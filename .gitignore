@@ -1,0 +1,12 @@
+/.vs/Cumulocity.MQTT/v15/Server/sqlite3
+/.vs/Cumulocity.MQTT/v15
+/test/MQTT.Client.NetStandard/TestResults
+/test/MQTT.Client.NetStandard/bin/Debug/netcoreapp2.0
+/src/MQTT.Client.NetStandard/obj/Release
+/src/MQTT.Client.NetStandard/bin/Debug/netstandard2.0
+/src/MQTT.Client.NetStandard/bin/Release/netstandard2.0
+/src/MQTT.Client.NetStandard/obj/Debug/netstandard2.0
+/src/MQTT.Client.NetStandard/obj
+/test/MQTT.Client.NetStandard/obj/Debug/netcoreapp2.0
+/test/MQTT.Client.NetStandard/obj/MQTT.Test.csproj.nuget.cache
+/test/MQTT.Client.NetStandard/obj
