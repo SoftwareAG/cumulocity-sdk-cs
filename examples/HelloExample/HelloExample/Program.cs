@@ -36,11 +36,10 @@ namespace HelloExample
 
             //create device
             await CreateDevice(cl);
-
             //set hardware information
             await ConfigureHardware(cl);
-
             //listen for operation
+            await SetExecutingOperations(cl);
         }
 
         private static async Task CreateDevice(Client cl)
@@ -53,6 +52,18 @@ namespace HelloExample
         {
             await cl.MqttStaticInventoryTemplates
                     .ConfigureHardware("S123456789", "model", "1.0", (e) => { return Task.FromResult(false); });
+        }
+
+        private static async Task SetExecutingOperations(Client cl)
+        {
+            cl.RestartEvt += Cl_RestartEvt;
+            await cl.MqttStaticOperationTemplates
+                    .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
+        }
+
+        private static void Cl_RestartEvt(object sender, RestartEventArgs e)
+        {
+            Console.WriteLine("RestartEvt");
         }
     }
 }

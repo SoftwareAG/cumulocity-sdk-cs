@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\MQTT.Client.NetStandard\MQTT.NetStandard.csproj" />
+  </ItemGroup>
+
 </Project>
