@@ -10,3 +10,6 @@
 /test/MQTT.Client.NetStandard/obj/Debug/netcoreapp2.0
 /test/MQTT.Client.NetStandard/obj/MQTT.Test.csproj.nuget.cache
 /test/MQTT.Client.NetStandard/obj
+/examples/AdvancedExample/.vs/AdvancedExample/v15
+/examples/AdvancedExample/AdvancedExample/bin/Debug/netcoreapp2.0
+/examples/AdvancedExample/AdvancedExample/obj
