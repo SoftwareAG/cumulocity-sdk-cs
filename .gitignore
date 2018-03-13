@@ -17,3 +17,6 @@
 /examples/HelloExample/HelloExample/bin/Debug/netcoreapp2.0
 /examples/HelloExample/HelloExample/obj/Debug/netcoreapp2.0
 /examples/HelloExample/HelloExample/obj
+/test-results
+/tools/Cake
+/tools
