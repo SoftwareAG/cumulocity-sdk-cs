@@ -1,14 +1,38 @@
-﻿using Cumulocity.MQTT.Enums;
-using Cumulocity.MQTT.Interfaces;
-using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Protocol;
+﻿#region Cumulocity GmbH
+
+// /*
+//  * Copyright (C) 2015-2018
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  * this software and associated documentation files (the "Software"),
+//  * to deal in the Software without restriction, including without limitation the rights to use,
+//  * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+//  * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be
+//  * included in all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  */
+
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using Cumulocity.MQTT.Enums;
+using Cumulocity.MQTT.Interfaces;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Protocol;
 
 namespace Cumulocity.MQTT
 {
@@ -18,30 +42,32 @@ namespace Cumulocity.MQTT
 
         public MqttStaticInventoryTemplates(IMqttClient cl)
         {
-            this._mqttClient = cl;
+            _mqttClient = cl;
         }
 
         /// <summary>
-        /// Childs the device creation. Will create a new child device for the current device.
-        /// The newly created object will be added as child device. Additionally an externaId
-        /// for the child will be created with type “c8y_Serial” and the value a combination of the serial of the root device
-        /// and the unique child ID.
+        ///     Childs the device creation. Will create a new child device for the current device.
+        ///     The newly created object will be added as child device. Additionally an externaId
+        ///     for the child will be created with type “c8y_Serial” and the value a combination of the serial of the root device
+        ///     and the unique child ID.
         /// </summary>
         /// <param name="uniqueChildID">The unique child identifier. Mandatory parameter.</param>
         /// <param name="deviceName">Name of the device.</param>
         /// <param name="deviceType">Type of the device.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> ChildDeviceCreationAsync(string uniqueChildID, string deviceName, string deviceType, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> ChildDeviceCreationAsync(string uniqueChildID, string deviceName, string deviceType,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var childDeviceCreationMsg = new MqttApplicationMessage()
+                var childDeviceCreationMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("101,{0},{1},{2}", uniqueChildID, deviceName, deviceType)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("101,{0},{1},{2}", uniqueChildID, deviceName,
+                        deviceType)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -52,39 +78,36 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Configures the hardware. Will update the Hardware properties of the device.
+        ///     Configures the hardware. Will update the Hardware properties of the device.
         /// </summary>
         /// <param name="serialNumber">The serial number.</param>
         /// <param name="model">The model.</param>
         /// <param name="revision">The revision.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> ConfigureHardware(string serialNumber, string model, string revision, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> ConfigureHardware(string serialNumber, string model, string revision,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var configureHardwareMsg = new MqttApplicationMessage()
+                var configureHardwareMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("110,{0},{1},{2}", serialNumber, model, revision)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("110,{0},{1},{2}", serialNumber, model, revision)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -95,23 +118,19 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Configures the mobile. Will update the Mobile properties of the device.
+        ///     Configures the mobile. Will update the Mobile properties of the device.
         /// </summary>
         /// <param name="imei">The imei.</param>
         /// <param name="iccid">The iccid.</param>
@@ -122,16 +141,19 @@ namespace Cumulocity.MQTT
         /// <param name="cellId">The cell identifier.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> ConfigureMobile(string imei, string iccid, string imsi, string mcc, string mnc, string lac, string cellId, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> ConfigureMobile(string imei, string iccid, string imsi, string mcc, string mnc,
+            string lac, string cellId, Func<Exception, Task<bool>> errorHandlerAsync,
+            ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var configureMobileMsg = new MqttApplicationMessage()
+                var configureMobileMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("111,{0},{1},{2},{3},{4},{5},{6}", imei, iccid, imsi, mcc, mnc, lac, cellId)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("111,{0},{1},{2},{3},{4},{5},{6}", imei, iccid, imsi,
+                        mcc, mnc, lac, cellId)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -142,23 +164,19 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Configures the position.
+        ///     Configures the position.
         /// </summary>
         /// <param name="latitude">The latitude.</param>
         /// <param name="longitude">The longitude.</param>
@@ -166,16 +184,18 @@ namespace Cumulocity.MQTT
         /// <param name="accuracy">The accuracy.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> ConfigurePosition(string latitude, string longitude, string altitude, string accuracy, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> ConfigurePosition(string latitude, string longitude, string altitude, string accuracy,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var configurePositionMsg = new MqttApplicationMessage()
+                var configurePositionMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("112,{0},{1},{2},{3}", latitude, longitude, altitude, accuracy)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("112,{0},{1},{2},{3}", latitude, longitude, altitude,
+                        accuracy)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -186,37 +206,35 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Devices the creation. Will create a new device for the serial number in the inventory if not yet existing.
-        /// An externalId for the device with type c8y_Serial and the device identifier of the MQTT clientId as value will be created
+        ///     Devices the creation. Will create a new device for the serial number in the inventory if not yet existing.
+        ///     An externalId for the device with type c8y_Serial and the device identifier of the MQTT clientId as value will be
+        ///     created
         /// </summary>
         /// <param name="deviceName">Name of the device.</param>
         /// <param name="deviceType">Type of the device.</param>
-        public async Task<bool> DeviceCreation(string deviceName, string deviceType, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> DeviceCreation(string deviceName, string deviceType,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var deviceCreationMsg = new MqttApplicationMessage()
+                var deviceCreationMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("100,{0},{1}", deviceName, deviceType)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("100,{0},{1}", deviceName, deviceType)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -227,35 +245,32 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Gets the child devices. Will trigger the sending of child devices of the device.
+        ///     Gets the child devices. Will trigger the sending of child devices of the device.
         /// </summary>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> GetChildDevices(Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> GetChildDevices(Func<Exception, Task<bool>> errorHandlerAsync,
+            ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var getChildDevicesMsg = new MqttApplicationMessage()
+                var getChildDevicesMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
                     Payload = Encoding.UTF8.GetBytes("105"),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
@@ -266,37 +281,34 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the configuration. Will update the Position properties of the device.
+        ///     Sets the configuration. Will update the Position properties of the device.
         /// </summary>
         /// <param name="configuration">The configuration.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> SetConfiguration(string configuration, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetConfiguration(string configuration, Func<Exception, Task<bool>> errorHandlerAsync,
+            ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setConfigurationMsg = new MqttApplicationMessage()
+                var setConfigurationMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("113,{0}", configuration)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("113,{0}", configuration)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -307,39 +319,36 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the firmware. Will set the firmware installed on the device.
+        ///     Sets the firmware. Will set the firmware installed on the device.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="url">The URL.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> SetFirmware(string name, string version, string url, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetFirmware(string name, string version, string url,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setFirmwareMsg = new MqttApplicationMessage()
+                var setFirmwareMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("115,{0},{1},{2}", name, version, url)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("115,{0},{1},{2}", name, version, url)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -350,37 +359,35 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the required availability. Will set the required interval for availability monitoring. It will only set the value if does not exist. Values entered e.g. through UI are not overwritten.
+        ///     Sets the required availability. Will set the required interval for availability monitoring. It will only set the
+        ///     value if does not exist. Values entered e.g. through UI are not overwritten.
         /// </summary>
         /// <param name="requiredInterval">The required interval.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> SetRequiredAvailability(int requiredInterval, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetRequiredAvailability(int requiredInterval,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setRequiredAvailabilityMsg = new MqttApplicationMessage()
+                var setRequiredAvailabilityMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("117,{0}", requiredInterval)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("117,{0}", requiredInterval)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -390,23 +397,19 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the software. Will set the list of software installed on the device. List of 3 values per software
+        ///     Sets the software. Will set the list of software installed on the device. List of 3 values per software
         /// </summary>
         /// <param name="software1">The software1.</param>
         /// <param name="version1">The version1.</param>
@@ -419,25 +422,22 @@ namespace Cumulocity.MQTT
         /// <param name="url3">The url3.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-
-        public async Task<bool> SetSoftwareList(IList<Software> installedSoftware, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetSoftwareList(IList<Software> installedSoftware,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
 
-            if (installedSoftware == null)
-            {
-                throw new ArgumentNullException(nameof(installedSoftware));
-            }
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            if (installedSoftware == null) throw new ArgumentNullException(nameof(installedSoftware));
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var softwares = String.Join(",", installedSoftware.Select(o => o.Name + "," + o.Version + "," + o.Url));
+                var softwares = string.Join(",", installedSoftware.Select(o => o.Name + "," + o.Version + "," + o.Url));
 
 
-                var setSoftwareList = new MqttApplicationMessage()
+                var setSoftwareList = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("116,{0}", softwares)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("116,{0}", softwares)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -448,43 +448,38 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the supported operations.
+        ///     Sets the supported operations.
         /// </summary>
         /// <param name="supportedOperations">The supported operations.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">supportedOperations</exception>
-        public async Task<bool> SetSupportedOperations(IList<string> supportedOperations, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetSupportedOperations(IList<string> supportedOperations,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
-            if (supportedOperations == null)
-            {
-                throw new ArgumentNullException(nameof(supportedOperations));
-            }
+            if (supportedOperations == null) throw new ArgumentNullException(nameof(supportedOperations));
 
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setSupportedOperationsMsg = new MqttApplicationMessage()
+                var setSupportedOperationsMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Concat("114,", String.Join(", ", supportedOperations.ToArray()))),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Concat("114,",
+                        string.Join(", ", supportedOperations.ToArray()))),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -494,28 +489,22 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         private static string GetProcessingMode(ProcessingMode? processingMode)
         {
             var stringProcessingMode = "s";
             if (processingMode.HasValue && processingMode.Value.Equals(ProcessingMode.TRANSIENT))
-            {
                 stringProcessingMode = "t";
-            }
 
             return stringProcessingMode;
         }

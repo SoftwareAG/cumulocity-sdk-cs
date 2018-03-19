@@ -3,14 +3,15 @@
 //////////////////////////////////////////////////////////////////////
  
 var target = Argument("target", "Default");
-var configuration = Argument("configuration", "Release");
+var configurationRelease = Argument("configuration", "Release");
+var configurationDebug = Argument("configuration", "Debug");
   
 //////////////////////////////////////////////////////////////////////
 ///    Build Variables
 /////////////////////////////////////////////////////////////////////
 var binDir = "";       //Destination Binary File Directory name i.e. bin
 var solutionFile = ""; // Solution file if needed
-var outputDir = Directory("./publish") + Directory(configuration);  // The output directory the build artefacts saved too
+var outputDir = Directory("./publish") + Directory(configurationRelease);  // The output directory the build artefacts saved too
 
 
 var testFailed = false;
@@ -61,15 +62,14 @@ Task("Build")
 	
 	var buildSettings = new DotNetCoreBuildSettings
      {
-         Configuration = configuration
+         Configuration = configurationRelease
 		//, OutputDirectory = outputDir
      };
 	 
     if(IsRunningOnWindows())
     {
-      // Use MSBuild
-      // MSBuild(solutionFile , settings => settings.SetConfiguration(configuration));
-	 
+		// Use MSBuild
+		// MSBuild(solutionFile , settings => settings.SetConfiguration(configuration));	 
 	  	var projects = GetFiles("./src/*.NetStandard/*.csproj");
 		foreach (var project in projects)
 		{
@@ -79,7 +79,36 @@ Task("Build")
     else
     {
 		// Use XBuild
-		//DotNetCoreBuild(projJson, buildSettings);
+	 	var projects = GetFiles("./src/*.NetStandard/*.csproj");
+		foreach (var project in projects)
+		{
+		   DotNetCoreBuild(project.FullPath, buildSettings);
+		}
+    }
+});
+
+Task("BuildDebug")
+    .IsDependentOn("Restore")
+    .Does(() => {
+	
+	var buildSettings = new DotNetCoreBuildSettings
+     {
+         Configuration = configurationDebug
+     };
+	 
+    if(IsRunningOnWindows())
+    {
+		// Use MSBuild
+		// MSBuild(solutionFile , settings => settings.SetConfiguration(configuration));	 
+	  	var projects = GetFiles("./src/*.NetStandard/*.csproj");
+		foreach (var project in projects)
+		{
+		   DotNetCoreBuild(project.FullPath, buildSettings);
+		}
+    }
+    else
+    {
+		// Use XBuild
 	 	var projects = GetFiles("./src/*.NetStandard/*.csproj");
 		foreach (var project in projects)
 		{
@@ -91,7 +120,7 @@ Task("Build")
 Task("Test")
 .IsDependentOn("Clean")
 .IsDependentOn("Restore")
-.IsDependentOn("Build")
+.IsDependentOn("BuildDebug")
 	.ContinueOnError()
 	.Does(() =>
 	{
