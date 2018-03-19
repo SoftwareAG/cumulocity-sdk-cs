@@ -9,7 +9,7 @@ namespace Cumulocity.MQTT.Model
 {
     public class InventoryGetRequest : Request
     {
-        private readonly IList<CustomValue> _customValues;
+        private readonly IList<CustomValue> _customValues = new List<CustomValue>();
         private readonly bool _byId;
         private readonly string _externalIdType;
         private readonly bool? _response;

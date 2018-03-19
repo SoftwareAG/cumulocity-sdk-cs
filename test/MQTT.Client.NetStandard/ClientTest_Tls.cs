@@ -8,6 +8,7 @@ using MQTT.Test;
 namespace Cumulocity.MQTT.Test
 {
     [TestFixture]
+    [Ignore("TLS")]
     public class ClientTest_Tls
     {
         private Mock<IConfiguration> ini;
@@ -33,7 +34,7 @@ namespace Cumulocity.MQTT.Test
         public void ClientTest_TlsConnection_Connect()
         {
             var res = Task.Run(() => cl.ConnectAsync()).Result;
-
+            TestContext.WriteLine(res.ToString());
             Assert.IsTrue(cl.IsConnected);
         }
     }

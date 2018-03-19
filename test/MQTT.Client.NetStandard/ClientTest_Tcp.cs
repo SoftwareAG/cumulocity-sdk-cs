@@ -12,6 +12,7 @@ using MQTT.Test;
 namespace Cumulocity.MQTT.Test
 {
     [TestFixture]
+    [Ignore("Firewall")]
     public class ClientTest_Tcp
     {
         private Mock<IConfiguration> ini;
@@ -34,10 +35,10 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
         public void ClientTest_TcpConnection_Connect()
         {
             var res = Task.Run(() => cl.ConnectAsync()).Result;
+            TestContext.WriteLine(res.ToString());
             Assert.IsTrue(cl.IsConnected);
         }
     }

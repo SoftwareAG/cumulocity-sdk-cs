@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Cumulocity.MQTT.Interfaces;
 using MQTT.Test;
@@ -41,6 +42,7 @@ namespace Cumulocity.MQTT.Test
             cl = new Client(config.Object);
 
             var res1 = Task.Run(() => cl.ConnectAsync()).Result;
+            TestContext.WriteLine(res1);
             Assert.IsTrue(cl.IsConnected);
         }
 
@@ -54,6 +56,7 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_ConfigureHardware()
         {
+            Thread.Sleep(1000);
             //Will update the Hardware properties of the device.
             //If the device does not exist then create a new one
             var res2 = Task.Run(() => cl.MqttStaticInventoryTemplates.ConfigureHardware(RandomString(8), "model", "1.0", (e) => { return Task.FromResult(false); })).Result;
@@ -70,6 +73,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
+        [Ignore("Firewall")]
         public void ClientTest_WsConnection_GetChildDevices()
         {
             //Will trigger the sending of child devices of the device.
@@ -96,8 +100,10 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
+        [Ignore("Firewall")]
         public void ClientTest_WsConnection_ConfigurePosition()
         {
+            Thread.Sleep(1000);
             //Will update the Position properties of the device.
             var res2 = Task.Run(() => cl.MqttStaticInventoryTemplates.ConfigurePosition(
                                         "52.409538",
@@ -109,6 +115,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
+        [Ignore("Firewall")]
         public void ClientTest_WsConnection_SetConfiguration()
         {
             //Will update the Position properties of the device.
@@ -119,6 +126,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
+        [Ignore("Firewall")]
         public void ClientTest_WsConnection_SetSupportedOperations()
         {
             IList<string> supportedOperations = new List<string>();
@@ -133,6 +141,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
+        [Ignore("Firewall")]
         public void ClientTest_WsConnection_SetFirmware()
         {
             //Will set the firmware installed on the device

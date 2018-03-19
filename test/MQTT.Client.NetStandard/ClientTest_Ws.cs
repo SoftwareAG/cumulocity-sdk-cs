@@ -37,7 +37,7 @@ namespace Cumulocity.MQTT.Test
         public void ClientTest_WsConnection_Connect()
         {
             var res = Task.Run(() => cl.ConnectAsync()).Result;
-
+            TestContext.WriteLine(res.ToString());
             Assert.IsTrue(cl.IsConnected);
         }
     }

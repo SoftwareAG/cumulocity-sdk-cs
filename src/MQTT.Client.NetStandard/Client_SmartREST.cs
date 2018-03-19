@@ -1,7 +1,7 @@
 ﻿using Cumulocity.MQTT.Enums;
 using Cumulocity.MQTT.Interfaces;
 using Cumulocity.MQTT.Model;
-using Cumulocity.MQTT.Interfaces;
+
 
 using Serilog;
 using System;

@@ -43,7 +43,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("510,{0}", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("510,{0}", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
 
@@ -55,7 +62,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("511,{0},execute this", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("511,{0},execute this", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Configuration (513)
@@ -66,7 +80,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("513,{0},\"val1 = 1\nval2 = 2\"", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("513,{0},\"val1 = 1\nval2 = 2\"", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Firmware (515)
@@ -77,7 +98,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("515,{0},myFimrware,1.0,http://www.my.url", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("515,{0},myFimrware,1.0,http://www.my.url", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Software list (516)
@@ -88,7 +116,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("516,{0},softwareA,1.0,url1,softwareB,2.0,url2", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("516,{0},softwareA,1.0,url1,softwareB,2.0,url2", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Measurement request operation (517)
@@ -99,7 +134,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("517,{0},LOGA", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("517,{0},LOGA", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Relay (518)
@@ -110,7 +152,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("518,{0},OPEN", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("518,{0},OPEN", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //RelayArray (519)
@@ -121,7 +170,13 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("519,{0},OPEN,CLOSE,CLOSE,OPEN", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("519,{0},OPEN,CLOSE,CLOSE,OPEN", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Upload configuration file (520)
@@ -132,7 +187,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("520,{0}", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("520,{0}", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Download configuration file (521)
@@ -143,7 +205,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("521,{0},http://www.my.url", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("521,{0},http://www.my.url", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Logfile request (522)
@@ -154,7 +223,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("522,{0},logfileA,2013-06-22T17:03:14.000+02:00,2013-06-22T18:03:14.000+02:00,ERROR,1000", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("522,{0},logfileA,2013-06-22T17:03:14.000+02:00,2013-06-22T18:03:14.000+02:00,ERROR,1000", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
         //Communication mode (523)
@@ -165,7 +241,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("523,{0},SMS", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("523,{0},SMS", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
 
@@ -177,7 +260,14 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(clientId, s.ToString());
             };
 
-            MqttApplicationMessage applicationMessage = new MqttApplicationMessage("s/ds", Encoding.UTF8.GetBytes(String.Format("106,child1,child2,child3", clientId)), MqttQualityOfServiceLevel.AtLeastOnce, false);
+            var applicationMessage = new MqttApplicationMessage()
+            {
+                Topic = "s/ds",
+                Payload = Encoding.UTF8.GetBytes(String.Format("106,{0}", clientId)),
+                QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                Retain = false
+            };
+
             mqttClient.Raise(e => e.ApplicationMessageReceived += null, new MqttApplicationMessageReceivedEventArgs(clientId, applicationMessage));
         }
 

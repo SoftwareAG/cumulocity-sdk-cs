@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Cumulocity.MQTT.Test
 {
     [TestFixture]
+    [Ignore("Firewall")]
     public class ClientTest_Wss
     {
         private Client cl;
@@ -29,11 +30,10 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
-        public void ClientTest_TlsConnection_Connect()
+        public void ClientTest_WssConnection_Connect()
         {
             var res = Task.Run(() => cl.ConnectAsync()).Result;
-
+            TestContext.WriteLine(res.ToString());
             Assert.IsTrue(cl.IsConnected);
         }
     }

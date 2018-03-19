@@ -31,7 +31,7 @@ namespace Cumulocity.MQTT
         public async Task<bool> CreateBasicEventAsync(string type, string text, string time, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            //string stringProcessingMode = GetProcessingMode(processingMode);
             if (String.IsNullOrEmpty(type))
             {
                 throw new ArgumentNullException(nameof(type));
@@ -41,7 +41,7 @@ namespace Cumulocity.MQTT
             {
                 var createBasicEventMsg = new MqttApplicationMessage()
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
+                    Topic = String.Format("{0}/us", "s"),
                     Payload = Encoding.UTF8.GetBytes(String.Format("400,{0},{1},{2}", type, text, time)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false

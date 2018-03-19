@@ -521,7 +521,7 @@ namespace Cumulocity.MQTT
                     var msgID = msgs.FirstOrDefault();
                     if (!String.IsNullOrEmpty(msgID))
                     {
-                        ExecuteOther(Int32.Parse(msgID), msgs);
+                         ExecuteOther(Int32.Parse(msgID), msgs);
                     }
                 }
                 if (e.ApplicationMessage.Topic.StartsWith("s/dc/"))
@@ -580,7 +580,7 @@ namespace Cumulocity.MQTT
             {
                 //options.ChannelOptions = new MqttClientTlsOptions { Server = _config.Server };
             }
-
+            options.CommunicationTimeout = TimeSpan.FromSeconds(60);
             return options;
         }
 

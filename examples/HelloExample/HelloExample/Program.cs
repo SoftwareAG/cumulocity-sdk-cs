@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cumulocity.MQTT;
 using Cumulocity.MQTT.Model;
@@ -22,7 +23,7 @@ namespace HelloExample
             {
                 Server = "ws://piotr.staging.c8y.io/mqtt",
                 UserName = @"piotr/admin",
-                Password = @"",
+                Password = @"test1234",
                 ClientId = "4927468bdd4b4171a23e31476ff82675",
                 Port = "80",
                 ConnectionType = "WS"
@@ -34,12 +35,33 @@ namespace HelloExample
             //connect to the Cumulocity
             Console.WriteLine(String.Format("Connected {0}", cl.IsConnected));
 
-            //create device
-            await CreateDevice(cl);
-            //set hardware information
-            await ConfigureHardware(cl);
-            //listen for operation
-            await SetExecutingOperations(cl);
+            ////create device
+            //await CreateDevice(cl);
+            ////set hardware information
+            //await ConfigureHardware(cl);
+            ////listen for operation
+            //await SetExecutingOperations(cl);
+
+            for (int i = 0; i < 10; i++)
+            {
+                int counter = 5000;
+                while (counter-- > 0)
+                {
+                    Console.WriteLine(counter);
+                    Thread.Sleep(100);
+                    var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+                }
+            }
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    int counter = 5000;
+            //    while (counter-- > 0)
+            //    {
+            //        Console.WriteLine(counter);
+            //        var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            //    }
+            //}
         }
 
         private static async Task CreateDevice(Client cl)

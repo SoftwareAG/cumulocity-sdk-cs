@@ -27,12 +27,13 @@ namespace Cumulocity.MQTT
 
             try
             {
-                var commandMsg = new MqttApplicationMessage(
-                    "s/ucr",
-                    new byte[0],
-                    MqttQualityOfServiceLevel.AtLeastOnce,
-                    false
-                );
+                var commandMsg = new MqttApplicationMessage()
+                {
+                    Topic = "s/ucr",
+                    Payload = new byte[0],
+                    QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
+                    Retain = false
+                };
 
                 await cl.PublishAsync(commandMsg);
             }
@@ -56,4 +57,5 @@ namespace Cumulocity.MQTT
             }
         }
     }
+
 }
