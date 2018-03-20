@@ -12,8 +12,8 @@ string currentBranch;
 string lastTagCommit;
 string releaseBranch;
 string readCommitCountInReleaseBranch;
-string defaultBranchName="default";
-string releaseBranchName="Release";
+string defaultBranchName="develop";
+string releaseBranchName="release";
 
 //+budowanie skryptów
 //+pakowanie z wersji która mam podniesiony numer
@@ -48,7 +48,7 @@ Task("CreateReleaseBranch").Does(()=> {
 });
 
 Task("CreateReleaseBranchAndDeploy").Does(()=> {
-		checkHgVersion();
+		checkGitVersion();
 		readVersionProps();
 
 		var canCreate =
@@ -62,7 +62,7 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 });
 
 Task("CreateNextDevelopIteration").Does(()=> {
-		checkHgVersion();
+		checkGitVersion();
 		readVersionProps();
 		var canCreate =
 		canNextDevelopIterationOnRelease();
@@ -82,7 +82,7 @@ Task("CreateNextDevelopIteration").Does(()=> {
 // });
 
 
-void checkHgVersion(){
+void checkGitVersion(){
  		var settings = new ProcessSettings
 		{
 		   Arguments = new ProcessArgumentBuilder().Append("check-version.ps1  -local false")
@@ -122,6 +122,10 @@ void readVersionProps()
 
 bool canCreateRelease()
 {
+		System.Console.WriteLine(defaultBranchName);
+		System.Console.WriteLine(lastTagCommit);
+		System.Console.WriteLine(readCommitCountInReleaseBranch);
+		
 		if(currentBranch.Equals(defaultBranchName) && !lastTagCommit.Equals("r0.0.0") && readCommitCountInReleaseBranch.Equals("0") )
 		{
 			System.Console.WriteLine("Yes, you can create a release branch.");
@@ -234,7 +238,7 @@ void cleanDirectories(){
 
 	if(FileExists("version.props"))
 	{
-		IO.File.DeleteFile("./version.props");
+		DeleteFile("./version.props");
 	}
 }
 void packProject()
@@ -257,7 +261,7 @@ void packProject()
 	};  
 
     //MQTT
-	projects = GetFiles("./src/MQTT.Client.NetStandard/*.csproj");
+	var projects = GetFiles("./src/MQTT.Client.NetStandard/*.csproj");
 	foreach (var project in projects)
 	{
 		Console.WriteLine(project.FullPath);

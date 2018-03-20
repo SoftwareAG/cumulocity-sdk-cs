@@ -30,9 +30,7 @@ Write-Output "mode = $mode"
 
 
 #$srcDir = Get-ChildItem ./src 
-$srcDir = Get-ChildItem ./MicroservicesSDK/src/* -include ('*.csproj', '*.scriptversion') -recurse
-$srcDir += Get-ChildItem ./DeviceSDK/MQTT/src/* -include ('*.csproj', '*.scriptversion') -recurse
-$srcDir += Get-ChildItem ./Examples/BuildingScripts/* -include ('*.csproj', '*.scriptversion') -recurse
+$srcDir = Get-ChildItem ./src/* -include ('*.csproj', '*.scriptversion') -recurse
 
 $save = $true;
 foreach ($folder in $srcDir) {
