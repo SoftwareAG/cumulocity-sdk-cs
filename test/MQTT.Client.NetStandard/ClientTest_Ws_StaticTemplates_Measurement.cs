@@ -38,26 +38,26 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_CreateCustomMeasurement()
         {
-            var res2 = Task.Run(() => cl.MqttStaticMeasurementTemplates.CreateCustomMeasurementAsync("c8y_Temperature", "T", "25", string.Empty, string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticMeasurementTemplates.CreateCustomMeasurementAsync("c8y_Temperature", "T", "25", string.Empty, string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         [Test]
         public void ClientTest_WsConnection_CreateSignalStrengthMeasurement()
         {
-            var res2 = Task.Run(() => cl.MqttStaticMeasurementTemplates.CreateSignalStrengthMeasurementAsync("-90", "23", "2017-09-13T14:00:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticMeasurementTemplates.CreateSignalStrengthMeasurementAsync("-90", "23", "2017-09-13T14:00:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         [Test]
         public void ClientTest_WsConnection_CreateTemperatureMeasurement()
         {
-            var res2 = Task.Run(() => cl.MqttStaticMeasurementTemplates.CreateTemperatureMeasurementAsync("25", "2017-09-13T15:01:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticMeasurementTemplates.CreateTemperatureMeasurementAsync("25", "2017-09-13T15:01:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
 
         [Test]
         public void ClientTest_WsConnection_CreateBatteryMeasurement()
         {
-            var res2 = Task.Run(() => cl.MqttStaticMeasurementTemplates.CreateBatteryMeasurementAsync("95", "2017-09-13T15:01:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticMeasurementTemplates.CreateBatteryMeasurementAsync("95", "2017-09-13T15:01:14.000+02:00", (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
 

@@ -41,42 +41,42 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_CreateCriticalAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.CreateCriticalAlarmAsync("c8y_TemperatureAlarm", "Alarm of type c8y_TemperatureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.CreateCriticalAlarmAsync("c8y_TemperatureAlarm", "Alarm of type c8y_TemperatureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Create MAJOR alarm (302)
         [Test]
         public void ClientTest_WsConnection_CreateMajorAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.CreateMajorAlarmAsync("c8y_BatteryAlarm", " Major Alarm of type c8y_BatteryAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.CreateMajorAlarmAsync("c8y_BatteryAlarm", " Major Alarm of type c8y_BatteryAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Create MINOR alarm (303)
         [Test]
         public void ClientTest_WsConnection_CreateMinorAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.CreateMinorAlarmAsync("c8y_WaterAlarm", "Alarm of type c8y_WaterAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.CreateMinorAlarmAsync("c8y_WaterAlarm", "Alarm of type c8y_WaterAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Create WARNING alarm (304)
         [Test]
         public void ClientTest_WsConnection_CreateWarningAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.CreateWarningAlarmAsync("c8y_AirPressureAlarm", "Warning of type c8y_AirPressureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.CreateWarningAlarmAsync("c8y_AirPressureAlarm", "Warning of type c8y_AirPressureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Update severity of existing alarm (305)
         [Test]
         public void ClientTest_WsConnection_UpdateSeverityOfExistingAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.UpdateSeverityOfExistingAlarmAsync("c8y_AirPressureAlarm", "CRITICAL", (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.UpdateSeverityOfExistingAlarmAsync("c8y_AirPressureAlarm", "CRITICAL", (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Clear existing alarm (306)
         [Test]
         public void ClientTest_WsConnection_ClearExistingAlarm()
         {
-            var res2 = Task.Run(() => cl.MqttStaticAlarmTemplates.ClearExistingAlarmAsync("c8y_TemperatureAlarm", (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticAlarmTemplates.ClearExistingAlarmAsync("c8y_TemperatureAlarm", (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
     }

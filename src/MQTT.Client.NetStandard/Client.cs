@@ -53,12 +53,12 @@ namespace Cumulocity.MQTT
             _storeStaticOther = AddOtherStore();
             SubscribeEvt();
             DeviceCredentials = new DeviceCredentials(_mqttClient);
-            MqttCustomSmartRest = new MqttCustomSmartRest(_mqttClient);
-            MqttStaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
-            MqttStaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
-            MqttStaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
-            MqttStaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
-            MqttStaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
+            CustomSmartRest = new MqttCustomSmartRest(_mqttClient);
+            StaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
+            StaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
+            StaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
+            StaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
+            StaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
         }
 
         /// <summary>
@@ -79,21 +79,21 @@ namespace Cumulocity.MQTT
             _storeStaticOther = AddOtherStore();
             SubscribeEvt();
             DeviceCredentials = new DeviceCredentials(_mqttClient);
-            MqttCustomSmartRest = new MqttCustomSmartRest(_mqttClient);
-            MqttStaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
-            MqttStaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
-            MqttStaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
-            MqttStaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
-            MqttStaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
+            CustomSmartRest = new MqttCustomSmartRest(_mqttClient);
+            StaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
+            StaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
+            StaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
+            StaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
+            StaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
         }
 
         public IDeviceCredentials DeviceCredentials { get; }
-        public IMqttCustomSmartRest MqttCustomSmartRest { get; }
-        public IMqttStaticAlarmTemplates MqttStaticAlarmTemplates { get; }
-        public IMqttStaticEventTemplates MqttStaticEventTemplates { get; }
-        public IMqttStaticInventoryTemplates MqttStaticInventoryTemplates { get; }
-        public IMqttStaticMeasurementTemplates MqttStaticMeasurementTemplates { get; }
-        public IMqttStaticOperationTemplates MqttStaticOperationTemplates { get; }
+        public IMqttCustomSmartRest CustomSmartRest { get; }
+        public IMqttStaticAlarmTemplates StaticAlarmTemplates { get; }
+        public IMqttStaticEventTemplates StaticEventTemplates { get; }
+        public IMqttStaticInventoryTemplates StaticInventoryTemplates { get; }
+        public IMqttStaticMeasurementTemplates StaticMeasurementTemplates { get; }
+        public IMqttStaticOperationTemplates StaticOperationTemplates { get; }
 
         /// <summary>
         /// Lists all children of the device

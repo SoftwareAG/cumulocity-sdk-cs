@@ -40,7 +40,7 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_CreateBasicEvent()
         {
-            var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
+            var res2 = Task.Run(() => cl.StaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
             Assert.IsTrue(res2);
         }
         //Create location update event (401)
@@ -48,7 +48,7 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_CreateLocationUpdateEvent()
         {
-            var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateLocationUpdateEventAsync(
+            var res2 = Task.Run(() => cl.StaticEventTemplates.CreateLocationUpdateEventAsync(
                  "52.209538",
                  "16.831992",
                  "76",
@@ -61,7 +61,7 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_CreateLocationUpdateEventWithDeviceUpdate()
         {
-            var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateLocationUpdateEventWithDeviceUpdateAsync(
+            var res2 = Task.Run(() => cl.StaticEventTemplates.CreateLocationUpdateEventWithDeviceUpdateAsync(
                                  "52.209538",
                                  "16.831992",
                                  "76",

@@ -13,6 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT.Test", "test\MQTT.Clie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E94D0412-692F-4274-B261-E8124DBBCFA8}"
 	ProjectSection(SolutionItems) = preProject
+		build-release.cake = build-release.cake
 		build.cake = build.cake
 		README.md = README.md
 	EndProjectSection
