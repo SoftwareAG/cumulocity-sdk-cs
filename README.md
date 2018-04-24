@@ -1,6 +1,10 @@
 # Cumulocity C# Library #
 
 Cumulocity C# Library is an asynchronous, event-driven networking library to ease your development for connecting to the Cumulocity cloud. The library uses Cumulocity's self invented SmartREST protocol for M2M communication which targets any device that are capable of running embedded Linux or Windows.
+### Dependencies ### 
+* [MQTTnet](https://github.com/chkr1011/MQTTnet/blob/master/LICENSE)
+* [Serilog](https://github.com/serilog/serilog/blob/dev/LICENSE)
+* [Sonaranalyzer-dotnet](https://github.com/SonarSource/sonaranalyzer-dotnet/blob/master/LICENSE)
 
 ### Prerequisites ###
 
