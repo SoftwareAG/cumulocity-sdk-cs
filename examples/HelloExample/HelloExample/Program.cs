@@ -6,7 +6,7 @@ using Cumulocity.MQTT.Model;
 
 namespace HelloExample
 {
-    class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
@@ -21,9 +21,9 @@ namespace HelloExample
             //configure MQTT connection
             var cnf = new Configuration()
             {
-                Server = "ws://piotr.staging.c8y.io/mqtt",
-                UserName = @"piotr/admin",
-                Password = @"test1234",
+                Server = "ws://url/mqtt",
+                UserName = @"tenant/user",
+                Password = @"p@ssword",
                 ClientId = "4927468bdd4b4171a23e31476ff82675",
                 Port = "80",
                 ConnectionType = "WS"
@@ -35,52 +35,58 @@ namespace HelloExample
             //connect to the Cumulocity
             Console.WriteLine(String.Format("Connected {0}", cl.IsConnected));
 
-            ////create device
-            //await CreateDevice(cl);
-            ////set hardware information
-            //await ConfigureHardware(cl);
-            ////listen for operation
-            //await SetExecutingOperations(cl);
+            //create device
+            await CreateDevice(cl);
+            //set hardware information
+            await ConfigureHardware(cl);
+            //listen for operation
+            await SetExecutingOperations(cl);
+            //Create a measurement
+            await CreateCustomMeasurement(cl);
+            //Create an event
+            await CreateBasicEvent(cl);
+            //Create an alarm
+            await CreateCriticalAlarm(cl);
 
-            for (int i = 0; i < 10; i++)
-            {
-                int counter = 5000;
-                while (counter-- > 0)
-                {
-                    Console.WriteLine(counter);
-                    Thread.Sleep(100);
-                    var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
-                }
-            }
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    int counter = 5000;
-            //    while (counter-- > 0)
-            //    {
-            //        Console.WriteLine(counter);
-            //        var res2 = Task.Run(() => cl.MqttStaticEventTemplates.CreateBasicEventAsync("c8y_MyEvent", "Something was triggered", string.Empty, (e) => { return Task.FromResult(false); })).Result;
-            //    }
-            //}
         }
 
         private static async Task CreateDevice(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
-                    .DeviceCreation("TestDevice3", "", (e) => { return Task.FromResult(false); });
+            await cl.StaticInventoryTemplates.DeviceCreation("TestDevice3", "", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task ConfigureHardware(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .ConfigureHardware("S123456789", "model", "1.0", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetExecutingOperations(Client cl)
         {
             cl.RestartEvt += Cl_RestartEvt;
-            await cl.MqttStaticOperationTemplates
+            await cl.StaticOperationTemplates
                     .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
+        }
+
+        private static async Task CreateCustomMeasurement(Client cl)
+        {
+            await cl.StaticMeasurementTemplates
+                .CreateCustomMeasurementAsync("c8y_Temperature", "T", "25", string.Empty, string.Empty, (e) => { return Task.FromResult(false); });
+        }
+
+        private static async Task CreateBasicEvent(Client cl)
+        {
+            await cl.StaticEventTemplates
+                .CreateBasicEventAsync(
+                    "c8y_MyEvent", "Something was triggered",
+                    string.Empty,
+                    (e) => { return Task.FromResult(false); });
+        }
+
+        private static async Task CreateCriticalAlarm(Client cl)
+        {
+            await cl.StaticAlarmTemplates
+                .CreateCriticalAlarmAsync("c8y_TemperatureAlarm", "Alarm of type c8y_TemperatureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static void Cl_RestartEvt(object sender, RestartEventArgs e)

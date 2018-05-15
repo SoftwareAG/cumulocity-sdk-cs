@@ -44,7 +44,6 @@ namespace Cumulocity.MQTT.Test
             Assert.IsTrue(res2);
         }
         //Create location update event (401)
-
         [Test]
         public void ClientTest_WsConnection_CreateLocationUpdateEvent()
         {

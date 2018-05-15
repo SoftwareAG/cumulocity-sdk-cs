@@ -23,8 +23,8 @@ namespace AdvancedExample
             var cnf = new Configuration()
             {
                 Server = "ws://piotr.staging.c8y.io/mqtt",
-                UserName = @"piotr/admin",
-                Password = @"",
+                UserName = @"tenant/user",
+                Password = @"p@ssw0rd",
                 ClientId = "4927468bdd4b4171a23e31476ff82675",
                 Port = "80",
                 ConnectionType = "WS"
@@ -34,14 +34,21 @@ namespace AdvancedExample
             await cl.ConnectAsync();
             Console.WriteLine(String.Format("Connected {0}", cl.IsConnected));
 
-            //The entry point
-            //await CallAllMethods(cl);
-        }
+	        Console.Write("Do you want call all methods? [y/n]");
+	        var callAllMethod = Console.ReadLine();
+
+	        //The entry point
+			if (callAllMethod == "y")
+	        {
+		        await CallAllMethods(cl);
+			}
+
+		}
 
 
         private static async Task CallAllMethods(Client cl)
         {
-            //MqttStatic
+            //Static
             await CreateDevice(cl);
             await ConfigureHardware(cl);
             await ChildDeviceCreation(cl);
@@ -88,31 +95,31 @@ namespace AdvancedExample
         private static async Task SetExecutingOperations(Client cl)
         {
             cl.RestartEvt += Cl_RestartEvt;
-            await cl.MqttStaticOperationTemplates
+            await cl.StaticOperationTemplates
                     .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetOperationToFailed(Client cl)
         {
-            await cl.MqttStaticOperationTemplates
+            await cl.StaticOperationTemplates
                     .SetOperationToFailedAsync("c8y_Restart", "Could not restart", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetOperationToSuccessful(Client cl)
         {
-            await cl.MqttStaticOperationTemplates
+            await cl.StaticOperationTemplates
                     .SetOperationToSuccessfulAsync("c8y_Restart", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task GetPendingOperations(Client cl)
         {
-            await cl.MqttStaticOperationTemplates
+            await cl.StaticOperationTemplates
                     .GetPendingOperationsAsync((e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateLocationUpdateEventWithDeviceUpdate(Client cl)
         {
-            await cl.MqttStaticEventTemplates
+            await cl.StaticEventTemplates
                     .CreateLocationUpdateEventWithDeviceUpdateAsync(
                                  "52.209539",
                                  "16.831993",
@@ -124,7 +131,7 @@ namespace AdvancedExample
 
         private static async Task CreateLocationUpdateEvent(Client cl)
         {
-            await cl.MqttStaticEventTemplates
+            await cl.StaticEventTemplates
                     .CreateLocationUpdateEventAsync(
                      "52.209538",
                      "16.831992",
@@ -136,76 +143,76 @@ namespace AdvancedExample
 
         private static async Task ClearExistingAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .ClearExistingAlarmAsync("c8y_TemperatureAlarm", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task UpdateSeverityOfExistingAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .UpdateSeverityOfExistingAlarmAsync("c8y_AirPressureAlarm", "CRITICAL", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateWarningAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .CreateWarningAlarmAsync("c8y_AirPressureAlarm", "Warning of type c8y_AirPressureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateMinorAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .CreateMinorAlarmAsync("c8y_WaterAlarm", "Alarm of type c8y_WaterAlarm raised", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateMajorAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .CreateMajorAlarmAsync("c8y_BatteryAlarm", " Major Alarm of type c8y_BatteryAlarm raised", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateCriticalAlarm(Client cl)
         {
-            await cl.MqttStaticAlarmTemplates
+            await cl.StaticAlarmTemplates
                 .CreateCriticalAlarmAsync("c8y_TemperatureAlarm", "Alarm of type c8y_TemperatureAlarm raised", string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateBatteryMeasurement(Client cl)
         {
-            await cl.MqttStaticMeasurementTemplates
+            await cl.StaticMeasurementTemplates
                 .CreateBatteryMeasurementAsync("95", "2017-09-13T15:01:14.000+02:00", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateTemperatureMeasurement(Client cl)
         {
-            await cl.MqttStaticMeasurementTemplates
+            await cl.StaticMeasurementTemplates
                 .CreateTemperatureMeasurementAsync("25", "2018-02-15T05:01:14.000+02:00", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateSignalStrengthMeasurement(Client cl)
         {
-            await cl.MqttStaticMeasurementTemplates
+            await cl.StaticMeasurementTemplates
                 .CreateSignalStrengthMeasurementAsync("-90", "23", "2017-09-13T14:00:14.000+02:00", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SendRequestDataPostTemplateEvent(Client cl)
         {
-            await cl.MqttCustomSmartRest.SendRequestDataAsync("PostTemplateEvent", "5555", new List<string> { "", "100" });
+            await cl.CustomSmartRest.SendRequestDataAsync("PostTemplateEvent", "5555", new List<string> { "", "100" });
         }
 
         private static async Task SendRequestDataPostTemplateMeasurement(Client cl)
         {
-            await cl.MqttCustomSmartRest.SendRequestDataAsync("PostTemplateMeasurement", "7777", new List<string> { "", "25" });
+            await cl.CustomSmartRest.SendRequestDataAsync("PostTemplateMeasurement", "7777", new List<string> { "", "25" });
         }
 
         private static async Task SendRequestDataPostTemplateAlarm(Client cl)
         {
-            await cl.MqttCustomSmartRest.SendRequestDataAsync("PostTemplateAlarm", "6666", new List<string> { "2018-02-15T16:03:14.000+02:00", "100", "ACTIVE", "MAJOR" });
+            await cl.CustomSmartRest.SendRequestDataAsync("PostTemplateAlarm", "6666", new List<string> { "2018-02-15T16:03:14.000+02:00", "100", "ACTIVE", "MAJOR" });
         }
 
         private static async Task CreateTemplateDataUpdateTemplateOperation(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("UpdateTemplateOperation",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateOperation",
                                                  new List<Request> {
                                                  new OperationRequest("1111",
                                                  null,
@@ -230,7 +237,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataUpdateTemplateClearingAlarm(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("UpdateTemplateClearingAlarm",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateClearingAlarm",
                                                  new List<Request> {
                                                  new AlarmUpdateRequest("0000",
                                                  null,
@@ -255,7 +262,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataUpdateTemplateAlarm(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("UpdateTemplateAlarm",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateAlarm",
                                                new List<Request> {
                                                  new AlarmUpdateRequest("2222",
                                                  null,
@@ -274,7 +281,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataUpdateTemplateInventory(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("UpdateTemplateInventory",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateInventory",
                                                  new List<Request> {
                                                  new InventoryRequest("3333",
                                                  null,
@@ -296,7 +303,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataPostTemplateInventory(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("PostTemplateInventory",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("PostTemplateInventory",
                                                  new List<Request> {
                                                  new InventoryRequest("4444",
                                                  null,
@@ -318,7 +325,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplatePostTemplateEvent(Client cl)
         {
-            await cl.MqttCustomSmartRest.CreateTemplateDataAsync("PostTemplateEvent",
+            await cl.CustomSmartRest.CreateTemplateDataAsync("PostTemplateEvent",
                                  new List<Request> {
                                              new EventRequest("5555",
                                              null,
@@ -345,7 +352,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataPostTemplateAlarm(Client cl)
         {
-            await cl.MqttCustomSmartRest
+            await cl.CustomSmartRest
                     .CreateTemplateDataAsync("PostTemplateAlarm",
                                         new List<Request> {
                                              new AlarmRequest("6666",
@@ -383,7 +390,7 @@ namespace AdvancedExample
 
         private static async Task CreateTemplateDataAsyncPostTemplateMeasurement(Client cl)
         {
-            await cl.MqttCustomSmartRest
+            await cl.CustomSmartRest
                     .CreateTemplateDataAsync("PostTemplateMeasurement",
                                     new List<Request> {
                                          new MeasurementRequest("7777",
@@ -411,12 +418,12 @@ namespace AdvancedExample
 
         private static void SendRequestDataAsyncGetTemplate4(Client cl)
         {
-            var resultGetTemplate = Task.Run(() => cl.MqttCustomSmartRest.SendRequestDataAsync("GetTemplate4", "9998", new List<string> { "4927468bdd4b4171a23e31476ff82675" })).Result;
+            var resultGetTemplate = Task.Run(() => cl.CustomSmartRest.SendRequestDataAsync("GetTemplate4", "9998", new List<string> { "4927468bdd4b4171a23e31476ff82675" })).Result;
         }
 
         private static async Task CreateTemplateDataGetTemplate(Client cl)
         {
-            await cl.MqttCustomSmartRest
+            await cl.CustomSmartRest
                     .CreateTemplateDataAsync("GetTemplate4",
                                                     new List<Request> {
                                                     new InventoryGetRequest("9999",null, String.Empty, true),
@@ -440,19 +447,19 @@ namespace AdvancedExample
             {
                 var item = e.IsExist;
             };
-            await cl.MqttCustomSmartRest
+            await cl.CustomSmartRest
                     .CheckTemplateCollectionExists("test2", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateCustomMeasurement(Client cl)
         {
-            await cl.MqttStaticMeasurementTemplates
+            await cl.StaticMeasurementTemplates
                     .CreateCustomMeasurementAsync("c8y_Temperature", "T", "25", string.Empty, string.Empty, (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetRequiredAvailability(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .SetRequiredAvailability(60,
                                              (e) => { return Task.FromResult(false); });
         }
@@ -463,13 +470,13 @@ namespace AdvancedExample
             list.Add(new Software() { Name = "Software01", Url = "url1", Version = "1.0" });
             list.Add(new Software() { Name = "Software02", Url = "url2", Version = "2.1" });
 
-            await cl.MqttStaticInventoryTemplates.SetSoftwareList(list,
+            await cl.StaticInventoryTemplates.SetSoftwareList(list,
                                          (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetFirmware(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .SetFirmware(
                                 "Extreme",
                                 "Ultra 1.0",
@@ -484,14 +491,14 @@ namespace AdvancedExample
             supportedOperations.Add("c8y_Configuration");
 
             //Will set the supported operations of the device
-            await cl.MqttStaticInventoryTemplates.SetSupportedOperations(
+            await cl.StaticInventoryTemplates.SetSupportedOperations(
                                         supportedOperations,
                                         (e) => { return Task.FromResult(false); });
         }
 
         private static async Task SetConfiguration(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .SetConfiguration(
                             "val1 = 1\nval2 = 2",
                             (e) => { return Task.FromResult(false); });
@@ -499,7 +506,7 @@ namespace AdvancedExample
 
         private static async Task ConfigurePosition(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .ConfigurePosition(
                                 "52.409538",
                                 "16.931992",
@@ -510,7 +517,7 @@ namespace AdvancedExample
 
         private static async Task ConfigureMobile(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .ConfigureMobile(
                                 "356938035643809",
                                 "8991101200003204510",
@@ -524,7 +531,7 @@ namespace AdvancedExample
 
         private static async Task GetChildDevices(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .GetChildDevices((e) => { return Task.FromResult(false); });
         }
 
@@ -536,19 +543,19 @@ namespace AdvancedExample
                     Console.WriteLine(device);
                 }
             };
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .ChildDeviceCreationAsync("D32Q", "Device Name", "c8y_MQTTDevice", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task ConfigureHardware(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .ConfigureHardware("S123456789", "model", "1.0", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateDevice(Client cl)
         {
-            await cl.MqttStaticInventoryTemplates
+            await cl.StaticInventoryTemplates
                     .DeviceCreation("TestDevice3", "", (e) => { return Task.FromResult(false); });
         }
 

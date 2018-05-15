@@ -45,14 +45,14 @@ namespace Cumulocity.MQTT.Test
             TestContext.WriteLine(res1);
         }
 
-        //[Test]
-        //public void ClientTest_WsConnection_UpdateDataAsync_Operation()
-        //{
-        //    //var res1 = Task.Run(() => cl.SubscribeAsync()).Result;
-        //    var res2 = Task.Run(() => cl.DeviceCredentials.RequestDeviceCredentials((e) => { return Task.FromResult(false); })).Result;
-        //    Assert.IsTrue(res2);
-        //}
-        [Test, MaxTime(10000)]
+		[Test]
+		public void ClientTest_WsConnection_UpdateDataAsync_Operation()
+		{
+			//var res1 = Task.Run(() => cl.SubscribeAsync()).Result;
+			var res2 = Task.Run(() => cl.DeviceCredentials.RequestDeviceCredentials((e) => { return Task.FromResult(false); })).Result;
+			Assert.IsTrue(res2);
+		}
+		[Test, MaxTime(10000)]
         public void ClientTest_Ws_RequestDeviceCredential()
         {
             cl.RequestDeviceCredentialEvt += (s, e) =>
@@ -61,7 +61,9 @@ namespace Cumulocity.MQTT.Test
                 Assert.AreEqual(true, isTenant);
             };
 
-            var res2 = Task.Run(() => cl.DeviceCredentials.RequestDeviceCredentials((e) => { return Task.FromResult(false); })).Result;
+            bool res2 = Task.Run(() => cl.DeviceCredentials.RequestDeviceCredentials((e) => { return Task.FromResult(false); })).Result;
+
+			Assert.AreEqual(true,res2);
 
         }
 

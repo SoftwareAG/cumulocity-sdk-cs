@@ -493,8 +493,9 @@ namespace Cumulocity.MQTT
                         var msgID = msgs.FirstOrDefault();
                         if (!String.IsNullOrEmpty(msgID))
                         {
-                            ExecuteStaticOperation(Int32.Parse(msgID), msgs);
-                        }
+                            var executeStaticOperation = ExecuteStaticOperation(Int32.Parse(msgID), msgs);
+	                        Trace.WriteLine($"ExecuteStaticOperation: {executeStaticOperation}");
+						}
                     }
                 }
                 if (e.ApplicationMessage.Topic.Equals("s/dt"))
@@ -508,8 +509,9 @@ namespace Cumulocity.MQTT
                         var msgID = msgs.FirstOrDefault();
                         if (!String.IsNullOrEmpty(msgID))
                         {
-                            ExecuteSmartRest(Int32.Parse(msgID), msgs);
-                        }
+                            var executeSmartRest = ExecuteSmartRest(Int32.Parse(msgID), msgs);
+	                        Trace.WriteLine($"ExecuteSmartRest: {executeSmartRest}");
+						}
                     }
                 }
                 if (e.ApplicationMessage.Topic.Equals("s/dcr"))
@@ -521,8 +523,10 @@ namespace Cumulocity.MQTT
                     var msgID = msgs.FirstOrDefault();
                     if (!String.IsNullOrEmpty(msgID))
                     {
-                         ExecuteOther(Int32.Parse(msgID), msgs);
-                    }
+						
+                         var executeOther = ExecuteOther(Int32.Parse(msgID), msgs);
+	                     Trace.WriteLine($"ExecuteOther: {executeOther}");
+					}
                 }
                 if (e.ApplicationMessage.Topic.StartsWith("s/dc/"))
                 {
@@ -578,7 +582,7 @@ namespace Cumulocity.MQTT
             }
             else if (connType.Equals(ConnectionTypes.TLS))
             {
-                //options.ChannelOptions = new MqttClientTlsOptions { Server = _config.Server };
+                Debug.WriteLine("TLS");
             }
             options.CommunicationTimeout = TimeSpan.FromSeconds(60);
             return options;

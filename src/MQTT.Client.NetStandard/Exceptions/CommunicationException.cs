@@ -23,10 +23,12 @@
 #endregion
 
 using System;
+using System.Runtime.Serialization;
 
 namespace Cumulocity.MQTT.Exceptions
 {
-    public class CommunicationException : Exception
+	[Serializable]
+	public class CommunicationException : Exception
     {
         protected CommunicationException()
         {
@@ -46,5 +48,9 @@ namespace Cumulocity.MQTT.Exceptions
             : base(message, innerException)
         {
         }
-    }
+
+		protected CommunicationException(SerializationInfo info, StreamingContext context) : base(info, context)
+		{
+		}
+	}
 }

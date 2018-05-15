@@ -56,7 +56,7 @@ namespace Cumulocity.MQTT
             Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+
             if (string.IsNullOrEmpty(type)) throw new ArgumentNullException(nameof(type));
 
             try
