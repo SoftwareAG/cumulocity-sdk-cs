@@ -73,7 +73,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
+        //[Ignore("Firewall")]
         public void ClientTest_WsConnection_GetChildDevices()
         {
             //Will trigger the sending of child devices of the device.
@@ -100,7 +100,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
+       // [Ignore("Firewall")]
         public void ClientTest_WsConnection_ConfigurePosition()
         {
             Thread.Sleep(1000);
@@ -115,7 +115,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
+        //[Ignore("Firewall")]
         public void ClientTest_WsConnection_SetConfiguration()
         {
             //Will update the Position properties of the device.
@@ -126,7 +126,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
+        //[Ignore("Firewall")]
         public void ClientTest_WsConnection_SetSupportedOperations()
         {
             IList<string> supportedOperations = new List<string>();
@@ -141,7 +141,6 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
         public void ClientTest_WsConnection_SetFirmware()
         {
             //Will set the firmware installed on the device

@@ -13,11 +13,11 @@ namespace MQTT.Test
 
         private ConfigData()
         {
-            TcpServer = "piotr.staging.c8y.io";
-            TlsServer = "piotr.staging.c8y.io";
-            WsServer = "ws://piotr.staging.c8y.io/mqtt";
-            WssServer = "wss://piotr.staging.c8y.io/mqtt";
-            UserName = @"piotr/admin";
+            TcpServer = "daria.staging7.c8y.io";
+            TlsServer = "daria.staging7.c8y.io";
+            WsServer = "ws://daria.staging7.c8y.io/mqtt";
+            WssServer = "wss://daria.staging7.c8y.io/mqtt";
+            UserName = @"daria/admin";
             Password = @"test1234";
             ClientId = "4927468bdd4b4171a23e31476ff82674";
             TlsPort = "8883";

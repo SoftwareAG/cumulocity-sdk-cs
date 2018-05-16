@@ -561,6 +561,7 @@ namespace Cumulocity.MQTT
             {
                 ClientId = _config.ClientId,
                 CleanSession = true
+			
             };
             if (!String.IsNullOrEmpty(_config.UserName) && !String.IsNullOrEmpty(_config.Password))
             {
@@ -585,7 +586,8 @@ namespace Cumulocity.MQTT
                 Debug.WriteLine("TLS");
             }
             options.CommunicationTimeout = TimeSpan.FromSeconds(60);
-            return options;
+	        options.KeepAlivePeriod = TimeSpan.FromSeconds(60);
+			return options;
         }
 
         public struct CustomValue

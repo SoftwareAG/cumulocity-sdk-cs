@@ -18,7 +18,6 @@ using MQTTnet.Client;
 namespace Cumulocity.MQTT.Test
 {
     [TestFixture]
-    [Ignore("SmartREST")]
     internal class ClientTest_Ws_SmartRest_FullMock
     {
         private Mock<IMqttClient> mqttClient;
@@ -81,7 +80,7 @@ namespace Cumulocity.MQTT.Test
     }
 
     [TestFixture]
-    [Ignore("SmartREST")]
+   //[Ignore("SmartREST")]
     internal class ClientTest_Ws_SmartRest
     {
 
@@ -117,37 +116,37 @@ namespace Cumulocity.MQTT.Test
             TestContext.WriteLine(res1);
         }
 
-        [Test]
-        public void ClientTest_WsConnection_CheckTemplateCollectionExists_Exist_IoTHub()
-        {
-            var autoEvent = new AutoResetEvent(false);
+        //[Test]
+        //public void ClientTest_WsConnection_CheckTemplateCollectionExists_Exist_IoTHub()
+        //{
+        //    var autoEvent = new AutoResetEvent(false);
 
-            cl.IsExistTemplateCollectionEvt += (s, e) =>
-            {
-                Assert.AreEqual(false, e.IsExist);
-                autoEvent.Set();
-            };
+        //    cl.IsExistTemplateCollectionEvt += (s, e) =>
+        //    {
+        //        Assert.AreEqual(false, e.IsExist);
+        //        autoEvent.Set();
+        //    };
 
-            Task.Run(() => cl.CustomSmartRest.CheckTemplateCollectionExists("test2", (e) => { return Task.FromResult(false); }));
+        //    Task.Run(() => cl.CustomSmartRest.CheckTemplateCollectionExists("test2", (e) => { return Task.FromResult(false); }));
 
-            autoEvent.WaitOne();
-        }
+        //    autoEvent.WaitOne();
+        //}
 
-        [Test]
-        public void ClientTest_WsConnection_CheckTemplateCollectionExists_NotExist_IoTHub()
-        {
-            var autoEvent = new AutoResetEvent(false);
+        //[Test]
+        //public void ClientTest_WsConnection_CheckTemplateCollectionExists_NotExist_IoTHub()
+        //{
+        //    var autoEvent = new AutoResetEvent(false);
 
-            cl.IsExistTemplateCollectionEvt += (s, e) =>
-            {
-                Assert.AreEqual(false, e.IsExist);
-                autoEvent.Set();
-            };
+        //    cl.IsExistTemplateCollectionEvt += (s, e) =>
+        //    {
+        //        Assert.AreEqual(false, e.IsExist);
+        //        autoEvent.Set();
+        //    };
 
-            Task.Run(() => cl.CustomSmartRest.CheckTemplateCollectionExists("test2", (e) => { return Task.FromResult(false); }));
+        //    Task.Run(() => cl.CustomSmartRest.CheckTemplateCollectionExists("test2", (e) => { return Task.FromResult(false); }));
 
-            autoEvent.WaitOne();
-        }
+        //    autoEvent.WaitOne();
+        //}
 
         [Test]
         public void ClientTest_WsConnection_CheckTemplateCollectionExists_CreateGetInventoryDataAsync()
@@ -171,7 +170,7 @@ namespace Cumulocity.MQTT.Test
         }
 
         [Test]
-        [Ignore("Firewall")]
+        //[Ignore("Firewall")]
         public void ClientTest_WsConnection_CheckTemplateCollectionExists_GetInventoryDataAsync()
         {
             var res1 = Task.Run(() => cl.CustomSmartRest.SubscribeSmartRestAsync("GetTemplate4")).Result;
@@ -378,9 +377,9 @@ namespace Cumulocity.MQTT.Test
         [Test]
         public void ClientTest_WsConnection_AddUpdateDataAsync_OperationRequest()
         {
-            var res2 = Task.Run(() => cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateOperation",
+            var res2 = Task.Run(() => cl.CustomSmartRest.CreateTemplateDataAsync("UpdateTemplateOperation2",
                                                                      new List<Request> {
-                                                                        new OperationRequest("1111",
+                                                                        new OperationRequest("11112",
                                                                         null,
                                                                         "com_cumulocity_model_WebCamDevice",
                                                                         new OperationFragment(
@@ -394,7 +393,7 @@ namespace Cumulocity.MQTT.Test
                                                                             } })
                                                                      },
                                                                      new List<Response> {
-                                                                         new Response("8889",
+                                                                         new Response("88892",
                                                                          String.Empty,
                                                                          "c8y_IsDevice",
                                                                          new List<string> { "type", "c8y_MQTTDevice", "c8y_Mobile.cellId" })
