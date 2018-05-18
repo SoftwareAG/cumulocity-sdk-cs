@@ -23,3 +23,5 @@
 /.vscode
 /examples/HelloExample/.idea/.idea.HelloExample/.idea
 /src/MQTT.Client.NetStandard/MQTT.NetStandard.v3.ncrunchproject.user
+/test/MQTT.Client.XUnitTest/bin/Debug/netcoreapp2.0
+/test/MQTT.Client.XUnitTest/obj
