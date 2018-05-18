@@ -94,7 +94,7 @@ namespace Cumulocity.MQTT
         public IMqttStaticInventoryTemplates StaticInventoryTemplates { get; }
         public IMqttStaticMeasurementTemplates StaticMeasurementTemplates { get; }
         public IMqttStaticOperationTemplates StaticOperationTemplates { get; }
-
+		
         /// <summary>
         /// Lists all children of the device
         /// </summary>
@@ -216,7 +216,10 @@ namespace Cumulocity.MQTT
             return new Dictionary<int, Func<List<string>, bool>>
             {
                 { 510, (msgs) => {
-                    RestartEvt?.Invoke(msgs.ElementAt(1), new RestartEventArgs() { });
+                    RestartEvt?.Invoke(msgs.ElementAt(1), new RestartEventArgs()
+                    {
+
+                    });
                     return true;
                 } },
                 { 511, (msgs) => {

@@ -4,13 +4,20 @@ using Cumulocity.MQTT.Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NSubstitute;
 using static Cumulocity.MQTT.Client;
+
 
 namespace AdvancedExample
 {
     class Program
     {
-        static void Main(string[] args)
+	    static string tenant = "tenant";
+	    static string user = "user";
+	    static string url = "url";
+	    static string clientId = "4927468bdd4b4171a23e31476ff82675";
+
+		static void Main(string[] args)
         {
             Console.WriteLine("Advanced Example");
 
@@ -20,12 +27,13 @@ namespace AdvancedExample
 
         private static async Task RunClientAsync()
         {
-            var cnf = new Configuration()
+
+			var cnf = new Configuration()
             {
-                Server = "ws://url/mqtt",
-                UserName = @"tenant/admin",
+                Server = $"ws://{url}/mqtt",
+                UserName = $"{tenant}/{user}",
                 Password = @"p@ssw0rd",
-                ClientId = "4927468bdd4b4171a23e31476ff82675",
+                ClientId = clientId,
                 Port = "80",
                 ConnectionType = "WS"
             };
@@ -41,14 +49,13 @@ namespace AdvancedExample
 	        Console.Write("Do you want call all methods? [y/n]");
 	        var callAllMethod = Console.ReadLine();
 
-	        //The entry point
+			//The entry point
 			if (callAllMethod == "y")
-	        {
-				for(int i=0; i<5000; i++)
-		          await CallAllMethods(cl);
+			{
+				for (int i = 0; i < 5000; i++)
+					await CallAllMethods(cl);
 			}
-
-	        Console.WriteLine("The End");
+			Console.WriteLine("The End");
 
 		}
 
@@ -97,6 +104,7 @@ namespace AdvancedExample
             await SendRequestDataPostTemplateAlarm(cl);
             await SendRequestDataPostTemplateMeasurement(cl);
             await SendRequestDataPostTemplateEvent(cl);
+	        await RestartDevice(cl);
         }
 
         private static async Task SetExecutingOperations(Client cl)
@@ -105,9 +113,24 @@ namespace AdvancedExample
 			cl.RestartEvt += Cl_RestartEvt;
             await cl.StaticOperationTemplates
                     .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
-        }
+	        cl.RestartEvt -= Cl_RestartEvt;
+		}
 
-        private static async Task SetOperationToFailed(Client cl)
+	    private static async Task RestartDevice(Client cl)
+	    {
+		    Console.WriteLine("SetExecutingOperations.501");
+		    cl.RestartEvt += Cl_RestartEvt;
+		    await cl.StaticOperationTemplates
+			    .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
+
+		    FireEvent(cl, "RestartEvt", clientId, new RestartEventArgs());
+		    await Task.Delay(1000);
+
+		    await SetOperationToSuccessful(cl);
+
+	    }
+
+		private static async Task SetOperationToFailed(Client cl)
         {
 	        Console.WriteLine("SetOperationToFailed");
 			await cl.StaticOperationTemplates
@@ -610,5 +633,20 @@ namespace AdvancedExample
         {
             Console.WriteLine("Restart");
         }
-    }
+
+	    public static void FireEvent(object onMe, string invokeMe, params object[] eventParams)
+	    {
+		    MulticastDelegate eventDelagate =
+			    (MulticastDelegate)onMe.GetType().GetField(invokeMe,
+				    System.Reflection.BindingFlags.Instance |
+				    System.Reflection.BindingFlags.NonPublic).GetValue(onMe);
+
+		    Delegate[] delegates = eventDelagate.GetInvocationList();
+
+		    foreach (Delegate dlg in delegates)
+		    {
+			    dlg.Method.Invoke(dlg.Target, eventParams);
+		    }
+	    }
+	}
 }
