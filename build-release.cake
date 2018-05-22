@@ -15,8 +15,8 @@ string readCommitCountInReleaseBranch;
 string defaultBranchName="develop";
 string releaseBranchName="release";
 
-//+budowanie skryptów
-//+pakowanie z wersji która mam podniesiony numer
+//+budowanie skrypt?w
+//+pakowanie z wersji kt?ra mam podniesiony numer
 //-deploy
 
 //-Commits
@@ -37,10 +37,11 @@ Task("CreateReleaseBranch").Does(()=> {
 		if(canCreate){
 			buildCsProjects();
 			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
-			packProject();
-			
+			packProject();			
 			//Deploy
+			createReleaseBranch("release/" + lastTagCommit); //New Branch i Push
 			cleanDirectories();
+
 			//Commit?! //hg new release/r8  + Usuwan Snaphot			
 		}else{
 			Console.WriteLine("nomanm, can not create a branch.");
@@ -51,13 +52,29 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 		checkGitVersion();
 		readVersionProps();
 
-		var canCreate =
+		var canCreateVersion =
 		canCreateRelease();
 
-		if(canCreate){
+		if(canCreateVersion){
 			buildCsProjects();
 			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
 			packProject();
+			//Deploy
+			createReleaseBranch("release/" + lastTagCommit); //New Branch i Push
+			cleanDirectories();
+		}else
+		{
+			var canCreateHotfix =
+			canNextDevelopIterationOnRelease();
+
+			if(canCreateHotfix){
+				buildCsProjects();
+				bumpVersionProjects(Version.Hotfix, string.Empty);
+				packProject();		
+				//Deploy
+				//...//Wersja
+				cleanDirectories();
+			}
 		}	
 });
 
@@ -122,7 +139,8 @@ void readVersionProps()
 
 bool canCreateRelease()
 {
-		System.Console.WriteLine(defaultBranchName);
+	    System.Console.WriteLine("CanCreateRelease");
+		System.Console.WriteLine(currentBranch);
 		System.Console.WriteLine(lastTagCommit);
 		System.Console.WriteLine(readCommitCountInReleaseBranch);
 		
@@ -138,7 +156,12 @@ bool canCreateRelease()
 
 bool canNextDevelopIterationOnRelease()
 {
-		if(currentBranch.Equals(releaseBranchName) && !readCommitCountInReleaseBranch.Equals("0") )
+	    System.Console.WriteLine("CanNextDevelopIterationOnRelease");
+		System.Console.WriteLine(currentBranch.Split('/')[0]);
+		System.Console.WriteLine(releaseBranchName);
+		System.Console.WriteLine(readCommitCountInReleaseBranch);
+
+		if(currentBranch.Split('/')[0].Equals(releaseBranchName) && !readCommitCountInReleaseBranch.Equals("0") )
 		{
 			System.Console.WriteLine("Yes, you can create a next develop iteration.");
 			return true;
@@ -210,11 +233,12 @@ void bumpVersionProjects(Version version,string fixVersion)
 		};
 		StartProcess("pwsh", settings);
 }
-void createReleaseBranch()
+void createReleaseBranch(string version)
 {
 		Information("Create Release Branch {0}", DateTime.Now);
 
-		var command = "create-releasebranch.ps1"; // "createrelease.ps1 -version " + version
+		//var command = "create-releasebranch.ps1"; 
+        var command = "create-releasebranch.ps1 -version " + version;
 
 	 	var settings = new ProcessSettings
 		{
