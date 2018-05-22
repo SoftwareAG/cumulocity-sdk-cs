@@ -36,12 +36,12 @@ namespace Cumulocity.MQTT.XUnitTest
 
 		private ConfigData()
 		{
-			TcpServer = "daria.staging7.c8y.io";
-			TlsServer = "daria.staging7.c8y.io";
-			WsServer = "ws://daria.staging7.c8y.io/mqtt";
-			WssServer = "wss://daria.staging7.c8y.io/mqtt";
-			UserName = @"daria/admin";
-			Password = @"test1234";
+			TcpServer = "url";
+			TlsServer = "url";
+			WsServer = "ws://url/mqtt";
+			WssServer = "wss://url/mqtt";
+			UserName = @"tenant/user";
+			Password = @"pass";
 			ClientId = "4927468bdd4b4171a23e31476ff82674";
 			TlsPort = "8883";
 			TcpPort = "1883";
