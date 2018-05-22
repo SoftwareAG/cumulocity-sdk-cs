@@ -14,18 +14,7 @@ string releaseBranch;
 string readCommitCountInReleaseBranch;
 string defaultBranchName="develop";
 string releaseBranchName="release";
-
-//+budowanie skrypt?w
-//+pakowanie z wersji kt?ra mam podniesiony numer
-//-deploy
-
-//-Commits
-//-new branch - hg new release/r8 -> kommit
-//-new version - Usuwan Snaphot -> kommit
-
-//-Hundson - teraz wszyskim POM zmienia wersje na 8.19.0 commits (release) //bump-version.ps1 -mode release
-//-Hundson ustawia Taga copy for tag c8y-agents-8.19.0 commits (release) 
-//-Hudson ustawia 8.19.1-SNAPSHOT //bump-version.ps1 -mode beta
+string buildVersion;
 
 Task("CreateReleaseBranch").Does(()=> {
 		checkGitVersion();
@@ -39,10 +28,8 @@ Task("CreateReleaseBranch").Does(()=> {
 			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
 			packProject();			
 			//Deploy
-			createReleaseBranch("release/" + lastTagCommit); //New Branch i Push
-			cleanDirectories();
-
-			//Commit?! //hg new release/r8  + Usuwan Snaphot			
+			createReleaseBranch("release/" + lastTagCommit); 
+			cleanDirectories();		
 		}else{
 			Console.WriteLine("nomanm, can not create a branch.");
 		}
@@ -60,7 +47,7 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
 			packProject();
 			//Deploy
-			createReleaseBranch("release/" + lastTagCommit); //New Branch i Push
+			createReleaseBranch("release/" + lastTagCommit); 
 			cleanDirectories();
 		}else
 		{
@@ -70,9 +57,11 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 			if(canCreateHotfix){
 				buildCsProjects();
 				bumpVersionProjects(Version.Hotfix, string.Empty);
-				packProject();		
+				packProject();
+				readBuildVersionProps();	
 				//Deploy
-				//...//Wersja
+				createHotFixInRelease(buildVersion);
+				System.Console.WriteLine(buildVersion);
 				cleanDirectories();
 			}
 		}	
@@ -91,12 +80,6 @@ Task("CreateNextDevelopIteration").Does(()=> {
 		}
 });
 
-// Task("Publish")  
-//   .IsDependentOn("CreateReleaseBranch")
-//   .Does(() => 
-// {
-// 	packProject();
-// });
 
 
 void checkGitVersion(){
@@ -134,6 +117,23 @@ void readVersionProps()
 					}
 			}
 	}
+}
+
+void readBuildVersionProps()
+{
+		if (FileExists("./buildVersion.props"))
+		{
+			
+			string[] lines = System.IO.File.ReadAllLines("./buildVersion.props");
+			
+			foreach (string line in lines)
+			{
+					if (line.StartsWith("buildVersion"))
+					{
+						buildVersion = line.Substring("buildVersion:".Length).Trim();
+					}
+			}
+		}
 }
 
 
@@ -246,6 +246,18 @@ void createReleaseBranch(string version)
 		};
 		StartProcess("pwsh", settings);
 }
+void createHotFixInRelease(string version)
+{
+		Information("Create Hot Fix {0}", DateTime.Now);
+
+        var command = "create-hotfix.ps1 -version " + version;
+
+	 	var settings = new ProcessSettings
+		{
+		   Arguments = new ProcessArgumentBuilder().Append(command)
+		};
+		StartProcess("pwsh", settings);
+}
 void cleanDirectories(){
 
 	var pathPublish = "./publish/";
@@ -263,6 +275,11 @@ void cleanDirectories(){
 	if(FileExists("version.props"))
 	{
 		DeleteFile("./version.props");
+	}
+
+	if(FileExists("buildVersion.props"))
+	{
+		DeleteFile("./buildVersion.props");
 	}
 }
 void packProject()

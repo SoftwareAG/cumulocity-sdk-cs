@@ -96,6 +96,7 @@ foreach ($folder in $srcDir) {
             }
 
             if($save){
+                $versionFileName = ".\buildVersion.props"
                 $buildVersion =  $majorInt.ToString() + "." + $minorInt.ToString() + "." + $patchInt.ToString()
                 if($mode -eq "beta"){
                      #$betaString = "-beta-{0:D5}" -f [convert]::ToInt32($betaInt, 10)
@@ -110,7 +111,9 @@ foreach ($folder in $srcDir) {
                 $_."#text" = $buildVersion
                 Write-Output "Incrementing version for: $($projFile.Name)"
                 Write-Output "    $origVer --> $buildVersion"
-            
+                
+                "buildVersion:$buildVersion" | Add-Content $versionFileName
+
                 $proj.Save($projFile)
             }
         }

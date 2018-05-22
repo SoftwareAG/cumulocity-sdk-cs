@@ -6,6 +6,7 @@ Param(
 	
 if($version)
 {
-	#hg tag "$version"
-	#hg push
+	git branch "$version"
+    git tag "$version"
+	#git push
 }
