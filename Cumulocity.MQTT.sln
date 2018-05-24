@@ -9,7 +9,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F1945BBB-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT.NetStandard", "src\MQTT.Client.NetStandard\MQTT.NetStandard.csproj", "{A858A237-8EAF-4C0C-B4F3-14A1A36E8AC8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT.Test", "test\MQTT.Client.NetStandard\MQTT.Test.csproj", "{848BDA8E-7272-431E-8766-183EE79CCAD2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E94D0412-692F-4274-B261-E8124DBBCFA8}"
+	ProjectSection(SolutionItems) = preProject
+		build-release.cake = build-release.cake
+		build.cake = build.cake
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTT.XUnitTest", "test\MQTT.Client.XUnitTest\MQTT.XUnitTest.csproj", "{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,25 +40,25 @@ Global
 		{A858A237-8EAF-4C0C-B4F3-14A1A36E8AC8}.Release|x64.Build.0 = Release|Any CPU
 		{A858A237-8EAF-4C0C-B4F3-14A1A36E8AC8}.Release|x86.ActiveCfg = Release|Any CPU
 		{A858A237-8EAF-4C0C-B4F3-14A1A36E8AC8}.Release|x86.Build.0 = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|x64.Build.0 = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Debug|x86.Build.0 = Debug|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|x64.ActiveCfg = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|x64.Build.0 = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|x86.ActiveCfg = Release|Any CPU
-		{848BDA8E-7272-431E-8766-183EE79CCAD2}.Release|x86.Build.0 = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|x64.Build.0 = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Debug|x86.Build.0 = Debug|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|x64.ActiveCfg = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|x64.Build.0 = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|x86.ActiveCfg = Release|Any CPU
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A858A237-8EAF-4C0C-B4F3-14A1A36E8AC8} = {A261881D-97AE-4C22-A15A-D17B32300675}
-		{848BDA8E-7272-431E-8766-183EE79CCAD2} = {F1945BBB-C6C9-47F3-8EDB-669C41B35FFA}
+		{F61D53C3-B1F2-49DD-9F61-FECC7BBA6507} = {F1945BBB-C6C9-47F3-8EDB-669C41B35FFA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0DC5597-A814-4157-B095-157DC5D30920}

@@ -1,4 +1,28 @@
-﻿using Cumulocity.MQTT.Enums;
+﻿#region Cumulocity GmbH
+
+// /*
+//  * Copyright (C) 2015-2018
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  * this software and associated documentation files (the "Software"),
+//  * to deal in the Software without restriction, including without limitation the rights to use,
+//  * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+//  * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be
+//  * included in all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  */
+
+#endregion
+
+using Cumulocity.MQTT.Enums;
 using Cumulocity.MQTT.Interfaces;
 using Cumulocity.MQTT.Utils;
 using MQTTnet;
@@ -53,12 +77,12 @@ namespace Cumulocity.MQTT
             _storeStaticOther = AddOtherStore();
             SubscribeEvt();
             DeviceCredentials = new DeviceCredentials(_mqttClient);
-            MqttCustomSmartRest = new MqttCustomSmartRest(_mqttClient);
-            MqttStaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
-            MqttStaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
-            MqttStaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
-            MqttStaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
-            MqttStaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
+            CustomSmartRest = new MqttCustomSmartRest(_mqttClient);
+            StaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
+            StaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
+            StaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
+            StaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
+            StaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
         }
 
         /// <summary>
@@ -79,22 +103,22 @@ namespace Cumulocity.MQTT
             _storeStaticOther = AddOtherStore();
             SubscribeEvt();
             DeviceCredentials = new DeviceCredentials(_mqttClient);
-            MqttCustomSmartRest = new MqttCustomSmartRest(_mqttClient);
-            MqttStaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
-            MqttStaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
-            MqttStaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
-            MqttStaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
-            MqttStaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
+            CustomSmartRest = new MqttCustomSmartRest(_mqttClient);
+            StaticAlarmTemplates = new MqttStaticAlarmTemplates(_mqttClient);
+            StaticEventTemplates = new MqttStaticEventTemplates(_mqttClient);
+            StaticInventoryTemplates = new MqttStaticInventoryTemplates(_mqttClient);
+            StaticMeasurementTemplates = new MqttStaticMeasurementTemplates(_mqttClient);
+            StaticOperationTemplates = new MqttStaticOperationTemplates(_mqttClient);
         }
 
         public IDeviceCredentials DeviceCredentials { get; }
-        public IMqttCustomSmartRest MqttCustomSmartRest { get; }
-        public IMqttStaticAlarmTemplates MqttStaticAlarmTemplates { get; }
-        public IMqttStaticEventTemplates MqttStaticEventTemplates { get; }
-        public IMqttStaticInventoryTemplates MqttStaticInventoryTemplates { get; }
-        public IMqttStaticMeasurementTemplates MqttStaticMeasurementTemplates { get; }
-        public IMqttStaticOperationTemplates MqttStaticOperationTemplates { get; }
-
+        public IMqttCustomSmartRest CustomSmartRest { get; }
+        public IMqttStaticAlarmTemplates StaticAlarmTemplates { get; }
+        public IMqttStaticEventTemplates StaticEventTemplates { get; }
+        public IMqttStaticInventoryTemplates StaticInventoryTemplates { get; }
+        public IMqttStaticMeasurementTemplates StaticMeasurementTemplates { get; }
+        public IMqttStaticOperationTemplates StaticOperationTemplates { get; }
+		
         /// <summary>
         /// Lists all children of the device
         /// </summary>
@@ -216,7 +240,10 @@ namespace Cumulocity.MQTT
             return new Dictionary<int, Func<List<string>, bool>>
             {
                 { 510, (msgs) => {
-                    RestartEvt?.Invoke(msgs.ElementAt(1), new RestartEventArgs() { });
+                    RestartEvt?.Invoke(msgs.ElementAt(1), new RestartEventArgs()
+                    {
+
+                    });
                     return true;
                 } },
                 { 511, (msgs) => {
@@ -493,8 +520,9 @@ namespace Cumulocity.MQTT
                         var msgID = msgs.FirstOrDefault();
                         if (!String.IsNullOrEmpty(msgID))
                         {
-                            ExecuteStaticOperation(Int32.Parse(msgID), msgs);
-                        }
+                            var executeStaticOperation = ExecuteStaticOperation(Int32.Parse(msgID), msgs);
+	                        Trace.WriteLine($"ExecuteStaticOperation: {executeStaticOperation}");
+						}
                     }
                 }
                 if (e.ApplicationMessage.Topic.Equals("s/dt"))
@@ -508,8 +536,9 @@ namespace Cumulocity.MQTT
                         var msgID = msgs.FirstOrDefault();
                         if (!String.IsNullOrEmpty(msgID))
                         {
-                            ExecuteSmartRest(Int32.Parse(msgID), msgs);
-                        }
+                            var executeSmartRest = ExecuteSmartRest(Int32.Parse(msgID), msgs);
+	                        Trace.WriteLine($"ExecuteSmartRest: {executeSmartRest}");
+						}
                     }
                 }
                 if (e.ApplicationMessage.Topic.Equals("s/dcr"))
@@ -521,8 +550,10 @@ namespace Cumulocity.MQTT
                     var msgID = msgs.FirstOrDefault();
                     if (!String.IsNullOrEmpty(msgID))
                     {
-                        ExecuteOther(Int32.Parse(msgID), msgs);
-                    }
+						
+                         var executeOther = ExecuteOther(Int32.Parse(msgID), msgs);
+	                     Trace.WriteLine($"ExecuteOther: {executeOther}");
+					}
                 }
                 if (e.ApplicationMessage.Topic.StartsWith("s/dc/"))
                 {
@@ -557,6 +588,7 @@ namespace Cumulocity.MQTT
             {
                 ClientId = _config.ClientId,
                 CleanSession = true
+			
             };
             if (!String.IsNullOrEmpty(_config.UserName) && !String.IsNullOrEmpty(_config.Password))
             {
@@ -578,10 +610,11 @@ namespace Cumulocity.MQTT
             }
             else if (connType.Equals(ConnectionTypes.TLS))
             {
-                //options.ChannelOptions = new MqttClientTlsOptions { Server = _config.Server };
+                Debug.WriteLine("TLS");
             }
-
-            return options;
+            options.CommunicationTimeout = TimeSpan.FromSeconds(60);
+	        options.KeepAlivePeriod = TimeSpan.FromSeconds(60);
+			return options;
         }
 
         public struct CustomValue

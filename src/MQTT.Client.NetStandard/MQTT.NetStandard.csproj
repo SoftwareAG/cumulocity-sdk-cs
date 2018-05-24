@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <!--<AssemblyName>MQTT</AssemblyName>
@@ -8,12 +7,10 @@
     <AssemblyName>Cumulocity.MQTT</AssemblyName>
     <RootNamespace>Cumulocity.MQTT</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="MQTTnet" Version="2.7.0" />
-    <PackageReference Include="Serilog" Version="2.5.0" />
+    <PackageReference Include="MQTTnet" Version="2.7.5" />
+    <PackageReference Include="Serilog" Version="2.6.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="SonarAnalyzer.CSharp" Version="6.8.2.4717" />
   </ItemGroup>
-
 </Project>

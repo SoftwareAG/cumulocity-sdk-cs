@@ -1,22 +1,47 @@
-﻿using Cumulocity.MQTT.Enums;
+﻿#region Cumulocity GmbH
+
+// /*
+//  * Copyright (C) 2015-2018
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  * this software and associated documentation files (the "Software"),
+//  * to deal in the Software without restriction, including without limitation the rights to use,
+//  * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+//  * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be
+//  * included in all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  */
+
+#endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cumulocity.MQTT.Enums;
 using static Cumulocity.MQTT.Client;
 
 namespace Cumulocity.MQTT.Model
 {
     public class InventoryGetRequest : Request
     {
-        private readonly IList<CustomValue> _customValues;
         private readonly bool _byId;
+        private readonly IList<CustomValue> _customValues = new List<CustomValue>();
         private readonly string _externalIdType;
         private readonly bool? _response;
 
-        public InventoryGetRequest(string messageId, bool? response, string externalIdType, bool byId) : base(messageId, ValidApis.Inventory, HttpMethods.GET)
+        public InventoryGetRequest(string messageId, bool? response, string externalIdType, bool byId) : base(messageId,
+            ValidApis.Inventory, HttpMethods.GET)
         {
-            if (!byId && String.IsNullOrEmpty(externalIdType))
+            if (!byId && string.IsNullOrEmpty(externalIdType))
                 throw new ArgumentException(nameof(externalIdType));
             _externalIdType = externalIdType;
             _byId = byId;
@@ -25,53 +50,36 @@ namespace Cumulocity.MQTT.Model
 
         private string PreTemplate(string method)
         {
-            return String.Format("10,{0},{1},INVENTORY,{2}", _messageId, method, _response == null ? String.Empty : _response.ToString());
+            return string.Format("10,{0},{1},INVENTORY,{2}", _messageId, method,
+                _response == null ? string.Empty : _response.ToString());
         }
 
         private string GetExternalIdType()
         {
-            if (_byId)
-            {
-                return ",true";
-            }
-            else
-            {
-                if (!String.IsNullOrEmpty(_externalIdType))
-                {
-                    return String.Format(",false,{0}", _externalIdType);
-                }
-                else
-                {
-                    return ",false";
-                }
-            }
+            if (_byId) return ",true";
+
+            if (!string.IsNullOrEmpty(_externalIdType))
+                return string.Format(",false,{0}", _externalIdType);
+            return ",false";
         }
 
         private string PostTemplate()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             if (_customValues != null && _customValues.Any())
-            {
                 foreach (var item in _customValues)
-                {
                     result.Append(item.CustomValueAsString);
-                }
-            }
             return result.ToString();
         }
 
         public override string RequestTemplate()
         {
-            string method = base._httpMethods.ToString();
+            var method = _httpMethods.ToString();
             if (method.ToLower().Equals("get"))
-            {
-                return String.Concat(PreTemplate(method), GetExternalIdType());
-            }
-            else if (method.ToLower().Equals("put"))
-            {
-                return String.Concat(PreTemplate(method), GetExternalIdType(), PostTemplate());
-            }
-            return String.Empty;
+                return string.Concat(PreTemplate(method), GetExternalIdType());
+            if (method.ToLower().Equals("put"))
+                return string.Concat(PreTemplate(method), GetExternalIdType(), PostTemplate());
+            return string.Empty;
         }
     }
 }

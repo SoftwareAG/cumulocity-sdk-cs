@@ -1,12 +1,36 @@
-﻿using Cumulocity.MQTT.Enums;
-using Cumulocity.MQTT.Interfaces;
-using MQTTnet;
-using MQTTnet.Client;
-using MQTTnet.Protocol;
+﻿#region Cumulocity GmbH
+
+// /*
+//  * Copyright (C) 2015-2018
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  * this software and associated documentation files (the "Software"),
+//  * to deal in the Software without restriction, including without limitation the rights to use,
+//  * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+//  * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be
+//  * included in all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  */
+
+#endregion
+
 using System;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using Cumulocity.MQTT.Enums;
+using Cumulocity.MQTT.Interfaces;
+using MQTTnet;
+using MQTTnet.Client;
+using MQTTnet.Protocol;
 
 namespace Cumulocity.MQTT
 {
@@ -16,23 +40,24 @@ namespace Cumulocity.MQTT
 
         public MqttStaticOperationTemplates(IMqttClient cl)
         {
-            this._mqttClient = cl;
+            _mqttClient = cl;
         }
 
         /// <summary>
-        /// Gets the pending operations asynchronous.
+        ///     Gets the pending operations asynchronous.
         /// </summary>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
-        public async Task<bool> GetPendingOperationsAsync(Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> GetPendingOperationsAsync(Func<Exception, Task<bool>> errorHandlerAsync,
+            ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var getPendingOperationsMsg = new MqttApplicationMessage()
+                var getPendingOperationsMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
                     Payload = Encoding.UTF8.GetBytes("500"),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
@@ -44,43 +69,37 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Gets the executing operations asynchronous.
+        ///     Gets the executing operations asynchronous.
         /// </summary>
         /// <param name="fragment">The fragment.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">fragment</exception>
-        public async Task<bool> SetExecutingOperationsAsync(string fragment, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetExecutingOperationsAsync(string fragment,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
 
-            if (String.IsNullOrEmpty(fragment))
-            {
-                throw new ArgumentNullException(nameof(fragment));
-            }
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            if (string.IsNullOrEmpty(fragment)) throw new ArgumentNullException(nameof(fragment));
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var getExecutingOperationsMsg = new MqttApplicationMessage()
+                var getExecutingOperationsMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("501,{0}", fragment)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("501,{0}", fragment)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -91,44 +110,38 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the operation to failed asynchronous.
+        ///     Sets the operation to failed asynchronous.
         /// </summary>
         /// <param name="fragment">The fragment.</param>
         /// <param name="failureReason">The failure reason.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">fragment</exception>
-        public async Task<bool> SetOperationToFailedAsync(string fragment, string failureReason, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetOperationToFailedAsync(string fragment, string failureReason,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
 
-            if (String.IsNullOrEmpty(fragment))
-            {
-                throw new ArgumentNullException(nameof(fragment));
-            }
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            if (string.IsNullOrEmpty(fragment)) throw new ArgumentNullException(nameof(fragment));
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setOperationToFailedMsg = new MqttApplicationMessage()
+                var setOperationToFailedMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("502,{0},{1}", fragment, failureReason)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("502,{0},{1}", fragment, failureReason)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -139,44 +152,38 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         /// <summary>
-        /// Sets the operation to successful asynchronous.
+        ///     Sets the operation to successful asynchronous.
         /// </summary>
         /// <param name="fragment">The fragment.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="errorHandlerAsync">The error handler asynchronous.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">fragment</exception>
-        public async Task<bool> SetOperationToSuccessfulAsync(string fragment, string parameters, Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
+        public async Task<bool> SetOperationToSuccessfulAsync(string fragment, string parameters,
+            Func<Exception, Task<bool>> errorHandlerAsync, ProcessingMode? processingMode = null)
         {
             ExceptionDispatchInfo capturedException = null;
 
-            if (String.IsNullOrEmpty(fragment))
-            {
-                throw new ArgumentNullException(nameof(fragment));
-            }
-            string stringProcessingMode = GetProcessingMode(processingMode);
+            if (string.IsNullOrEmpty(fragment)) throw new ArgumentNullException(nameof(fragment));
+            var stringProcessingMode = GetProcessingMode(processingMode);
             try
             {
-                var setOperationToSuccessfulMsg = new MqttApplicationMessage()
+                var setOperationToSuccessfulMsg = new MqttApplicationMessage
                 {
-                    Topic = String.Format("{0}/us", stringProcessingMode),
-                    Payload = Encoding.UTF8.GetBytes(String.Format("503,{0}", fragment)),
+                    Topic = string.Format("{0}/us", stringProcessingMode),
+                    Payload = Encoding.UTF8.GetBytes(string.Format("503,{0}", fragment)),
                     QualityOfServiceLevel = MqttQualityOfServiceLevel.AtLeastOnce,
                     Retain = false
                 };
@@ -187,28 +194,22 @@ namespace Cumulocity.MQTT
             {
                 capturedException = ExceptionDispatchInfo.Capture(ex);
             }
+
             if (capturedException != null)
             {
-                bool needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
-                if (needsThrow)
-                {
-                    capturedException.Throw();
-                }
+                var needsThrow = await errorHandlerAsync(capturedException.SourceException).ConfigureAwait(false);
+                if (needsThrow) capturedException.Throw();
                 return false;
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         private static string GetProcessingMode(ProcessingMode? processingMode)
         {
             var stringProcessingMode = "s";
             if (processingMode.HasValue && processingMode.Value.Equals(ProcessingMode.TRANSIENT))
-            {
                 stringProcessingMode = "t";
-            }
 
             return stringProcessingMode;
         }

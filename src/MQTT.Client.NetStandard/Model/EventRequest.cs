@@ -1,25 +1,48 @@
-﻿using Cumulocity.MQTT.Enums;
-using System;
+﻿#region Cumulocity GmbH
+
+// /*
+//  * Copyright (C) 2015-2018
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  * this software and associated documentation files (the "Software"),
+//  * to deal in the Software without restriction, including without limitation the rights to use,
+//  * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+//  * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be
+//  * included in all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+//  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+//  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+//  * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+//  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+//  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//  */
+
+#endregion
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Cumulocity.MQTT.Enums;
 using static Cumulocity.MQTT.Client;
 
 namespace Cumulocity.MQTT.Model
 {
     public class EventRequest : Request
     {
-        public readonly string _time;
-
         private readonly IList<CustomValue> _customValues;
 
         private readonly bool? _response;
 
         private readonly string _text;
+        public readonly string _time;
 
         private readonly string _type;
 
-        public EventRequest(string messageId, bool? response, string type, string text, string time, IList<CustomValue> customValues) : base(messageId, ValidApis.Event, HttpMethods.POST)
+        public EventRequest(string messageId, bool? response, string type, string text, string time,
+            IList<CustomValue> customValues) : base(messageId, ValidApis.Event, HttpMethods.POST)
         {
             _type = type;
             _text = text;
@@ -30,26 +53,23 @@ namespace Cumulocity.MQTT.Model
 
         public override string RequestTemplate()
         {
-            string method = base._httpMethods.ToString();
-            return String.Concat(PreTemplate(method), PostTemplate());
+            var method = _httpMethods.ToString();
+            return string.Concat(PreTemplate(method), PostTemplate());
         }
 
         private string PostTemplate()
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             if (_customValues != null && _customValues.Any())
-            {
                 foreach (var item in _customValues)
-                {
                     result.Append(item.CustomValueAsString);
-                }
-            }
             return result.ToString();
         }
 
         private string PreTemplate(string method)
         {
-            return String.Format("10,{0},{1},EVENT,{2},{3},{4},{5}", _messageId, method, _response == null ? String.Empty : _response.ToString(), _type, _text, _time);
+            return string.Format("10,{0},{1},EVENT,{2},{3},{4},{5}", _messageId, method,
+                _response == null ? string.Empty : _response.ToString(), _type, _text, _time);
         }
     }
 }
