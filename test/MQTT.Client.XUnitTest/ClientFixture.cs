@@ -22,7 +22,11 @@
 
 #endregion
 using System;
+using System.IO;
+using System.Linq;
 using Cumulocity.MQTT.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cumulocity.MQTT.XUnitTest
 {
@@ -31,14 +35,38 @@ namespace Cumulocity.MQTT.XUnitTest
 		
 		public ClientFixture()
 		{
-		
+			var path = @"Properties\launchSettings.json";
+
+			if (File.Exists(path))
+			{
+				using (var file = File.OpenText(path))
+				{
+					var reader = new JsonTextReader(file);
+					var jObject = JObject.Load(reader);
+
+					var variables = jObject
+						.GetValue("profiles")
+						//select a proper profile here
+						.SelectMany(profiles => profiles.Children())
+						.SelectMany(profile => profile.Children<JProperty>())
+						.Where(prop => prop.Name == "environmentVariables")
+						.SelectMany(prop => prop.Value.Children<JProperty>())
+						.ToList();
+
+					foreach (var variable in variables)
+					{
+						Environment.SetEnvironmentVariable(variable.Name, variable.Value.ToString());
+					}
+				}
+			}
+
 			var cnf = new Configuration()
 			{
-				Server = ConfigData.Instance.WsServer,
-				UserName = ConfigData.Instance.UserName,
-				Password = ConfigData.Instance.Password,
-				ClientId = ConfigData.Instance.ClientId,
-				Port = ConfigData.Instance.WsPort,
+				Server = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTCSDEVICESDK_WsServer")) ? ConfigData.Instance.WsServer : Environment.GetEnvironmentVariable("TESTCSDEVICESDK_WsServer"),
+				UserName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTCSDEVICESDK_UserName")) ?  ConfigData.Instance.UserName : Environment.GetEnvironmentVariable("TESTCSDEVICESDK_UserName"),
+				Password = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTCSDEVICESDK_Password")) ? ConfigData.Instance.Password : Environment.GetEnvironmentVariable("TESTCSDEVICESDK_Password"),
+				ClientId = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTCSDEVICESDK_ClientId")) ?  ConfigData.Instance.ClientId : Environment.GetEnvironmentVariable("TESTCSDEVICESDK_ClientId"),
+				Port = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("TESTCSDEVICESDK_WsPort")) ? ConfigData.Instance.WsPort : Environment.GetEnvironmentVariable("TESTCSDEVICESDK_WsPort"),
 				ConnectionType = "WS"
 			};
 
