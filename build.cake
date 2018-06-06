@@ -102,7 +102,7 @@ Task("Test")
 		}
 
         //Normal solution
-		var tests = GetFiles("./test/MQTT.Client.NetStandard/*.csproj");
+		var tests = GetFiles("./test/MQTT.Client.XUnitTest/*.csproj");
 		
 		foreach(var test in tests)
 		{

@@ -22,4 +22,10 @@
     <ProjectReference Include="..\..\src\MQTT.Client.NetStandard\MQTT.NetStandard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Properties\launchSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

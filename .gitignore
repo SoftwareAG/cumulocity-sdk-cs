@@ -25,3 +25,11 @@
 /src/MQTT.Client.NetStandard/MQTT.NetStandard.v3.ncrunchproject.user
 /test/MQTT.Client.XUnitTest/bin/Debug/netcoreapp2.0
 /test/MQTT.Client.XUnitTest/obj
+/test/MQTT.Client.XUnitTest/Properties/launchSettings.json
+/test/MQTT.Client.XUnitTest/TestResults
+/src/MQTT.Client.NetStandard/bin/Debug
+/examples/HelloExample/HelloExample/Properties/PublishProfiles
+/examples/HelloExample/HelloExample/bin
+/.vs/config
+/examples/AdvancedExample/.vs/AdvancedExample/DesignTimeBuild
+/examples/HelloExample/HelloExample/HelloExample.csproj.user
