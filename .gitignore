@@ -33,3 +33,4 @@
 /.vs/config
 /examples/AdvancedExample/.vs/AdvancedExample/DesignTimeBuild
 /examples/HelloExample/HelloExample/HelloExample.csproj.user
+/.vs/Cumulocity.MQTT/DesignTimeBuild

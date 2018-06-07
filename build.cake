@@ -42,6 +42,11 @@ Task("Clean")
 			{
 				CleanDirectory(outputDir);
 			}
+			
+		if (DirectoryExists(testResultDir))
+			{
+				CleanDirectory(testResultDir);
+			}
 	});
 
 Task("Restore")
@@ -159,9 +164,9 @@ Task("Test")
 		}
 
 		// Copy test result files.
-		// var tmpTestResultFiles = GetFiles("./**/Result.xml");
-		// CopyFiles(tmpTestResultFiles, testResultDir);
-		// XmlTransform("./tools/MsUnit.xslt", testResultDir +"/Result.xml", testResultDir +"/JUnit.Result.xml");	
+		 var tmpTestResultFiles = GetFiles("./**/Result.xml");
+		 CopyFiles(tmpTestResultFiles, testResultDir);
+		 XmlTransform("./tools/MsUnit.xslt", testResultDir +"/Result.xml", testResultDir +"/JUnit.Result.xml");	
 	});
 
 //////////////////////////////////////////////////////////////////////
