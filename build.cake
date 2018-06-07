@@ -147,7 +147,7 @@ Task("Test")
 			    Information("Solution Directory: {0} {1}", solutionDir,test.FullPath);
 				DotNetCoreTest(test.FullPath, new DotNetCoreTestSettings
 				{
-					//ArgumentCustomization = args => args.Append("-l \"trx;LogFileName=Result.xml\""),
+					ArgumentCustomization = args => args.Append("-l \"trx;LogFileName=Result.xml\""),
 					WorkingDirectory = projectFolder
 				});
 			}
