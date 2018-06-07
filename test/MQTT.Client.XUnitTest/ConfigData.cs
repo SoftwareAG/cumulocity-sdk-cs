@@ -36,17 +36,17 @@ namespace Cumulocity.MQTT.XUnitTest
 
 		private ConfigData()
 		{
-			TcpServer = "url";
-			TlsServer = "url";
-			WsServer = "ws://url/mqtt";
-			WssServer = "wss://url/mqtt";
-			UserName = @"tenant/user";
-			Password = @"pass";
-			ClientId = "4927468bdd4b4171a23e31476ff82674";
-			TlsPort = "8883";
-			TcpPort = "1883";
-			WsPort = "80";
-			WssPort = "443";
+			TcpServer = "";
+			TlsServer = "";
+			WsServer = "";
+			WssServer = "";
+			UserName = @"";
+			Password = @"";
+			ClientId = "";
+			TlsPort = "";
+			TcpPort = "";
+			WsPort = "";
+			WssPort = "";
 		}
 
 		public static ConfigData Instance
