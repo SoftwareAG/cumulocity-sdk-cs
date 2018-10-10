@@ -45,13 +45,13 @@ namespace HelloExample
             //configure MQTT connection
             var cnf = new Configuration()
             {
-	            Server = "ws://piotr.staging.c8y.io/mqtt",
-	            UserName = @"piotr/admin",
-	            Password = @"test1234",
-	            ClientId = "4927468bdd4b4171a23e31476ff82675",
-	            Port = "80",
-	            ConnectionType = "WS"
-			};
+                Server = "ws://piotr.staging.c8y.io/mqtt",
+                UserName = @"piotr/admin",
+                Password = @"test1234",
+                ClientId = "4927468bdd4b4171a23e31476ff82675",
+                Port = "80",
+                ConnectionType = "WS"
+            };
 
             var cl = new Client(cnf);
             await cl.ConnectAsync();
@@ -71,7 +71,6 @@ namespace HelloExample
             //await CreateBasicEvent(cl);
             //Create an alarm
             //await CreateCriticalAlarm(cl);
-
         }
 
         private static async Task CreateDevice(Client cl)
