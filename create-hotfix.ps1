@@ -6,6 +6,9 @@ Param(
 	
 if($version)
 {
+    $version  = "$version"
+    git add .
+    git commit -m "prepare hotfix $version"
     git tag "$version"
-	#git push
+	git push -f --tags
 }

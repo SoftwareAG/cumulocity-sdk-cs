@@ -1,6 +1,7 @@
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
+var buildDir = Directory("./publish");
 
 using Path = System.IO.Path; 
 using IO = System.IO;
@@ -12,28 +13,9 @@ string currentBranch;
 string lastTagCommit;
 string releaseBranch;
 string readCommitCountInReleaseBranch;
-string defaultBranchName="develop";
+string defaultBranchName="develop";  //#default #develop
 string releaseBranchName="release";
 string buildVersion;
-
-Task("CreateReleaseBranch").Does(()=> {
-		checkGitVersion();
-		readVersionProps();
-
-		var canCreate = 
-		canCreateRelease();	
-
-		if(canCreate){
-			buildCsProjects();
-			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
-			packProject();			
-			//Deploy
-			createReleaseBranch("release/" + lastTagCommit); 
-			cleanDirectories();		
-		}else{
-			Console.WriteLine("nomanm, can not create a branch.");
-		}
-});
 
 Task("CreateReleaseBranchAndDeploy").Does(()=> {
 		checkGitVersion();
@@ -43,10 +25,12 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 		canCreateRelease();
 
 		if(canCreateVersion){
+		    checkNumberCommitsAfterLastTag();
 			buildCsProjects();
 			bumpVersionProjects(Version.Release,lastTagCommit.Remove(0,1));
-			packProject();
-			//Deploy
+			readBuildVersionProps();
+			packCsProject();
+			deployCsProject();
 			createReleaseBranch("release/" + lastTagCommit); 
 			cleanDirectories();
 		}else
@@ -57,10 +41,10 @@ Task("CreateReleaseBranchAndDeploy").Does(()=> {
 			if(canCreateHotfix){
 				buildCsProjects();
 				bumpVersionProjects(Version.Hotfix, string.Empty);
-				packProject();
 				readBuildVersionProps();	
-				//Deploy
-				createHotFixInRelease(buildVersion);
+				packCsProject();
+				deployCsProject();
+				createHotFixInRelease("r" + buildVersion);
 				System.Console.WriteLine(buildVersion);
 				cleanDirectories();
 			}
@@ -76,12 +60,19 @@ Task("CreateNextDevelopIteration").Does(()=> {
 		if(canCreate){
 			buildCsProjects();
 			bumpVersionProjects(Version.Hotfix, string.Empty);
-			packProject();		
+			packCsProject();		
 		}
 });
 
 
-
+void checkNumberCommitsAfterLastTag()
+{	
+ 	var settings = new ProcessSettings
+	{
+		Arguments = new ProcessArgumentBuilder().Append("check-commits.ps1 -tag " + lastTagCommit)
+	};
+	StartProcess("pwsh", settings);	
+}
 void checkGitVersion(){
  		var settings = new ProcessSettings
 		{
@@ -157,9 +148,9 @@ bool canCreateRelease()
 bool canNextDevelopIterationOnRelease()
 {
 	    System.Console.WriteLine("CanNextDevelopIterationOnRelease");
-		System.Console.WriteLine(currentBranch.Split('/')[0]);
-		System.Console.WriteLine(releaseBranchName);
-		System.Console.WriteLine(readCommitCountInReleaseBranch);
+		System.Console.WriteLine("split" + currentBranch.Split('/')[0]);
+		System.Console.WriteLine("releaseBranchName" + releaseBranchName);
+		System.Console.WriteLine("readCommitCountInReleaseBranch" + readCommitCountInReleaseBranch);
 
 		if(currentBranch.Split('/')[0].Equals(releaseBranchName) && !readCommitCountInReleaseBranch.Equals("0") )
 		{
@@ -179,14 +170,7 @@ void buildCsProjects(){
 			Configuration = configuration
 		};
 	 
-	 	var projects = GetFiles("./MicroservicesSDK/src/**/*.csproj");
-		foreach (var project in projects)
-		{
-		   Console.WriteLine(project.FullPath);
-		   DotNetCoreBuild(project.FullPath, buildSettings);
-		}
-
-		projects = GetFiles("./DeviceSDK/MQTT/src/MQTT.Client.NetStandard/*.csproj");
+	 	var projects = GetFiles("./src/**/*.csproj");
 		foreach (var project in projects)
 		{
 		   Console.WriteLine(project.FullPath);
@@ -194,15 +178,6 @@ void buildCsProjects(){
 		}
 }
 
-void buildScriptProject(){
-
-		var command = "build-scripts.sh";
- 		var settings = new ProcessSettings
-		{
-		   Arguments = new ProcessArgumentBuilder().Append(command)
-		};
-		StartProcess("sh", settings);
-}
 
 void bumpVersionProjects(Version version,string fixVersion)
 {
@@ -226,6 +201,7 @@ void bumpVersionProjects(Version version,string fixVersion)
        if(fixVersion.Length > 4){
 		   command = command + " -fixVersion " + fixVersion; 
 	   }
+	   Information("bumpVersionProjects: {0}", command);
 	
  		var settings = new ProcessSettings
 		{
@@ -266,7 +242,7 @@ void cleanDirectories(){
 		CleanDirectory(pathPublish);
 	}
 
-	var pathBuildingScripts = "./Examples/BuildingScripts/test";
+	var pathBuildingScripts = "./../Examples/BuildingScripts/test";
 	if (DirectoryExists(pathBuildingScripts))
 	{
 		IO.Directory.Delete(pathBuildingScripts, true);
@@ -281,8 +257,26 @@ void cleanDirectories(){
 	{
 		DeleteFile("./buildVersion.props");
 	}
+	
+	if(FileExists("commits.props"))
+	{
+		DeleteFile("./commits.props");
+	}
 }
-void packProject()
+
+void deployCsProject()
+{
+	Information("The deployment was started!");
+  
+    var command = "deploy.sh";
+	
+	var settings = new ProcessSettings
+	{
+	   Arguments = new ProcessArgumentBuilder().Append(command)
+	};
+	StartProcess("bash", settings);
+}
+void packCsProject()
 {
 	var path =  "./publish/";
 	if (DirectoryExists("./publish/"))
@@ -295,23 +289,47 @@ void packProject()
 
 	var buildSettings = new DotNetCoreMSBuildSettings();
 	var packSettings = new DotNetCorePackSettings  
-	{             OutputDirectory = path,
+	{              OutputDirectory = path,
 					NoBuild = true,
 					Configuration = configuration,
 					MSBuildSettings = buildSettings
 	};  
 
-    //MQTT
-	var projects = GetFiles("./src/MQTT.Client.NetStandard/*.csproj");
+	var projects = GetFiles("./src/**/*.csproj");
 	foreach (var project in projects)
 	{
 		Console.WriteLine(project.FullPath);
 		DotNetCorePack(project.FullPath, packSettings);
 	}
+
+	Zip("./../Examples/BuildingScripts/microservicesdk-win-dev", "./publish/microservicesdk-win-dev-"+ buildVersion +".zip");
+	Zip("./../Examples/BuildingScripts/microservicesdk-lin-dev", "./publish/microservicesdk-lin-dev-"+ buildVersion +".zip");
+}
+
+void publishNugets()
+{
+    var nugetFiles = GetFiles(buildDir.Path.FullPath+"/**/*.nupkg");
+	var source = EnvironmentVariable("PRIVATE_FEED_SOURCE");
+    var accessToken = EnvironmentVariable("PRIVATE_FEED_ACCESSTOKEN");
+	
+    foreach(var file in nugetFiles)
+    {				
+        //var settings = new DotNetCoreNuGetPushSettings()
+        //{
+        //    Source = source,
+        //    ApiKey = accessToken
+        //};
+		
+		// Read the settings from Nuget.Config where DefaultPushSource must be defined.
+		// ~/.config/NuGet/NuGet.Config or 
+        // ~/.nuget/NuGet/NuGet.Config (varies by OS distribution)
+		
+        DotNetCoreNuGetPush(file.FullPath);
+    }
 }
 
 Task("Default")
-  .IsDependentOn("CreateReleaseBranch")
+  .IsDependentOn("CreateReleaseBranchAndDeploy")
   .Does(() =>
 {
 });
