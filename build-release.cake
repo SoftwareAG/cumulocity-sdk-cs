@@ -242,12 +242,6 @@ void cleanDirectories(){
 		CleanDirectory(pathPublish);
 	}
 
-	var pathBuildingScripts = "./../Examples/BuildingScripts/test";
-	if (DirectoryExists(pathBuildingScripts))
-	{
-		IO.Directory.Delete(pathBuildingScripts, true);
-	}
-
 	if(FileExists("version.props"))
 	{
 		DeleteFile("./version.props");
@@ -302,8 +296,6 @@ void packCsProject()
 		DotNetCorePack(project.FullPath, packSettings);
 	}
 
-	Zip("./../Examples/BuildingScripts/microservicesdk-win-dev", "./publish/microservicesdk-win-dev-"+ buildVersion +".zip");
-	Zip("./../Examples/BuildingScripts/microservicesdk-lin-dev", "./publish/microservicesdk-lin-dev-"+ buildVersion +".zip");
 }
 
 void publishNugets()
