@@ -50,3 +50,7 @@
 /rest-api/Cumulocity.SDK.Client.HelperTest/obj
 /rest-api/src/ConsoleApp1/bin/Debug/netcoreapp2.2
 /rest-api/test/Cumulocity.SDK.Client.IntegrationTest/bin/Debug/netcoreapp2.2
+/rest-api/test/Cumulocity.SDK.Client.HelperTest/bin/Debug/netcoreapp2.2
+/rest-api/test/Cumulocity.SDK.Client.HelperTest/obj
+/rest-api/test/TestsExtensions/bin/Debug/netcoreapp2.2
+/rest-api/test/TestsExtensions/obj

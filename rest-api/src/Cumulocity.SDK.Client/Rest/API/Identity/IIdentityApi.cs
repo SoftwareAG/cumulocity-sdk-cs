@@ -12,8 +12,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 	    /// <param name="externalId"> the external to be created </param>
 	    /// <returns> the created external id </returns>
 	    /// <exception cref="SDKException"> if the external id could not be created </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ExternalIDRepresentation create(ExternalIDRepresentation externalId) throws SDKException;
+        //ORIGINAL LINE: ExternalIDRepresentation create(ExternalIDRepresentation externalId) throws SDKException;
         ExternalIDRepresentation create(ExternalIDRepresentation externalId);
 
 	    /// <summary>
@@ -24,8 +23,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 	    /// <param name="extId"> id of the event to search for </param>
 	    /// <returns> the external id representation including the managed object </returns>
 	    /// <exception cref="SDKException"> if the external id is not found or if the query failed </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ExternalIDRepresentation getExternalId(ID extId) throws SDKException;
+        //ORIGINAL LINE: ExternalIDRepresentation getExternalId(ID extId) throws SDKException;
         ExternalIDRepresentation getExternalId(ID extId);
 
 	    /// <summary>
@@ -34,8 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 	    /// <param name="gid"> the global of the external ids to search for </param>
 	    /// <returns> a collection of external ids with paging functionality </returns>
 	    /// <exception cref="SDKException"> if the query failed </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ExternalIDCollection getExternalIdsOfGlobalId(GId gid) throws SDKException;
+        //ORIGINAL LINE: ExternalIDCollection getExternalIdsOfGlobalId(GId gid) throws SDKException;
         IExternalIDCollection getExternalIdsOfGlobalId(GId gid);
 
 	    /// <summary>
@@ -43,8 +40,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 	    /// </summary>
 	    /// <param name="externalId"> the external id to be deleted </param>
 	    /// <exception cref="SDKException"> if the external could not be deleted </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: void deleteExternalId(ExternalIDRepresentation externalId) throws SDKException;
+        //ORIGINAL LINE: void deleteExternalId(ExternalIDRepresentation externalId) throws SDKException;
         void deleteExternalId(ExternalIDRepresentation externalId);
     }
 }

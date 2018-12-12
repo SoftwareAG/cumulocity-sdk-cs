@@ -41,8 +41,7 @@ namespace ConsoleApp1
             SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
             mo_mm.set(meter);
             mo_mm = inventory.create(mo_mm);            
-            
-            //Inventory Filter          
+                     
             InventoryFilter inventoryFilter = new InventoryFilter();
             inventoryFilter.byFragmentType(typeof(Position));
             
@@ -55,35 +54,5 @@ namespace ConsoleApp1
             
             Console.ReadKey();
         }
-
-	    private static ServiceProvider ServiceProvider()
-	    {
-		    var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
-
-		    var isDevelopment = string.IsNullOrEmpty(devEnvironmentVariable) ||
-		                        devEnvironmentVariable.ToLower() == "development";
-
-		    var builder = new ConfigurationBuilder();
-		    builder
-			    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-		    if (isDevelopment)
-		    {
-			    builder.AddUserSecrets<Program>();
-		    }
-
-		    Configuration = builder.Build();
-
-		    IServiceCollection services = new ServiceCollection();
-
-		    services
-			    .Configure<SecretStuff>(Configuration.GetSection(nameof(SecretStuff)))
-			    .AddOptions()
-			    .AddSingleton<ISecretRevealer, SecretRevealer>()
-			    .BuildServiceProvider();
-
-		    var serviceProvider = services.BuildServiceProvider();
-		    return serviceProvider;
-	    }
     }
 }

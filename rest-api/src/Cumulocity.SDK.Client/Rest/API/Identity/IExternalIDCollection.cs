@@ -1,7 +1,9 @@
+using Cumulocity.SDK.Client.Rest.Representation.Identity;
+
 namespace Cumulocity.SDK.Client.Rest.API.Identity
 {
     public interface
-        IExternalIDCollection //: PagedCollectionResource<ExternalIDRepresentation, PagedExternalIDCollectionRepresentation>
+        IExternalIDCollection : IPagedCollectionResource<ExternalIDRepresentation, PagedExternalIDCollectionRepresentation>
     {
     }
 }

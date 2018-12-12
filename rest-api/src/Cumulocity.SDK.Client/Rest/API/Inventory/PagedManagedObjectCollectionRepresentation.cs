@@ -7,7 +7,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
         IPagedCollectionRepresentation<ManagedObjectRepresentation> where T : ManagedObjectCollectionRepresentation
     {
 
-        //ORIGINAL LINE: private final PagedCollectionResource<ManagedObjectRepresentation, ? extends ManagedObjectCollectionRepresentation> collectionResource;
         private readonly IPagedCollectionResource<ManagedObjectRepresentation, T> collectionResource;
 
         public PagedManagedObjectCollectionRepresentation(ManagedObjectCollectionRepresentation collection, IPagedCollectionResource<ManagedObjectRepresentation, T> collectionResource) 

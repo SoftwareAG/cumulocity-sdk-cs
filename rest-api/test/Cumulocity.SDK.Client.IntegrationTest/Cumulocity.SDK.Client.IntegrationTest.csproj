@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Cumulocity.SDK.Client.HelperTest\Cumulocity.SDK.Client.HelperTest.csproj" />
     <ProjectReference Include="..\..\src\Cumulocity.SDK.Client\Cumulocity.SDK.Client.csproj" />
   </ItemGroup>
 
