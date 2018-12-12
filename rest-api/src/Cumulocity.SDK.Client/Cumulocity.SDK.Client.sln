@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cumulocity.SDK.Client", "Cumulocity.SDK.Client.csproj", "{D5277997-501A-4F5A-B2D2-D6ACC3E917B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "..\ConsoleApp1\ConsoleApp1.csproj", "{BAE919BF-07C6-44D5-9E2E-58F0C02C5550}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5277997-501A-4F5A-B2D2-D6ACC3E917B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5277997-501A-4F5A-B2D2-D6ACC3E917B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5277997-501A-4F5A-B2D2-D6ACC3E917B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5277997-501A-4F5A-B2D2-D6ACC3E917B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE919BF-07C6-44D5-9E2E-58F0C02C5550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE919BF-07C6-44D5-9E2E-58F0C02C5550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAE919BF-07C6-44D5-9E2E-58F0C02C5550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAE919BF-07C6-44D5-9E2E-58F0C02C5550}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54219BDB-5C96-4300-B8A0-F039365D9C36}
+	EndGlobalSection
+EndGlobal

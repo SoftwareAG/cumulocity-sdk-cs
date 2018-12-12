@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cumulocity.SDK.Client", "src\Cumulocity.SDK.Client\Cumulocity.SDK.Client.csproj", "{83FB41ED-0038-440A-B267-81961F3F4F3B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "src\ConsoleApp1\ConsoleApp1.csproj", "{E0D9D19F-0800-4D8D-B063-2FA9928008DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AF409482-6397-490D-90D1-F600BCC6609A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{239B1328-BECA-4D5A-A5C0-5DB7C2C95770}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cumulocity.SDK.Client.IntegrationTest", "test\Cumulocity.SDK.Client.IntegrationTest\Cumulocity.SDK.Client.IntegrationTest.csproj", "{0C51E8A2-B8E3-4289-B60C-D4AF40727D48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cumulocity.SDK.Client.UnitTest", "test\Cumulocity.SDK.Client.UnitTest\Cumulocity.SDK.Client.UnitTest.csproj", "{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cumulocity.SDK.Client.HelperTest", "Cumulocity.SDK.Client.HelperTest\Cumulocity.SDK.Client.HelperTest.csproj", "{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83FB41ED-0038-440A-B267-81961F3F4F3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83FB41ED-0038-440A-B267-81961F3F4F3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83FB41ED-0038-440A-B267-81961F3F4F3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83FB41ED-0038-440A-B267-81961F3F4F3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0D9D19F-0800-4D8D-B063-2FA9928008DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0D9D19F-0800-4D8D-B063-2FA9928008DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0D9D19F-0800-4D8D-B063-2FA9928008DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0D9D19F-0800-4D8D-B063-2FA9928008DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C51E8A2-B8E3-4289-B60C-D4AF40727D48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C51E8A2-B8E3-4289-B60C-D4AF40727D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C51E8A2-B8E3-4289-B60C-D4AF40727D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C51E8A2-B8E3-4289-B60C-D4AF40727D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{83FB41ED-0038-440A-B267-81961F3F4F3B} = {AF409482-6397-490D-90D1-F600BCC6609A}
+		{E0D9D19F-0800-4D8D-B063-2FA9928008DA} = {AF409482-6397-490D-90D1-F600BCC6609A}
+		{0C51E8A2-B8E3-4289-B60C-D4AF40727D48} = {239B1328-BECA-4D5A-A5C0-5DB7C2C95770}
+		{505A2AED-8E0B-4398-BE3C-C6D43A6A81D6} = {239B1328-BECA-4D5A-A5C0-5DB7C2C95770}
+		{663F5A83-1AC8-4E27-A7B1-DEC1C42C6334} = {239B1328-BECA-4D5A-A5C0-5DB7C2C95770}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7A0128D-00FC-41B4-89A0-0EB5AE504067}
+	EndGlobalSection
+EndGlobal
