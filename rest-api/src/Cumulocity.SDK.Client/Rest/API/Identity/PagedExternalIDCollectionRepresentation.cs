@@ -14,12 +14,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 
 		public PagedExternalIDCollectionRepresentation(ExternalIDCollectionRepresentation collection, IPagedCollectionResource<ExternalIDRepresentation, T> collectionResource)
 		{
-			//ManagedObjects = collection.ManagedObjects;
+			this.collectionResource = collectionResource;
+			ExternalIds = collection.ExternalIds;
 			PageStatistics = collection.PageStatistics;
 			Self = collection.Self;
 			Next = collection.Next;
 			Prev = collection.Prev;
-			this.collectionResource = collectionResource;
 		}
 
 		public IEnumerable<ExternalIDRepresentation> allPages()

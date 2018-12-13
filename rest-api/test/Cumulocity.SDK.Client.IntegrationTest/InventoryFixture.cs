@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Cumulocity.SDK.Client.HelperTest;
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
