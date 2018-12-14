@@ -104,11 +104,18 @@ namespace Cumulocity.SDK.Client.Rest
                 return new InventoryApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Inventory , PageSize);
             }
         }
-        //public IInventoryApi InventoryApi { get; }
-        public IIdentityApi IdentityApi { get; }
+
+	    public IIdentityApi IdentityApi
+	    {
+		    get
+		    {
+			    var restConnector = createRestConnector();
+				return new IdentityApiImpl(restConnector,new TemplateUrlParser(), getPlatformApi(restConnector).Identity, PageSize);
+			}
+	    }
 
 
-        private static string getHostUrl(string host, int port)
+	    private static string getHostUrl(string host, int port)
         {
             return "http://" + host + ":" + port;
         }

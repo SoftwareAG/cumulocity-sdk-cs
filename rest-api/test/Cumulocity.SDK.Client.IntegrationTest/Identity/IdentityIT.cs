@@ -64,7 +64,9 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 
 		public virtual void iCallCreate()
 		{
-			Result1.Add(IdentityApi.create(Input.First()));
+			var io= Input.First();
+			var id =IdentityApi.create(io);
+			Result1.Add(id);
 		}
 
 		public virtual void shouldGetBackTheExternalId()
