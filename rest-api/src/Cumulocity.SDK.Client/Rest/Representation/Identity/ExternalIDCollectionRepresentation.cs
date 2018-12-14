@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Identity
 {
-    public class ExternalIDCollectionRepresentation : BaseCollectionRepresentation<ExternalIDRepresentation>
+	[JsonObject]
+	public class ExternalIDCollectionRepresentation : BaseCollectionRepresentation<ExternalIDRepresentation>
     {
         private IList<ExternalIDRepresentation> externalIds = new List<ExternalIDRepresentation>();
 

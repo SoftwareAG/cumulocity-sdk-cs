@@ -10,8 +10,8 @@ public interface IPagedCollectionResource<T, out TC> where TC : BaseCollectionRe
 	/// <summary>
 	/// The method returns the first page.
 	/// </summary>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: C get(QueryParam... queryParams) throws SDKException;
+    //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+    //ORIGINAL LINE: C get(QueryParam... queryParams) throws SDKException;
 	TC get(params QueryParam[] queryParams);
 
 	/// <summary>
@@ -20,8 +20,7 @@ public interface IPagedCollectionResource<T, out TC> where TC : BaseCollectionRe
 	/// <param name="pageSize">                 - page size </param>
 	/// <returns> BaseCollectionRepresentation type of BaseCollectionRepresentation. </returns>
 	/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: C get(int pageSize, QueryParam... queryParams) throws SDKException;
+    //ORIGINAL LINE: C get(int pageSize, QueryParam... queryParams) throws SDKException;
 	TC get(int pageSize, params QueryParam[] queryParams);
 
 	/// <summary>
@@ -31,8 +30,7 @@ public interface IPagedCollectionResource<T, out TC> where TC : BaseCollectionRe
 	/// <param name="pageNumber">               - page number </param>
 	/// <returns> BaseCollectionRepresentation type of BaseCollectionRepresentation. </returns>
 	/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: C getPage(BaseCollectionRepresentation collectionRepresentation, int pageNumber) throws SDKException;
+    //ORIGINAL LINE: C getPage(BaseCollectionRepresentation collectionRepresentation, int pageNumber) throws SDKException;
 	TC getPage(BaseCollectionRepresentation<T> collectionRepresentation, int pageNumber);
 
 	/// <summary>

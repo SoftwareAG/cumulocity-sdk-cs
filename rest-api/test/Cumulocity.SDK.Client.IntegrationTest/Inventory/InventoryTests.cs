@@ -351,8 +351,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 		IList<ManagedObjectReferenceRepresentation> refs = refCollection.References;
 		ISet<GId> childDeviceIDs = new HashSet<GId>() {refs[0].ManagedObject.Id, refs[1].ManagedObject.Id };
 
-		//assertThat(childDeviceIDs, @is(asSet(child1.Id, child2.Id)));
-		//Assert.Equal(childDeviceIDs, new HashSet<GId>() { child2.Id,child1.Id });
 		Assert.True(childDeviceIDs.SetEquals(new HashSet<GId>() {child1.Id, child2.Id}));
 
 		// When

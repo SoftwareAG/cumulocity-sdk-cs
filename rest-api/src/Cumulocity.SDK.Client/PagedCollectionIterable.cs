@@ -35,27 +35,6 @@ public class PagedCollectionIterable<T, C> : IEnumerable<T>, IEnumerator<T> wher
 	{
 		return this;
 	}
-//
-//	public  bool hasNext()
-//	{
-//		if (reachedLimit())
-//		{
-//			return false;
-//		}
-////JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//		if (iterator_Renamed.hasNext())
-//		{
-//			return true;
-//		}
-//		if (collection.Next == null)
-//		{
-//			return false;
-//		}
-//		collection = _collectionResource.getNextPage(collection);
-//		iterator_Renamed = collection.GetEnumerator();
-////JAVA TO C# CONVERTER TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
-//		return iterator_Renamed.hasNext();
-//	}
 
 	public virtual bool reachedLimit()
 	{
