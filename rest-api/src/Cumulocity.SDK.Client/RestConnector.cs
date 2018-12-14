@@ -87,7 +87,13 @@ namespace Cumulocity.SDK.Client
             return parseResponseWithId(representation, response.Result, (int) HttpStatusCode.OK);
         }
 
-        public void Delete(string path)
+	    public T PutWithoutId<T>(string path, CumulocityMediaType mediaType, T representation)		    
+	    {
+		    var response = this.putClientResponse<T>(path, mediaType, representation);
+		    return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.OK, representation.GetType());
+	    }
+
+		public void Delete(string path)
         {
             var response = this.deleteClientResponse(path);
             this.ResponseParser.checkStatus(response.Result, new int[]{ (int)HttpStatusCode.NoContent});

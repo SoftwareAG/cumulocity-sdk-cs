@@ -7,7 +7,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rest\API\Event\" />
     <Folder Include="Rest\API\Measurement\" />
   </ItemGroup>
 
