@@ -1,4 +1,5 @@
 ﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
@@ -95,8 +96,8 @@ namespace Cumulocity.SDK.Client.Rest
         {
             throw new NotImplementedException();
         }
-        
-        public  IInventoryApi InventoryApi
+
+	    public  IInventoryApi InventoryApi
         {
             get
             {
@@ -114,8 +115,16 @@ namespace Cumulocity.SDK.Client.Rest
 			}
 	    }
 
+	    public IEventApi EventApi {
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new EventApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Event, PageSize);
+			}
+	    }
 
-	    private static string getHostUrl(string host, int port)
+
+		private static string getHostUrl(string host, int port)
         {
             return "http://" + host + ":" + port;
         }

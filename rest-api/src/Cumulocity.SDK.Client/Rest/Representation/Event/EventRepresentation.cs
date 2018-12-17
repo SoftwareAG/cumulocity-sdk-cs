@@ -1,6 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Event
@@ -19,7 +20,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 		private DateTime time;
 
 		//ORIGINAL LINE: @Null(operation = { Command.CREATE, Command.UPDATE }) private DateTime creationTime;
-		private DateTime creationTime;
+		private DateTime? creationTime;
 
 		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private String text;
 		private string text;
@@ -34,6 +35,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 
 		//ORIGINAL LINE: @JSONConverter(type = IDTypeConverter.class) @JSONProperty(ignoreIfNull = true) public GId getId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonConverter(typeof(GidConverter))]
 		public virtual GId Id
 		{
 			get
@@ -118,7 +120,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 
 		//ORIGINAL LINE: @JSONProperty(value = "creationTime", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getCreationDateTime()
 		[JsonProperty(propertyName: "creationTime", NullValueHandling = NullValueHandling.Ignore)]
-		public virtual DateTime CreationDateTime
+		public virtual DateTime? CreationDateTime
 		{
 			get
 			{

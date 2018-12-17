@@ -27,9 +27,9 @@ using Cumulocity.SDK.Client.Rest.Representation.Event;
 
 namespace Cumulocity.SDK.Client.Rest.API.Event
 {
-	internal interface IEventApi
+	public interface IEventApi
 	{
-
+		
 		/**
 		 * Gets event by id
 		 *

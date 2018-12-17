@@ -1,4 +1,5 @@
 ﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
 
@@ -16,7 +17,7 @@ namespace Cumulocity.SDK.Client
 
         //IAlarmApi AlarmApi {get;}
 
-        //EventApi EventApi {get;}
+        IEventApi EventApi {get;}
 
         //AuditRecordApi AuditRecordApi {get;}
 

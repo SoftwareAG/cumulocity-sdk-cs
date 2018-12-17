@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Event
 {
+	[JsonObject]
 	public class EventCollectionRepresentation : BaseCollectionRepresentation<EventRepresentation>
 	{
 
