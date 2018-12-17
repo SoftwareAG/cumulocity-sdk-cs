@@ -17,7 +17,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 		private string type;
 
 		//ORIGINAL LINE: @Null(operation = Command.UPDATE) @NotNull(operation = Command.CREATE) private DateTime time;
-		private DateTime time;
+		private DateTime? time;
 
 		//ORIGINAL LINE: @Null(operation = { Command.CREATE, Command.UPDATE }) private DateTime creationTime;
 		private DateTime? creationTime;
@@ -64,7 +64,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 
 		//ORIGINAL LINE: @JSONProperty(value = "time", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getDateTime()
 		[JsonProperty(propertyName: "time", NullValueHandling = NullValueHandling.Ignore)]
-		public virtual DateTime DateTime
+		public virtual DateTime? DateTime
 		{
 			get
 			{

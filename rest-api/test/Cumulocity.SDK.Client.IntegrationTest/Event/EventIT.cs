@@ -82,6 +82,35 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			}
 		}
 
+		//@Given("I have a Event with no type value for the managed object$")
+
+		public void iHaveAEventWithNoType()
+		{
+			EventRepresentation rep = new EventRepresentation();
+			rep.DateTime = DateTime.UtcNow;
+			rep.Text = " Event of Managed Object : 1";
+			rep.Source = managedObject;
+			Input.Add(rep);
+		}
+		//@Given("I have a Event with no text value for the managed object$")
+		public void iHaveAEventWithNoText()
+		{
+			EventRepresentation rep = new EventRepresentation();
+			rep.Type = "type";
+			rep.DateTime = DateTime.UtcNow;
+			rep.Source = managedObject;
+			Input.Add(rep);
+		}
+
+		//@Given("I have a Event with no time value for the managed object$")
+		public void iHaveAEventWithNoTime()
+		{
+			EventRepresentation rep = new EventRepresentation();
+			rep.Type = "type";
+			rep.Text = " Event of Managed Object : 1";
+			rep.Source = managedObject;
+			Input.Add(rep);
+		}
 		// ------------------------------------------------------------------------
 		// When
 		// ------------------------------------------------------------------------
@@ -94,7 +123,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 				foreach (var rep in Input)
 				{
 					var evt = EventApi.create(rep);
-					Result.Add(EventApi.create(evt));
+					Result.Add(evt);
 				}
 			}
 			catch (SDKException ex)
@@ -122,6 +151,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		{
 			Assert.Equal(collection.Events.Count, count);
 		}
+		//@Then("Event response should be unprocessable$")
+		public void shouldBeBadRequest()
+		{
+			Assert.Equal(422, Status);
+		}
 		// ------------------------------------------------------------------------
 		// Test
 		// ------------------------------------------------------------------------
@@ -139,5 +173,44 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			//    Then I should get '2' Events
 			iShouldGetNumberOfEvents(2);
 		}
+
+		//    Scenario: Create Events without type
+		[Fact]
+		public void createEventsWithoutType() 
+		{
+			//    Given I have a Event with no type value for the managed object
+			iHaveAEventWithNoType();
+			//    When I create all Events
+			iCreateAll();
+			//    Then Event response should be unprocessable
+			shouldBeBadRequest();
+		}
+
+		//
+		//
+		//    Scenario: Create Events without time
+		[Fact]
+		public void createEventsWithoutTime() 
+		{
+			//    Given I have a Event with no time value for the managed object
+			iHaveAEventWithNoTime();
+			//    When I create all Events
+			iCreateAll();
+			//    Then Event response should be unprocessable
+			shouldBeBadRequest();
+		}
+
+	//
+	//    Scenario: Create Events without text
+	[Fact]
+	public void createEventsWithoutText() 
+	{
+		//    Given I have a Event with no text value for the managed object
+		iHaveAEventWithNoText();
+		//    When I create all Events
+		iCreateAll();
+		//    Then Event response should be unprocessable
+		shouldBeBadRequest();
 	}
+}
 }
