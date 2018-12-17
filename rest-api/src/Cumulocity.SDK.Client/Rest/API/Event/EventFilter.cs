@@ -112,8 +112,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		public virtual EventFilter byDate(DateTime fromDate, DateTime toDate)
 		{
 			//DateConverter.date2String
-			this.dateFrom = fromDate.ToLongDateString();
-			this.dateTo = toDate.ToLongDateString();
+			this.dateFrom = fromDate.ToString("o");
+			this.dateTo = toDate.ToString("o");
 			return this;
 		}
 

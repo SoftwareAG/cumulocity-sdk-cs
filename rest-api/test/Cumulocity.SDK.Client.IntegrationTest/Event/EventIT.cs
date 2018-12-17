@@ -216,7 +216,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 				DateTime dateTime = DateTime.ParseExact(time, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
 				ManagedObjectRepresentation mo = managedObject;
-				EventFilter filter = new EventFilter().byDate(dateTime, dateTime);
+				EventFilter filter = new EventFilter().byDate(dateTime, dateTime).byType("type");
 				collection = EventApi.getEventsByFilter(filter).get();
 			} catch (SDKException ex) {
 				Status = ex.HttpStatus;
