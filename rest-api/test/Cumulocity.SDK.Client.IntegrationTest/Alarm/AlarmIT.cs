@@ -20,24 +20,21 @@
 //  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  */
 
-#endregion
+#endregion Cumulocity GmbH
 
-using System;
+using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.API.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Builder;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
+using System.Net;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 {
 	public class AlarmIT : IClassFixture<AlarmFixture>, IDisposable
 	{
-		private ManagedObjectRepresentation mo1;
-		private ManagedObjectRepresentation mo2;
-		private ManagedObjectRepresentation mo3;
-		private int t = 0;
-
 		public AlarmIT(AlarmFixture fixture)
 		{
 			AlarmApi = fixture.platform.AlarmApi;
@@ -47,37 +44,78 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			mo3 = fixture.platform.InventoryApi.create(aSampleMo().withName("MO" + 3).build());
 		}
 
-		public IAlarmApi AlarmApi { get; set; }
-
 		public void Dispose()
 		{
 		}
+
+		private readonly ManagedObjectRepresentation mo1;
+		private ManagedObjectRepresentation mo2;
+		private ManagedObjectRepresentation mo3;
+		private int t;
+
+		public IAlarmApi AlarmApi { get; set; }
+
 		private static ManagedObjectRepresentationBuilder aSampleMo()
 		{
 			return RestRepresentationObjectMother.anMoRepresentationLike(SampleManagedObjectRepresentation
 				.MO_REPRESENTATION);
 		}
+
 		private AlarmRepresentation aSampleAlarm(ManagedObjectRepresentation source)
 		{
 			return RestRepresentationObjectMother.anAlarmRepresentationLike(
-				SampleAlarmRepresentation.ALARM_REPRESENTATION)
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 				.withType("com_nsn_bts_TrxFaulty" + t++)
 				.withStatus("ACTIVE")
-				.withSeverity("major")
+				.withSeverity("MAJOR")
 				.withSource(source)
 				.withText("Alarm for mo")
 				.withDateTime(DateTime.UtcNow).build();
 		}
 
 		[Fact]
-		public void shouldHaveIdAfterCreateAlarm() 
+		public void shouldHaveIdAfterCreateAlarm()
 		{
 			// Given
-			AlarmRepresentation rep = aSampleAlarm(mo1);
+			var rep = aSampleAlarm(mo1);
 			// When
-			AlarmRepresentation created = AlarmApi.create(rep);
+			var created = AlarmApi.create(rep);
 			// Then
 			Assert.NotNull(created.Id);
+		}
+
+		[Fact]
+		public void createAlarmWithoutText()
+		{
+			// Given
+			AlarmRepresentation alarm = RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+			.withSource(mo1).withText(null).build();
+
+			// When
+			var ex = Record.Exception(() => AlarmApi.create(alarm));
+
+			// Then
+			Assert.NotNull(ex);
+			Assert.IsType<SDKException>(ex);
+			Assert.Equal((int)HttpStatusCode.UnprocessableEntity, ((SDKException)ex).HttpStatus);
+		}
+
+		[Fact]
+		public void createAlarmsWithoutSeverity()
+		{
+			// Given
+			AlarmRepresentation alarm = RestRepresentationObjectMother.anAlarmRepresentationLike(
+				   SampleAlarmRepresentation.ALARM_REPRESENTATION)
+			   .withSource(mo1).withSeverity(null).build();
+
+			// When
+			var ex = Record.Exception(() => AlarmApi.create(alarm));
+
+			// Then
+			Assert.NotNull(ex);
+			Assert.IsType<SDKException>(ex);
+			Assert.Equal((int)HttpStatusCode.UnprocessableEntity, ((SDKException)ex).HttpStatus);
+		}
 	}
-}
 }

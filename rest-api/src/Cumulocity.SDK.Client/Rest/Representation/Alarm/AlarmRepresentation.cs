@@ -22,7 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 		private long? count;
 
 		//ORIGINAL LINE: @Null(operation = Command.UPDATE) private DateTime firstOccurrenceTime;
-		private DateTime firstOccurrenceTime;
+		private DateTime? firstOccurrenceTime;
 
 		public AlarmRepresentation()
 		{
@@ -91,7 +91,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 
 		//ORIGINAL LINE: @JSONProperty(value = "firstOccurrenceTime", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getFirstOccurrenceDateTime()
 		[JsonProperty(propertyName: "firstOccurrenceTime", NullValueHandling = NullValueHandling.Ignore)]
-		public virtual DateTime FirstOccurrenceDateTime
+		public virtual DateTime? FirstOccurrenceDateTime
 		{
 			get
 			{

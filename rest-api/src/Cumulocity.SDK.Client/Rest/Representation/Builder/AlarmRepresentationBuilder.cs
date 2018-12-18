@@ -57,7 +57,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 		}
 
 		[Obsolete]
-		public virtual AlarmRepresentationBuilder withTime(DateTime value)
+		public virtual AlarmRepresentationBuilder withTime(DateTime? value)
 		{
 			setFieldValue("time", value);
 			return this;
