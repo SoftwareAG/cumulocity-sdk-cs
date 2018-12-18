@@ -41,14 +41,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <param name="alarm"> to be updated </param>
 		/// <returns> the updated alarm </returns>
 		/// <exception cref="SDKException"> if the alarm could not be updated </exception>
-		//AlarmRepresentation Update(AlarmRepresentation alarm);
+		AlarmRepresentation Update(AlarmRepresentation alarm);
 
 		/// <summary>
 		/// Gets all alarms from the platform
 		/// </summary>
 		/// <returns> collection of alarms with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//AlarmCollection Alarms { get; }
+		AlarmCollection Alarms { get; }
 
 		/// <summary>
 		/// Gets alarms from the platform based on the specified filter
@@ -56,13 +56,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <param name="filter"> the filter criteria(s) </param>
 		/// <returns> collection of alarms matched by the filter with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//AlarmCollection GetAlarmsByFilter(AlarmFilter filter);
+		AlarmCollection GetAlarmsByFilter(AlarmFilter filter);
 		/// <summary>
 		/// Delete alarms from the platform based on the specified filter
 		/// </summary>
 		/// <param name="filter"> the filter criteria(s) </param>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//void DeleteAlarmsByFilter(AlarmFilter filter);
+		void DeleteAlarmsByFilter(AlarmFilter filter);
 
 		/// <summary>
 		/// Updates an alarm in the platform.
