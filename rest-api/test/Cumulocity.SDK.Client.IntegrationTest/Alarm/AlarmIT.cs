@@ -24,6 +24,7 @@
 
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.API.Alarm;
+using Cumulocity.SDK.Client.Rest.Model.Event;
 using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Builder;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
@@ -158,7 +159,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 				resultNumber++;
 			}
 
-			Assert.Equal(10,resultNumber);
+			Assert.Equal(10, resultNumber);
 		}
 
 		[Fact]
@@ -190,6 +191,83 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			// Then
 			var alarms = bySource.Alarms;
 			Assert.Equal(2, alarms.Count);
+		}
+
+		[Fact]
+		public void shouldReturnFilterBySource()
+		{
+			// Given
+			AlarmApi.create(aSampleAlarm(mo1));
+			AlarmApi.create(aSampleAlarm(mo2));
+
+			// When
+			AlarmFilter filter = new AlarmFilter().bySource(mo1);
+			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+
+			// Then
+			var alarms = bySource.Alarms;
+			Assert.Equal(1, alarms.Count);
+			Assert.Equal(alarms[0].Source.Id, mo1.Id);
+		}
+
+		[Fact]
+		public void getAlarmCollectionByStatus()
+		{
+			// Given
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+					.withType("com_nsn_bts_TrxFaulty" + t++)
+					.withStatus("ACTIVE")
+					.withSource(mo1).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+					.withType("com_nsn_bts_TrxFaulty" + t++)
+					.withStatus("ACKNOWLEDGED")
+					.withSource(mo1).build());
+
+			// When
+			AlarmFilter acknowledgedFilter = new AlarmFilter().byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
+
+			// Then
+			foreach (AlarmRepresentation result in AlarmApi.getAlarmsByFilter(acknowledgedFilter).get().allPages())
+			{
+				Assert.Equal("ACKNOWLEDGED", result.Status);
+			}
+		}
+
+		[Fact]
+		public void getAlarmCollectionByStatusAndSource()
+		{
+			// Given
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("CLEARED")
+						.withSource(mo1).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACKNOWLEDGED")
+						.withSource(mo1).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("CUSTOM")
+						.withSource(mo2).build());
+
+			// When
+			AlarmFilter acknowledgedFilter = new AlarmFilter()
+				.byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED")).bySource(mo1);
+			AlarmCollectionRepresentation acknowledgedAlarms = AlarmApi.getAlarmsByFilter(acknowledgedFilter).get();
+
+			// Then
+			var alarms = acknowledgedAlarms.Alarms;
+			Assert.Equal( 1, alarms.Count);
+			Assert.Equal("ACKNOWLEDGED", alarms[0].Status );
+			Assert.Equal(mo1.Id, alarms[0].Source.Id);
 		}
 	}
 }
