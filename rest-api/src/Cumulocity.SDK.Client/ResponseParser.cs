@@ -27,10 +27,18 @@ namespace Cumulocity.SDK.Client
             var result = JsonConvert.DeserializeObject<T>(r);
             return result; 
         }
-        
 
-        //ORIGINAL LINE: public <T> T parseObject(ClientResponse response, int expectedStatusCode, Class<T> type) throws SDKException
-        public virtual T parseObject<T>(HttpResponseMessage response, int expectedStatusCode, T type)
+	    public virtual async Task<T> ParseAsync<T>(HttpResponseMessage response, int expectedStatusCode, Type type)
+	    {
+		    checkStatus(response, expectedStatusCode);
+		    var r = await response.Content.ReadAsStringAsync();
+		    var result = JsonConvert.DeserializeObject<T>(r);
+		    return result;
+	    }
+
+
+		//ORIGINAL LINE: public <T> T parseObject(ClientResponse response, int expectedStatusCode, Class<T> type) throws SDKException
+		public virtual T parseObject<T>(HttpResponseMessage response, int expectedStatusCode, T type)
         {
             checkStatus(response, expectedStatusCode);
             //return response.getEntity(type);

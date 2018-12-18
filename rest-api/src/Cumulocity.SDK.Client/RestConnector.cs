@@ -67,7 +67,14 @@ namespace Cumulocity.SDK.Client
             return ResponseParser.parse<T>(response.Result, (int) HttpStatusCode.Created,typeof(T));
         }
 
-        public T PostWithId<T>(string path, CumulocityMediaType mediaType, T representation)
+	    public async Task<T> PostAsync<T>(string path, CumulocityMediaType mediaType, T representation)
+		    where T : IResourceRepresentation
+	    {
+		    var response = await httpPost(path, mediaType, mediaType, representation);
+		    return await ResponseParser.ParseAsync<T>(response, (int)HttpStatusCode.Created, typeof(T));
+	    }
+
+		public T PostWithId<T>(string path, CumulocityMediaType mediaType, T representation)
             where T : IBaseResourceRepresentationWithId
         {
             var response = httpPost(path, mediaType, mediaType, representation);

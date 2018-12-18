@@ -28,6 +28,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Builder;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using Xunit;
 
@@ -116,6 +117,79 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			Assert.NotNull(ex);
 			Assert.IsType<SDKException>(ex);
 			Assert.Equal((int)HttpStatusCode.UnprocessableEntity, ((SDKException)ex).HttpStatus);
+		}
+
+		[Fact]
+		public void shouldReturnAllCreatedAlarms()
+		{
+			// Given
+			ManagedObjectRepresentation source = mo1;
+
+			for (int i = 0; i < 10; i++)
+			{
+				AlarmApi.create(aSampleAlarm(source));
+			}
+
+			int resultNumber = 0;
+			var pager = AlarmApi.getAlarmsByFilter(new AlarmFilter().bySource(source.Id)).get().allPages();
+			foreach (AlarmRepresentation alarm in pager)
+			{
+				resultNumber++;
+			}
+
+			Assert.Equal(resultNumber, 10);
+		}
+
+		[Fact]
+		public void shouldReturnAllCreatedAsyncAlarms()
+		{
+			// Given
+			ManagedObjectRepresentation source = mo1;
+
+			for (int i = 0; i < 10; i++)
+			{
+				var alarmRepresentation = AlarmApi.CreateAsync(aSampleAlarm(source)).Result;
+			}
+
+			int resultNumber = 0;
+			var pager = AlarmApi.getAlarmsByFilter(new AlarmFilter().bySource(source.Id)).get().allPages();
+			foreach (AlarmRepresentation alarm in pager)
+			{
+				resultNumber++;
+			}
+
+			Assert.Equal(10,resultNumber);
+		}
+
+		[Fact]
+		public void shouldReturnNoAlarmWithUnmatchedFilter()
+		{
+			// Given
+			AlarmApi.create(aSampleAlarm(mo1));
+
+			// When
+			AlarmFilter filter = new AlarmFilter().bySource(mo3);
+			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+
+			// Then
+			var alarms = bySource.Alarms;
+			Assert.Equal(0, alarms.Count);
+		}
+
+		[Fact]
+		public void shouldReturnMultipleAlarmsWithMatchedFilter()
+		{
+			// Given
+			AlarmApi.create(aSampleAlarm(mo1));
+			AlarmApi.create(aSampleAlarm(mo1));
+
+			// When
+			AlarmFilter filter = new AlarmFilter().bySource(mo1);
+			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+
+			// Then
+			var alarms = bySource.Alarms;
+			Assert.Equal(2, alarms.Count);
 		}
 	}
 }

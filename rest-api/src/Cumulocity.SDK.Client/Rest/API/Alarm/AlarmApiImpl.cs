@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 
@@ -49,6 +50,11 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		}
 
 		//ORIGINAL LINE: @Override public AlarmRepresentation update(AlarmRepresentation alarmToUpdate) throws SDKException
+		public Task<AlarmRepresentation> CreateAsync(AlarmRepresentation alarm)
+		{
+			return restConnector.PostAsync(SelfUri, AlarmMediaType.ALARM, alarm);
+		}
+
 		public  AlarmRepresentation update(AlarmRepresentation alarmToUpdate)
 		{
 			string url = SelfUri + "/" + alarmToUpdate.Id.Value;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 
@@ -32,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <param name="alarm"> alarm to be created </param>
 		/// <returns> the created alarm with the generated id </returns>
 		/// <exception cref="SDKException"> if the alarm could not be created </exception>
-		//Future CreateAsync(AlarmRepresentation alarm);
+		Task<AlarmRepresentation> CreateAsync(AlarmRepresentation alarm);
 
 		/// <summary>
 		/// Updates an alarm in the platform.
