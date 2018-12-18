@@ -265,9 +265,139 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 			// Then
 			var alarms = acknowledgedAlarms.Alarms;
-			Assert.Equal( 1, alarms.Count);
-			Assert.Equal("ACKNOWLEDGED", alarms[0].Status );
+			Assert.Equal(1, alarms.Count);
+			Assert.Equal("ACKNOWLEDGED", alarms[0].Status);
 			Assert.Equal(mo1.Id, alarms[0].Source.Id);
+		}
+
+		[Fact]
+		public void shouldGetAlarmById()
+		{
+			// Given
+			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+				.withStatus("ACTIVE")
+				.withSource(mo1).build());
+
+			AlarmRepresentation returned = AlarmApi.getAlarm(created.Id);
+
+			Assert.Equal("ACTIVE", returned.Status);
+			Assert.Equal(mo1.Id, returned.Source.Id);
+		}
+
+		[Fact]
+		public void shouldReturnTheUpdatedAlarm()
+		{
+			// Given
+			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+					.withStatus("ACTIVE")
+					.withSource(mo1).build());
+
+			// When
+			AlarmRepresentation alarm = new AlarmRepresentation();
+			alarm.Status = "ACKNOWLEDGED";
+			alarm.Id = created.Id;
+			AlarmRepresentation updated = AlarmApi.updateAlarm(alarm);
+
+			// Then
+			Assert.Equal("ACKNOWLEDGED", updated.Status);
+			Assert.Equal(mo1.Id, updated.Source.Id);
+		}
+
+		[Fact]
+		public void shouldUpdateAlarm()
+		{
+			// Given
+			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withStatus("ACTIVE")
+						.withSource(mo1).build());
+
+			// When
+			AlarmRepresentation alarm = new AlarmRepresentation();
+			alarm.Status ="ACKNOWLEDGED";
+			alarm.Id = created.Id;
+			AlarmApi.updateAlarm(alarm);
+
+			// Then
+			AlarmRepresentation returned = AlarmApi.getAlarm(created.Id);
+
+			Assert.Equal("ACKNOWLEDGED", returned.Status);
+			Assert.Equal(mo1.Id, returned.Source.Id);
+		}
+
+		[Fact]
+		public void shouldDeleteAlarmCollectionByEmptyFilter()
+		{
+			// Given
+			for (int i = 0; i < 5; i++)
+			{
+				AlarmApi.create(aSampleAlarm(mo1));
+				AlarmApi.create(aSampleAlarm(mo2));
+				AlarmApi.create(aSampleAlarm(mo3));
+			}
+
+			AlarmFilter emptyFilter = new AlarmFilter();
+
+			//When
+			AlarmApi.deleteAlarmsByFilter(emptyFilter);
+
+			//Then
+			int resultNumber = 0;
+			var pager = AlarmApi.getAlarms().get().allPages();
+			foreach (AlarmRepresentation alarm in pager)
+			{
+				resultNumber++;
+			}
+
+			Assert.Equal(0,resultNumber);
+		}
+
+		[Fact]
+		public void shouldDeleteByFilterStatus()
+		{
+			// Given
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACTIVE")
+						.withSource(mo1).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACKNOWLEDGED")
+						.withSource(mo1).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACKNOWLEDGED")
+						.withSource(mo2).build());
+
+			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("CLEARED")
+						.withSource(mo2).build());
+
+			AlarmFilter alarmFilter = new AlarmFilter().byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
+
+			// When
+			AlarmApi.deleteAlarmsByFilter(alarmFilter);
+
+			// Then
+			var allAlarms = AlarmApi.getAlarms().get().Alarms;
+
+			Assert.Equal(2, allAlarms.Count);
+			List<string> wantedStatus = new List<string>();
+			wantedStatus.Add("ACTIVE");
+			wantedStatus.Add("CLEARED");
+			foreach (AlarmRepresentation alarm in allAlarms)
+			{
+				Assert.True(wantedStatus.Contains(alarm.Status));
+			}
 		}
 	}
 }

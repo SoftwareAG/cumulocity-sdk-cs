@@ -61,7 +61,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			return restConnector.PutWithoutId(url, AlarmMediaType.ALARM, prepareForUpdate(alarmToUpdate));
 		}
 
-		public IAlarmCollection alarms { get; }
+
+
+		public IAlarmCollection getAlarms()
+		{
+				string url = SelfUri;
+				return new AlarmCollectionImpl(restConnector, url, pageSize);			
+		}
 
 		private AlarmRepresentation prepareForUpdate(AlarmRepresentation alarm)
 		{

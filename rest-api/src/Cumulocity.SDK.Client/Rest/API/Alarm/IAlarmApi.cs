@@ -44,12 +44,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <exception cref="SDKException"> if the alarm could not be updated </exception>
 		AlarmRepresentation update(AlarmRepresentation alarm);
 
-		/// <summary>
-		/// Gets all alarms from the platform
-		/// </summary>
-		/// <returns> collection of alarms with paging functionality </returns>
-		/// <exception cref="SDKException"> if the query failed </exception>
-		IAlarmCollection alarms { get; }
+	    /// <summary>
+	    /// Gets all alarms from the platform
+	    /// </summary>
+	    /// <returns> collection of alarms with paging functionality </returns>
+	    /// <exception cref="SDKException"> if the query failed </exception>
+	    IAlarmCollection getAlarms();
 
 		/// <summary>
 		/// Gets alarms from the platform based on the specified filter
