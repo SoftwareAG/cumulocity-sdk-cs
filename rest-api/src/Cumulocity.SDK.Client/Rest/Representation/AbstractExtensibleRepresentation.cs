@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 
         //ORIGINAL LINE: @JSONProperty(ignore = true) public Map<String, Object> getAttrs()
 	    [JsonExtensionData]
-	    private  IDictionary<string, Newtonsoft.Json.Linq.JToken> Attrs
+	    public  IDictionary<string, Newtonsoft.Json.Linq.JToken> Attrs
         {
             get => attrs;
             set => attrs = value;
