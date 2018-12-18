@@ -18,43 +18,43 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
         {
             return sampleManagedObjectReferenceRepresentation();
         }
-//
-//
-//        //ORIGINAL LINE: public static EventRepresentationBuilder anEventRepresentationLike(final SampleEventRepresentation sample)
-//        public static EventRepresentationBuilder anEventRepresentationLike(SampleEventRepresentation sample)
-//        {
-//            return sample.builder();
-//        }
-//
-//
-//        //ORIGINAL LINE: public static AlarmRepresentationBuilder anAlarmRepresentationLike(final SampleAlarmRepresentation sample)
-//        public static AlarmRepresentationBuilder anAlarmRepresentationLike(SampleAlarmRepresentation sample)
-//        {
-//            return sample.builder();
-//        }
-//
-//
-//        //ORIGINAL LINE: public static MeasurementRepresentationBuilder aMeasurementRepresentationLike(final SampleMeasurementRepresentation measurment)
-//        public static MeasurementRepresentationBuilder aMeasurementRepresentationLike(
-//            SampleMeasurementRepresentation measurment)
-//        {
-//            return measurment.builder();
-//        }
-//
-//
-//        //ORIGINAL LINE: public static BulkOperationRepresentationBuilder aBulkOperationRepresentationLike(final SampleBulkOperationRepresentation bulkOperation)
-//        public static BulkOperationRepresentationBuilder aBulkOperationRepresentationLike(
-//            SampleBulkOperationRepresentation bulkOperation)
-//        {
-//            return bulkOperation.builder();
-//        }
-//
-//
-//        //ORIGINAL LINE: public static OperationRepresentationBuilder anOperationRepresentationLike(final SampleOperationRepresentation operationRepresentation)
-//        public static OperationRepresentationBuilder anOperationRepresentationLike(
-//            SampleOperationRepresentation operationRepresentation)
-//        {
-//            return operationRepresentation.builder();
-//        }
-    }
+		//
+		//
+		//        //ORIGINAL LINE: public static EventRepresentationBuilder anEventRepresentationLike(final SampleEventRepresentation sample)
+		//        public static EventRepresentationBuilder anEventRepresentationLike(SampleEventRepresentation sample)
+		//        {
+		//            return sample.builder();
+		//        }
+		//
+		//
+		//        //ORIGINAL LINE: public static AlarmRepresentationBuilder anAlarmRepresentationLike(final SampleAlarmRepresentation sample)
+		public static AlarmRepresentationBuilder anAlarmRepresentationLike(Func<AlarmRepresentationBuilder> sample)
+		{
+			return sample();
+		}
+		//
+		//
+		//        //ORIGINAL LINE: public static MeasurementRepresentationBuilder aMeasurementRepresentationLike(final SampleMeasurementRepresentation measurment)
+		//        public static MeasurementRepresentationBuilder aMeasurementRepresentationLike(
+		//            SampleMeasurementRepresentation measurment)
+		//        {
+		//            return measurment.builder();
+		//        }
+		//
+		//
+		//        //ORIGINAL LINE: public static BulkOperationRepresentationBuilder aBulkOperationRepresentationLike(final SampleBulkOperationRepresentation bulkOperation)
+		//        public static BulkOperationRepresentationBuilder aBulkOperationRepresentationLike(
+		//            SampleBulkOperationRepresentation bulkOperation)
+		//        {
+		//            return bulkOperation.builder();
+		//        }
+		//
+		//
+		//        //ORIGINAL LINE: public static OperationRepresentationBuilder anOperationRepresentationLike(final SampleOperationRepresentation operationRepresentation)
+		//        public static OperationRepresentationBuilder anOperationRepresentationLike(
+		//            SampleOperationRepresentation operationRepresentation)
+		//        {
+		//            return operationRepresentation.builder();
+		//        }
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Alarm;
 using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
@@ -121,6 +122,14 @@ namespace Cumulocity.SDK.Client.Rest
 			    var restConnector = createRestConnector();
 			    return new EventApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Event, PageSize);
 			}
+	    }
+	    public IAlarmApi AlarmApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new AlarmApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Alarm, PageSize);
+		    }
 	    }
 
 

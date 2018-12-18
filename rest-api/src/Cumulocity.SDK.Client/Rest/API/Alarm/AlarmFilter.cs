@@ -129,8 +129,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <returns> the alarm filter with {@code fromDate} and {@code toDate} set. </returns>
 		public virtual AlarmFilter byDate(DateTime fromDate, DateTime toDate)
 		{
-			this.dateFrom = DateConverter.date2String(fromDate);
-			this.dateTo = DateConverter.date2String(toDate);
+			//DateConverter.date2String
+			this.dateFrom = fromDate.ToString("o");
+			this.dateTo = toDate.ToString("o");
 			return this;
 		}
 
@@ -142,7 +143,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// <returns> the alarm filter with {@code fromDate} set </returns>
 		public virtual AlarmFilter byFromDate(DateTime fromDate)
 		{
-			this.dateFrom = DateConverter.date2String(fromDate);
+			this.dateFrom = fromDate.ToString("o");
 			return this;
 		}
 

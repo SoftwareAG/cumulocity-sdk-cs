@@ -1,3 +1,4 @@
+using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Event;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
@@ -7,22 +8,22 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Platform
     public class PlatformApiRepresentation : AbstractExtensibleRepresentation
     {
 	      public EventsApiRepresentation Event;
-//
-//        private MeasurementsApiRepresentation measurement;
-//
-//        private AuditRecordsRepresentation audit;
-//
-//        private AlarmsApiRepresentation alarm;
-//
-//        private UsersApiRepresentation user;
-//
-//        private DeviceControlRepresentation deviceControl;
-//
-//        private CepApiRepresentation cep;
-//
-//        private TenantApiRepresentation tenant;
+		//
+		//        private MeasurementsApiRepresentation measurement;
+		//
+		//        private AuditRecordsRepresentation audit;
+		//
+	    public AlarmsApiRepresentation Alarm;
+		//
+		//        private UsersApiRepresentation user;
+		//
+		//        private DeviceControlRepresentation deviceControl;
+		//
+		//        private CepApiRepresentation cep;
+		//
+		//        private TenantApiRepresentation tenant;
 
-        public InventoryRepresentation Inventory { get; set; }
+		public InventoryRepresentation Inventory { get; set; }
 
         public IdentityRepresentation Identity { get; set; }
 
