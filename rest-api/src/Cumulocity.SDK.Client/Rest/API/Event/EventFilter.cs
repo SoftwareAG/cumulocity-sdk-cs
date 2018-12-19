@@ -101,13 +101,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			return this;
 		}
 
-		public virtual string FragmentType
-		{
-			get
-			{
-				return fragmentType;
-			}
-		}
+		public virtual string FragmentType => fragmentType;
 
 		public virtual EventFilter byDate(DateTime fromDate, DateTime toDate)
 		{

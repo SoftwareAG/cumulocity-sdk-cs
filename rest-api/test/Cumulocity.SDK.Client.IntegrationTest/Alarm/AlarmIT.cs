@@ -357,6 +357,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		[Fact]
 		public void shouldDeleteByFilterStatus()
 		{
+			var allAlarmsT = AlarmApi.getAlarms().get().Alarms;
 			// Given
 			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)

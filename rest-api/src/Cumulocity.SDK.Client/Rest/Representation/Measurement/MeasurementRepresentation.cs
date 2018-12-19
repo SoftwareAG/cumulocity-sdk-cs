@@ -1,65 +1,108 @@
-using System;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 {
-    public class MeasurementRepresentation : AbstractExtensibleRepresentation, ICloneable
-    {
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @Null(operation = Command.CREATE) private GId id;
+	public class MeasurementRepresentation : AbstractExtensibleRepresentation, ICloneable
+	{
+		//ORIGINAL LINE: @Null(operation = Command.CREATE) private GId id;
+		private GId id;
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private ManagedObjectRepresentation source;
+		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private String type;
+		private string type;
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private DateTime time;
+		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private DateTime time;
+		private DateTime time;
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private String type;
+		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private ManagedObjectRepresentation source;
+		private ManagedObjectRepresentation source;
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONConverter(type = IDTypeConverter.class) public void setId(GId id)
-        public virtual GId Id { set; get; }
-
-
-        public virtual string Type { set; get; }
-
-
-        public virtual ExternalIDRepresentation ExternalSource { set; get; }
-
-
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(value = "deprecated_Time", ignore = true) @Deprecated public Date getTime()
-//	[Obsolete]
-//	public virtual DateTime Time
-//	{
-//		get
-//		{
-//			return time == null ? null : time.toDate();
-//		}
-//		set
-//		{
-//			this.time = value == null ? null : newLocal(value);
-//		}
-//	}
+		private ExternalIDRepresentation externalSource;
+		public virtual GId Id
+		{
+			set
+			{
+				this.id = value;
+			}
+			get
+			{
+				return id;
+			}
+		}
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(value = "time", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getDateTime()
-        public virtual DateTime DateTime { get; set; }
+		public virtual string Type
+		{
+			set
+			{
+				this.type = value;
+			}
+			get
+			{
+				return type;
+			}
+		}
 
 
-        public virtual ManagedObjectRepresentation Source { set; get; }
+		public virtual ExternalIDRepresentation ExternalSource
+		{
+			set
+			{
+				this.externalSource = value;
+			}
+			get
+			{
+				return externalSource;
+			}
+		}
+
+		//ORIGINAL LINE: @JSONProperty(value = "deprecated_Time", ignore = true) @Deprecated public Date getTime()
+		//	[Obsolete]
+		//	public virtual DateTime Time
+		//	{
+		//		get
+		//		{
+		//			return time == null ? null : time.toDate();
+		//		}
+		//		set
+		//		{
+		//			this.time = value == null ? null : newLocal(value);
+		//		}
+		//	}
+
+		//ORIGINAL LINE: @JSONProperty(value = "time", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getDateTime()
+		public virtual DateTime DateTime
+		{
+			get
+			{
+				return time;
+			}
+			set
+			{
+				this.time = value;
+			}
+		}
+
+		public virtual ManagedObjectRepresentation Source
+		{
+			set
+			{
+				this.source = value;
+			}
+			get
+			{
+				return source;
+			}
+		}
 
 
-        //Used in conversion to make sure not to do side effects
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        //ORIGINAL LINE: @Override protected Object clone() throws CloneNotSupportedException
-        public object Clone()
-        {
-            return MemberwiseClone();
-        }
-    }
+		//Used in conversion to make sure not to do side effects
+		//ORIGINAL LINE: @Override protected Object clone() throws CloneNotSupportedException
+		public object Clone()
+		{
+			return MemberwiseClone();
+		}
+	}
 }

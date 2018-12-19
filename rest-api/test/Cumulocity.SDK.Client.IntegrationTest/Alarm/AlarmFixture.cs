@@ -4,6 +4,7 @@ using System.Text;
 using Cumulocity.SDK.Client.HelperTest;
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
+using Cumulocity.SDK.Client.Rest.Model.Idtype;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 {
@@ -27,7 +28,18 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 		public void Dispose()
 		{
-			
+			var inventory = platform.InventoryApi;
+			List<GId> lst = new List<GId>();
+			foreach (var item in inventory.ManagedObjects.get().allPages())
+			{
+				lst.Add(item.Id);
+			}
+
+			foreach (var id in lst)
+			{
+				var mo = inventory.getManagedObject(id);
+				mo.delete();
+			}
 		}
 	}
 }
