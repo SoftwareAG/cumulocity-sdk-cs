@@ -16,7 +16,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 		private string type;
 
 		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private DateTime time;
-		private DateTime time;
+		private DateTime? time;
 
 		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) private ManagedObjectRepresentation source;
 		private ManagedObjectRepresentation source;
@@ -79,7 +79,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 
 		//ORIGINAL LINE: @JSONProperty(value = "time", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getDateTime()
 		[JsonProperty("time",NullValueHandling = NullValueHandling.Ignore)]
-		public virtual DateTime DateTime
+		public virtual DateTime? DateTime
 		{
 			get
 			{

@@ -96,6 +96,17 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			allShouldBeCreated();
 		}
 
+		[Fact]
+		public void createMeasurementsWithoutTime()
+		{
+			//    Given I have a measurement of type 'com.type1' and no time value for the managed object
+			iHaveAMeasurementWithNoTime("com.type1");
+			//    When I create all measurements
+			iCreateAll();
+			//    Then Measurement response should be unprocessable
+			shouldBeBadRequest();
+		}
+
 		// ------------------------------------------------------------------------
 		// Given
 		// ------------------------------------------------------------------------
@@ -121,19 +132,26 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			for (int i = 0; i < n; i++)
 			{
 				MeasurementRepresentation rep = new MeasurementRepresentation();
-				//rep.Time = new Date());
 				rep.DateTime = DateTime.UtcNow;
 				rep.Type = "com.type1";
 				rep.Source = managedObjects[0];
 
 				// Set fragment
-				//Class <?> cls = Class.forName(fragmentType);
-				//Object fragment = cls.newInstance();
 				Object fragment = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
 				rep.set(fragment);
 
 				Input.Add(rep);
 			}
+		}
+
+		//@Given("I have a measurement of type '([^']*)' and no time value for the managed object")
+
+		public void iHaveAMeasurementWithNoTime(String type)
+		{
+			MeasurementRepresentation rep = new MeasurementRepresentation();
+			rep.Type = type;
+			rep.Source = managedObjects[0];
+			Input.Add(rep);
 		}
 
 		// ------------------------------------------------------------------------
@@ -178,11 +196,17 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//@Then("All measurements should be created")
 		public void allShouldBeCreated()
 		{
-			Assert.Equal(Input.Count,Result1.Count);
+			Assert.Equal(Input.Count, Result1.Count);
 			foreach (MeasurementRepresentation rep in Result1)
 			{
 				Assert.NotNull(rep.Id);
 			}
+		}
+
+		//@Then("Measurement response should be unprocessable")
+		public void shouldBeBadRequest()
+		{
+			Assert.Equal(422, Status);
 		}
 	}
 }
