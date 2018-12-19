@@ -2,6 +2,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Event;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Platform
 {
@@ -9,7 +10,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Platform
     {
 	      public EventsApiRepresentation Event;
 		//
-		//        private MeasurementsApiRepresentation measurement;
+	    public MeasurementsApiRepresentation Measurement;
 		//
 		//        private AuditRecordsRepresentation audit;
 		//

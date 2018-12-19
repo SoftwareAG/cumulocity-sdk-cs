@@ -2,6 +2,8 @@ using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
+using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 {
@@ -20,6 +22,9 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 		private ManagedObjectRepresentation source;
 
 		private ExternalIDRepresentation externalSource;
+
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonConverter(typeof(GidConverter))]
 		public virtual GId Id
 		{
 			set
@@ -45,7 +50,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 			}
 		}
 
-
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual ExternalIDRepresentation ExternalSource
 		{
 			set
@@ -73,6 +78,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 		//	}
 
 		//ORIGINAL LINE: @JSONProperty(value = "time", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getDateTime()
+		[JsonProperty("time",NullValueHandling = NullValueHandling.Ignore)]
 		public virtual DateTime DateTime
 		{
 			get

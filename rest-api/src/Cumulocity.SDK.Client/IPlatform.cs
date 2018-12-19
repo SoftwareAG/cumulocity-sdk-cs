@@ -1,7 +1,9 @@
 ﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Alarm;
 using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
+using Cumulocity.SDK.Client.Rest.API.Measurement;
 
 namespace Cumulocity.SDK.Client
 {
@@ -10,12 +12,11 @@ namespace Cumulocity.SDK.Client
         IInventoryApi InventoryApi {get;}
         IIdentityApi IdentityApi { get; }
         IRestOperations Rest();
-
-        //MeasurementApi MeasurementApi {get;}
+        IMeasurementApi MeasurementApi {get;}
 
         //DeviceControlApi DeviceControlApi {get;}
 
-        //IAlarmApi AlarmApi {get;}
+        IAlarmApi AlarmApi {get;}
 
         IEventApi EventApi {get;}
 

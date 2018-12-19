@@ -3,6 +3,7 @@ using Cumulocity.SDK.Client.Rest.API.Alarm;
 using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
+using Cumulocity.SDK.Client.Rest.API.Measurement;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Representation.Platform;
@@ -129,6 +130,15 @@ namespace Cumulocity.SDK.Client.Rest
 		    {
 			    var restConnector = createRestConnector();
 			    return new AlarmApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Alarm, PageSize);
+		    }
+	    }
+
+	    public IMeasurementApi MeasurementApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new MeasurementApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Measurement, PageSize);
 		    }
 	    }
 
