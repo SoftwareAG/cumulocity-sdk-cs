@@ -75,6 +75,18 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			}
 		}
 
+		private MeasurementRepresentation aSampleMeasurement(ManagedObjectRepresentation source)
+		{
+			MeasurementRepresentation rep = new MeasurementRepresentation();
+			rep.Type = "com.type1";
+			rep.DateTime = DateTime.UtcNow;
+			rep.Source = source;
+			Input.Add(rep);
+
+			rep.set(new FragmentOne());
+			return rep;
+		}
+
 		private static ManagedObjectRepresentationBuilder aSampleMo()
 		{
 			return RestRepresentationObjectMother.anMoRepresentationLike(SampleManagedObjectRepresentation
@@ -437,13 +449,92 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			iShouldGetNumberOfMeasurements(0);
 		}
 
-		// ------------------------------------------------------------------------
-		// Given
-		// ------------------------------------------------------------------------
 
-		//@Given("I have '(\\d+)' measurements of type '([^']*)' for the managed object")
+	//
+	// Scenario: Delete measurements by filter
+	//......
+	[Fact]
+	public void deleteMeasurementsByTypeFilter() 
+		{
+		//    Given I have '3' measurements of type 'com.type1' for the managed object
+		iHaveMeasurements(3, "com.type1");
+        //    And I have '2' measurements of type 'com.type2' for the managed object
+        iHaveMeasurements(2, "com.type2");
+		//    When I create all measurements
+		iCreateAll();
+		//    Then All measurements should be created
+		allShouldBeCreated();
+		//    When I query all measurements
+		iQueryAll();
+		//    Then I should get '5' measurements
+		iShouldGetNumberOfMeasurements(5);
+		//    When I delete all measurements by type 'com.type2'
+		iDeleteMeasurementsByType("com.type2");
+		//    And I query all measurements
+		iQueryAll();
+		//    Then I should get '3' measurements
+		iShouldGetNumberOfMeasurements(3);
+		//    When I query all measurements by type 'com.type1'
+		iQueryAllByType("com.type1");
+		//    Then I should get '3' measurements
+		iShouldGetNumberOfMeasurements(3);
+		//    When I query all measurements by type 'com.type2'
+		iQueryAllByType("com.type2");
+		//    Then I should get '0' measurements
+		iShouldGetNumberOfMeasurements(0);
+	}
 
-		public void iHaveMeasurements(int n, String type)
+	//    Scenario: Create measurement in bulk
+
+	[Fact]
+	public void createMeasurementsInBulk()
+	{
+		//    Given I have '2' measurements of type 'com.type1' for the managed object
+		iHaveMeasurements(3, "com.type2");
+		//    When I create all measurements in bulk
+		iCreateAllBulk();
+		//    Then All measurements should be created
+		allShouldBeCreated();
+	}
+
+	//
+	//    Scenario: Get measurements collection by default page settings
+
+	[Fact]
+	public void getMeasurementCollectionByDefaultPageSettings() 
+	{
+        // Given
+        for (int i = 0; i < 12; i++) {
+			MeasurementRepresentation rep = aSampleMeasurement(managedObjects[0]);
+			MeasurementApi.create(rep);
+		}
+
+		// When
+		MeasurementCollectionRepresentation measurements = MeasurementApi.Measurements.get();
+
+		// Then
+		Assert.Equal(5,measurements.Measurements.Count);
+
+		// When
+		MeasurementCollectionRepresentation page1st = MeasurementApi.Measurements.getPage(measurements, 1);
+
+		// Then
+		Assert.Equal(5, page1st.Measurements.Count);
+
+		// When
+		MeasurementCollectionRepresentation page2nd = MeasurementApi.Measurements.getPage(measurements, 2);
+
+		// Then
+		Assert.Equal(5, page2nd.Measurements.Count);
+		}
+	// ------------------------------------------------------------------------
+	// Given
+	// ------------------------------------------------------------------------
+
+
+	//@Given("I have '(\\d+)' measurements of type '([^']*)' for the managed object")
+
+	public void iHaveMeasurements(int n, String type)
 		{
 			for (int i = 0; i < n; i++)
 			{
@@ -742,12 +833,23 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			}
 		}
 
-		// ------------------------------------------------------------------------
-		// Then
-		// ------------------------------------------------------------------------
+		//@When("I query all measurements by type '([^']*)'")
+		public void iQueryAllByType(String type) 
+		{
+			try {
+			MeasurementFilter typeFilter = new MeasurementFilter().byType(type);
+			Collection1 = MeasurementApi.getMeasurementsByFilter(typeFilter).get();
+		} catch (SDKException ex) {
+			Status = ex.HttpStatus;
+		}
+}
 
-		//@Then("All measurements should be created")
-		public void allShouldBeCreated()
+// ------------------------------------------------------------------------
+// Then
+// ------------------------------------------------------------------------
+
+//@Then("All measurements should be created")
+public void allShouldBeCreated()
 		{
 			Assert.Equal(Input.Count, Result1.Count);
 			foreach (MeasurementRepresentation rep in Result1)
