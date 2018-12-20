@@ -223,7 +223,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//
 		//    Scenario: Get measurement collection by source and fragment type
-		//...........
 		[Fact]
 		public void getMeasurementCollectionBySourceAndFragmentType()
 		{
@@ -373,6 +372,67 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
 			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+		}
+
+		//
+		//    Scenario: Get measurement
+		//.......
+		[Fact]
+		public void getMeasurement()
+		{
+			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '0' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			//    When I create all measurements
+			iCreateAll();
+			//    And I get the measurement with the created id
+			iGetMeasurementWithCreatedId();
+			//    Then I should get the measurement
+			shouldGetTheMeasurement();
+		}
+
+		//
+		//    Scenario: Delete measurement
+
+		[Fact]
+		public void deleteMeasurement()
+		{
+			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '0' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			//    When I create all measurements
+			iCreateAll();
+			//    And I delete the measurement with the created id
+			iDeleteMeasurementWithCreatedId();
+			//    And I get the measurement with the created id
+			iGetMeasurementWithCreatedId();
+			//    Then Measurement should not be found
+			shouldNotBeFound();
+		}
+
+		//
+		// Scenario: Delete all measurement collection by an empty filter
+		[Fact]
+		public void deleteMeasurementCollectionByEmptyFilter()
+		{
+			//    Given I have '3' measurements of type 'com.type1' for the managed object
+			iHaveMeasurements(3, "com.type1");
+			//    And I have '2' measurements of type 'com.type2' for the managed object
+			iHaveMeasurements(2, "com.type2");
+			//    When I create all measurements
+			iCreateAll();
+			//    Then All measurements should be created
+			allShouldBeCreated();
+			//    When I query all measurements
+			iQueryAll();
+			//    Then I should get '5' measurements
+			iShouldGetNumberOfMeasurements(5);
+			//    When I delete all measurement collection
+			iDeleteMeasurementCollection();
+			//    And I query all measurements
+			iQueryAll();
 			//    Then I should get '0' measurements
 			iShouldGetNumberOfMeasurements(0);
 		}
@@ -611,6 +671,77 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			}
 		}
 
+		//@When("I get the measurement with the created id")
+
+		public void iGetMeasurementWithCreatedId()
+		{
+			try
+			{
+				Result2.Add(MeasurementApi.getMeasurement(Result1[0].Id));
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I delete the measurement with the created id")
+
+		public void iDeleteMeasurementWithCreatedId()
+		{
+			try
+			{
+				MeasurementApi.deleteMeasurement(Result1[0]);
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I delete all measurement collection")
+
+		public void iDeleteMeasurementCollection()
+		{
+			try
+			{
+				MeasurementApi.deleteMeasurementsByFilter(new MeasurementFilter());
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I delete all measurements by type '([^']*)'")
+
+		public void iDeleteMeasurementsByType(String type)
+		{
+			try
+			{
+				MeasurementFilter typeFilter = new MeasurementFilter().byType(type);
+				MeasurementApi.deleteMeasurementsByFilter(typeFilter);
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I query all measurements")
+
+		public void iQueryAll()
+		{
+			try
+			{
+				Collection1 = MeasurementApi.Measurements.get();
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
 		// ------------------------------------------------------------------------
 		// Then
 		// ------------------------------------------------------------------------
@@ -634,7 +765,21 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//@Then("I should get '(\\d+)' measurements")
 		public void iShouldGetNumberOfMeasurements(int count)
 		{
-			Assert.Equal(count, Collection1.Measurements.Where(x => x.Type.Equals("com.type1")).Count());
+			Assert.Equal(count, Collection1.Measurements.Count());
+		}
+
+		//@Then("Measurement should not be found")
+
+		public void shouldNotBeFound()
+		{
+			Assert.Equal(404,Status);
+		}
+
+		//@Then("I should get the measurement")
+
+		public void shouldGetTheMeasurement()
+		{
+			Assert.Equal( Result2[0].Id, Result1[0].Id);
 		}
 	}
 }
