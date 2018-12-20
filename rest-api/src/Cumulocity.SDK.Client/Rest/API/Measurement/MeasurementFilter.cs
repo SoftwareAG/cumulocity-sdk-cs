@@ -167,7 +167,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		{
 			//DateConverter.date2String(fromDate);
 			this.dateFrom = fromDate.ToString("o");
-			this.dateTo = fromDate.ToString("o"); 
+			this.dateTo = toDate.ToString("o"); 
 			return this;
 		}
 

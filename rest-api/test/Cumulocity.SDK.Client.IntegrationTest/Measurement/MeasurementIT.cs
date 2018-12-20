@@ -5,6 +5,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
@@ -168,20 +169,22 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		[Fact]
 		public void getMeasurementCollectionByTime()
 		{
+			var a = getMeasurementsFrom1stPage();
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			iHaveAMeasurementWithTypeAndTime("2018-12-18T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			iHaveAMeasurementWithTypeAndTime("2018-12-18T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    When I create all measurements
 			iCreateAll();
 			//    And I query all measurements by time from '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllByTime("2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			iQueryAllByTime("2018-12-18T10:00:14.9072393Z", "2018-12-18T10:10:14.9072393Z");
 			//    Then I should get '2' measurements
 			iShouldGetNumberOfMeasurements(2);
+			
 			//    And I query all measurements by time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllByTime("2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			iQueryAllByTime("2018-12-18T09:00:14.9072393Z", "2018-12-18T09:10:14.9072393Z");
 			//    Then I should get '0' measurements
 			iShouldGetNumberOfMeasurements(0);
 		}
@@ -209,11 +212,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			//    Then I should get '1' measurements
 			iShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '0' and time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceAndTime(0, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			iQueryAllBySourceAndTime(0, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
 			//    Then I should get '0' measurements
 			iShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceAndTime(1, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			iQueryAllBySourceAndTime(1, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
 			//    Then I should get '0' measurements
 			iShouldGetNumberOfMeasurements(0);
 		}
@@ -346,15 +349,14 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void iHaveAMeasurementWithTypeAndTime(String time, String fragmentType, int index)
 		{
 			MeasurementRepresentation rep = new MeasurementRepresentation();
-			rep.DateTime = DateTime.UtcNow;
+			rep.DateTime = DateTime.ParseExact(time, "o",
+				System.Globalization.CultureInfo.InvariantCulture);
 			rep.Type = "com.type1";
 			rep.Source = managedObjects[index];
-			Input.Add(rep);
 
 			// Set fragment
 			var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
 			rep.set(fragmentClass);
-
 			Input.Add(rep);
 		}
 
@@ -418,7 +420,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//@Then("I should get '(\\d+)' measurements")
 		public void iShouldGetNumberOfMeasurements(int count)
 		{
-			Assert.Equal(count, Collection1.Measurements.Count);
+			Assert.Equal(count, Collection1.Measurements.Where(x=>x.Type.Equals("com.type1")).Count());
+
 		}
 	}
 }
