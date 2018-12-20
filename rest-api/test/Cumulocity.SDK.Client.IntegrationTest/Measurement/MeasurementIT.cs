@@ -182,7 +182,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			iQueryAllByTime("2018-12-18T10:00:14.9072393Z", "2018-12-18T10:10:14.9072393Z");
 			//    Then I should get '2' measurements
 			iShouldGetNumberOfMeasurements(2);
-			
+
 			//    And I query all measurements by time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
 			iQueryAllByTime("2018-12-18T09:00:14.9072393Z", "2018-12-18T09:10:14.9072393Z");
 			//    Then I should get '0' measurements
@@ -217,6 +217,162 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			iShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
 			iQueryAllBySourceAndTime(1, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+		}
+
+		//
+		//    Scenario: Get measurement collection by source and fragment type
+		//...........
+		[Fact]
+		public void getMeasurementCollectionBySourceAndFragmentType()
+		{
+			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '0' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '1' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			//    When I create all measurements
+			iCreateAll();
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne'
+			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			//    Then I should get '1' measurements
+			iShouldGetNumberOfMeasurements(1);
+			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne'
+			iQueryAllBySourceAndType(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			//    Then I should get '1' measurements
+			iShouldGetNumberOfMeasurements(1);
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo'
+			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo'
+			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+		}
+
+		//
+		//
+		//    Scenario: Get measurement collection by fragment type and time
+
+		[Fact]
+		public void getMeasurementCollectionByFragmentTypeAndTime()
+		{
+			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '0' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '1' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			//    When I create all measurements
+			iCreateAll();
+			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from '2011-11-03T11:00:00
+			// .000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
+					"2018-12-19T10:10:14.9072393Z");
+			//    Then I should get '2' measurements
+			iShouldGetNumberOfMeasurements(2);
+			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from '2011-11-03T11:00:00
+			// .000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:14.9072393Z",
+					"2018-12-19T10:10:14.9072393Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from '2011-11-03T10:00:00
+			// .000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:14.9072393Z",
+					"2018-12-19T10:00:14.9072393Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+		}
+
+		//
+		//
+		//    Scenario: Get measurement collection by source and fragment type and time
+
+		[Fact]
+		public void getMeasurementCollectionBySourceAndFragmentTypeAndTime()
+		{
+			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '0' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
+			// .FragmentOne' and for '1' managed object
+			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			//    When I create all measurements
+			iCreateAll();
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '1' measurements
+			iShouldGetNumberOfMeasurements(1);
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:01:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:00:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:00:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '1' measurements
+			iShouldGetNumberOfMeasurements(1);
+			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:00:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
+					"2018-12-19T10:10:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:00:00.0000000Z");
+			//    Then I should get '0' measurements
+			iShouldGetNumberOfMeasurements(0);
+			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
+			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
+			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should get '0' measurements
 			iShouldGetNumberOfMeasurements(0);
 		}
@@ -397,6 +553,64 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			}
 		}
 
+		//@When("I query all measurements by source '(\\d+)' and fragment type '([^']*)'")
+		public void iQueryAllBySourceAndType(int index, String fragmentType)
+		{
+			try
+			{
+				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
+
+				ManagedObjectRepresentation source = managedObjects[index];
+				MeasurementFilter filter = new MeasurementFilter().byFragmentType(fragmentClass.GetType()).bySource(source);
+
+				Collection1 = MeasurementApi.getMeasurementsByFilter(filter).get();
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I query all measurements by fragment type '([^']*)' and time from '([^']*)' and time to '([^']*)'")
+
+		public void iQueryAllByTypeAndTime(String fragmentType, String from, String to)
+		{
+			try
+			{
+				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
+				var fromDate = DateTime.ParseExact(from, "o",
+					System.Globalization.CultureInfo.InvariantCulture);
+				var toDate = DateTime.ParseExact(to, "o",
+					System.Globalization.CultureInfo.InvariantCulture);
+				MeasurementFilter filter = new MeasurementFilter().byDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				Collection1 = MeasurementApi.getMeasurementsByFilter(filter).get();
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I query all measurements by source '(\\d+)' and fragment type '([^']*)' and time from '([^']*)' and time to '([^']*)'")
+		public void iQueryAllBySourceTypeAndTime(int index, String fragmentType, String from, String to)
+		{
+			try
+			{
+				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
+				ManagedObjectRepresentation source = managedObjects[index];
+				var fromDate = DateTime.ParseExact(from, "o",
+					System.Globalization.CultureInfo.InvariantCulture);
+				var toDate = DateTime.ParseExact(to, "o",
+					System.Globalization.CultureInfo.InvariantCulture);
+				MeasurementFilter filter = new MeasurementFilter().bySource(source).byDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				Collection1 = MeasurementApi.getMeasurementsByFilter(filter).get();
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
 		// ------------------------------------------------------------------------
 		// Then
 		// ------------------------------------------------------------------------
@@ -420,8 +634,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//@Then("I should get '(\\d+)' measurements")
 		public void iShouldGetNumberOfMeasurements(int count)
 		{
-			Assert.Equal(count, Collection1.Measurements.Where(x=>x.Type.Equals("com.type1")).Count());
-
+			Assert.Equal(count, Collection1.Measurements.Where(x => x.Type.Equals("com.type1")).Count());
 		}
 	}
 }
