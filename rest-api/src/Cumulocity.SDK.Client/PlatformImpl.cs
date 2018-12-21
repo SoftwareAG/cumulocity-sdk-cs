@@ -1,5 +1,6 @@
 ﻿using System;
 using Cumulocity.SDK.Client.Rest.API.Alarm;
+using Cumulocity.SDK.Client.Rest.API.DeviceControl;
 using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
@@ -139,6 +140,24 @@ namespace Cumulocity.SDK.Client.Rest
 		    {
 			    var restConnector = createRestConnector();
 			    return new MeasurementApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Measurement, PageSize);
+		    }
+	    }
+
+	    public IDeviceCredentialsApi DeviceCredentialsApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new DeviceCredentialsApiImpl(this,restConnector);
+		    }
+	    }
+
+	    public IDeviceControlApi DeviceControlApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new DeviceControlApiImpl(this,restConnector, new UrlProcessor(), getPlatformApi(restConnector).DeviceControl, PageSize);
 		    }
 	    }
 

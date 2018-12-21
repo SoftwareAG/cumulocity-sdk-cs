@@ -160,7 +160,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling.Threads
 
 	}
 
-	internal class ThreadGroup
+	public class ThreadGroup
 	{
 		private List<Thread> threads = new List<Thread>();
 

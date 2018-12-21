@@ -15,7 +15,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
 
 
 		//ORIGINAL LINE: @Null(operation = {CREATE}) @NotNull(operation = {UPDATE}) private String status;
-		public string status { get; set; }
+		public string Status { get; set; }
 
 		//ORIGINAL LINE: @Null(operation = {UPDATE}) private String tenantId;
 		public string TenantId { get; set; }
