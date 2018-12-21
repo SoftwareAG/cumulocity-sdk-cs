@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
 {
@@ -10,28 +11,31 @@ namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
 	{
 
 		//ORIGINAL LINE: @NotNull(operation = {CREATE}) @Null(operation = {UPDATE}) private String id;
-		public string id;
+		public string Id { get; set; }
 
 
 		//ORIGINAL LINE: @Null(operation = {CREATE}) @NotNull(operation = {UPDATE}) private String status;
-		public string status;
+		public string status { get; set; }
 
 		//ORIGINAL LINE: @Null(operation = {UPDATE}) private String tenantId;
-		public string tenantId;
+		public string TenantId { get; set; }
 
 
 		//ORIGINAL LINE: @Null(operation = {UPDATE}) @Getter(onMethod = @__(@JSONProperty(ignoreIfNull = true))) private String groupId;
-		public string groupId;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string GroupId { get; set; }
 
 		//ORIGINAL LINE: @Getter(onMethod = @__(@JSONProperty(ignoreIfNull = true))) private String type;
-		private string type;
-
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string Type { get; set; }
 
 		//ORIGINAL LINE: @Null(operation = {CREATE, UPDATE}) @Getter(onMethod = @__(@JSONProperty(ignoreIfNull = true))) private String owner;
-		public string owner;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string Owner { get; set; }
 
 		//ORIGINAL LINE: @Null(operation = {CREATE, UPDATE}) @Getter(onMethod = @__({@JSONProperty(ignoreIfNull = true), @JSONConverter(type = DateTimeConverter.class)})) private DateTime creationTime;
-		public DateTime creationTime;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public DateTime? CreationTime { get; set; }
 
 	}
 }

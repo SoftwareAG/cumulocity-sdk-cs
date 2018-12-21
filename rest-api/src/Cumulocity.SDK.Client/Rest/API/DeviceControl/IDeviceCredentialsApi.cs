@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Cumulocity.SDK.Client.Rest.API.Polling;
+using Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
