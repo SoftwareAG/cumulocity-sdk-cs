@@ -2,6 +2,6 @@
 {
 	public interface ISecretRevealer
 	{
-		(string user, string pass) Reveal();
+		(string user, string pass, string userbootstrap, string passbootstrap) Reveal();
 	}
 }

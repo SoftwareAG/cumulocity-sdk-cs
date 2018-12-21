@@ -8,5 +8,8 @@ namespace Cumulocity.SDK.Client.HelperTest
 	{
 		public string UserAdmin { get; set; }
 		public string PasswordAdmin { get; set; }
+
+		public string UserBootstrap { get; set; }
+		public string PasswordBootstrap { get; set; }
 	}
 }

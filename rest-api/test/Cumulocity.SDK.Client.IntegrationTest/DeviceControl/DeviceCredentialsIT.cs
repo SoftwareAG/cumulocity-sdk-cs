@@ -2,22 +2,22 @@
 using Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using System;
+using System.Threading;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 {
 	public class DeviceCredentialsIT : IClassFixture<DeviceCredentialsFixture>, IDisposable
 	{
-		private DeviceCredentialsApiImpl deviceCredentialsResource;
-		private ResponseParser responseParser;
-		private RestConnector restConnector;
-		private DeviceCredentialsFixture fixture;
+		private readonly DeviceCredentialsApiImpl deviceCredentialsResource;
+		private readonly RestConnector restConnector;
+		private readonly DeviceCredentialsFixture fixture;
 
 		public DeviceCredentialsIT(DeviceCredentialsFixture fixture)
 		{
 			this.fixture = fixture;
-			deviceCredentialsResource = (DeviceCredentialsApiImpl)fixture.platform.DeviceCredentialsApi;
-			responseParser = new ResponseParser();
+			deviceCredentialsResource = (DeviceCredentialsApiImpl)fixture.bootstrap.DeviceCredentialsApi;
+			var responseParser = new ResponseParser();
 			restConnector = new RestConnector(fixture.platform, responseParser);
 		}
 
@@ -28,22 +28,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			int pollIntervalInSeconds = 2;
 			createNewDeviceRequest(deviceId);
 
-			//Timer timer = new Timer();
-			//timer.schedule(new TimerTask()
-			//{
-			//	@Override
-
-			//	public void run()
-			//	{
-			//		acceptNewDeviceRequest(deviceId);
-			//	}
-			//}, pollIntervalInSeconds* 2 * 1000);
+			var timer = new Timer(
+				callback: new TimerCallback((_) => { acceptNewDeviceRequest(deviceId); }),
+				state: null,
+				dueTime: 0,
+				period: pollIntervalInSeconds * 2 * 1000);
 
 			DeviceCredentialsRepresentation credentials = deviceCredentialsResource.pollCredentials(deviceId, pollIntervalInSeconds, 100);
-			//assertThat(credentials).isNotNull();
-			//assertThat(credentials.getTenantId()).isEqualTo(platform.getTenantId());
-			//assertThat(credentials.getUsername()).isEqualTo("device_" + deviceId);
-			//assertThat(credentials.getPassword()).isNotEmpty();
+
+			Assert.NotNull(credentials);
+			Assert.Equal(credentials.Id, this.fixture.platform.TenantId);
+			Assert.Equal(credentials.Username, "device_" + deviceId);
+			Assert.NotEmpty(credentials.Password);
+			timer.Dispose();
 		}
 
 		private void createNewDeviceRequest(String deviceId)

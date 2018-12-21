@@ -10,6 +10,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 	public class DeviceCredentialsFixture : IDisposable
 	{
 		public PlatformImpl platform;
+		public PlatformImpl bootstrap;
 
 		public DeviceCredentialsFixture()
 		{
@@ -21,8 +22,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 				ProxyHost = "127.0.0.1",
 				ProxyPort = 8888
 			};
+			PlatformImpl bootstrap = new PlatformImpl("https://piotr.staging.c8y.io",
+				new CumulocityCredentials(secretRevealer.Reveal().userbootstrap, secretRevealer.Reveal().passbootstrap))
+			{
+				ProxyHost = "127.0.0.1",
+				ProxyPort = 8888
+			};
 
 			this.platform = platform;
+			this.bootstrap = bootstrap;
 		}
 
 		public void Dispose()
