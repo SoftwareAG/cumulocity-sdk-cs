@@ -112,7 +112,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 
 		internal void Shutdown()
 		{
-
+			foreach (var t in threads)
+			{
+				t.Interrupt();
+			}
 		}
 	}
 }

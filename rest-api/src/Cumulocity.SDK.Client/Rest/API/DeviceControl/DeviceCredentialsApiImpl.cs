@@ -1,4 +1,5 @@
-﻿using Cumulocity.SDK.Client.Rest.API.Polling;
+﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
 using Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
@@ -49,34 +50,28 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 
 		public DeviceCredentialsRepresentation pollCredentials(string deviceId, PollingStrategy pollingStrategy)
 		{
-			return null;
-			//return aPoller(deviceId, pollingStrategy).startAndPoll();
+			return aPoller(deviceId, pollingStrategy).startAndPoll();
 		}
 
 		//ORIGINAL LINE: private AlteringRateResultPoller<DeviceCredentialsRepresentation> aPoller(final String deviceId, PollingStrategy pollingStrategy)
-		//private AlteringRateResultPoller<DeviceCredentialsRepresentation> aPoller(string deviceId, PollingStrategy pollingStrategy)
-		//{
-		//	GetResultTask<DeviceCredentialsRepresentation> pollingTask = new GetResultTaskAnonymousInnerClass(this, deviceId);
-		//	return new AlteringRateResultPoller<DeviceCredentialsRepresentation>(pollingTask, pollingStrategy);
-		//}
+		private AlteringRateResultPoller<DeviceCredentialsRepresentation> aPoller(string deviceId, PollingStrategy pollingStrategy)
+		{
+			GetResultTask<DeviceCredentialsRepresentation> pollingTask = new GetResultTask<DeviceCredentialsRepresentation>(this,deviceId);
+			return new AlteringRateResultPoller<DeviceCredentialsRepresentation>(pollingTask, pollingStrategy);
+		}
 
-		//private class GetResultTaskAnonymousInnerClass : GetResultTask<DeviceCredentialsRepresentation>
-		//{
-		//	private readonly DeviceCredentialsApiImpl outerInstance;
-
-		//	private string deviceId;
-
-		//	public GetResultTaskAnonymousInnerClass(DeviceCredentialsApiImpl outerInstance, string deviceId)
-		//	{
-		//		this.outerInstance = outerInstance;
-		//		this.deviceId = deviceId;
-		//	}
-
-		//	public  DeviceCredentialsRepresentation tryGetResult()
-		//	{
-		//		return outerInstance.pollCredentials(deviceId);
-		//	}
-
-		//}
+		public class GetResultTask<K> : IGetResultTask<K> where K : new()
+		{
+			private string DeviceId { get; set; }
+			private DeviceCredentialsApiImpl DeviceCredentialsApiImpl { get; set; }
+			public GetResultTask(DeviceCredentialsApiImpl deviceCredentialsApiImpl,string deviceId)
+			{
+				this.DeviceId = deviceId;
+			}
+			public K TryGetResult()
+			{
+				return DeviceCredentialsApiImpl.pollCredentials(DeviceId);
+			}
+		}
 	}
 }
