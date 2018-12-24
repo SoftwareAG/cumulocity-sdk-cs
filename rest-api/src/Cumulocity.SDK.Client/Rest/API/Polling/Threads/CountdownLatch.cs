@@ -27,5 +27,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling.Threads
 		{
 			m_event.WaitOne();
 		}
+		public void Wait(int timeout)
+		{
+			m_event.WaitOne(timeout);
+		}
 	}
 }

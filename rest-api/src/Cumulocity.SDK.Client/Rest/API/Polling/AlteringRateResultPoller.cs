@@ -6,34 +6,29 @@ using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
 
 namespace Cumulocity.SDK.Client.Rest.API.Polling
 {
-	public class AlteringRateResultPoller<K> : IResultPoller<K>
+	public class AlteringRateResultPoller<K>
 	{
 
-		//private static readonly Logger LOG = LoggerFactory.getLogger(typeof(AlteringRateResultPoller));
+		IGetResultTask<K> getResultTask;
+		PollingStrategy pollingStrategy;
+		ScheduledThreadPoolExecutor pollingExecutor = new ScheduledThreadPoolExecutor(1);
+		CountDownLatch latch;
+		Exception lastException;
+		K result;
+		Action pollingTask;
 
-		public interface GetResultTask<K>
+		public AlteringRateResultPoller(IGetResultTask<K> getResultTask, PollingStrategy strategy)
 		{
-			K tryGetResult();
-		}
-
-		private readonly PollingStrategy pollingStrategy;
-		private readonly ScheduledThreadPoolExecutor pollingExecutor;
-		private readonly Runnable pollingTask;
-		private CountDownLatch latch;
-		private  K result;
-		private Exception lastException;
-
-		public AlteringRateResultPoller(GetResultTask<K> task, PollingStrategy strategy)
-		{
+			this.getResultTask = getResultTask;
 			this.pollingStrategy = strategy;
-			this.pollingExecutor = new ScheduledThreadPoolExecutor(1, new ThreadFactory());
-			this.pollingTask = wrapAsRunnable(task);
+			this.pollingTask = pollingAppendResult;
 		}
 
-		public  bool start()
+		public bool Start()
 		{
 			if (pollingTask == null)
 			{
+				Console.WriteLine("Poller start requested without pollingTask being set");
 				//LOG.error("Poller start requested without pollingTask being set");
 				return false;
 			}
@@ -44,30 +39,57 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 
 		private void scheduleNextTaskExecution()
 		{
-			if (!pollingStrategy.Empty)
+			if (pollingStrategy != null)
 			{
-				pollingExecutor.Schedule(pollingTask, pollingStrategy.popNext()??0, TimeUnit.MILLISECONDS);
+				//pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(pollingStrategy.popNext()??1));
+				pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(300));
 			}
 
 		}
 
-		public  void stop()
+		private void pollingAppendResult()
 		{
-			//shutdown operationsPollingExecutor if it's running or if it's no shutting down just now
-			pollingExecutor.Shutdown();
+			var task = this.getResultTask;
+
+			if (result != null)
+			{
+				return;
+			}
+			try
+			{
+				result = task.TryGetResult();
+				if (result == null)
+				{
+					scheduleNextTaskExecution();
+				}
+				else
+				{
+					latch.Signal();
+				}
+			}
+			catch (Exception ex)
+			{
+				lastException = ex;
+				//LOG.info("Polling with wrong result: " + digest(ex.getMessage()));
+				if (pollingStrategy != null)
+				{
+					//LOG.info("Try again in " + pollingStrategy.peakNext() / 1000 + " seconds.");
+				}
+				scheduleNextTaskExecution();
+			}
 		}
 
-		public  K startAndPoll()
+		public K startAndPoll()
 		{
 			latch = new CountDownLatch(1);
 			start();
 			try
 			{
 				waitForResult();
-				//if (result == default(K) && lastException != null)
-				//{
-				//	//LOG.error("Timeout occured, last exception: " + lastException);
-				//}
+				if (result == null && lastException != null)
+				{
+					//LOG.error("Timeout occured, last exception: " + lastException);
+				}
 				return result;
 			}
 			catch (Exception e)
@@ -79,72 +101,34 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				stop();
 			}
 		}
+		public bool start()
+		{
+			if (pollingTask == null)
+			{
+				//LOG.error("Poller start requested without pollingTask being set");
+				return false;
+			}
 
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: private void waitForResult() throws InterruptedException
+			scheduleNextTaskExecution();
+			return true;
+		}
+		public void stop()
+		{
+			//shutdown operationsPollingExecutor if it's running or if it's no shutting down just now
+			pollingExecutor.Shutdown();
+		}
+
 		private void waitForResult()
 		{
 			if (pollingStrategy.Timeout == null)
 			{
-				//latch.await();
+				latch.Wait();
 			}
 			else
 			{
-				//latch.await(pollingStrategy.Timeout, TimeUnit.MILLISECONDS);
+				latch.Wait((int)pollingStrategy.Timeout);
 			}
 		}
 
-		//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-		//ORIGINAL LINE: private Runnable wrapAsRunnable(final GetResultTask<K> task)
-		private Runnable wrapAsRunnable(GetResultTask<K> task)
-		{
-			//Todo: Runnable
-			return null;
-		}
-
-		//JAVA TO C# CONVERTER WARNING: 'final' parameters are not available in .NET:
-		//ORIGINAL LINE: private void appendResult(final GetResultTask<K> task)
-		private void appendResult(GetResultTask<K> task)
-		{
-			//if (result != default(K))
-			//{
-			//	return;
-			//}
-			try
-			{
-				//result = task.tryGetResult();
-				//if (result == default(K))
-				//{
-				//	scheduleNextTaskExecution();
-				//}
-				//else
-				//{
-				//	latch.CountDown();
-				//}
-			}
-			catch (Exception ex)
-			{
-				lastException = ex;
-				//LOG.info("Polling with wrong result: " + digest(ex.Message));
-				if (!pollingStrategy.Empty)
-				{
-					//LOG.info("Try again in " + pollingStrategy.peakNext() / 1000 + " seconds.");
-				}
-				scheduleNextTaskExecution();
-			}
-		}
-
-		private static string digest(string message)
-		{
-			if (string.ReferenceEquals(message, null) || message.Length < 200)
-			{
-				return message;
-			}
-			else
-			{
-				return message.Substring(0, Math.Min(message.Length - 1, 200));
-			}
-		}
 	}
-
 }
