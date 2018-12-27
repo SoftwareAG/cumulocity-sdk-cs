@@ -10,7 +10,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 	{
 		public int ThreadCount => threads.Length;
 		public EventHandler<Exception> OnException;
-
+		private bool shutdown = false;
 		private ManualResetEvent waiter;
 		private Thread[] threads;
 		private SortedSet<Tuple<DateTime, Action>> queue;
@@ -79,6 +79,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				{
 					lock (waiter)
 					{
+						if (IsShutdown())
+							break;
 						if (queue.Any())
 						{
 							if (queue.First().Item1 <= DateTime.Now)
@@ -112,10 +114,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 
 		internal void Shutdown()
 		{
-			foreach (var t in threads)
+			lock (waiter)
 			{
-				t.Interrupt();
+				shutdown = true;
 			}
+		}
+		public bool IsShutdown()
+		{
+			return shutdown;
 		}
 	}
 }

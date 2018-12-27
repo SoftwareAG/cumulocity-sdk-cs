@@ -25,11 +25,11 @@ namespace Cumulocity.SDK.Client
 
         private const int ReadTimeoutInMillis = 180000;
 
-        private static CumulocityHttpClient client; //= new CumulocityHttpClient();
+        private  CumulocityHttpClient client; //= new CumulocityHttpClient();
 
 
         public RestConnector(PlatformParameters platformParameters, ResponseParser responseParser) : this(
-            platformParameters, responseParser, createClient(platformParameters))
+            platformParameters, responseParser, null)
         {
         }
 
@@ -38,12 +38,13 @@ namespace Cumulocity.SDK.Client
         {
             PlatformParameters = platformParameters;
             ResponseParser = responseParser;
-            Client = client;
+	        Client = createClient(platformParameters);
+
         }
 
         public virtual PlatformParameters PlatformParameters { get; }
 
-        public virtual CumulocityHttpClient Client { get; }
+        public  CumulocityHttpClient Client { get; }
 
         public virtual ResponseParser ResponseParser { get; }
 
@@ -138,8 +139,9 @@ namespace Cumulocity.SDK.Client
                 RequestUri = new Uri(path),
                 Content = stringContent
             };
-            
-            if (PlatformParameters.requireResponseBody())
+	        var pass = PlatformParameters.Password;
+
+			if (PlatformParameters.requireResponseBody())
                 request.Headers.TryAddWithoutValidation("Accept", accept.TypeString);
             
             request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
@@ -207,7 +209,7 @@ namespace Cumulocity.SDK.Client
             return repFromPlatform != null;
         }
 
-        public static CumulocityHttpClient createClient(PlatformParameters platformParameters)
+        public  CumulocityHttpClient createClient(PlatformParameters platformParameters)
         {
             var config = new HttpClientHandler();
 //            if (isProxyRequired(platformParameters))
@@ -231,7 +233,7 @@ namespace Cumulocity.SDK.Client
             return client;
         }
 
-        private static HttpClientHandler createDefaultClientHander(HttpClientHandler config)
+        private  HttpClientHandler createDefaultClientHander(HttpClientHandler config)
         {
             var credentials = new NetworkCredential("user", "pass");
             var handler = new HttpClientHandler {Credentials = credentials}; 

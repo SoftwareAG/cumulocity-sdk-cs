@@ -42,7 +42,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			if (pollingStrategy != null)
 			{
 				//pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(pollingStrategy.popNext()??1));
-				pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(300));
+				pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(2000));
 			}
 
 		}

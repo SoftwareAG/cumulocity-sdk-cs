@@ -11,13 +11,16 @@ namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
 	{
 
 		//ORIGINAL LINE: @NotNull(operation = {CREATE}) @Null(operation = {UPDATE}) private String id;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string Id { get; set; }
 
 
 		//ORIGINAL LINE: @Null(operation = {CREATE}) @NotNull(operation = {UPDATE}) private String status;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string Status { get; set; }
 
 		//ORIGINAL LINE: @Null(operation = {UPDATE}) private String tenantId;
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string TenantId { get; set; }
 
 

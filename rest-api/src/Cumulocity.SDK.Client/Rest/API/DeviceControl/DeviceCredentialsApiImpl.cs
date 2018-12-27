@@ -39,7 +39,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			//ORIGINAL LINE: final DeviceCredentialsRepresentation representation = new DeviceCredentialsRepresentation();
 			DeviceCredentialsRepresentation representation = new DeviceCredentialsRepresentation();
 			representation.Id = deviceId;
-			return restConnector.Post(credentialsUrl, DeviceControlMediaType.DEVICE_CREDENTIALS, representation);
+			return restConnector.Post<DeviceCredentialsRepresentation>(credentialsUrl, DeviceControlMediaType.DEVICE_CREDENTIALS, representation);
 		}
 
 		public DeviceCredentialsRepresentation pollCredentials(string deviceId, int interval, int timeout)
@@ -67,10 +67,23 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			public GetResultTask(DeviceCredentialsApiImpl deviceCredentialsApiImpl,string deviceId)
 			{
 				this.DeviceId = deviceId;
+				this.DeviceCredentialsApiImpl = deviceCredentialsApiImpl;
 			}
 			public K TryGetResult()
 			{
-				return DeviceCredentialsApiImpl.pollCredentials(DeviceId);
+				var readData = DeviceCredentialsApiImpl.pollCredentials(DeviceId);
+				if (readData is DeviceCredentialsApiImpl)
+				{
+					return (K)(object)readData;
+				}
+				try
+				{
+					return (K)Convert.ChangeType(readData, typeof(K));
+				}
+				catch (InvalidCastException)
+				{
+					return default(K);
+				}
 			}
 		}
 	}

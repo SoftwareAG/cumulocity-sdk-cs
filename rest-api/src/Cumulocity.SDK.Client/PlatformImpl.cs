@@ -92,7 +92,7 @@ namespace Cumulocity.SDK.Client.Rest
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public IRestOperations Rest()

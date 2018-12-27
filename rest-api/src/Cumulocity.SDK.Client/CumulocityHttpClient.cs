@@ -17,7 +17,7 @@ namespace Cumulocity.SDK.Client
         private PlatformParameters platformParameters;
         private readonly SerializerSettings _serializerSettings;
 
-        internal CumulocityHttpClient(HttpClientHandler createDefaultClientHandler, bool disposeHandler) : base(
+	    public CumulocityHttpClient(HttpClientHandler createDefaultClientHandler, bool disposeHandler) : base(
             createDefaultClientHandler, disposeHandler)
         {
         }

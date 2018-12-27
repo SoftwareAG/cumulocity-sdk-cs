@@ -1,4 +1,7 @@
-﻿namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
+namespace Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap
 {
 	public class DeviceCredentialsRepresentation : CustomPropertiesMapRepresentation
 	{
@@ -13,7 +16,7 @@
 
 		//ORIGINAL LINE: @Null(operation = {CREATE}) private String password;
 		private string password;
-
+		[JsonProperty("id")]
 		public virtual string Id
 		{
 			get
@@ -25,7 +28,7 @@
 				this.id = value;
 			}
 		}
-
+		[JsonProperty("tenantId")]
 		public virtual string TenantId
 		{
 			get
@@ -37,7 +40,7 @@
 				this.tenantId = value;
 			}
 		}
-
+		[JsonProperty("username")]
 		public virtual string Username
 		{
 			get
@@ -49,7 +52,7 @@
 				this.username = value;
 			}
 		}
-
+		[JsonProperty("password")]
 		public virtual string Password
 		{
 			get
