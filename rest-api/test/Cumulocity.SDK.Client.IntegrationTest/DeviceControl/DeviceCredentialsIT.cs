@@ -27,7 +27,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			string deviceId = "3000";
 			int pollIntervalInSeconds = 2;
 			createNewDeviceRequest(deviceId);
-			Thread.Sleep(5000);
 
 			DeviceCredentialsRepresentation credentials = deviceCredentialsResource.pollCredentials(deviceId, pollIntervalInSeconds, 100);
 

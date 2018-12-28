@@ -71,13 +71,15 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			}
 			public K TryGetResult()
 			{
-				var readData = DeviceCredentialsApiImpl.pollCredentials(DeviceId);
-				if (readData is DeviceCredentialsApiImpl)
-				{
-					return (K)(object)readData;
-				}
+
 				try
 				{
+					var readData = DeviceCredentialsApiImpl.pollCredentials(DeviceId);
+					if (readData is DeviceCredentialsApiImpl)
+					{
+						return (K)(object)readData;
+					}
+
 					return (K)Convert.ChangeType(readData, typeof(K));
 				}
 				catch (InvalidCastException)
