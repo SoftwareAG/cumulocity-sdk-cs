@@ -54,3 +54,5 @@
 /rest-api/test/Cumulocity.SDK.Client.HelperTest/obj
 /rest-api/test/TestsExtensions/bin/Debug/netcoreapp2.2
 /rest-api/test/TestsExtensions/obj
+/rest-api/src/cometd.NetStandard/obj/Debug/netstandard2.0
+/rest-api/src/cometd.NetStandard/obj
