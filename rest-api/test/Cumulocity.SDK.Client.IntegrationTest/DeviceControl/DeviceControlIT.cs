@@ -28,6 +28,7 @@ using Cumulocity.SDK.Client.Rest.Model;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
 using System.Collections.Generic;
+using Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification;
 using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Representation.Builder;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
@@ -37,13 +38,17 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 {
 	public class DeviceControlIT : IClassFixture<DeviceControlFixture>, IDisposable
 	{
+		private class SimpleOperationProcessor
+		{
+		}
+
 		private readonly IDeviceControlApi deviceControlResource;
 		private readonly IInventoryApi inventoryApi;
 		private readonly List<ManagedObjectRepresentation> managedObjects = new List<ManagedObjectRepresentation>();
 		private readonly DeviceControlFixture fixture;
-		//private OperationNotificationSubscriber subscriber;
+		private OperationNotificationSubscriber subscriber;
 		private OperationRepresentation operation1;
-		//SimpleOperationProcessor operationProcessor = new SimpleOperationProcessor();
+		SimpleOperationProcessor operationProcessor = new SimpleOperationProcessor();
 		FixedRatePoller poller = null;
 		OperationCollectionRepresentation allOperations;
 

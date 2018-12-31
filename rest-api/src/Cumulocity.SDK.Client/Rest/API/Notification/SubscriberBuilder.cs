@@ -104,7 +104,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private IBayeuxSessionProvider createSessionProvider()
 		{
-			return createProvider(endpoint, parameters, dataType, unauthorizedConnectionWatcher, resolveEnabledExtensions());
+			return DefaultBayeuxClientProvider.createProvider(endpoint, parameters, dataType, unauthorizedConnectionWatcher, resolveEnabledExtensions());
 		}
 
 		private IExtension[] resolveEnabledExtensions()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Cumulocity.SDK.Client.Rest.API.Notification;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
@@ -20,8 +21,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification
 
 		private ISubscriber<GId, OperationRepresentation> createSubscriber(PlatformParameters parameters)
 		{
-			return null;
-			//return SubscriberBuilder.anSubscriber<GId, OperationRepresentation>().withEndpoint(DEVICE_CONTROL_NOTIFICATIONS_URL).withSubscriptionNameResolver(new AgentDeviceIdAsSubscriptonName()).withParameters(parameters).withDataType(typeof(OperationRepresentation)).withMessageDeliveryAcknowlage(true).build();
+			return SubscriberBuilder<GId, OperationRepresentation>.anSubscriber<GId, OperationRepresentation>().withEndpoint(DEVICE_CONTROL_NOTIFICATIONS_URL).withSubscriptionNameResolver(new AgentDeviceIdAsSubscriptonName()).withParameters(parameters).withDataType(typeof(OperationRepresentation)).withMessageDeliveryAcknowlage(true).build();
 		}
 
 		//ORIGINAL LINE: public Subscription<GId> subscribe(final GId agentId, final SubscriptionListener<GId, OperationRepresentation> handler) throws SDKException

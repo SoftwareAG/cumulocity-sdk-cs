@@ -17,4 +17,8 @@
     <Folder Include="Identity\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Cumulocity.SDK.Client\Cumulocity.SDK.Client.csproj" />
+  </ItemGroup>
+
 </Project>
