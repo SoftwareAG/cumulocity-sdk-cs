@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
+	[JsonObject]
 	public class OperationCollectionRepresentation : BaseCollectionRepresentation<OperationRepresentation>
 	{
 		private IList<OperationRepresentation> operations;
