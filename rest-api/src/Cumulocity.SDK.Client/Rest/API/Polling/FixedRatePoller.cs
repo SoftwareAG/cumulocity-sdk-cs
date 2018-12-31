@@ -26,7 +26,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			this.periodInterval = periodInterval;
 		}
 
-		public bool start()
+		public virtual bool start()
 		{
 			if (pollingTask == null)
 			{
@@ -35,15 +35,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			}
 
 			//start scheduled periodic polling for new operations (only one task in scheduler at any given time)
-			if (pollingExecutor.ThreadCount == 0)
-			{
-				pollingExecutor.ScheduleAtFixedRate(pollingTask, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(periodInterval));
-			}
+
+			pollingExecutor.ScheduleAtFixedRate(pollingTask, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(periodInterval));
 
 			return true;
 		}
 
-		public void stop()
+		public virtual void stop()
 		{
 			//shutdown operationsPollingExecutor if it's running or if it's no shutting down just now
 			pollingExecutor.Shutdown();

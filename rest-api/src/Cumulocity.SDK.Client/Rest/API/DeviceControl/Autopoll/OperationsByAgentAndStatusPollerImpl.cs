@@ -36,5 +36,27 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 				//logger.error("Problem polling for operations", e);
 			}
 		}
+
+		
+		public override bool start()
+		{
+			if (!base.start())
+			{
+				return false;
+			}
+
+			//start operationRep handler, which is getting operations from blocking queue
+			queueHandler.start();
+			return true;
+		}
+
+	
+		public override void stop()
+		{
+			base.stop();
+
+			//stop operationRep handler, which is getting operations from blocking queue
+			queueHandler.stop();
+		}
 	}
 }

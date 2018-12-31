@@ -71,7 +71,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		{
 			while (true)
 			{
-				TimeSpan sleepingTime = TimeSpan.MaxValue;
+				TimeSpan sleepingTime = TimeSpan.FromMilliseconds(Int32.MaxValue);
 				bool needToSleep = true;
 				Action task = null;
 
