@@ -26,6 +26,7 @@ using Cumulocity.SDK.Client.Rest.API.DeviceControl;
 using Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll;
 using Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
+using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Model;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
@@ -127,12 +128,134 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		}
 
 		//
-		//Given
+		//    Scenario: adding operations to queue
+		[Fact]
+		public void addingOperationToQueue()
+		{
+			//    When I get all operations for device '1'
+			iGetAllOperationsForAgent(1);
+			//    Then I should receive '0' operations
+			iShouldReceiveXOperations(0);
+			//    When I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+			//    And I get all operations for device '1'
+			iGetAllOperationsForDeviceX(1);
+			//    Then I should receive '1' operations
+			iShouldReceiveXOperations(1);
+		}
+
+		//  Scenario: get notification about new operation
+		[Fact]
+		public void getNotificationAboutNewOperation()
+		{
+			//      Given I have a operation subscriber for agent '0'
+			iHaveAOperationSubscriberForAgent(0);
+			//    When I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+			//    Then subscriber should receive operation
+			subscriberShouldReceiveOperation();
+		}
+
 		//
+		//    Scenario: Operation CRUD
 
-		//@Given("^I have a poller for agent '([^']*)'$")
+		[Fact]
+		public void operationCRUD()
+		{
+			//    When I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+			//    And I call get on created operation
+			iCallGetOnCreatedOperation();
+			//    Then I should receive operation with status 'PENDING'
+			iShouldReceiveOperationWithStatusX("PENDING");
+			//    When I update created operation with status 'EXECUTING'
+			iUpdateCreatedOperationWithStatusX("EXECUTING");
+			//    And I call get on created operation
+			iCallGetOnCreatedOperation();
+			//    Then I should receive operation with status 'EXECUTING'
+			iShouldReceiveOperationWithStatusX("EXECUTING");
+		}
 
-		public void iHaveAPollerForAgent(int arg1)
+		//
+		//    Scenario: query operations by status
+		[Fact]
+		public void queryOperationByStatus()
+		{
+			iQueryOperationsWithStatusX("EXECUTING");
+			int numOfExecuting = allOperations.Operations.Count;
+			iQueryOperationsWithStatusX("PENDING");
+			int numOfPending = allOperations.Operations.Count;
+			//    When I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+			//    And I update created operation with status 'EXECUTING'
+			iUpdateCreatedOperationWithStatusX("EXECUTING");
+			//    And I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+			//    When I query operations with status 'PENDING'
+			iQueryOperationsWithStatusX("PENDING");
+			//    Then I should receive '1' operations
+			iShouldReceiveXOperations(numOfPending + 1);
+			//    And all received operations should have status 'PENDING'
+			allRecievedOperationsShouldHaveStatusX("PENDING");
+			//    When I query operations with status 'EXECUTING'
+			iQueryOperationsWithStatusX("EXECUTING");
+			//    Then I should receive '1' operations
+			iShouldReceiveXOperations(numOfExecuting + 1);
+			//    And all received operations should have status 'EXECUTING'
+			allRecievedOperationsShouldHaveStatusX("EXECUTING");
+		}
+
+		//
+		//    Scenario: query operations by device
+
+		[Fact]
+		public void queryOperationsByDevice() 
+		{
+			//    And I create an operation for device '1'
+			iCreateAnOperationForDevice(1);
+		//    And I create an operation for device '1'
+		iCreateAnOperationForDevice(1);
+		//    And I create an operation for device '3'
+		iCreateAnOperationForDevice(3);
+		//    When I get all operations for device '1'
+		iGetAllOperationsForDeviceX(1);
+		//    Then I should receive '2' operations
+		iShouldReceiveXOperations(2);
+		//    When I get all operations for device '3'
+		iGetAllOperationsForDeviceX(3);
+		//    Then I should receive '1' operations
+		iShouldReceiveXOperations(1);
+	}
+
+		//
+		//    Scenario: query operations by agent
+
+		[Fact]
+		public void queryOperationsByAgent()
+	{
+	//    And I create an operation for device '1'
+	iCreateAnOperationForDevice(1);
+	//    And I create an operation for device '1'
+	iCreateAnOperationForDevice(1);
+	//    And I create an operation for device '3'
+	iCreateAnOperationForDevice(3);
+	//    When I get all operations for agent '0'
+	iGetAllOperationsForAgent(0);
+	//    Then I should receive '2' operations
+	iShouldReceiveXOperations(2);
+	//    When I get all operations for agent '2'
+	iGetAllOperationsForAgent(2);
+	//    Then I should receive '1' operations
+	iShouldReceiveXOperations(1);
+	}
+
+	//
+	//Given
+	//
+
+	//@Given("^I have a poller for agent '([^']*)'$")
+
+	public void iHaveAPollerForAgent(int arg1)
 		{
 			GId agentId = getMoId(arg1);
 			poller = new OperationsByAgentAndStatusPollerImpl(deviceControlResource, agentId.Value, OperationStatus.PENDING, operationProcessor);
@@ -143,6 +266,24 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		{
 			GId deviceId = managedObjects[arg1].Id;
 			return deviceId;
+		}
+
+		//@Given("^I have a operation subscriber for agent '([^']*)'$")
+		public void iHaveAOperationSubscriberForAgent(int arg1)
+		{
+			GId agentId = getMoId(arg1);
+			subscriber = new OperationNotificationSubscriber(fixture.platform);
+
+			subscriber.subscribe(agentId, new Handler(operationProcessor));
+
+			try
+			{
+				Thread.Sleep(2000);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
 		}
 
 		//
@@ -159,6 +300,42 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			operation1 = deviceControlResource.create(operationRepresentation);
 		}
 
+		//@When("^I get all operations for agent '([^']*)'$")
+
+		public void iGetAllOperationsForAgent(int agentNum)
+		{
+			OperationFilter filter = new OperationFilter().byAgent(getMoId(agentNum).Value);
+			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+		}
+
+		//@When("^I get all operations for device '([^']*)'$")
+		public void iGetAllOperationsForDeviceX(int deviceNum)
+		{
+			OperationFilter filter = new OperationFilter().byDevice(getMoId(deviceNum).Value);
+			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+		}
+
+		//@When("^I call get on created operation$")
+		public void iCallGetOnCreatedOperation()
+		{
+			GId operationId = operation1.Id;
+			operation1 = deviceControlResource.getOperation(operationId);
+		}
+
+		//@When("^I update created operation with status '([^']*)'$")
+		public void iUpdateCreatedOperationWithStatusX(String status)
+		{
+			operation1.Status = status;
+			operation1 = deviceControlResource.update(operation1);
+		}
+
+		//@When("^I query operations with status '([^']*)'$")
+		public void iQueryOperationsWithStatusX(String status)
+		{
+			OperationFilter filter = new OperationFilter().byStatus(OperationStatus.valueOf(status));
+			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+		}
+
 		//
 		//Then
 		//
@@ -169,11 +346,70 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			try
 			{
 				Thread.Sleep(11000);
-				Assert.Equal(1,operationProcessor.Operations.Count); 
+				Assert.Equal(1, operationProcessor.Operations.Count);
 			}
 			catch (ThreadInterruptedException e)
 			{
 				Debug.WriteLine(e.StackTrace.ToString());
+			}
+		}
+
+		//@Then("^I should receive '([^']*)' operations$")
+		public void iShouldReceiveXOperations(int amount)
+		{
+			Assert.Equal(amount, allOperations.Operations.Count);
+		}
+
+		//@Then("^subscriber should receive operation$")
+		public void subscriberShouldReceiveOperation()
+		{
+			try
+			{
+				Thread.Sleep(11000);
+				Assert.Equal(1, operationProcessor.Operations.Count);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+			}
+		}
+
+		//@Then("^I should receive operation with status '([^']*)'$")
+		public void iShouldReceiveOperationWithStatusX(String status)
+		{
+			Assert.Equal(status, operation1.Status);
+		}
+
+		//@Then("^all received operations should have status '([^']*)'$")
+
+		public void allRecievedOperationsShouldHaveStatusX(String status)
+		{
+			foreach (OperationRepresentation operation in allOperations.Operations)
+			{
+				Assert.Equal(status, operation.Status);
+			}
+		}
+
+		//
+		//Handler
+		//
+
+		public class Handler : ISubscriptionListener<GId, OperationRepresentation>
+		{
+			private SimpleOperationProcessor operationProcessor;
+
+			public Handler(SimpleOperationProcessor processor)
+			{
+				this.operationProcessor = processor;
+			}
+
+			public void onError(ISubscription<GId> subscription, Exception ex)
+			{
+			}
+
+			public void onNotification(ISubscription<GId> subscription, OperationRepresentation notification)
+			{
+				operationProcessor.process(notification);
 			}
 		}
 	}

@@ -14,7 +14,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
 	internal class DefaultBayeuxClientProvider : IBayeuxSessionProvider
 	{
-		private const int CONNECTED_STATE_TIMEOUT = 30;
+		private const int CONNECTED_STATE_TIMEOUT = 3000;
 
 		private readonly PlatformParameters paramters;
 
@@ -62,7 +62,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private BayeuxClient openSession(BayeuxClient bayeuxClient)
 		{
-			bayeuxClient.handshake();
+			 bayeuxClient.handshake();
 
 			var handshake = bayeuxClient.waitFor(CONNECTED_STATE_TIMEOUT, new List<BayeuxClient.State>() { BayeuxClient.State.CONNECTED });
 			if (handshake != BayeuxClient.State.CONNECTED)
