@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Cumulocity.SDK.Client.Rest.Model.Idtype;
 
 namespace Cumulocity.SDK.Client.Rest.Utils
 {
@@ -76,10 +77,50 @@ namespace Cumulocity.SDK.Client.Rest.Utils
                 throw new ArgumentNullException("obj");
             var objType = obj.GetType();
             var propertyInfo = GetPropertyInfo(objType, fieldName);
-            if (propertyInfo == null)
-                throw new ArgumentOutOfRangeException("fieldName",
-                    string.Format("Couldn't find field {0} in type {1}", fieldName, objType.FullName));
-            propertyInfo.SetValue(obj, val);
+	        if (propertyInfo == null)
+	        {
+		        propertyInfo = GetPropertyInfo(objType, "Attrs");
+			}
+			if (propertyInfo == null)
+				throw new ArgumentOutOfRangeException("fieldName",
+					string.Format("Couldn't find field {0} in type {1}", fieldName, objType.FullName));
+
+			System.Type propertyType = propertyInfo.PropertyType;
+	        // Get the type code so we can switch
+	        System.TypeCode typeCode = System.Type.GetTypeCode(propertyType);
+	        try
+	        {
+
+		        switch (typeCode)
+		        {
+			        case TypeCode.Int32:
+				        propertyInfo.SetValue(obj, Convert.ToInt32(val), null);
+				        break;
+			        case TypeCode.Int64:
+				        propertyInfo.SetValue(obj, Convert.ToInt64(val), null);
+				        break;
+			        case TypeCode.String:
+				        propertyInfo.SetValue(obj, val, null);
+				        break;
+			        case TypeCode.Object:
+				        if (propertyType == typeof(GId) )
+				        {
+					        propertyInfo.SetValue(obj, new GId(val.ToString()), null);
+					        return;
+				        }
+				        break;
+			        default:
+				        propertyInfo.SetValue(obj, val, null);
+				        break;
+		        }
+
+		        return;
+	        }
+	        catch (Exception ex)
+	        {
+		        throw new Exception("Failed to set property value for our Foreign Key");
+	        }
+			propertyInfo.SetValue(obj, val);
         }
         
         public static IEnumerable<Type> GetTypesWithPackageName() {

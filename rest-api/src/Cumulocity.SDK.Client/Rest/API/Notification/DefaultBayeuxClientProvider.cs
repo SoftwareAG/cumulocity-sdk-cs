@@ -14,7 +14,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
 	internal class DefaultBayeuxClientProvider : IBayeuxSessionProvider
 	{
-		private const int CONNECTED_STATE_TIMEOUT = 3000;
+		private const int CONNECTED_STATE_TIMEOUT = 10000;
 
 		private readonly PlatformParameters paramters;
 
@@ -36,7 +36,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 		{
 			this.paramters = paramters;
 			this.endpoint = endpoint;
-			//this.httpClient = httpClient;
 			this.endpointDataType = endpointDataType;
 			this.unauthorizedConnectionWatcher = unauthorizedConnectionWatcher;
 			this.extensions = extensions.ToList();
@@ -87,9 +86,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private IDictionary<string, object> createTransportOptions()
 		{
-			//ORIGINAL LINE: final Map<String, Object> options = new HashMap<String, Object>();
-			//IDictionary<string, object> options = new Dictionary<string, object>();
-			//options[ClientTransport.JSON_CONTEXT_OPTION] = new ClientSvensonJSONContext(endpointDataType);
 			IDictionary<string, object> options = new Dictionary<string, object>();
 			return options;
 		}

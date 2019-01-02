@@ -61,7 +61,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			this.inventoryApi = fixture.platform.InventoryApi;
 			createManagedObjects();
 			deviceControlResource = fixture.platform.DeviceControlApi;
-			//operation1 = null;
+			operation1 = null;
 			allOperations = null;
 		}
 
@@ -278,7 +278,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 			try
 			{
-				Thread.Sleep(2000);
+				Thread.Sleep(10000);
 			}
 			catch (Exception ex)
 			{
@@ -363,10 +363,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//@Then("^subscriber should receive operation$")
 		public void subscriberShouldReceiveOperation()
 		{
+			Thread.Sleep(11000);
+			Assert.Equal(1, operationProcessor.Operations.Count);
+
 			try
 			{
-				Thread.Sleep(11000);
-				Assert.Equal(1, operationProcessor.Operations.Count);
+
 			}
 			catch (Exception ex)
 			{

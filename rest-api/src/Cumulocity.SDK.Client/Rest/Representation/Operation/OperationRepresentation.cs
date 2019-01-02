@@ -50,7 +50,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 		[JsonConverter(typeof(GidConverter))]
 		public virtual GId DeviceId
 		{
-			get => deviceId;
+			get => deviceId; 
 			set => deviceId = value;
 		}
 
@@ -90,7 +90,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 
 		//ORIGINAL LINE: @JSONProperty(value = "creationTime", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getCreationDateTime()
 		[JsonProperty("creationTime", NullValueHandling = NullValueHandling.Ignore)]
-		public virtual DateTime? CreationDateTime
+		public virtual DateTime? CreationTime
 		{
 			get => creationTime;
 			set => creationTime = value;
