@@ -31,4 +31,10 @@
     <ProjectReference Include="..\Cumulocity.SDK.Client.UnitTest\Cumulocity.SDK.Client.UnitTest.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\Cep\test-module.epl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

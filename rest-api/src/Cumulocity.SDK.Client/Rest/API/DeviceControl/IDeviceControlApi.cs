@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
@@ -102,8 +103,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		/// <returns> subscriber </returns>
 		/// <exception cref="SDKException"> </exception>
 		//ORIGINAL LINE: Subscriber<GId, OperationRepresentation> getNotificationsSubscriber() throws SDKException;
-		//TODO: Subscriber
-		//Subscriber<GId, OperationRepresentation> NotificationsSubscriber { get; }
+		ISubscriber<GId, OperationRepresentation> NotificationsSubscriber { get; }
 	}
 
 }

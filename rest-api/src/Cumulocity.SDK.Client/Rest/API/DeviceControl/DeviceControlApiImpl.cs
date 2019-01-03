@@ -2,6 +2,8 @@
 using Cumulocity.SDK.Client.Rest.Model.Operation;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using System.Collections.Generic;
+using Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification;
+using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
@@ -105,12 +107,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		}
 
 		//ORIGINAL LINE: @Override public Subscriber<GId, OperationRepresentation> getNotificationsSubscriber() throws SDKException
-		//public override Subscriber<GId, OperationRepresentation> NotificationsSubscriber
-		//{
-		//	get
-		//	{
-		//		return new OperationNotificationSubscriber(parameters);
-		//	}
-		//}
+		public  ISubscriber<GId, OperationRepresentation> NotificationsSubscriber
+		{
+			get
+			{
+				return new OperationNotificationSubscriber(parameters);
+			}
+		}
 	}
 }

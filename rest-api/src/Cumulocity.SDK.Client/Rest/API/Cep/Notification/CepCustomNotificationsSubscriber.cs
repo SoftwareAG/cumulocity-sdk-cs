@@ -1,4 +1,5 @@
-﻿using Cumulocity.SDK.Client.Rest.API.Notification;
+﻿using System;
+using Cumulocity.SDK.Client.Rest.API.Notification;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 
 namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
@@ -16,9 +17,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 
 		private ISubscriber<string, object> createSubscriber(PlatformParameters parameters)
 		{
-			// @formatter:off
 			return SubscriberBuilder<string, object>.anSubscriber<string, object>().withParameters(parameters).withEndpoint(CEP_CUSTOM_NOTIFICATIONS_URL).withSubscriptionNameResolver(new Identity()).withDataType(typeof(object)).build();
-			// @formatter:on
 		}
 
 		//ORIGINAL LINE: public Subscription<String> subscribe(final String channelID, final SubscriptionListener<String, Object> handler) throws SDKException
@@ -45,5 +44,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 				return id;
 			}
 		}
+
 	}
 }

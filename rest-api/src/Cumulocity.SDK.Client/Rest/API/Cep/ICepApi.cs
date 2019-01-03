@@ -109,6 +109,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// <summary>
 		/// Checks state of cep microservice.
 		/// </summary>
-		T health<T>(T clazz);
+		T health<T>(Type clazz);
 	}
 }

@@ -7,7 +7,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 {
 	public class CepApiFixture
 	{
-		private PlatformImpl platform;
+		public PlatformImpl platform;
 
 		public CepApiFixture()
 		{

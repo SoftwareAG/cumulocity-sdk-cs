@@ -5,7 +5,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Cep;
 
 namespace Cumulocity.SDK.Client.Rest.API.Cep
 {
-	public interface ICepModuleCollection //: IPagedCollectionResource<CepModuleRepresentation, PagedCepModuleCollectionRepresentation>
+	public interface ICepModuleCollection : IPagedCollectionResource<CepModuleRepresentation, PagedCepModuleCollectionRepresentation<CepModuleCollectionRepresentation>>
 	{
 
 	}

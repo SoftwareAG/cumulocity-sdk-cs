@@ -1,45 +1,45 @@
-﻿using System;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
-using Cumulocity.SDK.Client.Rest.Representation;
+﻿using Cumulocity.SDK.Client.Rest.Representation;
+using System;
+using System.IO;
 
 namespace Cumulocity.SDK.Client
 {
-    public interface IRestOperations
-    {
-        T Get<T>(string path, CumulocityMediaType mediaType, Type responseType);
+	public interface IRestOperations
+	{
+		T Get<T>(string path, CumulocityMediaType mediaType, Type responseType);
 
-        T Get<T>(string path, MediaType mediaType, Type responseType);
+		T Get<T>(string path, MediaType mediaType, Type responseType);
 
-        //Response.Status getStatus(string path, CumulocityMediaType mediaType);
+		T postStream<T>(string path, CumulocityMediaType mediaType, Stream content, Type responseClass);
 
-        //T postStream<T>(string path, CumulocityMediaType mediaType, InputStream content, Type<T> responseClass);
+		T postText<T>(string path, string content, Type responseClass);
 
-        //T postText<T>(string path, string content, Type<T> responseClass);
+		T putText<T>(string path, string content, Type responseClass);
 
-        //T putText<T>(string path, string content, Type<T> responseClass);
+		T putStream<T>(string path, MediaType mediaType, Stream content, Type responseClass);
 
-        //T putStream<T>(string path, string contentType, InputStream content, Type<T> responseClass);
+		T PostWithId<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
 
-        //T putStream<T>(string path, MediaType mediaType, InputStream content, Type<T> responseClass);
+		T Post<T>(string path, CumulocityMediaType mediaType, T representation) where T : IResourceRepresentation;
 
-        //T postFile<T>(string path, T representation, sbyte[] bytes, Type<T> responseClass);
+		void PostWithoutResponse<T>(string path, MediaType mediaType, T representation) where T : IResourceRepresentation;
 
-        //T put<T>(string path, MediaType mediaType, T representation);
+		//T putStream<T>(string path, string contentType, Stream content, Type responseClass);
 
-        //Future postAsync<T>(string path, CumulocityMediaType mediaType, T representation);
+		//T postFile<T>(string path, T representation, sbyte[] bytes, Type<T> responseClass);
 
-        //Future putAsync<T>(string path, CumulocityMediaType mediaType, T representation);
+		//T put<T>(string path, MediaType mediaType, T representation);
 
-        T PostWithId<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
+		//Future postAsync<T>(string path, CumulocityMediaType mediaType, T representation);
 
-        T Post<T>(string path, CumulocityMediaType mediaType, T representation) where T : IResourceRepresentation;
+		//Future putAsync<T>(string path, CumulocityMediaType mediaType, T representation);
 
-        void PostWithoutResponse<T>(string path, MediaType mediaType, T representation) where T : IResourceRepresentation;
+		//Result post<Result, Param>(string path, CumulocityMediaType contentType, CumulocityMediaType accept, Param representation, Type<Result> clazz);
 
-        //Result post<Result, Param>(string path, CumulocityMediaType contentType, CumulocityMediaType accept, Param representation, Type<Result> clazz);
+		//Response.Status getStatus(string path, CumulocityMediaType mediaType);
 
-        T Put<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
+		T Put<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
 
-        void Delete(string path);
-    }
+		void Delete(string path);
+	}
 }
