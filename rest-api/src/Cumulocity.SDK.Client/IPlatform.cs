@@ -21,8 +21,8 @@ namespace Cumulocity.SDK.Client
 		IDeviceCredentialsApi DeviceCredentialsApi { get; }
 		ICepApi CepApi { get; }
 		//TenantOptionApi TenantOptionApi {get;}
-		//AuditRecordApi AuditRecordApi {get;}
 		//UserApi UserApi {get;}
+		//AuditRecordApi AuditRecordApi {get;}
 		//BinariesApi BinariesApi {get;}
 	}
 }
