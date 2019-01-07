@@ -6,6 +6,7 @@ using Cumulocity.SDK.Client.Rest.API.Event;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
 using Cumulocity.SDK.Client.Rest.API.Measurement;
+using Cumulocity.SDK.Client.Rest.API.Option;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Representation.Platform;
@@ -170,7 +171,14 @@ namespace Cumulocity.SDK.Client.Rest
 			    return new CepApiImpl(this, restConnector, PageSize);
 		    }
 	    }
-
+	    public ITenantOptionApi TenantOptionApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+			    return new TenantOptionApiImpl(restConnector, getPlatformApi(restConnector).Tenant, PageSize);
+		    }
+	    }
 
 		private static string getHostUrl(string host, int port)
         {

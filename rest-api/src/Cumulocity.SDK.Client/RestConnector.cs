@@ -49,24 +49,25 @@ namespace Cumulocity.SDK.Client
 		public T Get<T>(string path, CumulocityMediaType mediaType, Type responseType)
 		{
 			var response = getClientResponse(path, mediaType);
-			return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.OK, responseType);
+			return ResponseParser.parse<T>(response.Result, responseType, (int)HttpStatusCode.OK);
 		}
 
 		public T Get<T>(string path, MediaType mediaType, Type responseType)
 		{
-			throw new NotImplementedException();
+			var response = getClientResponse(path, mediaType);
+			return ResponseParser.parse<T>(response.Result, responseType, (int)HttpStatusCode.OK);
 		}
 
 		public T postStream<T>(string path, CumulocityMediaType mediaType, Stream content, Type representation)
 		{
 			var response = httpStreamPost(path, mediaType, mediaType, content, representation);
-			return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.Created, representation);
+			return ResponseParser.parse<T>(response.Result,  representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T postText<T>(string path, string content, Type representation)
 		{
 			var response = httpPostText<T>(path, content, representation);
-			return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.Created, representation);
+			return ResponseParser.parse<T>(response.Result,representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T putText<T>(string path, string content, Type responseClass)
@@ -84,7 +85,7 @@ namespace Cumulocity.SDK.Client
 		{
 			var response = httpPost(path, mediaType, mediaType, representation);
 
-			return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.Created, typeof(T));
+			return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public async Task<T> PostAsync<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -117,7 +118,7 @@ namespace Cumulocity.SDK.Client
 		public T PutWithoutId<T>(string path, CumulocityMediaType mediaType, T representation)
 		{
 			var response = this.putClientResponse<T>(path, mediaType, representation);
-			return ResponseParser.parse<T>(response.Result, (int)HttpStatusCode.OK, representation.GetType());
+			return ResponseParser.parse<T>(response.Result, representation.GetType(), (int)HttpStatusCode.OK);
 		}
 
 		public void Delete(string path)
@@ -125,7 +126,21 @@ namespace Cumulocity.SDK.Client
 			var response = this.deleteClientResponse(path);
 			this.ResponseParser.checkStatus(response.Result, new int[] { (int)HttpStatusCode.NoContent });
 		}
+		private Task<HttpResponseMessage> getClientResponse(string path, MediaType mediaType)
+		{
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = new Uri(path)
+			};
+			request.Headers.TryAddWithoutValidation("Accept", mediaType.Subtype);
 
+			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+			request.AddTfaHeader(this.PlatformParameters.getTfaToken());
+			request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
+
+			return client.SendAsync(request);
+		}
 		private Task<HttpResponseMessage> getClientResponse(string path, CumulocityMediaType mediaType)
 		{
 			var request = new HttpRequestMessage
@@ -268,7 +283,7 @@ namespace Cumulocity.SDK.Client
 			where T : IBaseResourceRepresentationWithId
 		{
 			//T repFromPlatform = (IResourceRepresentationWithId) ResponseParser.parse<T>(response, responseCode, representation.GetType());
-			var repFromPlatform = ResponseParser.parse<T>(response, responseCode, representation.GetType());
+			var repFromPlatform = ResponseParser.parse<T>(response, representation.GetType(), responseCode);
 			var repToReturn = isDefined(repFromPlatform) ? repFromPlatform : representation;
 			if (response.Headers.Location != null) repToReturn.Id = ResponseParser.parseIdFromLocation(response);
 			return repToReturn;

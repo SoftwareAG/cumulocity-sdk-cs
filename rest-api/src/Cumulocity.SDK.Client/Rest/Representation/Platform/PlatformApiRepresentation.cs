@@ -4,6 +4,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
+using Cumulocity.SDK.Client.Rest.Representation.Tenant;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Platform
 {
@@ -11,17 +12,14 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Platform
     {
 	    public EventsApiRepresentation Event;
 	    public MeasurementsApiRepresentation Measurement;
-		//        private AuditRecordsRepresentation audit;
 	    public AlarmsApiRepresentation Alarm;
-		//        private UsersApiRepresentation user;
 	    public DeviceControlRepresentation DeviceControl;
 		//
 		//        private CepApiRepresentation cep;
-		//
-		//        private TenantApiRepresentation tenant;
-
+		//        private UsersApiRepresentation user;
+		//        private AuditRecordsRepresentation audit;
+		public TenantApiRepresentation Tenant;
 		public InventoryRepresentation Inventory { get; set; }
-
         public IdentityRepresentation Identity { get; set; }
 
 ////JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:

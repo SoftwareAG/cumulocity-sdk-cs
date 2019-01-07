@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 {
@@ -6,15 +8,22 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 	//@NoArgsConstructor
 	//@AllArgsConstructor
 	//public class OptionsRepresentation extends BaseResourceRepresentation implements DynamicProperties
+	[JsonObject]
 	public class OptionsRepresentation : BaseResourceRepresentation
 	{
-		//ORIGINAL LINE: @Singular private Map<String, Object> properties = new HashMap<>();
 		private IDictionary<string, object> properties = new Dictionary<string, object>();
+
+		[JsonExtensionData]
+		public IDictionary<string, object> Properties
+		{
+			get => properties;
+			set => properties = value;
+		}
 
 		public virtual string getProperty(string name)
 		{
 			//ORIGINAL LINE: final Object o = properties.get(name);
-			object o = properties[name];
+			object o = Properties[name];
 			if (o != null)
 			{
 				return o.ToString();
@@ -24,22 +33,22 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 
 		public virtual void setProperty(string name, object value)
 		{
-			properties[name] = value;
+			Properties[name] = value;
 		}
 
 		public virtual ICollection<string> propertyNames()
 		{
-			return properties.Keys;
+			return Properties.Keys;
 		}
 
 		public bool hasProperty(string name)
 		{
-			return properties.ContainsKey(name);
+			return Properties.ContainsKey(name);
 		}
 
 		public object removeProperty(string name)
 		{
-			return properties.Remove(name);
+			return Properties.Remove(name);
 		}
 	}
 }

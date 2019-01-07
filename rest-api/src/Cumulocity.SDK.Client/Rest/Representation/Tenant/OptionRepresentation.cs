@@ -66,7 +66,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 		}
 
 		//ORIGINAL LINE: @JSONProperty(ignore = true) public boolean isTrue()
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonIgnore]
 		public virtual bool IsTrue
 		{
 			get
@@ -76,7 +76,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 		}
 
 		//ORIGINAL LINE: @JSONProperty(ignore = true) public boolean isFalse()
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonIgnore]
 		public virtual bool IsFalse
 		{
 			get

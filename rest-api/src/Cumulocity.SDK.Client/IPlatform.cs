@@ -6,6 +6,7 @@ using Cumulocity.SDK.Client.Rest.API.Inventory;
 using Cumulocity.SDK.Client.Rest.API.Measurement;
 using System;
 using Cumulocity.SDK.Client.Rest.API.Cep;
+using Cumulocity.SDK.Client.Rest.API.Option;
 
 namespace Cumulocity.SDK.Client
 {
@@ -20,7 +21,7 @@ namespace Cumulocity.SDK.Client
 		IEventApi EventApi { get; }
 		IDeviceCredentialsApi DeviceCredentialsApi { get; }
 		ICepApi CepApi { get; }
-		//TenantOptionApi TenantOptionApi {get;}
+		ITenantOptionApi TenantOptionApi {get;}
 		//UserApi UserApi {get;}
 		//AuditRecordApi AuditRecordApi {get;}
 		//BinariesApi BinariesApi {get;}

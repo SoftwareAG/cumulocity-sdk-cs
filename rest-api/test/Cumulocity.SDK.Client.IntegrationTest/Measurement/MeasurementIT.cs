@@ -13,7 +13,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	public class MeasurementIT : IClassFixture<MeasurementFixture>, IDisposable
 	{
 		private static List<ManagedObjectRepresentation> managedObjects = new List<ManagedObjectRepresentation>();
-		private PlatformImpl _fixture;
+		private readonly PlatformImpl _fixture;
 
 		public MeasurementIT(MeasurementFixture fixture)
 		{

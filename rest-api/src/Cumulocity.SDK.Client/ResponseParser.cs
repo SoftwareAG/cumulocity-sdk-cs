@@ -20,7 +20,7 @@ namespace Cumulocity.SDK.Client
         //private static readonly Logger LOG = LoggerFactory.getLogger(typeof(ResponseParser));
 
         //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        public virtual T parse<T>(HttpResponseMessage response, int expectedStatusCode, Type type)
+        public virtual T parse<T>(HttpResponseMessage response, Type type, params int[] expectedStatusCode)
         {
             checkStatus(response, expectedStatusCode);
             var r = response.Content.ReadAsStringAsync().Result;
@@ -49,7 +49,7 @@ namespace Cumulocity.SDK.Client
         //ORIGINAL LINE: public void checkStatus(ClientResponse response, int... expectedStatusCodes) throws SDKException
         public virtual void checkStatus(HttpResponseMessage response, params int[] expectedStatusCodes)
         {
-            var status = (int) response.StatusCode;
+	            var status = (int) response.StatusCode;
             var arr = expectedStatusCodes;
             var len = expectedStatusCodes.Length;
 
