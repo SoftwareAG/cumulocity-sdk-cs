@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cumulocity.SDK.Client.Rest.Representation.Tenant;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Application
 {
@@ -146,6 +147,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getContextPath()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ContextPath
 		{
 			get
@@ -162,6 +164,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @Deprecated @JSONProperty(ignoreIfNull = true) public String getResourcesUrl()
 		[Obsolete]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ResourcesUrl
 		{
 			get
@@ -178,6 +181,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @Deprecated @JSONProperty(ignoreIfNull = true) public String getResourcesUsername()
 		[Obsolete]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ResourcesUsername
 		{
 			get
@@ -193,6 +197,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @Deprecated @JSONProperty(ignoreIfNull = true) public String getResourcesPassword()
 		[Obsolete]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ResourcesPassword
 		{
 			get
@@ -208,6 +213,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getExternalUrl()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ExternalUrl
 		{
 			get
@@ -223,6 +229,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public ManifestRepresentation getManifest()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual ManifestRepresentation Manifest
 		{
 			get
@@ -238,6 +245,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getActiveVersionId()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string ActiveVersionId
 		{
 			get
@@ -253,6 +261,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public List<String> getRequiredRoles()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IList<string> RequiredRoles
 		{
 			get
@@ -263,6 +272,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Application
 
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getUrl()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Url
 		{
 			get
