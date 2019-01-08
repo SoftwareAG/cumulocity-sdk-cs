@@ -5,6 +5,7 @@ using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
 using Cumulocity.SDK.Client.Rest.API.Measurement;
 using System;
+using Cumulocity.SDK.Client.Rest.API.Audit;
 using Cumulocity.SDK.Client.Rest.API.Cep;
 using Cumulocity.SDK.Client.Rest.API.Option;
 
@@ -22,8 +23,8 @@ namespace Cumulocity.SDK.Client
 		IDeviceCredentialsApi DeviceCredentialsApi { get; }
 		ICepApi CepApi { get; }
 		ITenantOptionApi TenantOptionApi {get;}
-		//UserApi UserApi {get;}
-		//AuditRecordApi AuditRecordApi {get;}
-		//BinariesApi BinariesApi {get;}
+		IAuditRecordApi AuditRecordApi {get;}
+		//IUserApi UserApi {get;}
+		//IBinariesApi BinariesApi {get;}
 	}
 }

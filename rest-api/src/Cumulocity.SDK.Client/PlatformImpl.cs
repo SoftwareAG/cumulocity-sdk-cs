@@ -1,5 +1,6 @@
 ﻿using System;
 using Cumulocity.SDK.Client.Rest.API.Alarm;
+using Cumulocity.SDK.Client.Rest.API.Audit;
 using Cumulocity.SDK.Client.Rest.API.Cep;
 using Cumulocity.SDK.Client.Rest.API.DeviceControl;
 using Cumulocity.SDK.Client.Rest.API.Event;
@@ -178,6 +179,15 @@ namespace Cumulocity.SDK.Client.Rest
 			    var restConnector = createRestConnector();
 			    return new TenantOptionApiImpl(restConnector, getPlatformApi(restConnector).Tenant, PageSize);
 		    }
+	    }
+
+	    public IAuditRecordApi AuditRecordApi
+		{
+		    get
+		    {
+			    var restConnector = createRestConnector();
+				return new AuditRecordApiImpl(restConnector, new UrlProcessor(), getPlatformApi(restConnector).Audit, PageSize);
+			}
 	    }
 
 		private static string getHostUrl(string host, int port)

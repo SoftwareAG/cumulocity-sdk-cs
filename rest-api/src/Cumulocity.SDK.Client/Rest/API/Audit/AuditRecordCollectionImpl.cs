@@ -4,7 +4,8 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Audit
 {
-	public class AuditRecordCollectionImpl : PagedCollectionResourceImpl<AuditRecordRepresentation, AuditRecordCollectionRepresentation, PagedAuditCollectionRepresentation<AuditRecordCollectionRepresentation>>
+	public class AuditRecordCollectionImpl : PagedCollectionResourceImpl<AuditRecordRepresentation, AuditRecordCollectionRepresentation, PagedAuditCollectionRepresentation<AuditRecordCollectionRepresentation>>,
+		IAuditRecordCollection
 	{
 		public AuditRecordCollectionImpl(RestConnector restConnector, string url, int pageSize) : base(restConnector, url, pageSize)
 		{

@@ -61,13 +61,13 @@ namespace Cumulocity.SDK.Client
 		public T postStream<T>(string path, CumulocityMediaType mediaType, Stream content, Type representation)
 		{
 			var response = httpStreamPost(path, mediaType, mediaType, content, representation);
-			return ResponseParser.parse<T>(response.Result,  representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T postText<T>(string path, string content, Type representation)
 		{
 			var response = httpPostText<T>(path, content, representation);
-			return ResponseParser.parse<T>(response.Result,representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T putText<T>(string path, string content, Type responseClass)
@@ -126,6 +126,7 @@ namespace Cumulocity.SDK.Client
 			var response = this.deleteClientResponse(path);
 			this.ResponseParser.checkStatus(response.Result, new int[] { (int)HttpStatusCode.NoContent });
 		}
+
 		private Task<HttpResponseMessage> getClientResponse(string path, MediaType mediaType)
 		{
 			var request = new HttpRequestMessage
@@ -141,6 +142,7 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+
 		private Task<HttpResponseMessage> getClientResponse(string path, CumulocityMediaType mediaType)
 		{
 			var request = new HttpRequestMessage
@@ -225,7 +227,6 @@ namespace Cumulocity.SDK.Client
 				RequestUri = new Uri(path),
 				Content = stringContent
 			};
-			var pass = PlatformParameters.Password;
 
 			if (PlatformParameters.requireResponseBody())
 				request.Headers.TryAddWithoutValidation("Accept", accept.TypeString);

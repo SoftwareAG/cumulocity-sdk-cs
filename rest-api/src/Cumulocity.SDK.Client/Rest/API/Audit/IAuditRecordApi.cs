@@ -9,7 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 	/// <summary>
 	/// API for creating and retrieving audit records from the platform
 	/// </summary>
-	public interface AuditRecordApi
+	public interface IAuditRecordApi
 	{
 
 		/// <summary>
@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 		/// </summary>
 		/// <returns> collection of audit records with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		AuditRecordCollection AuditRecords { get; }
+		IAuditRecordCollection AuditRecords { get; }
 
 		/// <summary>
 		/// Gets audit records from the platform based on the specified filter
@@ -41,6 +41,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 		/// <param name="filter"> the filter criteria(s) </param>
 		/// <returns> collection of audit records matched by the filter with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		AuditRecordCollection getAuditRecordsByFilter(AuditRecordFilter filter);
+		IAuditRecordCollection getAuditRecordsByFilter(AuditRecordFilter filter);
 	}
 }
