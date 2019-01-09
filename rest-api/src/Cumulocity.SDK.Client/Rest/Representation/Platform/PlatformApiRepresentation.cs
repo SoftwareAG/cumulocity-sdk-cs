@@ -6,6 +6,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using Cumulocity.SDK.Client.Rest.Representation.Tenant;
+using Cumulocity.SDK.Client.Rest.Representation.User;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Platform
 {
@@ -19,9 +20,8 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Platform
 		public InventoryRepresentation Inventory { get; set; }
         public IdentityRepresentation Identity { get; set; }
 	    public AuditRecordsRepresentation Audit { get; set; }
-
+	    public UsersApiRepresentation User { get; set; }
 		//        private CepApiRepresentation cep;
-		//        private UsersApiRepresentation user;
 
 	}
 }

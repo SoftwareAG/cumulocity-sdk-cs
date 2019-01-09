@@ -8,6 +8,7 @@ using System;
 using Cumulocity.SDK.Client.Rest.API.Audit;
 using Cumulocity.SDK.Client.Rest.API.Cep;
 using Cumulocity.SDK.Client.Rest.API.Option;
+using Cumulocity.SDK.Client.Rest.API.User;
 
 namespace Cumulocity.SDK.Client
 {
@@ -24,7 +25,7 @@ namespace Cumulocity.SDK.Client
 		ICepApi CepApi { get; }
 		ITenantOptionApi TenantOptionApi {get;}
 		IAuditRecordApi AuditRecordApi {get;}
-		//IUserApi UserApi {get;}
+		IUserApi UserApi {get;}
 		//IBinariesApi BinariesApi {get;}
 	}
 }
