@@ -60,7 +60,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 
 		public void Dispose()
 		{
-			tenantCreator.removeTenant();
+			//tenantCreator.removeTenant();
 		}
 	}
 }

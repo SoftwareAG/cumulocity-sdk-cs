@@ -24,18 +24,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Common
 		public virtual async Task createTenantAsync()
 		{
 			var tr = await postNewTenant();
+			System.Threading.Thread.Sleep(10000);
 			Assert.Equal(201, (int)tr.StatusCode);
 		}
 
 		public void removeTenant()
 		{
 			var tenantResponse =  deleteTenant();
-			Assert.Equal(204, (int)tenantResponse.StatusCode);
+			Assert.True((int) tenantResponse.StatusCode == 204);
 		}
 
 		private async Task<HttpResponseMessage> postNewTenant()
 		{
-			string host = platform.Host;
+			string host = "http://tenant.staging.c8y.io:8111/";
 			string tenantId = platform.TenantId;
 			string tenantJson =
 				$"{{ \"id\": \"{tenantId}\", \"domain\": \"{tenantId}.staging.c8y.io\", \"company\": \"sample-tenant\", \"adminName\": \"{platform.User}\", \"adminPass\": \"{platform.Password}\" }}";
@@ -49,7 +50,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Common
 						= new AuthenticationHeaderValue("Basic",
 							Convert.ToBase64String(
 								System.Text.Encoding.ASCII.GetBytes(
-									$"{"piotr/admin"}:{"test1234"}")));
+									$"{"tenant/admin"}:{"test1234"}")));
 
 					request.Content = stringContent;
 
@@ -62,7 +63,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Common
 
 		public virtual HttpResponseMessage deleteTenant()
 		{
-			string host = "https://managment.staging.c8y.io/";
+			string host = "http://managment.staging.c8y.io:8111/";
 
 			using (var client = new HttpClient())
 			using (var request = new HttpRequestMessage(HttpMethod.Delete, host + TENANT_URI + "/" + platform.TenantId))
@@ -71,7 +72,9 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Common
 					= new AuthenticationHeaderValue("Basic",
 						Convert.ToBase64String(
 							System.Text.Encoding.ASCII.GetBytes(
-								$"{"management/admin"}:{"Pyi1co1s"}")));
+								$"{"management/admin"}:{"Pyi1bo1r"}")));
+
+				request.Headers.TryAddWithoutValidation("Origin", "http://managment.staging.c8y.io:8111");
 
 				return client.SendAsync(request).Result;
 			}
