@@ -1,4 +1,5 @@
 ﻿using Cumulocity.SDK.Client.Rest.Representation;
+using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
 using System.IO;
 
@@ -24,9 +25,9 @@ namespace Cumulocity.SDK.Client
 
 		void PostWithoutResponse<T>(string path, MediaType mediaType, T representation) where T : IResourceRepresentation;
 
-		//T putStream<T>(string path, string contentType, Stream content, Type responseClass);
+		T putStream<T>(string path, string contentType, Stream content, Type responseClass);
 
-		//T postFile<T>(string path, T representation, sbyte[] bytes, Type<T> responseClass);
+		T postFile<T>(string path, ManagedObjectRepresentation container, byte[] bytes, T representation);
 
 		//T put<T>(string path, MediaType mediaType, T representation);
 

@@ -26,6 +26,6 @@ namespace Cumulocity.SDK.Client
 		ITenantOptionApi TenantOptionApi {get;}
 		IAuditRecordApi AuditRecordApi {get;}
 		IUserApi UserApi {get;}
-		//IBinariesApi BinariesApi {get;}
+		IBinariesApi BinariesApi {get;}
 	}
 }

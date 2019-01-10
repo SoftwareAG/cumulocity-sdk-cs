@@ -201,6 +201,15 @@ namespace Cumulocity.SDK.Client.Rest
 			}
 		}
 
+		public IBinariesApi BinariesApi
+		{
+			get
+			{
+				var restConnector = createRestConnector();
+				return new BinariesApiImpl(restConnector,getPlatformApi(restConnector).Inventory);
+			}
+		}
+
 		private static string getHostUrl(string host, int port)
 		{
 			return "http://" + host + ":" + port;

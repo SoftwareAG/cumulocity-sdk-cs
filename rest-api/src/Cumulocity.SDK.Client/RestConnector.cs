@@ -1,5 +1,6 @@
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.Representation;
+using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -70,15 +71,6 @@ namespace Cumulocity.SDK.Client
 			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
-		public T putText<T>(string path, string content, Type responseClass)
-		{
-			throw new NotImplementedException();
-		}
-
-		public T putStream<T>(string path, MediaType mediaType, Stream content, Type responseClass)
-		{
-			throw new NotImplementedException();
-		}
 
 		public T Post<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
@@ -210,7 +202,44 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+		private Task<HttpResponseMessage> httpPutText<T>(string path, String content, Type representation)
+		{
+			var stringContent = new StringContent(content, Encoding.UTF8).Replace(MediaType.TEXT_PLAIN);
 
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Put,
+				RequestUri = new Uri(path),
+				Content = stringContent
+			};
+
+			if (PlatformParameters.requireResponseBody())
+				request.Headers.TryAddWithoutValidation("Accept", MediaType.APPLICATION_JSON);
+
+			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+			request.AddTfaHeader(this.PlatformParameters.getTfaToken());
+
+			return client.SendAsync(request);
+		}
+
+		private Task<HttpResponseMessage> httpPutStream<T>(string path, Stream content, Type representation)
+		{
+
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Put,
+				RequestUri = new Uri(path),
+				Content = new StreamContent(content)
+			};
+
+			if (PlatformParameters.requireResponseBody())
+				request.Headers.TryAddWithoutValidation("Accept", MediaType.APPLICATION_JSON);
+
+			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+			request.AddTfaHeader(this.PlatformParameters.getTfaToken());
+
+			return client.SendAsync(request);
+		}
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
@@ -283,7 +312,6 @@ namespace Cumulocity.SDK.Client
 		private T parseResponseWithId<T>(T representation, HttpResponseMessage response, int responseCode)
 			where T : IBaseResourceRepresentationWithId
 		{
-			//T repFromPlatform = (IResourceRepresentationWithId) ResponseParser.parse<T>(response, responseCode, representation.GetType());
 			var repFromPlatform = ResponseParser.parse<T>(response, representation.GetType(), responseCode);
 			var repToReturn = isDefined(repFromPlatform) ? repFromPlatform : representation;
 			if (response.Headers.Location != null) repToReturn.Id = ResponseParser.parseIdFromLocation(response);
@@ -312,7 +340,6 @@ namespace Cumulocity.SDK.Client
 			client = new CumulocityHttpClient(createDefaultClientHander(config), true);
 			client.PlatformParameters = platformParameters;
 			//client.Fo FollowRedirects = true;
-			//client.addFilter(new HTTPBasicAuthFilter(platformParameters.Principal, platformParameters.Password));
 
 			client.addBasicAuthFilter(platformParameters.Principal, platformParameters.Password);
 
@@ -325,6 +352,51 @@ namespace Cumulocity.SDK.Client
 			var handler = new HttpClientHandler { Credentials = credentials };
 
 			return handler;
+		}
+		public T putText<T>(string path, string content, Type representation)
+		{
+			var response = httpPutText<T>(path, content, representation);
+			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+		}
+
+		public T putStream<T>(string path, string contentType, Stream content, Type representation)
+		{
+			var response = httpPutStream<T>(path, content, representation);
+			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+		}
+
+		public T putStream<T>(string path, MediaType mediaType, Stream content, Type responseClass)
+		{
+			throw new NotImplementedException();
+		}
+
+		public T postFile<T>(string path, ManagedObjectRepresentation container, byte[] bytes, T representation)
+		{
+			 var r = httpPostFile<T>(path, bytes);
+			throw new NotImplementedException();
+		}
+
+		private Task<HttpResponseMessage> httpPostFile<T>(string path, byte[] bytes)
+		{
+			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+
+			multipartContent.Add(new ByteArrayContent(bytes), "file", "file");
+
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = new Uri(path),
+				Content = multipartContent
+			};
+
+			if (PlatformParameters.requireResponseBody())
+				request.Headers.TryAddWithoutValidation("Accept", MediaType.APPLICATION_JSON);
+
+			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+			request.AddTfaHeader(this.PlatformParameters.getTfaToken());
+			request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
+
+			return client.SendAsync(request);
 		}
 	}
 }
