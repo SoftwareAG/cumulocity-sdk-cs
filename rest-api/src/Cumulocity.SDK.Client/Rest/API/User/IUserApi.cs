@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.User;
+﻿using Cumulocity.SDK.Client.Rest.Representation.User;
 
 namespace Cumulocity.SDK.Client.Rest.API.User
 {
@@ -12,6 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 		CurrentUserRepresentation updateCurrentUser(CurrentUserRepresentation currentUserRepresentation);
 
 		UserRepresentation GetCurrentUserWithCustomProperties();
+
 		UserRepresentation getUser(string tenant, string user);
 
 		UserRepresentation create(string tenant, UserRepresentation userRepresentation);
