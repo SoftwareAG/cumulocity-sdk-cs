@@ -69,7 +69,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 			// Given
 			UserRepresentation ur = CreateUserRepresentation();
 			var u1 = userApi.create(tenant, ur);
-			UserRepresentation userRepresentation = new UserRepresentation();
 			u1.UserName = userName;
 			u1.LastName = "lastName";
 			// When

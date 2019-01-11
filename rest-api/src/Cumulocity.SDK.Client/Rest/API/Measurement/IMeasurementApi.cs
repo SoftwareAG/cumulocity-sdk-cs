@@ -15,7 +15,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// <param name="gid"> id of the measurement to search for </param>
 		/// <returns> the measurement with the given id </returns>
 		/// <exception cref="SDKException"> if the measurement is not found or if the query failed </exception>
-		//ORIGINAL LINE: MeasurementRepresentation getMeasurement(GId gid) throws SDKException;
 		MeasurementRepresentation getMeasurement(GId gid);
 
 		/// <summary>
@@ -24,7 +23,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// <param name="measurement"> measurement to be created </param>
 		/// <returns> the created measurement with the generated id </returns>
 		/// <exception cref="SDKException"> if the measurement could not be created </exception>
-		//ORIGINAL LINE: MeasurementRepresentation create(MeasurementRepresentation measurement) throws SDKException;
 		MeasurementRepresentation create(MeasurementRepresentation measurement);
 
 		/// <summary>
@@ -32,7 +30,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// </summary>
 		/// <param name="measurement"> measurement to be created </param>
 		/// <exception cref="SDKException"> if the measurement could not be created </exception>
-		//ORIGINAL LINE: void createWithoutResponse(MeasurementRepresentation measurement) throws SDKException;
 		void createWithoutResponse(MeasurementRepresentation measurement);
 
 		/// <summary>
@@ -68,8 +65,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// </summary>
 		/// <param name="measurement"> to be deleted </param>
 		/// <exception cref="SDKException"> if the measurement could not be deleted </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: void delete(MeasurementRepresentation measurement) throws SDKException;
 		void delete(MeasurementRepresentation measurement);
 
 		/// <summary>
@@ -78,8 +73,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// <param name="filter"> the filter criteria(s) </param>
 		/// <exception cref="IllegalArgumentException"> </exception>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: void deleteMeasurementsByFilter(MeasurementFilter filter) throws IllegalArgumentException, SDKException;
 		void deleteMeasurementsByFilter(MeasurementFilter filter);
 
 		/// <summary>
@@ -87,8 +80,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// </summary>
 		/// <returns> collection of measurements with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: MeasurementCollection getMeasurements() throws SDKException;
 		IMeasurementCollection Measurements { get; }
 
 		/// <summary>
@@ -97,8 +88,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// <param name="filter"> the filter criteria(s) </param>
 		/// <returns> collection of measurements matched by the filter with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: MeasurementCollection getMeasurementsByFilter(MeasurementFilter filter) throws SDKException;
 		IMeasurementCollection getMeasurementsByFilter(MeasurementFilter filter);
 
 		/// <summary>
@@ -107,8 +96,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// </summary>
 		/// <param name="measurement"> to be deleted </param>
 		/// <exception cref="SDKException"> if the measurement could not be deleted </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: @Deprecated void deleteMeasurement(MeasurementRepresentation measurement) throws SDKException;
 		[Obsolete]
 		void deleteMeasurement(MeasurementRepresentation measurement);
 	}
