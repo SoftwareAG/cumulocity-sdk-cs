@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
@@ -27,26 +28,21 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			return restConnector.postFile<ManagedObjectRepresentation>(BinariesUrl, container, bytes, container);
 		}
 
-
-		//ORIGINAL LINE: @Override public ManagedObjectRepresentation replaceFile(GId containerId, String contentType, InputStream fileStream) throws SDKException
 		public  ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream)
 		{
 			return restConnector.putStream<ManagedObjectRepresentation>(BinariesUrl + V + containerId.Value, contentType, fileStream, typeof(ManagedObjectRepresentation));
 		}
 
-		//ORIGINAL LINE: @Override public void deleteFile(GId containerId) throws SDKException
 		public void deleteFile(GId containerId)
 		{
 			restConnector.Delete(BinariesUrl + V + containerId.Value);
 		}
 
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		public Stream downloadFile(GId id)
+		public Task<Stream> downloadFile(GId id)
 		{
-			return restConnector.Get<Stream>(BinariesUrl + V + id.Value, MediaType.APPLICATION_OCTET_STREAM_TYPE,  typeof(Stream));
+			return restConnector.GetStream(BinariesUrl + V + id.Value, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		}
 
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 		//ORIGINAL LINE: private String getBinariesUrl() throws SDKException
 		private string BinariesUrl
 		{

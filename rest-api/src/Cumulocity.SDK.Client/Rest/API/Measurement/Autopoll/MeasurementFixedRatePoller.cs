@@ -22,6 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 		{
 			PollingTask = pollingResult;
 		}
+
 		private void pollingResult()
 		{
 			try

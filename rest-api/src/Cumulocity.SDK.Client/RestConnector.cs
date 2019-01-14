@@ -58,6 +58,10 @@ namespace Cumulocity.SDK.Client
 			var response = getClientResponse(path, mediaType);
 			return ResponseParser.parse<T>(response.Result, responseType, (int)HttpStatusCode.OK);
 		}
+		public async Task<Stream> GetStream(string path, MediaType aPPLICATION_OCTET_STREAM_TYPE)
+		{
+			return await client.GetStreamAsync(path);
+		}
 
 		public T postStream<T>(string path, CumulocityMediaType mediaType, Stream content, Type representation)
 		{
@@ -70,7 +74,6 @@ namespace Cumulocity.SDK.Client
 			var response = httpPostText<T>(path, content, representation);
 			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
-
 
 		public T Post<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
@@ -202,6 +205,7 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+
 		private Task<HttpResponseMessage> httpPutText<T>(string path, String content, Type representation)
 		{
 			var stringContent = new StringContent(content, Encoding.UTF8).Replace(MediaType.TEXT_PLAIN);
@@ -225,11 +229,16 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPutStream<T>(string path, Stream content, Type representation)
 		{
 
+			var streamContent = new StreamContent(content);
+
+			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+			multipartContent.Add(streamContent, "file","fileName");
+
 			var request = new HttpRequestMessage
 			{
 				Method = HttpMethod.Put,
 				RequestUri = new Uri(path),
-				Content = new StreamContent(content)
+				Content = multipartContent
 			};
 
 			if (PlatformParameters.requireResponseBody())
@@ -240,6 +249,7 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
@@ -353,6 +363,7 @@ namespace Cumulocity.SDK.Client
 
 			return handler;
 		}
+
 		public T putText<T>(string path, string content, Type representation)
 		{
 			var response = httpPutText<T>(path, content, representation);
@@ -372,15 +383,28 @@ namespace Cumulocity.SDK.Client
 
 		public T postFile<T>(string path, ManagedObjectRepresentation container, byte[] bytes, T representation)
 		{
-			 var r = httpPostFile<T>(path, bytes);
-			throw new NotImplementedException();
+			var response = httpPostFile<T>(path, bytes, container);
+			return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
-		private Task<HttpResponseMessage> httpPostFile<T>(string path, byte[] bytes)
+		private Task<HttpResponseMessage> httpPostFile<T>(string path, byte[] bytes, ManagedObjectRepresentation container)
 		{
-			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+			var stringContentObject = new StringContent(JsonConvert.SerializeObject(container, new JsonSerializerSettings
+			{
+				ContractResolver = new CamelCasePropertyNamesContractResolver()
+			}));
+			stringContentObject.Headers.Clear();
 
-			multipartContent.Add(new ByteArrayContent(bytes), "file", "file");
+			var stringContentFilesize = new StringContent(bytes.Length.ToString());
+			stringContentObject.Headers.Clear();
+
+			var streamContent = new StreamContent(new MemoryStream(bytes));
+			streamContent.Headers.TryAddWithoutValidation("Content-Type", container.Type);
+
+			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
+			multipartContent.Add(stringContentObject, "object");
+			multipartContent.Add(stringContentFilesize, "filesize");
+			multipartContent.Add(streamContent, "file", container.Name);
 
 			var request = new HttpRequestMessage
 			{
