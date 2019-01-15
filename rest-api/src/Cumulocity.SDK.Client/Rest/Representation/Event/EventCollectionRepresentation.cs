@@ -27,11 +27,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 		{
 			return Events.GetEnumerator();
 		}
-
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<EventRepresentation> iterator()
-		public  IEnumerator<EventRepresentation> iterator()
-		{
-			return events.GetEnumerator();
-		}
 	}
 }

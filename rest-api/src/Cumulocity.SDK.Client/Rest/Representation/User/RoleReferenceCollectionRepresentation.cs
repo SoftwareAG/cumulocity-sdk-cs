@@ -16,8 +16,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			this.references = new List<RoleReferenceRepresentation>();
 		}
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @JSONTypeHint(RoleReferenceRepresentation.class) public List<RoleReferenceRepresentation> getReferences()
 		public virtual IList<RoleReferenceRepresentation> References
 		{
 			get
@@ -28,13 +26,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			{
 				this.references = value;
 			}
-		}
-
-
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<RoleReferenceRepresentation> iterator()
-		public  IEnumerator<RoleReferenceRepresentation> iterator()
-		{
-			return references.GetEnumerator();
 		}
 
 		public override IEnumerator<RoleReferenceRepresentation> GetEnumerator()

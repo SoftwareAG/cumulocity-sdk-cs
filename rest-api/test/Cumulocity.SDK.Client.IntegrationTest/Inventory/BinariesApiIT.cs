@@ -41,9 +41,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 		[Fact]
 		public void CheckUploadFile()
 		{
+			//Given
 			var mor = createManagedObjectRepresentation();
+			//When
 			var result = binariesApi.uploadFile(mor,ReadFile(logoX200XfinalJpg));
-
+			//Then
 			Assert.NotNull(result);
 			Assert.Equal( mor.Name, result.Name);
 
@@ -59,6 +61,9 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 			var uploadFile = binariesApi.uploadFile(mor, ReadFile(logoX200XfinalJpg));
 			//When
 			binariesApi.deleteFile(uploadFile.Id);
+			//binariesApi.deleteFile(new GId("155951"));
+			//Then
+			Assert.NotNull(uploadFile);
 		}
 
 		[Fact]

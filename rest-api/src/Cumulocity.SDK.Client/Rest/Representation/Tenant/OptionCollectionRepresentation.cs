@@ -23,12 +23,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 			}
 		}
 
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<OptionRepresentation> iterator()
-		public  IEnumerator<OptionRepresentation> iterator()
-		{
-			return options.GetEnumerator();
-		}
-
 		public override IEnumerator<OptionRepresentation> GetEnumerator()
 		{
 			return options.GetEnumerator();

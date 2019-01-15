@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 {
 	[JsonObject]
 	public class AvailabilityStatCollectionRepresentation : BaseCollectionRepresentation<AvailabilityStatRepresentation>
 	{
-
 		private IList<AvailabilityStatRepresentation> availabilityStats;
 
 		public AvailabilityStatCollectionRepresentation()
@@ -20,7 +17,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			this.availabilityStats = availabilityStats;
 		}
 
-		//ORIGINAL LINE: @JSONTypeHint(AvailabilityStatRepresentation.class) public List<AvailabilityStatRepresentation> getAvailabilityStats()
 		public virtual IList<AvailabilityStatRepresentation> AvailabilityStats
 		{
 			get
@@ -31,12 +27,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			{
 				this.availabilityStats = value;
 			}
-		}
-
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<AvailabilityStatRepresentation> iterator()
-		public  IEnumerator<AvailabilityStatRepresentation> iterator()
-		{
-			return availabilityStats.GetEnumerator();
 		}
 
 		public override IEnumerator<AvailabilityStatRepresentation> GetEnumerator()

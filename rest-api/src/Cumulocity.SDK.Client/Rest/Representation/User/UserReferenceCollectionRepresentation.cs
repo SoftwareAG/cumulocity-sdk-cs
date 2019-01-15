@@ -16,7 +16,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			this.references = new List<UserReferenceRepresentation>();
 		}
 
-		//ORIGINAL LINE: @JSONTypeHint(UserReferenceRepresentation.class) public List<UserReferenceRepresentation> getReferences()
 		public virtual IList<UserReferenceRepresentation> References
 		{
 			get
@@ -34,10 +33,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			return references.GetEnumerator();
 		}
 
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<UserReferenceRepresentation> iterator()
-		public  IEnumerator<UserReferenceRepresentation> iterator()
-		{
-			return references.GetEnumerator();
-		}
 	}
 }

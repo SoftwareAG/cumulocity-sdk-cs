@@ -23,13 +23,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 			}
 		}
 
-
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<MeasurementRepresentation> iterator()
-		public  IEnumerator<MeasurementRepresentation> iterator()
-		{
-			return measurements.GetEnumerator();
-		}
-
 		public override IEnumerator<MeasurementRepresentation> GetEnumerator()
 		{
 			return measurements.GetEnumerator();

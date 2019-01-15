@@ -105,8 +105,17 @@ namespace Cumulocity.SDK.Client.Rest.Utils
 			        case TypeCode.Object:
 				        if (propertyType == typeof(GId) )
 				        {
-					        propertyInfo.SetValue(obj, new GId(val.ToString()), null);
-					        return;
+					        var valType = val.GetType();
+					        if (val.GetType() == typeof(GId))
+					        {
+						        propertyInfo.SetValue(obj, (GId) val, null);
+						        return;
+							}
+					        else
+					        {
+						        propertyInfo.SetValue(obj, new GId(val.ToString()), null);
+						        return;
+					        }
 				        }
 				        break;
 			        default:

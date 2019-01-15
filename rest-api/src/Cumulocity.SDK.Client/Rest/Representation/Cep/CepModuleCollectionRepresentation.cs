@@ -10,7 +10,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Cep
 	{
 		private IList<CepModuleRepresentation> modules;
 
-		//ORIGINAL LINE: @JSONTypeHint(CepModuleRepresentation.class) @JSONProperty(ignoreIfNull = true) public List<CepModuleRepresentation> getModules()
+	
 		public virtual IList<CepModuleRepresentation> Modules
 		{
 			get
@@ -23,11 +23,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Cep
 			}
 		}
 
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<CepModuleRepresentation> iterator()
-		public  IEnumerator<CepModuleRepresentation> iterator()
-		{
-			return modules.GetEnumerator();
-		}
 		public override IEnumerator<CepModuleRepresentation> GetEnumerator()
 		{
 			return modules.GetEnumerator();

@@ -5,6 +5,7 @@ using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
+using System.Collections;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -80,6 +81,18 @@ namespace Cumulocity.SDK.Client
 		{
 			var response = httpPost(path, mediaType, mediaType, representation);
 
+			if (!PlatformParameters.requireResponseBody())
+			{
+				var repFromPlatform = ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+				return repFromPlatform != null ? repFromPlatform : representation;
+			}
+
+			//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
+			//{
+
+			//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
+			//}
+
 			return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
@@ -100,7 +113,8 @@ namespace Cumulocity.SDK.Client
 		public void PostWithoutResponse<T>(string path, MediaType mediaType, T representation)
 			where T : IResourceRepresentation
 		{
-			throw new NotImplementedException();
+			var response = httpPost(path, mediaType, representation);
+			ResponseParser.checkStatus(response.Result, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T Put<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -249,7 +263,29 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+		private Task<HttpResponseMessage> httpPost<T>(string path, MediaType contentType,
+			 T representation)
+		{
+			var json = JsonConvert.SerializeObject(representation,
+				new JsonSerializerSettings
+				{
+					ContractResolver = new CamelCasePropertyNamesContractResolver()
+				});
+			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.Subtype);
 
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = new Uri(path),
+				Content = stringContent
+			};
+
+			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+			request.AddTfaHeader(this.PlatformParameters.getTfaToken());
+			request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
+
+			return client.SendAsync(request);
+		}
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
@@ -378,7 +414,8 @@ namespace Cumulocity.SDK.Client
 
 		public T putStream<T>(string path, MediaType mediaType, Stream content, Type responseClass)
 		{
-			throw new NotImplementedException();
+			var response = httpPutStream<T>(path, content, responseClass);
+			return ResponseParser.parse<T>(response.Result, responseClass, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
 		public T postFile<T>(string path, ManagedObjectRepresentation container, byte[] bytes, T representation)

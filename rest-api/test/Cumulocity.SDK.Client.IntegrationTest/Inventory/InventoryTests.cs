@@ -164,7 +164,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var created = inventory.create(rep);
 
             // Then
-            Assert.NotNull(created.Id);
+            Assert.NotNull(created);
 //            Assert.NotNull(created.Self);
 //            Assert.NotSame(created, rep);
         }

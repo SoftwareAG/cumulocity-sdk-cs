@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
@@ -8,7 +8,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 	{
 		private IList<OperationRepresentation> operations;
 
-		//ORIGINAL LINE: @JSONTypeHint(OperationRepresentation.class) public List<OperationRepresentation> getOperations()
 		public virtual IList<OperationRepresentation> Operations
 		{
 			get
@@ -19,12 +18,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			{
 				this.operations = value;
 			}
-		}
-
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public Iterator<OperationRepresentation> iterator()
-		public IEnumerator<OperationRepresentation> iterator()
-		{
-			return operations.GetEnumerator();
 		}
 
 		public override IEnumerator<OperationRepresentation> GetEnumerator()
