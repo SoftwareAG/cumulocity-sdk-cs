@@ -5,7 +5,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 {
 	public class ConnectionIdleListener : IConnectionIdleListener
 	{
-		private Action action;
+		private readonly Action action;
 
 		public ConnectionIdleListener(Action action)
 		{

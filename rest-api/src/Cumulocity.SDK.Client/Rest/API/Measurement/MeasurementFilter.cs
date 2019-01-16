@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Model.util;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Measurement
 {
@@ -14,25 +12,18 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 	/// </summary>
 	public class MeasurementFilter : Filter
 	{
-		//ORIGINAL LINE: @ParamSource private String fragmentType;
 		private string fragmentType;
 
-		//ORIGINAL LINE: @ParamSource private String valueFragmentType;
 		private string valueFragmentType;
 
-		//ORIGINAL LINE: @ParamSource private String valueFragmentSeries;
 		private string valueFragmentSeries;
 
-		//ORIGINAL LINE: @ParamSource private String dateFrom;
 		private string dateFrom;
 
-		//ORIGINAL LINE: @ParamSource private String dateTo;
 		private string dateTo;
 
-		//ORIGINAL LINE: @ParamSource private String type;
 		private string type;
 
-		//ORIGINAL LINE: @ParamSource private String source;
 		private string source;
 
 		/// <summary>
@@ -70,13 +61,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		}
 
 		/// <returns> the {@code type} parameter of the query </returns>
-		public virtual string Type
-		{
-			get
-			{
-				return type;
-			}
-		}
+		public virtual string Type => type;
 
 		/// <returns> the {@code source} parameter of the query </returns>
 		public virtual string Source
@@ -99,13 +84,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			return this;
 		}
 
-		public virtual string FragmentType
-		{
-			get
-			{
-				return fragmentType;
-			}
-		}
+		public virtual string FragmentType => fragmentType;
 
 		/// <summary>
 		/// Specify value fragment type. This is preferred over the parameter {@code fragmentType}, because working with
@@ -147,27 +126,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			return this;
 		}
 
-		public virtual string ValueFragmentType
-		{
-			get
-			{
-				return valueFragmentType;
-			}
-		}
+		public virtual string ValueFragmentType => valueFragmentType;
 
-		public virtual string ValueFragmentSeries
-		{
-			get
-			{
-				return valueFragmentSeries;
-			}
-		}
+		public virtual string ValueFragmentSeries => valueFragmentSeries;
 
 		public virtual MeasurementFilter byDate(DateTime fromDate, DateTime toDate)
 		{
-			//DateConverter.date2String(fromDate);
 			this.dateFrom = fromDate.ToString("o");
-			this.dateTo = toDate.ToString("o"); 
+			this.dateTo = toDate.ToString("o");
 			return this;
 		}
 
@@ -177,13 +143,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			return this;
 		}
 
-		public virtual string FromDate
-		{
-			get
-			{
-				return dateFrom;
-			}
-		}
+		public virtual string FromDate => dateFrom;
 
 		public virtual string ToDate
 		{
@@ -192,6 +152,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 				return dateTo;
 			}
 		}
-
 	}
 }

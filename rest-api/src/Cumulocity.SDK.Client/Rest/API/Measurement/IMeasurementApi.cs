@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Measurement;
+using System;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Measurement
 {
 	public interface IMeasurementApi
 	{
-
 		/// <summary>
 		/// Gets measurement by id
 		/// </summary>
@@ -38,7 +36,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// <param name="measurementCollection"> measurements to be created </param>
 		/// <returns> the created measurements with their generated ids </returns>
 		/// <exception cref="SDKException"> if the measurements could not be created </exception>
-		//ORIGINAL LINE: MeasurementCollectionRepresentation createBulk(MeasurementCollectionRepresentation measurementCollection) throws SDKException;
 		MeasurementCollectionRepresentation createBulk(MeasurementCollectionRepresentation measurementCollection);
 
 		/// <summary>
@@ -46,18 +43,16 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// </summary>
 		/// <param name="measurementCollection"> measurements to be created </param>
 		/// <exception cref="SDKException"> if the measurements could not be created </exception>
-		//ORIGINAL LINE: void createBulkWithoutResponse(MeasurementCollectionRepresentation measurementCollection) throws SDKException;
 		void createBulkWithoutResponse(MeasurementCollectionRepresentation measurementCollection);
 
 		/// <summary>
-		/// Creates measurement in the platform. Immediate response is available through the Future object. 
-		/// In case of lost connection, buffers data in persistence provider. 
+		/// Creates measurement in the platform. Immediate response is available through the Future object.
+		/// In case of lost connection, buffers data in persistence provider.
 		/// </summary>
 		/// <param name="measurement"> measurement to be created </param>
 		/// <returns> the created measurement with the generated id </returns>
 		/// <exception cref="SDKException"> if the measurement could not be created </exception>
-		//ORIGINAL LINE: Future createAsync(MeasurementRepresentation measurement) throws SDKException;
-		//Future createAsync(MeasurementRepresentation measurement);
+		Task<MeasurementRepresentation> createAsync(MeasurementRepresentation measurement);
 
 		/// <summary>
 		/// Deletes measurement from the platform.

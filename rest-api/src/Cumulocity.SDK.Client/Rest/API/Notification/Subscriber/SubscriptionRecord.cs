@@ -70,6 +70,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			}
 			return subscribeOperationListener != null ? subscribeOperationListener.Equals(that.subscribeOperationListener) : that.subscribeOperationListener == null;
 		}
-
 	}
 }

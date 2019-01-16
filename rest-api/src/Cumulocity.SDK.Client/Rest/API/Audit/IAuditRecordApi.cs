@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 
@@ -11,7 +9,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 	/// </summary>
 	public interface IAuditRecordApi
 	{
-
 		/// <summary>
 		/// Gets an audit record by id
 		/// </summary>

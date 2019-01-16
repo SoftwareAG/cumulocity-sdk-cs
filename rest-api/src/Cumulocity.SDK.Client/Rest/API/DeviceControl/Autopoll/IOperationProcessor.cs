@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.Operation;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Operation;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
@@ -13,6 +10,5 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		/// <param name="operation"> operation to process </param>
 		/// <returns> true - if processing was successful, false - otherwise </returns>
 		bool process(OperationRepresentation operation);
-
 	}
 }

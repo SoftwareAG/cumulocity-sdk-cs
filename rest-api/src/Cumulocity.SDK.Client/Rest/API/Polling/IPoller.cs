@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.API.Polling
+﻿namespace Cumulocity.SDK.Client.Rest.API.Polling
 {
 	/// <summary>
 	/// This interface provides methods for controlling polling tasks. It can be used for any task that needs
@@ -21,5 +17,4 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		/// </summary>
 		void stop();
 	}
-
 }

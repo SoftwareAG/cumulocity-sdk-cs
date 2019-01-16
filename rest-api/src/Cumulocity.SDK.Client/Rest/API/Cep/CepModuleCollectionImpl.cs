@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Event;
-using Cumulocity.SDK.Client.Rest.Representation;
+﻿using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Cep;
-using Cumulocity.SDK.Client.Rest.Representation.Event;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Cep
 {
@@ -22,7 +18,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 				return CepMediaType.CEP_MODULE_COLLECTION;
 			}
 		}
+
 		protected internal override Type ResponseClassProp => typeof(CepModuleCollectionRepresentation);
+
 		protected internal override PagedCepModuleCollectionRepresentation<CepModuleCollectionRepresentation> wrap(CepModuleCollectionRepresentation collection)
 		{
 			return new PagedCepModuleCollectionRepresentation<CepModuleCollectionRepresentation>(collection, this);

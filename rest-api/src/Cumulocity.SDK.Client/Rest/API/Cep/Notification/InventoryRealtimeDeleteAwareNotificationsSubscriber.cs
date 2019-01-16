@@ -21,13 +21,11 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 			return SubscriberBuilder<string, ManagedObjectDeleteAwareNotification>.anSubscriber<string, ManagedObjectDeleteAwareNotification>().withParameters(parameters).withEndpoint(REALTIME_NOTIFICATIONS_URL).withSubscriptionNameResolver(new Identity()).withDataType(typeof(ManagedObjectDeleteAwareNotification)).build();
 		}
 
-		//ORIGINAL LINE: public Subscription<String> subscribe(final String channelID, final SubscriptionListener<String, ManagedObjectDeleteAwareNotification> handler) throws SDKException
 		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler)
 		{
 			return subscriber.subscribe(channelPrefix + channelID, handler);
 		}
 
-		//ORIGINAL LINE: @Override public Subscription<String> subscribe(String agentId, SubscribeOperationListener subscribeOperationListener, SubscriptionListener<String, ManagedObjectDeleteAwareNotification> handler, boolean autoRetry) throws SDKException
 		public ISubscription<string> subscribe(string agentId, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler, bool autoRetry)
 		{
 			return subscriber.subscribe(agentId, subscribeOperationListener, handler, autoRetry);

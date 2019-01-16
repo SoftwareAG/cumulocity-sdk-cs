@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Operation;
+﻿using Cumulocity.SDK.Client.Rest.Model.Operation;
 using Cumulocity.SDK.Client.Rest.Model.util;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
@@ -13,17 +11,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 	/// </summary>
 	public class OperationFilter : Filter
 	{
-
-		//ORIGINAL LINE: @ParamSource private String fragmentType;
 		private string fragmentType;
 
-		//ORIGINAL LINE: @ParamSource private String status;
 		private string status;
 
-		//ORIGINAL LINE: @ParamSource private String deviceId;
 		private string deviceId;
 
-		//ORIGINAL LINE: @ParamSource private String agentId;
 		private string agentId;
 
 		/// <summary>

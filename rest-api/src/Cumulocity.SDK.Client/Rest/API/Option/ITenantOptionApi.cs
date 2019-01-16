@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Option;
+﻿using Cumulocity.SDK.Client.Rest.Model.Option;
 using Cumulocity.SDK.Client.Rest.Representation.Tenant;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Option
 {
@@ -11,7 +10,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 	/// </summary>
 	public interface ITenantOptionApi
 	{
-
 		/// <summary>
 		/// Gets an option by id
 		/// Requires role ROLE_OPTION_MANAGEMENT_READ
@@ -36,8 +34,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// <param name="option"> option to be created </param>
 		/// <returns> the created option with the generated id </returns>
 		/// <exception cref="SDKException"> if the option could not be created </exception>
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: OptionRepresentation save(OptionRepresentation option) throws SDKException;
 		OptionRepresentation save(OptionRepresentation option);
 
 		/// <summary>
@@ -48,8 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// <param name="option"> option to be created </param>
 		/// <returns> the created option with the generated id </returns>
 		/// <exception cref="SDKException"> if the option could not be created </exception>
-		//Todo: saveAsync
-		//Future saveAsync(OptionRepresentation option);
+		Task<OptionRepresentation> saveAsync(OptionRepresentation option);
 
 		/// <summary>
 		/// Deletes option from the platform.

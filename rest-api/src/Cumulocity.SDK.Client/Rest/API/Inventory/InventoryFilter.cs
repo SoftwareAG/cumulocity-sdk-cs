@@ -10,28 +10,20 @@ using System.Text;
 public class InventoryFilter : Filter
 {
 
-//ORIGINAL LINE: @ParamSource private String fragmentType;
 	private string fragmentType;
 
-//ORIGINAL LINE: @ParamSource private String type;
 	private string type;
 
-//ORIGINAL LINE: @ParamSource private String owner;
 	private string owner;
 
-//ORIGINAL LINE: @ParamSource private String text;
 	private string text;
 
-//ORIGINAL LINE: @ParamSource private String ids;
 	private string ids;
 
-//ORIGINAL LINE: @ParamSource private String childAssetId;
 	private string childAssetId;
 
-//ORIGINAL LINE: @ParamSource private String childDeviceId;
 	private string childDeviceId;
 
-//ORIGINAL LINE: @ParamSource private String childAdditionId;
 	private string childAdditionId;
 
 	public static InventoryFilter searchInventory()

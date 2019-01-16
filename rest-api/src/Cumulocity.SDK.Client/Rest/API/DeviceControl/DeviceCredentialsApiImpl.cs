@@ -1,8 +1,8 @@
-﻿using System;
-using Cumulocity.SDK.Client.Rest.API.Polling;
+﻿using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
 using Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
@@ -36,7 +36,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 
 		public DeviceCredentialsRepresentation pollCredentials(string deviceId)
 		{
-			//ORIGINAL LINE: final DeviceCredentialsRepresentation representation = new DeviceCredentialsRepresentation();
 			DeviceCredentialsRepresentation representation = new DeviceCredentialsRepresentation();
 			representation.Id = deviceId;
 			return restConnector.Post<DeviceCredentialsRepresentation>(credentialsUrl, DeviceControlMediaType.DEVICE_CREDENTIALS, representation);
@@ -53,10 +52,9 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			return aPoller(deviceId, pollingStrategy).startAndPoll();
 		}
 
-		//ORIGINAL LINE: private AlteringRateResultPoller<DeviceCredentialsRepresentation> aPoller(final String deviceId, PollingStrategy pollingStrategy)
 		private AlteringRateResultPoller<DeviceCredentialsRepresentation> aPoller(string deviceId, PollingStrategy pollingStrategy)
 		{
-			GetResultTask<DeviceCredentialsRepresentation> pollingTask = new GetResultTask<DeviceCredentialsRepresentation>(this,deviceId);
+			GetResultTask<DeviceCredentialsRepresentation> pollingTask = new GetResultTask<DeviceCredentialsRepresentation>(this, deviceId);
 			return new AlteringRateResultPoller<DeviceCredentialsRepresentation>(pollingTask, pollingStrategy);
 		}
 
@@ -64,14 +62,15 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		{
 			private string DeviceId { get; set; }
 			private DeviceCredentialsApiImpl DeviceCredentialsApiImpl { get; set; }
-			public GetResultTask(DeviceCredentialsApiImpl deviceCredentialsApiImpl,string deviceId)
+
+			public GetResultTask(DeviceCredentialsApiImpl deviceCredentialsApiImpl, string deviceId)
 			{
 				this.DeviceId = deviceId;
 				this.DeviceCredentialsApiImpl = deviceCredentialsApiImpl;
 			}
+
 			public K TryGetResult()
 			{
-
 				try
 				{
 					var readData = DeviceCredentialsApiImpl.pollCredentials(DeviceId);

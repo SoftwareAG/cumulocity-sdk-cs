@@ -96,7 +96,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			notifyListenerOnError(message);
 		}
 
-
 		private void notifyListenerOnError(IMessage message)
 		{
 			string errorMessage = "Unknow error (unspecified by server)";

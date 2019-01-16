@@ -1,28 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Identity;
-using Cumulocity.SDK.Client.Rest.Representation;
+﻿using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Event;
-using Cumulocity.SDK.Client.Rest.Representation.Identity;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Event
 {
-
 	public class EventCollectionImpl : PagedCollectionResourceImpl<EventRepresentation, EventCollectionRepresentation, PagedEventCollectionRepresentation<EventCollectionRepresentation>>,
-		     IEventCollection
+			 IEventCollection
 	{
 		public EventCollectionImpl(RestConnector restConnector, string url, int pageSize) : base(restConnector, url, pageSize)
 		{
 		}
 
-		protected internal override CumulocityMediaType MediaType
-		{
-			get
-			{
-				return EventMediaType.EVENT_COLLECTION;
-			}
-		}
+		protected internal override CumulocityMediaType MediaType => EventMediaType.EVENT_COLLECTION;
+
 		protected internal override Type ResponseClassProp => typeof(EventCollectionRepresentation);
 
 		protected internal override PagedEventCollectionRepresentation<EventCollectionRepresentation> wrap(EventCollectionRepresentation collection)

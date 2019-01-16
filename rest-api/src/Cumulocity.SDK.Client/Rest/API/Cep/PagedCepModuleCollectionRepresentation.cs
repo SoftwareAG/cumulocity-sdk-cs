@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Cep;
 using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.Cep;
-using Cumulocity.SDK.Client.Rest.Representation.Event;
 
 namespace Cumulocity.SDK.Client.Rest.API.Cep
 {
@@ -30,6 +27,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		{
 			return new PagedCollectionIterable<CepModuleRepresentation, CepModuleCollectionRepresentation>(collectionResource, this, limit);
 		}
-
-}
+	}
 }

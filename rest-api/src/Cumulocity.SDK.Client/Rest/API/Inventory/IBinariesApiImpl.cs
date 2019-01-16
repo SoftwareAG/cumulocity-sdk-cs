@@ -1,4 +1,5 @@
 ﻿#region Cumulocity GmbH
+
 // /*
 //  * Copyright (C) 2015-2018
 //  *
@@ -18,20 +19,24 @@
 //  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  */
-#endregion
 
-using System.IO;
-using System.Threading.Tasks;
+#endregion Cumulocity GmbH
+
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
 	public interface IBinariesApi
 	{
 		ManagedObjectRepresentation uploadFile(ManagedObjectRepresentation container, byte[] bytes);
+
 		ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream);
+
 		void deleteFile(GId containerId);
+
 		Task<Stream> downloadFile(GId id);
 	}
 }

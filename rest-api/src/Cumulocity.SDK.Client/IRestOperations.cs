@@ -39,7 +39,7 @@ namespace Cumulocity.SDK.Client
 
 		//Response.Status getStatus(string path, CumulocityMediaType mediaType);
 
-		T Put<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
+		T PutAsync<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
 
 		void Delete(string path);
 	}

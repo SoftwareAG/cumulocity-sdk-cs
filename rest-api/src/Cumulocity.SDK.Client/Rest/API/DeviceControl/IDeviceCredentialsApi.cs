@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Polling;
+﻿using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Representation.DeviceBootstrap;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
 	/// <summary>
 	/// Api for device bootstrap
-	/// 
+	///
 	/// </summary>
 	public interface IDeviceCredentialsApi
 	{
@@ -23,8 +20,8 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		void delete(NewDeviceRequestRepresentation representation);
 
 		/// <summary>
-		/// Schedule polling credentials task, invoking it at the specified execution time and subsequently with the given interval 
-		/// 
+		/// Schedule polling credentials task, invoking it at the specified execution time and subsequently with the given interval
+		///
 		/// Execution will end after timeout
 		/// </summary>
 		/// <param name="deviceId"> </param>

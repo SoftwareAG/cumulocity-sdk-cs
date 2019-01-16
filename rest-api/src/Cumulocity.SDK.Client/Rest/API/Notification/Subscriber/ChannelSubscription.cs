@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using Cometd.Bayeux.Client;
+﻿using Cometd.Bayeux.Client;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
+using System.Diagnostics;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {

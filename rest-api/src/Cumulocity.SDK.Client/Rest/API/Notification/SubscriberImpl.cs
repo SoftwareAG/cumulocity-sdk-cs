@@ -52,19 +52,16 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 		}
 
 
-		//ORIGINAL LINE: public Subscription<T> subscribe(T object, final SubscriptionListener<T, Message> handler) throws SDKException
 		public virtual ISubscription<T> subscribe(T @object, ISubscriptionListener<T, IMessage> handler)
 		{
 			return this.subscribe(@object, new LoggingSubscribeOperationListener(), handler, true);
 		}
 
-		//ORIGINAL LINE: public Subscription<T> subscribe(T object, final SubscribeOperationListener subscribeOperationListener, final SubscriptionListener<T, Message> handler, final boolean autoRetry) throws SDKException
 		public virtual ISubscription<T> subscribe(T @object, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<T, IMessage> handler, bool autoRetry)
 		{
 			return subscribe(@object, subscribeOperationListener, handler, autoRetry, 0);
 		}
 
-		//ORIGINAL LINE: Subscription<T> subscribe(T object, final SubscribeOperationListener subscribeOperationListener, final SubscriptionListener<T, Message> handler, final boolean autoRetry, final int retriesCount) throws SDKException
 		internal virtual ISubscription<T> subscribe(T @object, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<T, IMessage> handler, bool autoRetry, int retriesCount)
 		{
 			checkArgument(!Helpers.IsNullOrDefault<T>(@object), "object can't be null");
@@ -73,14 +70,11 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 			ensureConnection();
 
-			//ORIGINAL LINE: final ClientSessionChannel channel = getChannel(object);
 			IClientSessionChannel channel = getChannel(@object);
 			log.LogDebug("subscribing to channel {}", channel.Id);
 
-			//ORIGINAL LINE: final MessageListenerAdapter listener = new MessageListenerAdapter(handler, channel, object);
 			var listener = new MessageListenerAdapter<T>(handler, channel, @object);
 
-			//ORIGINAL LINE: final ClientSessionChannel metaSubscribeChannel = session.getChannel(ClientSessionChannel.META_SUBSCRIBE);
 			IClientSessionChannel metaSubscribeChannel = session.getChannel(Channel_Fields.META_SUBSCRIBE);
 			var subscriptionRecord = new SubscriptionRecord<T>(@object, handler, subscribeOperationListener, this);
 			var subscriptionResultListener = new SubscriptionResultListener<T>(subscriptionRecord, listener, subscribeOperationListener, channel, autoRetry, retriesCount, this);
@@ -113,7 +107,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			}
 		}
 
-		//ORIGINAL LINE: private ClientSessionChannel getChannel(final T object)
 		private IClientSessionChannel getChannel(T @object)
 		{
 			//ORIGINAL LINE: final String channelId = subscriptionNameResolver.apply(object);
@@ -170,8 +163,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 				}
 			}
 		}
-
-		//ORIGINAL LINE: @Override public void onDisconnection(final int httpCode)
 		public void onDisconnection(int httpCode)
 		{
 			foreach (var subscription in subscriptions)

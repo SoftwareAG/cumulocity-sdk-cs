@@ -1,5 +1,4 @@
-﻿using System;
-using Cumulocity.SDK.Client.Rest.API.Notification;
+﻿using Cumulocity.SDK.Client.Rest.API.Notification;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 
 namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
@@ -20,13 +19,11 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 			return SubscriberBuilder<string, object>.anSubscriber<string, object>().withParameters(parameters).withEndpoint(CEP_CUSTOM_NOTIFICATIONS_URL).withSubscriptionNameResolver(new Identity()).withDataType(typeof(object)).build();
 		}
 
-		//ORIGINAL LINE: public Subscription<String> subscribe(final String channelID, final SubscriptionListener<String, Object> handler) throws SDKException
 		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, object> handler)
 		{
 			return subscriber.subscribe(channelID, handler);
 		}
 
-		//ORIGINAL LINE: @Override public Subscription<String> subscribe(String channelID, SubscribeOperationListener subscribeOperationListener, SubscriptionListener<String, Object> handler, boolean autoRetry) throws SDKException
 		public ISubscription<string> subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, object> handler, bool autoRetry)
 		{
 			return subscriber.subscribe(channelID, subscribeOperationListener, handler, autoRetry);
@@ -44,6 +41,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 				return id;
 			}
 		}
-
 	}
 }

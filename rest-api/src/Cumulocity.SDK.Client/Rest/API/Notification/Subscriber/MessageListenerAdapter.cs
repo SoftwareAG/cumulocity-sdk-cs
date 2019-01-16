@@ -33,6 +33,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 				return subscription;
 			}
 		}
-
 	}
 }

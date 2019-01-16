@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
-using Cumulocity.SDK.Client.Rest.Model.Option;
+﻿using Cumulocity.SDK.Client.Rest.Model.Option;
 using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Tenant;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Option
 {
@@ -12,7 +9,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 
 	public class TenantOptionApiImpl : ITenantOptionApi
 	{
-
 		private readonly RestConnector restConnector;
 
 		private readonly int pageSize;
@@ -26,15 +22,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			this.pageSize = pageSize;
 		}
 
-		//ORIGINAL LINE: @Override public OptionRepresentation getOption(OptionPK optionPK) throws SDKException
-		public  OptionRepresentation getOption(OptionPK optionPK)
+		public OptionRepresentation getOption(OptionPK optionPK)
 		{
 			string url = TenantApiRepresentation.TenantOptionForCategoryAndKey.Replace("{category}", optionPK.Category).Replace("{key}", optionPK.Key);
 			return restConnector.Get<OptionRepresentation>(url, OptionMediaType.OPTION, typeof(OptionRepresentation));
 		}
 
-		//ORIGINAL LINE: @Override public TenantOptionCollection getOptions() throws SDKException
-		public  ITenantOptionCollection Options
+		public ITenantOptionCollection Options
 		{
 			get
 			{
@@ -43,8 +37,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			}
 		}
 
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: private String getSelfUri() throws SDKException
 		private string SelfUri
 		{
 			get
@@ -53,29 +45,23 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			}
 		}
 
-		//ORIGINAL LINE: @Override public OptionRepresentation save(OptionRepresentation representation) throws SDKException
-		public  OptionRepresentation save(OptionRepresentation representation)
+		public OptionRepresentation save(OptionRepresentation representation)
 		{
-				return restConnector.Post<OptionRepresentation>(SelfUri, OptionMediaType.OPTION, representation);		
+			return restConnector.Post<OptionRepresentation>(SelfUri, OptionMediaType.OPTION, representation);
 		}
 
-		//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-		//ORIGINAL LINE: @Override public Future saveAsync(OptionRepresentation representation) throws SDKException
-		//public override Future<> saveAsync(OptionRepresentation representation)
-		//{
-		//	return restConnector.postAsync(SelfUri, OptionMediaType.OPTION, representation);
-		//}
+		public Task<OptionRepresentation> saveAsync(OptionRepresentation representation)
+		{
+			return restConnector.PostAsync(SelfUri, OptionMediaType.OPTION, representation);
+		}
 
-
-		//ORIGINAL LINE: @Override public void delete(OptionPK optionPK) throws SDKException
-		public  void delete(OptionPK optionPK)
+		public void delete(OptionPK optionPK)
 		{
 			string url = TenantApiRepresentation.TenantOptionForCategoryAndKey.Replace("{category}", optionPK.Category).Replace("{key}", optionPK.Key);
 			restConnector.Delete(url);
 		}
 
-		//ORIGINAL LINE: @Override public List<OptionRepresentation> getAllOptionsForCategory(String category) throws SDKException
-		public  IList<OptionRepresentation> getAllOptionsForCategory(string category)
+		public IList<OptionRepresentation> getAllOptionsForCategory(string category)
 		{
 			string url = TenantApiRepresentation.TenantOptionsForCategory.Replace("{category}", category);
 			OptionsRepresentation optionsRepresentation = restConnector.Get<OptionsRepresentation>(url, CumulocityMediaType.APPLICATION_JSON_TYPE, typeof(OptionsRepresentation));
@@ -123,7 +109,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			}
 			return options;
 		}
-
 	}
-
 }

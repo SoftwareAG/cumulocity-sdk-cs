@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
-	public interface IInventoryApi//<T> where T : ManagedObjectCollectionRepresentation
+	public interface IInventoryApi
 	{
 		/// <summary>
 		/// Returns the Managed Object of the Resource.

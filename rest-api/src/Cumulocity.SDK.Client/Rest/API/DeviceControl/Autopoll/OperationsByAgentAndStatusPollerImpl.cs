@@ -37,7 +37,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 		}
 
-		
 		public override bool start()
 		{
 			if (!base.start())
@@ -50,7 +49,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			return true;
 		}
 
-	
 		public override void stop()
 		{
 			base.stop();

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Cometd.Bayeux.Client;
+﻿using Cometd.Bayeux.Client;
 using Cometd.Client;
 using Cometd.Client.Transport;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.API.Notification.Transport;
 using Cumulocity.SDK.Client.Rest.API.Notification.Watchers;
-using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
@@ -26,10 +24,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private readonly ICollection<IExtension> extensions;
 
-		//ORIGINAL LINE: public static BayeuxSessionProvider createProvider(final String endpoint, final PlatformParameters paramters, Class endpointDataType, final Provider<Client> httpClient, UnauthorizedConnectionWatcher unauthorizedConnectionWatcher, Extension... extensions)
-		public static IBayeuxSessionProvider createProvider(string endpoint, PlatformParameters paramters, Type endpointDataType,  UnauthorizedConnectionWatcher unauthorizedConnectionWatcher, params IExtension[] extensions)
+		public static IBayeuxSessionProvider createProvider(string endpoint, PlatformParameters paramters, Type endpointDataType, UnauthorizedConnectionWatcher unauthorizedConnectionWatcher, params IExtension[] extensions)
 		{
-			return new DefaultBayeuxClientProvider(endpoint, paramters, endpointDataType,  unauthorizedConnectionWatcher, extensions);
+			return new DefaultBayeuxClientProvider(endpoint, paramters, endpointDataType, unauthorizedConnectionWatcher, extensions);
 		}
 
 		public DefaultBayeuxClientProvider(string endpoint, PlatformParameters paramters, Type endpointDataType, UnauthorizedConnectionWatcher unauthorizedConnectionWatcher, params IExtension[] extensions)
@@ -41,16 +38,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			this.extensions = extensions.ToList();
 		}
 
-		//ORIGINAL LINE: @Override public ClientSession get() throws SDKException
 		public IClientSession get()
 		{
 			return openSession(createSession());
 		}
 
-		//ORIGINAL LINE: private BayeuxClient createSession() throws SDKException
 		private BayeuxClient createSession()
 		{
-			//ORIGINAL LINE: final BayeuxClient session = new BayeuxClient(buildUrl(), createTransport(httpClient));
 			BayeuxClient session = new BayeuxClient(buildUrl(), new List<ClientTransport>() { createTransport() });
 			foreach (var extension in extensions)
 			{
@@ -61,7 +55,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private BayeuxClient openSession(BayeuxClient bayeuxClient)
 		{
-			 bayeuxClient.handshake();
+			bayeuxClient.handshake();
 
 			var handshake = bayeuxClient.waitFor(CONNECTED_STATE_TIMEOUT, new List<BayeuxClient.State>() { BayeuxClient.State.CONNECTED });
 			if (handshake != BayeuxClient.State.CONNECTED)
@@ -73,12 +67,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private string buildUrl()
 		{
-			//ORIGINAL LINE: final String host = paramters.getHost();
 			string host = paramters.Host;
 			return (host.EndsWith("/", StringComparison.Ordinal) ? host : host + "/") + endpoint;
 		}
 
-		//ORIGINAL LINE: private ClientTransport createTransport(final Provider<Client> httpClient)
 		private ClientTransport createTransport()
 		{
 			return new CumulocityLongPollingTransport(createTransportOptions(), paramters, unauthorizedConnectionWatcher);
@@ -94,7 +86,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 		{
 			return buildUrl();
 		}
-
 	}
-
 }

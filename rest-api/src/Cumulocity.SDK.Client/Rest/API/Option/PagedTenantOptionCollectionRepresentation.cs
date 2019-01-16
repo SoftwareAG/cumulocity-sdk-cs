@@ -18,7 +18,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			this.collectionResource = collectionResource;
 		}
 
-		public  IEnumerable<OptionRepresentation> allPages()
+		public IEnumerable<OptionRepresentation> allPages()
 		{
 			return new PagedCollectionIterable<OptionRepresentation, OptionCollectionRepresentation>(collectionResource, this);
 		}

@@ -1,19 +1,17 @@
-using System;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
 	public interface IManagedObject
 	{
-
 		/// <summary>
 		/// Returns the Managed Object of the Resource.
 		/// </summary>
 		/// <returns> ManagedObjectRepresentation </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated ManagedObjectRepresentation get() throws SDKException;
+
 		[Obsolete]
 		ManagedObjectRepresentation get();
 
@@ -21,8 +19,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// Deletes the Managed Object from the Cumulocity Server.
 		/// </summary>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated void delete() throws SDKException;
 		[Obsolete]
 		void delete();
 
@@ -32,8 +28,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="managedObjectRepresentation"> </param>
 		/// <returns> ManagedObjectRepresentation updated ManagedObject. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: @Deprecated ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation) throws SDKException;
 		[Obsolete]
 		ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation);
 
@@ -43,8 +37,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation) throws SDKException;
 		ManagedObjectReferenceRepresentation addChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation);
 
 		/// <summary>
@@ -53,8 +45,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="childId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildDevice(GId childId) throws SDKException;
 		ManagedObjectReferenceRepresentation addChildDevice(GId childId);
 
 		/// <summary>
@@ -63,8 +53,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectRepresentation addChildDevice(ManagedObjectRepresentation representation) throws SDKException;
 		ManagedObjectRepresentation addChildDevice(ManagedObjectRepresentation representation);
 
 		/// <summary>
@@ -72,8 +60,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <returns> ManagedObjectReferenceCollectionRepresentation which contains all the child devices. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceCollection getChildDevices() throws SDKException;
 		IManagedObjectReferenceCollection<ManagedObjectReferenceCollectionRepresentation> ChildDevices { get; }
 
 		/// <summary>
@@ -82,8 +68,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="deviceId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation getChildDevice(GId deviceId) throws SDKException;
 		ManagedObjectReferenceRepresentation getChildDevice(GId deviceId);
 
 		/// <summary>
@@ -91,8 +75,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <param name="deviceId"> </param>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: void deleteChildDevice(GId deviceId) throws SDKException;
 		void deleteChildDevice(GId deviceId);
 
 		/// <summary>
@@ -101,8 +83,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildAssets(ManagedObjectReferenceRepresentation refrenceReprsentation) throws SDKException;
 		ManagedObjectReferenceRepresentation addChildAssets(ManagedObjectReferenceRepresentation refrenceReprsentation);
 
 		/// <summary>
@@ -111,8 +91,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildAssets(GId childId) throws SDKException;
 		ManagedObjectReferenceRepresentation addChildAssets(GId childId);
 
 		/// <summary>
@@ -121,8 +99,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectRepresentation addChildAsset(ManagedObjectRepresentation representation) throws SDKException;
 		ManagedObjectRepresentation addChildAsset(ManagedObjectRepresentation representation);
 
 		/// <summary>
@@ -130,8 +106,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <returns> ManagedObjectReferenceCollectionRepresentation which contains all the child devices. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceCollection getChildAssets() throws SDKException;
 		IManagedObjectReferenceCollection<ManagedObjectReferenceCollectionRepresentation> ChildAssets { get; }
 
 		/// <summary>
@@ -140,8 +114,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="assetId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation getChildAsset(GId assetId) throws SDKException;
 		ManagedObjectReferenceRepresentation getChildAsset(GId assetId);
 
 		/// <summary>
@@ -149,8 +121,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <param name="assetId"> </param>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: void deleteChildAsset(GId assetId) throws SDKException;
+
 		void deleteChildAsset(GId assetId);
 
 		/// <summary>
@@ -159,8 +130,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child addition. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildAdditions(ManagedObjectReferenceRepresentation refrenceReprsentation) throws SDKException;
+
 		ManagedObjectReferenceRepresentation addChildAdditions(
 			ManagedObjectReferenceRepresentation refrenceReprsentation);
 
@@ -170,8 +140,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="childId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child addition. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation addChildAdditions(GId childId) throws SDKException;
 		ManagedObjectReferenceRepresentation addChildAdditions(GId childId);
 
 		/// <summary>
@@ -180,8 +148,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectRepresentation addChildAddition(ManagedObjectRepresentation representation) throws SDKException;
 		ManagedObjectRepresentation addChildAddition(ManagedObjectRepresentation representation);
 
 		/// <summary>
@@ -189,8 +155,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <returns> ManagedObjectReferenceCollectionRepresentation which contains all the child additions. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceCollection getChildAdditions() throws SDKException;
 		IManagedObjectReferenceCollection<ManagedObjectReferenceCollectionRepresentation> ChildAdditions { get; }
 
 		/// <summary>
@@ -199,8 +163,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="additionId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child additions. </returns>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: ManagedObjectReferenceRepresentation getChildAddition(GId additionId) throws SDKException;
 		ManagedObjectReferenceRepresentation getChildAddition(GId additionId);
 
 		/// <summary>
@@ -208,8 +170,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// </summary>
 		/// <param name="additionId"> </param>
 		/// <exception cref="SDKException"> </exception>
-//JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-//ORIGINAL LINE: void deleteChildAddition(GId additionId) throws SDKException;
 		void deleteChildAddition(GId additionId);
 	}
 }

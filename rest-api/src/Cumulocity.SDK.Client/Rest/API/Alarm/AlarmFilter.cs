@@ -1,34 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Event;
+﻿using Cumulocity.SDK.Client.Rest.Model.Event;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
+using System.Text;
 
 namespace Cumulocity.SDK.Client.Rest.API.Alarm
 {
 	public class AlarmFilter : Filter
 	{
-
-		//ORIGINAL LINE: @ParamSource private String status;
 		private string status;
 
-		//ORIGINAL LINE: @ParamSource private String source;
 		private string source;
 
-		//ORIGINAL LINE: @ParamSource private String dateFrom;
 		private string dateFrom;
 
-		//ORIGINAL LINE: @ParamSource private String dateTo;
 		private string dateTo;
 
-		//ORIGINAL LINE: @ParamSource private String severity;
 		private string severity;
 
-		//ORIGINAL LINE: @ParamSource private String resolved;
 		private string resolved;
 
-		//ORIGINAL LINE: @ParamSource private String type;
 		private string type;
 
 		/// <summary>
@@ -77,7 +68,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			}
 			this.status = tmp.ToString();
 			return this;
-
 		}
 
 		/// <returns> the {@code status} parameter of the query </returns>
@@ -109,7 +99,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			}
 		}
 
-
 		/// <returns> the {@code source} parameter of the query </returns>
 		public virtual string Source
 		{
@@ -119,9 +108,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			}
 		}
 
-
 		/// <summary>
-		/// Specifies the {@code fromDate} and {@code toDate} query parameters 
+		/// Specifies the {@code fromDate} and {@code toDate} query parameters
 		/// for query in a time range.
 		/// </summary>
 		/// <param name="fromDate"> the start date time of the range </param>
@@ -136,7 +124,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		}
 
 		/// <summary>
-		/// Specifies the {@code fromDate} query parameter 
+		/// Specifies the {@code fromDate} query parameter
 		/// for querying all alarms from the specified date time.
 		/// </summary>
 		/// <param name="fromDate"> the date time from which all alarms to be returned. </param>
@@ -190,8 +178,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			this.type = type;
 			return this;
 		}
-
-
 	}
-
 }

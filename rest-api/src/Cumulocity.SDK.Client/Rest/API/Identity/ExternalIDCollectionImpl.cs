@@ -1,9 +1,6 @@
-﻿
-using System;
-using Cumulocity.SDK.Client;
-using Cumulocity.SDK.Client.Rest.API.Identity;
-using Cumulocity.SDK.Client.Rest.Representation;
+﻿using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Identity
 {
@@ -11,7 +8,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 		PagedCollectionResourceImpl<ExternalIDRepresentation, ExternalIDCollectionRepresentation,
 			PagedExternalIDCollectionRepresentation<ExternalIDCollectionRepresentation>>, IExternalIDCollection
 	{
-
 		public ExternalIDCollectionImpl(RestConnector restConnector, string url, int pageSize) : base(restConnector,
 			url, pageSize)
 		{

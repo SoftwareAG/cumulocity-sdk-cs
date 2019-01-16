@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Cometd.Bayeux;
+﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
+using System.Diagnostics;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {

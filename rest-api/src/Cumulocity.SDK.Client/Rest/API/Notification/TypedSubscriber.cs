@@ -19,7 +19,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			this.dataType = dataType;
 		}
 
-		//ORIGINAL LINE: public Subscription<T> subscribe(T object, SubscriptionListener<T, R> handler) throws SDKException
 		public virtual ISubscription<T> subscribe(T @object, ISubscriptionListener<T, R> handler)
 		{
 			return subscriber.subscribe(@object, new MappingSubscriptionListener<T, R>(handler, dataType));
@@ -58,16 +57,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		public void onNotification(ISubscription<T> subscription, IMessage notification)
 		{
-			//ORIGINAL LINE: final R data = asDataType(notification);
 			R data = asDataType(notification);
 			handler.onNotification(subscription, data);
 		}
 
 		internal R asDataType(IMessage notification)
 		{
-			//ORIGINAL LINE: final Object data = notification.getData();
 			object data = notification.Data;
-			//return data != null && typeof(data).IsAssignableFrom(typeof(data)) ? dataType.cast(data) : null;
 
 			try
 			{

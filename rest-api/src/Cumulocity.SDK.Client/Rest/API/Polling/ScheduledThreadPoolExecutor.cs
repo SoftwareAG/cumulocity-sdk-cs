@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Cumulocity.SDK.Client.Rest.API.Polling
@@ -26,6 +25,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				thread.Start();
 			}
 		}
+
 		public void ScheduleWithFixedDelay(Action action, TimeSpan initialDelay, TimeSpan delay)
 		{
 			Schedule(() =>
@@ -34,6 +34,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				ScheduleWithFixedDelay(action, delay, delay);
 			}, DateTime.Now + initialDelay);
 		}
+
 		public void Schedule(Action action, TimeSpan initialDelay)
 		{
 			Schedule(action, DateTime.Now + initialDelay);
@@ -119,6 +120,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				shutdown = true;
 			}
 		}
+
 		public bool IsShutdown()
 		{
 			return shutdown;

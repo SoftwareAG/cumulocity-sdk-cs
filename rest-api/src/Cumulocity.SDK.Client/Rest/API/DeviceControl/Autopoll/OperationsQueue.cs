@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Operation;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.Operation;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
-	public class OperationsQueue: BlockingCollection<OperationRepresentation>
+	public class OperationsQueue : BlockingCollection<OperationRepresentation>
 	{
 		private static long serialVersionUID = -2987475330088840639L;
 
@@ -35,10 +32,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 			return base.TryAdd(arg0);
 		}
+
 		public bool contains(Object arg0)
 		{
 			//if not instance of OperationRepresentation then not contains
-			if (!(arg0 is OperationRepresentation)) {
+			if (!(arg0 is OperationRepresentation))
+			{
 				return false;
 			}
 			OperationRepresentation operation = (OperationRepresentation)arg0;
@@ -53,7 +52,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 					return true;
 				}
 			}
-			
+
 			//if no match, then list doesn't contain that element
 			return false;
 		}
@@ -67,6 +66,5 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 			return result;
 		}
-
 	}
 }

@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 {
 	public class UnauthorizedConnectionWatcher
 	{
-
 		//private readonly Logger log = LoggerFactory.getLogger(typeof(UnauthorizedConnectionWatcher));
 
 		private const int RETRY_COUNT_AFTER_UNAUTHORIZED = 5;

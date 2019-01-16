@@ -1,10 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
@@ -13,8 +10,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 	{
 		private const string V = "/";
 		private readonly RestConnector restConnector;
-
-		private InventoryRepresentation inventoryRepresentation;
+		private readonly InventoryRepresentation inventoryRepresentation;
 
 		public BinariesApiImpl(RestConnector restConnector, InventoryRepresentation inventoryRepresentation)
 		{
@@ -22,13 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			this.inventoryRepresentation = inventoryRepresentation;
 		}
 
-		//ORIGINAL LINE: @Override public ManagedObjectRepresentation uploadFile(ManagedObjectRepresentation container, byte[] bytes) throws SDKException
 		public ManagedObjectRepresentation uploadFile(ManagedObjectRepresentation container, byte[] bytes)
 		{
 			return restConnector.postFile<ManagedObjectRepresentation>(BinariesUrl, container, bytes, container);
 		}
 
-		public  ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream)
+		public ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream)
 		{
 			return restConnector.putStream<ManagedObjectRepresentation>(BinariesUrl + V + containerId.Value, contentType, fileStream, typeof(ManagedObjectRepresentation));
 		}
@@ -43,7 +38,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			return restConnector.GetStream(BinariesUrl + V + id.Value, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		}
 
-		//ORIGINAL LINE: private String getBinariesUrl() throws SDKException
 		private string BinariesUrl
 		{
 			get

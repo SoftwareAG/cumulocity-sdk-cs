@@ -43,8 +43,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private static void SetProperty(Object R, string propertyName, object value)
 		{
-			//TODO: Check it.
-
 			//Type type = R.GetType();
 			//object result;
 			//result = type.InvokeMember(

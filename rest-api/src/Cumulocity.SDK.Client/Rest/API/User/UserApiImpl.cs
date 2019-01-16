@@ -1,13 +1,11 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.Representation.User;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.User;
 
 namespace Cumulocity.SDK.Client.Rest.API.User
 {
 	public class UserApiImpl : IUserApi
 	{
-
 		private const string REALM = "realm";
 		private const string USER_NAME = "userName";
 
@@ -22,7 +20,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			this.usersApiRepresentation = usersApiRepresentation;
 		}
 
-		public  CurrentUserRepresentation CurrentUser
+		public CurrentUserRepresentation CurrentUser
 		{
 			get
 			{
@@ -31,7 +29,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			}
 		}
 
-		public  CurrentUserRepresentation updateCurrentUser(CurrentUserRepresentation currentUserRepresentation)
+		public CurrentUserRepresentation updateCurrentUser(CurrentUserRepresentation currentUserRepresentation)
 		{
 			string url = usersApiRepresentation.CurrentUser;
 			return restConnector.PutWithoutId(url, UserMediaType.CURRENT_USER, currentUserRepresentation);
@@ -43,7 +41,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			return restConnector.Get<UserRepresentation>(url, UserMediaType.CURRENT_USER, typeof(CurrentUserRepresentation));
 		}
 
-		public  UserRepresentation CurrentUserWithCustomProperties
+		public UserRepresentation CurrentUserWithCustomProperties
 		{
 			get
 			{
@@ -52,7 +50,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			}
 		}
 
-		public  UserRepresentation getUser(string tenant, string user)
+		public UserRepresentation getUser(string tenant, string user)
 		{
 			IDictionary<string, string> @params = new Dictionary<string, string>();
 			@params[REALM] = tenant;

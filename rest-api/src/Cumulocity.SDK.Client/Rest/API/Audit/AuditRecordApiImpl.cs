@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.API.Audit
 {
 	public class AuditRecordApiImpl : IAuditRecordApi
 	{
-
 		private readonly RestConnector restConnector;
 
 		private readonly int pageSize;
@@ -33,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			}
 		}
 
-		public  AuditRecordRepresentation getAuditRecord(GId gid)
+		public AuditRecordRepresentation getAuditRecord(GId gid)
 		{
 			string url = SelfUri + "/" + gid.Value;
 			return restConnector.Get<AuditRecordRepresentation>(url, AuditMediaType.AUDIT_RECORD, typeof(AuditRecordRepresentation));
@@ -47,7 +45,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			}
 		}
 
-
 		public IAuditRecordCollection AuditRecords
 		{
 			get
@@ -57,12 +54,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			}
 		}
 
-		public  AuditRecordRepresentation create(AuditRecordRepresentation representation)
+		public AuditRecordRepresentation create(AuditRecordRepresentation representation)
 		{
 			return restConnector.Post<AuditRecordRepresentation>(SelfUri, AuditMediaType.AUDIT_RECORD, representation);
 		}
 
-		public  IAuditRecordCollection getAuditRecordsByFilter(AuditRecordFilter filter)
+		public IAuditRecordCollection getAuditRecordsByFilter(AuditRecordFilter filter)
 		{
 			if (filter == null)
 			{
@@ -71,6 +68,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			IDictionary<string, string> @params = filter.QueryParams;
 			return new AuditRecordCollectionImpl(restConnector, urlProcessor.replaceOrAddQueryParam(SelfUri, @params), pageSize);
 		}
-
 	}
 }

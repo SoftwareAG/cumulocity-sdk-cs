@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll;
+﻿using Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll;
 using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using Cumulocity.SDK.Client.Rest.Utils;
-using Microsoft.Extensions.Logging;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 {
@@ -17,7 +14,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 	/// </summary>
 	public sealed class MeasurementFixedRatePoller : FixedRatePoller
 	{
-
 		public MeasurementFixedRatePoller(long periodInterval) : base(new ScheduledThreadPoolExecutor(1), periodInterval)
 		{
 			PollingTask = pollingResult;

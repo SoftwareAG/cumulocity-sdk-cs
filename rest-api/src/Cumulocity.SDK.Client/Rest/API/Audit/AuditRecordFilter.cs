@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.API.Audit
+﻿namespace Cumulocity.SDK.Client.Rest.API.Audit
 {
 	/// <summary>
 	/// A filter to be used in audit record queries.
@@ -11,14 +7,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 	/// </summary>
 	public class AuditRecordFilter : Filter
 	{
-
-		//ORIGINAL LINE: @ParamSource private String user;
 		private string user;
 
-		//ORIGINAL LINE: @ParamSource private String type;
 		private string type;
 
-		//ORIGINAL LINE: @ParamSource private String application;
 		private string application;
 
 		/// <summary>
@@ -80,6 +72,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 				return application;
 			}
 		}
-
 	}
 }

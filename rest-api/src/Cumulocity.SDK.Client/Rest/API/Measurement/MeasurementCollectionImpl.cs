@@ -11,10 +11,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		{
 		}
 
-		protected internal override CumulocityMediaType MediaType
-		{
-			get { return MeasurementMediaType.MEASUREMENT_COLLECTION; }
-		}
+		protected internal override CumulocityMediaType MediaType => MeasurementMediaType.MEASUREMENT_COLLECTION;
 
 		protected internal override Type ResponseClassProp => typeof(MeasurementCollectionRepresentation);
 

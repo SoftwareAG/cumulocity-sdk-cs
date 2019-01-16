@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Model.util;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 
@@ -16,25 +13,18 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 	/// </summary>
 	public class EventFilter : Filter
 	{
-		//ORIGINAL LINE: @ParamSource private String fragmentType;
 		private string fragmentType;
 
-		//ORIGINAL LINE: @ParamSource private String dateFrom;
 		private string dateFrom;
 
-		//ORIGINAL LINE: @ParamSource private String dateTo;
 		private string dateTo;
 
-		//ORIGINAL LINE: @ParamSource private String createdFrom;
 		private string createdFrom;
 
-		//ORIGINAL LINE: @ParamSource private String createdTo;
 		private string createdTo;
 
-		//ORIGINAL LINE: @ParamSource private String type;
 		private string type;
 
-		//ORIGINAL LINE: @ParamSource private String source;
 		private string source;
 
 		/// <summary>
@@ -81,13 +71,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		}
 
 		/// <returns> the {@code source} parameter of the query </returns>
-		public virtual string Source
-		{
-			get
-			{
-				return source;
-			}
-		}
+		public virtual string Source => source;
 
 		public virtual EventFilter byFragmentType(Type fragmentType)
 		{
@@ -105,7 +89,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 
 		public virtual EventFilter byDate(DateTime fromDate, DateTime toDate)
 		{
-			//DateConverter.date2String
 			this.dateFrom = fromDate.ToString("o");
 			this.dateTo = toDate.ToString("o");
 			return this;
@@ -117,41 +100,16 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			return this;
 		}
 
-		public virtual string FromDate
-		{
-			get
-			{
-				return dateFrom;
-			}
-		}
+		public virtual string FromDate => dateFrom;
 
-		public virtual string ToDate
-		{
-			get
-			{
-				return dateTo;
-			}
-		}
+		public virtual string ToDate => dateTo;
 
-		public virtual string CreatedFrom
-		{
-			get
-			{
-				return createdFrom;
-			}
-		}
+		public virtual string CreatedFrom => createdFrom;
 
-		public virtual string CreatedTo
-		{
-			get
-			{
-				return createdTo;
-			}
-		}
+		public virtual string CreatedTo => createdTo;
 
 		public virtual EventFilter byCreationDate(DateTime fromDate, DateTime toDate)
 		{
-			//DateConverter.date2String
 			this.createdFrom = fromDate.ToLongDateString();
 			this.createdTo = toDate.ToLongDateString();
 			return this;
@@ -159,10 +117,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 
 		public virtual EventFilter byFromCreationDate(DateTime fromDate)
 		{
-			//DateConverter.date2String
 			this.createdFrom = fromDate.ToLongDateString();
 			return this;
 		}
 	}
-
 }

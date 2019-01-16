@@ -31,13 +31,11 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 		/// <summary>
 		/// This method does NOT allow to receive device realtime DELETE actions
 		/// </summary>
-		//ORIGINAL LINE: public Subscription<String> subscribe(final String channelID, final SubscriptionListener<String, ManagedObjectNotification> handler) throws SDKException
 		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, ManagedObjectNotification> handler)
 		{
 			return subscriber.subscribe(channelPrefix + channelID, handler);
 		}
 
-		//ORIGINAL LINE: @Override public Subscription<String> subscribe(String channelID, SubscribeOperationListener subscribeOperationListener, SubscriptionListener<String, ManagedObjectNotification> handler, boolean autoRetry) throws SDKException
 		public ISubscription<string> subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectNotification> handler, bool autoRetry)
 		{
 			return subscriber.subscribe(channelID, subscribeOperationListener, handler, autoRetry);

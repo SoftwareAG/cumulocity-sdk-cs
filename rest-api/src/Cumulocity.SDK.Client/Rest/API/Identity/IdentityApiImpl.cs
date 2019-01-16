@@ -20,13 +20,12 @@
 //  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //  */
 
-#endregion
+#endregion Cumulocity GmbH
 
-using System;
-using System.Collections.Generic;
 using Cumulocity.SDK.Client.Rest.Model;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.API.Identity
 {
@@ -44,7 +43,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 
 		private readonly TemplateUrlParser templateUrlParser;
 
-
 		public IdentityApiImpl(RestConnector restConnector, TemplateUrlParser templateUrlParser,
 			IdentityRepresentation identityRepresentation, int pageSize)
 		{
@@ -53,15 +51,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 			IdentityRepresentation = identityRepresentation;
 			this.pageSize = pageSize;
 		}
-
-		//ORIGINAL LINE: private IdentityRepresentation getIdentityRepresentation() throws SDKException
 		private IdentityRepresentation IdentityRepresentation { get; }
-
 
 		public ExternalIDRepresentation create(ExternalIDRepresentation representation)
 		{
 			if (representation == null || representation.ManagedObject == null ||
-			    representation.ManagedObject.Id == null) throw new SDKException("Cannot determine global id value");
+				representation.ManagedObject.Id == null) throw new SDKException("Cannot determine global id value");
 
 			IDictionary<string, string> filter = new Dictionary<string, string>();
 			filter[GLOBAL_ID] = representation.ManagedObject.Id.Value;

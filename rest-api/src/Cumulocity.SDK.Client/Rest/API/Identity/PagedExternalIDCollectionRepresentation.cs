@@ -1,9 +1,5 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.API.Inventory;
-using Cumulocity.SDK.Client.Rest.Representation.Identity;
-using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 
 namespace Cumulocity.SDK.Client.Rest.API.Identity
 {

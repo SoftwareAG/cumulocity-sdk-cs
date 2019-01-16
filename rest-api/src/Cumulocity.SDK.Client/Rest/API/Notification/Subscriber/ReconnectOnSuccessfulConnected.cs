@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cometd.Bayeux;
+﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
@@ -9,25 +6,27 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 	public class ReconnectOnSuccessfulConnected<T> : IExtension
 	{
 		private readonly SubscriberImpl<T> subscriberImpl;
+
 		public ReconnectOnSuccessfulConnected(SubscriberImpl<T> subscriberImpl)
 		{
 			this.subscriberImpl = subscriberImpl;
 		}
+
 		private volatile bool reHandshakeSuccessful = false;
 
 		private volatile bool reconnectedSuccessful = false;
 
-		public  bool sendMeta(IClientSession session, IMutableMessage message)
+		public bool sendMeta(IClientSession session, IMutableMessage message)
 		{
 			return true;
 		}
 
-		public  bool send(IClientSession session, IMutableMessage message)
+		public bool send(IClientSession session, IMutableMessage message)
 		{
 			return true;
 		}
 
-		public  bool rcvMeta(IClientSession session, IMutableMessage message)
+		public bool rcvMeta(IClientSession session, IMutableMessage message)
 		{
 			if (subscriberImpl.isSuccessfulHandshake(message))
 			{

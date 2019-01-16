@@ -80,7 +80,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			return this;
 		}
 
-		public virtual ISubscriber<T,R> build()
+		public virtual ISubscriber<T, R> build()
 		{
 			verifyRequiredFields();
 			return new TypedSubscriber<T, R>(new SubscriberImpl<T>(subscriptionNameResolver, createSessionProvider(), unauthorizedConnectionWatcher), dataType);

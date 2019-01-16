@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Event;
 using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.Event;
-using Cumulocity.SDK.Client.Rest.Representation.Identity;
 
 namespace Cumulocity.SDK.Client.Rest.API.Event
 {
@@ -11,7 +8,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 	{
 		private readonly IPagedCollectionResource<EventRepresentation, T> collectionResource; //EventCollectionRepresentation
 
-		public PagedEventCollectionRepresentation(EventCollectionRepresentation collection, IPagedCollectionResource<EventRepresentation,T> collectionResource) 
+		public PagedEventCollectionRepresentation(EventCollectionRepresentation collection, IPagedCollectionResource<EventRepresentation, T> collectionResource)
 		{
 			Events = collection.Events;
 			PageStatistics = collection.PageStatistics;
@@ -21,16 +18,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			this.collectionResource = collectionResource;
 		}
 
-		public  IEnumerable<EventRepresentation> allPages()
+		public IEnumerable<EventRepresentation> allPages()
 		{
 			return new PagedCollectionIterable<EventRepresentation, EventCollectionRepresentation>(collectionResource, this);
 		}
 
-		public  IEnumerable<EventRepresentation> elements(int limit)
+		public IEnumerable<EventRepresentation> elements(int limit)
 		{
 			return new PagedCollectionIterable<EventRepresentation, EventCollectionRepresentation>(collectionResource, this, limit);
 		}
-
 	}
-
 }

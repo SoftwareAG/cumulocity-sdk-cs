@@ -5,7 +5,6 @@ using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System;
-using System.Collections;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -23,11 +22,9 @@ namespace Cumulocity.SDK.Client
 
 		private const string TfaTokenHeader = "TFAToken";
 
-		//private static readonly object[] ProvidersClasses = new object[] {typeof(CumulocityJSONMessageBodyWriter), typeof(CumulocityJSONMessageBodyReader), typeof(ErrorMessageRepresentationReader)};
-
 		private const int ReadTimeoutInMillis = 180000;
 
-		private CumulocityHttpClient client; //= new CumulocityHttpClient();
+		private CumulocityHttpClient client;
 
 		public RestConnector(PlatformParameters platformParameters, ResponseParser responseParser) : this(
 			platformParameters, responseParser, null)
@@ -59,6 +56,7 @@ namespace Cumulocity.SDK.Client
 			var response = getClientResponse(path, mediaType);
 			return ResponseParser.parse<T>(response.Result, responseType, (int)HttpStatusCode.OK);
 		}
+
 		public async Task<Stream> GetStream(string path, MediaType aPPLICATION_OCTET_STREAM_TYPE)
 		{
 			return await client.GetStreamAsync(path);
@@ -89,7 +87,6 @@ namespace Cumulocity.SDK.Client
 
 			//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
 			//{
-
 			//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
 			//}
 
@@ -116,12 +113,17 @@ namespace Cumulocity.SDK.Client
 			var response = httpPost(path, mediaType, representation);
 			ResponseParser.checkStatus(response.Result, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
-
 		public T Put<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IBaseResourceRepresentationWithId
 		{
 			var response = this.putClientResponse<T>(path, mediaType, representation);
 			return parseResponseWithId(representation, response.Result, (int)HttpStatusCode.OK);
+		}
+		public async Task<T> PutAsync<T>(string path, CumulocityMediaType mediaType, T representation)
+			where T : IResourceRepresentation
+		{
+			//var response = this.putClientResponse<T>(path, mediaType, representation);
+			//return parseResponseWithId(representation, response.Result, (int)HttpStatusCode.OK);
 		}
 
 		public T PutWithoutId<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -171,7 +173,6 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpStreamPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, Stream content, T representation)
 		{
-			// Send binary data and string data in a single request.
 			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
 			ByteArrayContent byteContent;
 
@@ -242,11 +243,10 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> httpPutStream<T>(string path, Stream content, Type representation)
 		{
-
 			var streamContent = new StreamContent(content);
 
 			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
-			multipartContent.Add(streamContent, "file","fileName");
+			multipartContent.Add(streamContent, "file", "fileName");
 
 			var request = new HttpRequestMessage
 			{
@@ -263,6 +263,7 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+
 		private Task<HttpResponseMessage> httpPost<T>(string path, MediaType contentType,
 			 T representation)
 		{
@@ -286,6 +287,7 @@ namespace Cumulocity.SDK.Client
 
 			return client.SendAsync(request);
 		}
+
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{

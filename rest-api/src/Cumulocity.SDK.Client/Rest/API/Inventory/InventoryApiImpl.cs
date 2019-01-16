@@ -1,134 +1,111 @@
-using System;
-using System.Collections.Generic;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
-public class InventoryApiImpl : IInventoryApi//<T> where T : ManagedObjectCollectionRepresentation
-{
-
-	private readonly RestConnector restConnector;
-
-	private readonly int pageSize;
-
-	private InventoryRepresentation inventoryRepresentation;
-
-	private UrlProcessor urlProcessor;
-	private IManagedObjectCollection _managedObjects;
-
-	public InventoryApiImpl(RestConnector restConnector, UrlProcessor urlProcessor, InventoryRepresentation inventoryRepresentation, int pageSize)
+	public class InventoryApiImpl : IInventoryApi//<T> where T : ManagedObjectCollectionRepresentation
 	{
-		this.restConnector = restConnector;
-		this.urlProcessor = urlProcessor;
-		this.inventoryRepresentation = inventoryRepresentation;
-		this.pageSize = pageSize;
-	}
+		private readonly RestConnector restConnector;
 
-	//Method 'throws' clauses are not available in .NET:
-	//ORIGINAL LINE: @Override public ManagedObjectRepresentation create(ManagedObjectRepresentation representation) throws SDKException
-	public  ManagedObjectRepresentation create(ManagedObjectRepresentation representation)
-	{
-		return restConnector.Post(MOCollectionUrl, InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
-	}
+		private readonly int pageSize;
 
-	IManagedObjectCollection IInventoryApi.ManagedObjects => ManagedObjects;
+		private InventoryRepresentation inventoryRepresentation;
 
-	//ORIGINAL LINE: @Override public ManagedObjectRepresentation get(GId id) throws SDKException
-	 public  ManagedObjectRepresentation get(GId id)
-	 {
-		 return restConnector.Get<ManagedObjectRepresentation>(MOCollectionUrl + "/" + id.Value,
-			 InventoryMediaType.GetInstance.MANAGED_OBJECT, typeof(ManagedObjectRepresentation));
-	 }
+		private UrlProcessor urlProcessor;
+		private IManagedObjectCollection _managedObjects;
 
-	//ORIGINAL LINE: @Override public void delete(GId id) throws SDKException
-	public ManagedObjectRepresentation Get(GId id)
-	{
-		throw new NotImplementedException();
-	}
-
-	public void delete(GId id)
-	 {
-		 restConnector.Delete(MOCollectionUrl + "/" + id.Value);
-	 }
-
-	//ORIGINAL LINE: @Override public ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation) throws SDKException
-	 public  ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation)
-	 {
-		 return (ManagedObjectRepresentation )restConnector.Put(MOCollectionUrl + "/" + managedObjectRepresentation.Id.Value, InventoryMediaType.GetInstance.MANAGED_OBJECT, managedObjectRepresentation);
-	 }
-
-	//ORIGINAL LINE: @Override public ManagedObject getManagedObject(GId globalId) throws SDKException
-	IManagedObjectCollection IInventoryApi.getManagedObjectsByListOfIds(IList<GId> ids)
-	{
-		throw new NotImplementedException();
-	}
-
-	public  IManagedObject getManagedObject(GId globalId)
-	{
-		return getManagedObjectApi(globalId);
-	}
-
-	//ORIGINAL LINE: @Override public ManagedObject getManagedObjectApi(GId globalId) throws SDKException
-	public  IManagedObject getManagedObjectApi(GId globalId)
-	{
-		if ((globalId == null) || (globalId.Value == null))
+		public InventoryApiImpl(RestConnector restConnector, UrlProcessor urlProcessor, InventoryRepresentation inventoryRepresentation, int pageSize)
 		{
-			throw new SDKException("Cannot determine the Global ID Value");
+			this.restConnector = restConnector;
+			this.urlProcessor = urlProcessor;
+			this.inventoryRepresentation = inventoryRepresentation;
+			this.pageSize = pageSize;
 		}
-		string url = MOCollectionUrl + "/" + globalId.Value;
-		return new ManagedObjectImpl(restConnector, url, pageSize);
-	}
 
-	//ORIGINAL LINE: @Override public ManagedObjectCollection getManagedObjects() throws SDKException
-	public  IManagedObjectCollection ManagedObjects
-	{
-		get
+		public ManagedObjectRepresentation create(ManagedObjectRepresentation representation)
 		{
-			string url = MOCollectionUrl;
-			return (IManagedObjectCollection) new ManagedObjectCollectionImpl(restConnector, url, pageSize);
+			return restConnector.Post(MOCollectionUrl, InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
 		}
-	}
 
-	//ORIGINAL LINE: @Override public ManagedObjectCollection getManagedObjectsByFilter(InventoryFilter filter) throws SDKException
-	public IManagedObjectCollection getManagedObjectsByFilter(InventoryFilter filter)
-	{
-		if (filter == null)
+		IManagedObjectCollection IInventoryApi.ManagedObjects => ManagedObjects;
+
+		public ManagedObjectRepresentation get(GId id)
 		{
-			return ManagedObjects;
+			return restConnector.Get<ManagedObjectRepresentation>(MOCollectionUrl + "/" + id.Value,
+				InventoryMediaType.GetInstance.MANAGED_OBJECT, typeof(ManagedObjectRepresentation));
 		}
-		IDictionary<string, string> @params = filter.QueryParams;
-		return (IManagedObjectCollection) new ManagedObjectCollectionImpl(restConnector, urlProcessor.replaceOrAddQueryParam(MOCollectionUrl, @params), pageSize);
-	}
 
-	//	IManagedObjectCollection IInventoryApi.getManagedObjectsByFilter(InventoryFilter filter)
-	//	{
-	//		throw new NotImplementedException();
-	//	}
-	
-
-	[Obsolete]
-	public  IManagedObjectCollection getManagedObjectsByListOfIds(IList<GId> ids)
-	{
-		return getManagedObjectsByFilter((new InventoryFilter()).byIds(ids));
-	}
-
-	//ORIGINAL LINE: protected String getMOCollectionUrl() throws SDKException
-	protected internal virtual string MOCollectionUrl
-	{
-		get
+		public ManagedObjectRepresentation Get(GId id)
 		{
-			return InventoryRepresentation.ManagedObjects.Self;
+			throw new NotImplementedException();
+		}
+
+		public void delete(GId id)
+		{
+			restConnector.Delete(MOCollectionUrl + "/" + id.Value);
+		}
+
+		public ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation)
+		{
+			return restConnector.Put($"{MOCollectionUrl}/{managedObjectRepresentation.Id.Value}", InventoryMediaType.GetInstance.MANAGED_OBJECT, managedObjectRepresentation);
+		}
+
+		public IManagedObject getManagedObject(GId globalId)
+		{
+			return getManagedObjectApi(globalId);
+		}
+
+		public IManagedObject getManagedObjectApi(GId globalId)
+		{
+			if ((globalId == null) || (globalId.Value == null))
+			{
+				throw new SDKException("Cannot determine the Global ID Value");
+			}
+			string url = $"{MOCollectionUrl}/{globalId.Value}";
+			return new ManagedObjectImpl(restConnector, url, pageSize);
+		}
+
+		public IManagedObjectCollection ManagedObjects
+		{
+			get
+			{
+				string url = MOCollectionUrl;
+				return (IManagedObjectCollection)new ManagedObjectCollectionImpl(restConnector, url, pageSize);
+			}
+		}
+
+		public IManagedObjectCollection getManagedObjectsByFilter(InventoryFilter filter)
+		{
+			if (filter == null)
+			{
+				return ManagedObjects;
+			}
+			IDictionary<string, string> @params = filter.QueryParams;
+			return (IManagedObjectCollection)new ManagedObjectCollectionImpl(restConnector, urlProcessor.replaceOrAddQueryParam(MOCollectionUrl, @params), pageSize);
+		}
+
+		[Obsolete]
+		public IManagedObjectCollection getManagedObjectsByListOfIds(IList<GId> ids)
+		{
+			return getManagedObjectsByFilter((new InventoryFilter()).byIds(ids));
+		}
+
+		protected internal virtual string MOCollectionUrl
+		{
+			get
+			{
+				return InventoryRepresentation.ManagedObjects.Self;
+			}
+		}
+
+		private InventoryRepresentation InventoryRepresentation
+		{
+			get
+			{
+				return inventoryRepresentation;
+			}
 		}
 	}
-
-	//ORIGINAL LINE: private InventoryRepresentation getInventoryRepresentation() throws SDKException
-	private InventoryRepresentation InventoryRepresentation
-	{
-		get
-		{
-			return inventoryRepresentation;
-		}
-	}
-}
 }
