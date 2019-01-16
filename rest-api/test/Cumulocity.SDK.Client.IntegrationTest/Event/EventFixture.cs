@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 
 		private IList<EventRepresentation> getEventsFrom1stPage()
 		{
-			return this.platform.EventApi.getEvents().get().Events;
+			return this.platform.EventApi.Events.get().Events;
 		}
 	}
 }

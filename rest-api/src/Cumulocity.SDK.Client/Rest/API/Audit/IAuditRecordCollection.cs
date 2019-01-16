@@ -7,4 +7,3 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 	{
 	}
 }
-}

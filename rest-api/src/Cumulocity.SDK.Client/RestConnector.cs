@@ -122,6 +122,7 @@ namespace Cumulocity.SDK.Client
 		public async Task<T> PutAsync<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
 		{
+			return await Task.FromResult(default(T));
 			//var response = this.putClientResponse<T>(path, mediaType, representation);
 			//return parseResponseWithId(representation, response.Result, (int)HttpStatusCode.OK);
 		}

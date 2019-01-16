@@ -165,7 +165,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		{
 			try
 			{
-				collection = EventApi.getEvents().get();
+				collection = EventApi.Events.get();
 			}
 			catch (SDKException ex)
 			{
@@ -268,7 +268,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		public void iQueryAllByPageNumber(int pageNumber) 
 		{
 		    try {
-				collection1 = EventApi.getEvents().getPage(collection, pageNumber);
+				collection1 = EventApi.Events.getPage(collection, pageNumber);
 			} catch (SDKException ex) {
 			    Status = ex.HttpStatus;
 			}
@@ -278,7 +278,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 	public void iQueryAllByNextPage(int currentPage, int numEvents) 
 {
         try {
-		EventCollectionRepresentation collectionRepresentation = EventApi.getEvents().getNextPage(collection1);
+		EventCollectionRepresentation collectionRepresentation = EventApi.Events.getNextPage(collection1);
 	    Assert.Equal(collectionRepresentation.PageStatistics.CurrentPage, currentPage);
 		Assert.Equal(collectionRepresentation.Events.Count, numEvents);
 	} catch (SDKException ex) {
@@ -292,7 +292,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 	public void iQueryAllByPreviousPage(int currentPage, int numEvents) 
 	{
 	    try {
-			EventCollectionRepresentation collectionRepresentation = EventApi.getEvents().getPreviousPage(collection1);
+			EventCollectionRepresentation collectionRepresentation = EventApi.Events.getPreviousPage(collection1);
 		    Assert.Equal(currentPage, collectionRepresentation.PageStatistics.CurrentPage);
 		    Assert.Equal(numEvents, collectionRepresentation.Events.Count);
 		} catch (SDKException ex){

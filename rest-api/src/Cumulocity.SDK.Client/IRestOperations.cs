@@ -2,6 +2,7 @@
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client
 {
@@ -39,7 +40,7 @@ namespace Cumulocity.SDK.Client
 
 		//Response.Status getStatus(string path, CumulocityMediaType mediaType);
 
-		T PutAsync<T>(string path, CumulocityMediaType mediaType, T representation) where T : IBaseResourceRepresentationWithId;
+		Task<T> PutAsync<T>(string path, CumulocityMediaType mediaType, T representation) where T : IResourceRepresentation;
 
 		void Delete(string path);
 	}
