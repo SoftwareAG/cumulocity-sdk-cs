@@ -39,7 +39,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 
 		public OperationRepresentation getOperation(GId gid)
 		{
-			string url = SelfUri + "/" + gid.Value;
+			string url = $"{SelfUri}/{gid.Value}";
 			return restConnector.Get<OperationRepresentation>(url, DeviceControlMediaType.OPERATION, typeof(OperationRepresentation));
 		}
 
@@ -59,13 +59,13 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 
 		public OperationRepresentation update(OperationRepresentation operation)
 		{
-			string url = SelfUri + "/" + operation.Id.Value;
+			string url = $"{SelfUri}/{operation.Id.Value}";
 			return restConnector.PutWithoutId(url, DeviceControlMediaType.OPERATION, prepareOperationForUpdate(operation));
 		}
 
 		public Task<OperationRepresentation> updateAsync(OperationRepresentation operation)
 		{
-			string url = SelfUri + "/" + operation.Id.Value;
+			string url = $"{SelfUri}/{operation.Id.Value}";
 			return restConnector.PutAsync(url, DeviceControlMediaType.OPERATION, prepareOperationForUpdate(operation));
 		}
 

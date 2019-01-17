@@ -240,7 +240,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 		{
 			get
 			{
-				return category + "/" + key;
+				return $"{category}/{key}";
 			}
 		}
 

@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 
 		public ManagedObjectRepresentation get(GId id)
 		{
-			return restConnector.Get<ManagedObjectRepresentation>(MOCollectionUrl + "/" + id.Value,
+			return restConnector.Get<ManagedObjectRepresentation>($"{MOCollectionUrl}/{id.Value}",
 				InventoryMediaType.GetInstance.MANAGED_OBJECT, typeof(ManagedObjectRepresentation));
 		}
 
@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 
 		public void delete(GId id)
 		{
-			restConnector.Delete(MOCollectionUrl + "/" + id.Value);
+			restConnector.Delete($"{MOCollectionUrl}/{id.Value}");
 		}
 
 		public ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation)

@@ -58,7 +58,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 
 		private string cepModuleUrl(string id)
 		{
-			return cepModulesUrl() + "/" + id;
+			return $"{cepModulesUrl()}/{id}";
 		}
 
 		public void delete(CepModuleRepresentation module)

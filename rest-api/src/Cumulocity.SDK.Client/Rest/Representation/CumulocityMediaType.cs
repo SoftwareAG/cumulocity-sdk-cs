@@ -51,7 +51,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation
         {
         }
 
-        public string TypeString => Type + "/" + Subtype;
+        public string TypeString => $"{Type}/{Subtype}";
 
         [Obsolete]
         public MediaType withParams()

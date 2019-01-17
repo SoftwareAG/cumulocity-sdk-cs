@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.Client.Rest
 
         private void setMandatoryFields(string host, CumulocityCredentials credentials)
         {
-            if (host[host.Length - 1] != '/') host = host + "/";
+            if (host[host.Length - 1] != '/') host = $"{host}/";
 
             this.host = host;
             tenantId = credentials.TenantId;

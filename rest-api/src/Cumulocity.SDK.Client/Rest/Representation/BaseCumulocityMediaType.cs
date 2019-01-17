@@ -42,6 +42,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation
         {
         }
 
-        public virtual string TypeString => Type + "/" + Subtype;
+        public virtual string TypeString => $"{Type}/{Subtype}";
     }
 }

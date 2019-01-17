@@ -40,7 +40,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification
 		{
 			public string apply(GId id)
 			{
-				return "/" + id.Value;
+				return $"/{id.Value}";
 			}
 		}
 	}

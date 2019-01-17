@@ -66,7 +66,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Common
 			string host = "http://managment.staging.c8y.io:8111/";
 
 			using (var client = new HttpClient())
-			using (var request = new HttpRequestMessage(HttpMethod.Delete, host + TENANT_URI + "/" + platform.TenantId))
+			using (var request = new HttpRequestMessage(HttpMethod.Delete, $"{host}{TENANT_URI}/{platform.TenantId}"))
 			{
 				client.DefaultRequestHeaders.Authorization
 					= new AuthenticationHeaderValue("Basic",

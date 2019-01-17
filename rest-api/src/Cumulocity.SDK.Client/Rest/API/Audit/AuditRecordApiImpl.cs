@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 
 		public AuditRecordRepresentation getAuditRecord(GId gid)
 		{
-			string url = SelfUri + "/" + gid.Value;
+			string url = $"{SelfUri}/{gid.Value}";
 			return restConnector.Get<AuditRecordRepresentation>(url, AuditMediaType.AUDIT_RECORD, typeof(AuditRecordRepresentation));
 		}
 

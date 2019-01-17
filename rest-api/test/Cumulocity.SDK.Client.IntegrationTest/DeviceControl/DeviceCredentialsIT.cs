@@ -70,7 +70,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 		private String newDeviceRequestUri(String deviceId)
 		{
-			return newDeviceRequestsUri() + "/" + deviceId;
+			return $"{newDeviceRequestsUri()}/{deviceId}";
 		}
 
 		public void Dispose()

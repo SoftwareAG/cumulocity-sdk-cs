@@ -32,7 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 
 		public MeasurementRepresentation getMeasurement(GId measurementId)
 		{
-			string url = MeasurementApiRepresentation.measurements.Self + "/" + measurementId.Value;
+			string url = $"{MeasurementApiRepresentation.measurements.Self}/{measurementId.Value}";
 			return restConnector.Get<MeasurementRepresentation>(url, MeasurementMediaType.MEASUREMENT, typeof(MeasurementRepresentation));
 		}
 
@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 
 		public void delete(MeasurementRepresentation measurement)
 		{
-			string url = MeasurementApiRepresentation.measurements.Self + "/" + measurement.Id.Value;
+			string url = $"{MeasurementApiRepresentation.measurements.Self}/{measurement.Id.Value}";
 			restConnector.Delete(url);
 		}
 

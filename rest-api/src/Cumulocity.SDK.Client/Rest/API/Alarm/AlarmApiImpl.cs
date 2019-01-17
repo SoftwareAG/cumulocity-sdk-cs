@@ -34,7 +34,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 
 		public  AlarmRepresentation getAlarm(GId alarmId)
 		{
-			string url = SelfUri + "/" + alarmId.Value;
+			string url = $"{SelfUri}/{alarmId.Value}";
 			return restConnector.Get<AlarmRepresentation>(url, AlarmMediaType.ALARM, typeof(AlarmRepresentation));
 		}
 
@@ -51,7 +51,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 
 		public  AlarmRepresentation update(AlarmRepresentation alarmToUpdate)
 		{
-			string url = SelfUri + "/" + alarmToUpdate.Id.Value;
+			string url = $"{SelfUri}/{alarmToUpdate.Id.Value}";
 			return restConnector.PutWithoutId(url, AlarmMediaType.ALARM, prepareForUpdate(alarmToUpdate));
 		}
 
