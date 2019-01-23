@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Cumulocity.SDK.Client.Rest.Model.Buffering;
 
 namespace Cumulocity.SDK.Client
 {
@@ -96,8 +97,9 @@ namespace Cumulocity.SDK.Client
 		public async Task<T> PostAsync<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
 		{
-			var response = await httpPost(path, mediaType, mediaType, representation);
-			return await ResponseParser.ParseAsync<T>(response, (int)HttpStatusCode.Created, typeof(T));
+			//var response = await httpPost(path, mediaType, mediaType, representation);
+			//return await ResponseParser.ParseAsync<T>(response, (int)HttpStatusCode.Created, typeof(T));
+			return await sendAsyncRequest(HttpMethod.Post.Method, path, mediaType, representation);
 		}
 
 		public T PostWithId<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -122,9 +124,17 @@ namespace Cumulocity.SDK.Client
 		public async Task<T> PutAsync<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
 		{
-			return await Task.FromResult(default(T));
+			return await sendAsyncRequest(HttpMethod.Put.Method, path, mediaType, representation);
+			//return await Task.FromResult(default(T));
 			//var response = this.putClientResponse<T>(path, mediaType, representation);
 			//return parseResponseWithId(representation, response.Result, (int)HttpStatusCode.OK);
+		}
+		private async Task<T> sendAsyncRequest<T>(String method, String path, CumulocityMediaType mediaType,T representation)
+			where T : IResourceRepresentation
+		{
+			var bufferRequestService = PlatformParameters.BufferRequestService;
+			var request = BufferedRequest.create(method, path, mediaType, representation);
+			return (T) await bufferRequestService.create(request);
 		}
 
 		public T PutWithoutId<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -357,7 +367,6 @@ namespace Cumulocity.SDK.Client
 			return client.SendAsync(request);
 		}
 
-		//ORIGINAL LINE: private <T extends ResourceRepresentationWithId> T parseResponseWithId(T representation, ClientResponse response, int responseCode) throws SDKException
 		private T parseResponseWithId<T>(T representation, HttpResponseMessage response, int responseCode)
 			where T : IBaseResourceRepresentationWithId
 		{

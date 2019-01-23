@@ -13,29 +13,17 @@ using Newtonsoft.Json.Serialization;
 
 namespace Cumulocity.SDK.Client.Rest.Representation
 {
-    public class AbstractExtensibleRepresentation : BaseResourceRepresentation //, DynamicProperties
+    public class AbstractExtensibleRepresentation : BaseResourceRepresentation 
     {
         private IDictionary<string, Newtonsoft.Json.Linq.JToken> attrs = new Dictionary<string, Newtonsoft.Json.Linq.JToken>();
 	    
-	    //[JsonExtensionData]
-	    //public Dictionary<string, Newtonsoft.Json.Linq.JToken> _JTokenProperty { get; set; }
-	    
-		//	    public bool ShouldSerialize_JTokenProperty()
-		//	    {
-		//		    return false;
-		//	    }
-		//	    public bool ShouldSerializeAttrs()
-		//	    {
-		//		    return true;
-		//	    }
+
 	    [OnDeserialized]
 	    private void OnDeserialized(StreamingContext context)
 	    {
 
 	    }
 
-
-        //ORIGINAL LINE: @JSONProperty(ignore = true) public Map<String, Object> getAttrs()
 	    [JsonExtensionData]
 	    public  IDictionary<string, Newtonsoft.Json.Linq.JToken> Attrs
         {

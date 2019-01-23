@@ -6,7 +6,6 @@ using Cumulocity.SDK.Client.Rest.Model;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using Cumulocity.SDK.Client.Rest.Model.C8Y;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
-using Microsoft.Extensions.Configuration;
 using System;
 
 namespace ConsoleApp1
@@ -27,28 +26,29 @@ namespace ConsoleApp1
 			var mo_hw = new ManagedObjectRepresentation();
 			mo_hw.Name = "Hello, world!";
 			mo_hw.set(new IsDevice());
-			mo_hw.set(new Firmware() { Name = "A", Url = "U" });
+			//mo_hw.set(new Firmware() { Name = "A", Url = "U" });
 			var mo_hw3 = inventory.create(mo_hw);
+			Console.WriteLine($"Url: {mo_hw.Self}");
 
-			//New electricity meter with a relay
-			ManagedObjectRepresentation mo_mm = new ManagedObjectRepresentation();
-			mo_mm.Name = "MyMeter-1";
-			Relay relay = new Relay();
-			mo_mm.set(new IsDevice());
-			mo_mm.set(relay);
-			SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
-			mo_mm.set(meter);
-			inventory.create(mo_mm);
+			////New electricity meter with a relay
+			//ManagedObjectRepresentation mo_mm = new ManagedObjectRepresentation();
+			//mo_mm.Name = "MyMeter-1";
+			//Relay relay = new Relay();
+			//mo_mm.set(new IsDevice());
+			//mo_mm.set(relay);
+			//SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
+			//mo_mm.set(meter);
+			//inventory.create(mo_mm);
 
-			InventoryFilter inventoryFilter = new InventoryFilter();
-			inventoryFilter.byFragmentType(typeof(Position));
+			//InventoryFilter inventoryFilter = new InventoryFilter();
+			//inventoryFilter.byFragmentType(typeof(Position));
 
-			IManagedObjectCollection moc = inventory.getManagedObjectsByFilter(inventoryFilter);
+			//IManagedObjectCollection moc = inventory.getManagedObjectsByFilter(inventoryFilter);
 
-			foreach (ManagedObjectRepresentation mo in moc.get().allPages())
-			{
-				Console.WriteLine(mo.Id);
-			}
+			//foreach (ManagedObjectRepresentation mo in moc.get().allPages())
+			//{
+			//	Console.WriteLine(mo.Id);
+			//}
 
 			Console.ReadKey();
 		}

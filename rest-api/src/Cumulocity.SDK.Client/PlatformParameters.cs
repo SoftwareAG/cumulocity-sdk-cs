@@ -146,7 +146,7 @@ namespace Cumulocity.SDK.Client.Rest
                 var persistentProvider = clientConfiguration.PersistentProvider;
                 bufferRequestService = new BufferRequestServiceImpl(persistentProvider);
                 bufferProcessor = new BufferProcessor(persistentProvider, bufferRequestService, restConnector);
-                bufferProcessor.startProcessing();
+                bufferProcessor.StartProcessing();
             }
             else
             {
@@ -191,7 +191,7 @@ namespace Cumulocity.SDK.Client.Rest
 
         public virtual void close()
         {
-            if (bufferProcessor != null) bufferProcessor.shutdown();
+            if (bufferProcessor != null) bufferProcessor.Shutdown();
         }
 
 //	public virtual bool registerInterceptor(HttpClientInterceptor interceptor)
@@ -213,7 +213,7 @@ namespace Cumulocity.SDK.Client.Rest
                 this.outerInstance = outerInstance;
             }
 
-            public virtual Task create(BufferedRequest request)
+            public virtual Task<object> create(BufferedRequest request)
             {
                 throw new Exception("Async feature is disabled in this platform client instance.");
             }

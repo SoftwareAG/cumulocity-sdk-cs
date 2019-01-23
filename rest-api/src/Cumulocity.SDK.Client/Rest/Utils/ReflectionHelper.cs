@@ -117,6 +117,10 @@ namespace Cumulocity.SDK.Client.Rest.Utils
 						        return;
 					        }
 				        }
+				        else
+				        {
+							propertyInfo.SetValue(obj, val, null);
+						}
 				        break;
 			        default:
 				        propertyInfo.SetValue(obj, val, null);

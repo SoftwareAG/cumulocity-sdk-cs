@@ -57,3 +57,5 @@
 /rest-api/src/cometd.NetStandard/obj/Debug/netstandard2.0
 /rest-api/src/cometd.NetStandard/obj
 /rest-api/src/cometd.NetStandard/bin/Debug/netstandard2.0
+/rest-api/src/Cumulocity.SDK.Client/bin/Debug/Cumulocity.SDK.Client.1.0.0.nupkg
+/rest-api/src/cometd.NetStandard/bin/Debug/cometd.NetStandard.1.0.0.nupkg

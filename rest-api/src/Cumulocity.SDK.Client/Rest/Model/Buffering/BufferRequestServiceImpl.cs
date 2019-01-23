@@ -5,8 +5,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 {
     public class BufferRequestServiceImpl : IBufferRequestService
     {
-        //ConcurrentMap<Long, Future> futures = new ConcurrentHashMap<Long, Future>();
-        private readonly ConcurrentDictionary<long?, Task> futures = new ConcurrentDictionary<long?, Task>();
+        private readonly ConcurrentDictionary<long, TaskCompletionSource<object>> _queue = new ConcurrentDictionary<long, TaskCompletionSource<object>>();
 
         private readonly PersistentProvider persistentProvider;
 
@@ -15,26 +14,35 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
             this.persistentProvider = persistentProvider;
         }
 
-        public virtual Task create(BufferedRequest request)
+        public virtual Task<object> create(BufferedRequest request)
         {
-            var requestId = persistentProvider.generateId();
-            var future = initAsyncResponse(requestId);
-            persistentProvider.offer(new ProcessingRequest(requestId, request));
-            return future;
-        }
+			//var requestId = persistentProvider.generateId();
+			//var future = initAsyncResponse(requestId);
+			//persistentProvider.offer(new ProcessingRequest(requestId, request));
+			//return future;
+
+			var tcs = new TaskCompletionSource<object>();
+			var requestId = persistentProvider.generateId();
+			persistentProvider.offer(new ProcessingRequest(requestId, request));
+			_queue.TryAdd(requestId, tcs); 
+			return tcs.Task;
+		}
 
         public virtual void addResponse(long requestId, Result result)
         {
-            Task future;
-            futures.TryGetValue(requestId, out future);
-            if (future != null) futures.TryRemove(requestId, out future);
+            _queue.TryGetValue(requestId, out TaskCompletionSource<object> future);
+            if (future != null)
+            {
+	            future.SetResult(result);
+				_queue.TryRemove(requestId, out future);
+            }
         }
 
-        private Task initAsyncResponse(long requestId)
-        {
-            var future = new Task(() => { });
-            futures.TryAdd(requestId, future);
-            return future;
-        }
+        //private Task initAsyncResponse(long requestId)
+        //{
+        //    var future = new Task(() => { });
+        //    futures.TryAdd(requestId, future);
+        //    return future;
+        //}
     }
 }
