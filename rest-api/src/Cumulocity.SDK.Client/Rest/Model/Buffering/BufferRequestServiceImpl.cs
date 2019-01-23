@@ -28,7 +28,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 			return tcs.Task;
 		}
 
-        public virtual void addResponse(long requestId, Result result)
+        public virtual void addResponse(long requestId, object result)
         {
             _queue.TryGetValue(requestId, out TaskCompletionSource<object> future);
             if (future != null)

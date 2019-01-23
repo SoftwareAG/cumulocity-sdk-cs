@@ -85,7 +85,7 @@ namespace Cumulocity.SDK.Client
 				var repFromPlatform = ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 				return repFromPlatform != null ? repFromPlatform : representation;
 			}
-
+			
 			//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
 			//{
 			//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
@@ -367,6 +367,7 @@ namespace Cumulocity.SDK.Client
 			return client.SendAsync(request);
 		}
 
+		//ORIGINAL LINE: private <T extends ResourceRepresentationWithId> T parseResponseWithId(T representation, ClientResponse response, int responseCode) throws SDKException
 		private T parseResponseWithId<T>(T representation, HttpResponseMessage response, int responseCode)
 			where T : IBaseResourceRepresentationWithId
 		{

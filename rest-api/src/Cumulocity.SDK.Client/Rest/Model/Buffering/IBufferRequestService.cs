@@ -6,6 +6,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
     {
         Task<object> create(BufferedRequest request);
 
-        void addResponse(long requestId, Result result);
+        void addResponse(long requestId, object result);
     }
 }

@@ -11,5 +11,10 @@
   <ItemGroup>
     <ProjectReference Include="..\cometd.NetStandard\cometd.NetStandard.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.csharp\4.3.0\ref\netstandard1.0\Microsoft.CSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

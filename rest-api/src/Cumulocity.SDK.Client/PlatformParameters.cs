@@ -218,7 +218,7 @@ namespace Cumulocity.SDK.Client.Rest
                 throw new Exception("Async feature is disabled in this platform client instance.");
             }
 
-            public virtual void addResponse(long requestId, Result result)
+            public virtual void addResponse(long requestId, object result)
             {
             }
         }

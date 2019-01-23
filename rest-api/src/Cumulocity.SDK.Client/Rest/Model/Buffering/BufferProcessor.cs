@@ -83,16 +83,16 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 
 			}
 		}
-		private  Result SendRequest(BufferedRequest httpPostRequest)
+		private object SendRequest(BufferedRequest httpPostRequest)
 		{
 			Result result = new Result();
 			while (true)
 			{
 				try
 				{
-					object response = DoSendRequest(httpPostRequest);
-					result.Response = response;
-					return result;
+					return DoSendRequest(httpPostRequest);
+					//result.Response = response;
+					//return result;
 				}
 				catch (SDKException e)
 				{
@@ -129,7 +129,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 			string method = httpPostRequest.Method;
 			if (HttpMethod.Post.Method.Equals(method))
 			{
-				return restConnector.Post<AlarmRepresentation>(httpPostRequest.Path, httpPostRequest.MediaType, httpPostRequest.Representation);
+				dynamic a = Convert.ChangeType(httpPostRequest.Representation, httpPostRequest.Representation.GetType());
+				return restConnector.Post(httpPostRequest.Path, httpPostRequest.MediaType,  a);
 			}
 			else if (HttpMethod.Put.Method.Equals(method))
 			{
