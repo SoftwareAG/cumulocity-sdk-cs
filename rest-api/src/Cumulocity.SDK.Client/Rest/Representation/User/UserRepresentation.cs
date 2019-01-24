@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Representation.Application;
+﻿using Cumulocity.SDK.Client.Rest.Representation.Application;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.User
 {
 	public class UserRepresentation : CustomPropertiesMapRepresentation
 	{
-
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @Null(operation = Command.CREATE) private String id;
 		private string id;
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @Size(max = 1000) @Pattern(regexp = "[^\\s\\\\+\\$/:]+", message = "field cannot contain whitespace, slashes nor any of (+$:) characters.") @Null(operation = Command.UPDATE) @NotNull(operation = Command.CREATE) private String userName;
 		private string userName;
 
 		private string owner;
@@ -27,12 +21,8 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 
 		private string lastName;
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @Size(max = 256, message = "maximum length is 256 characters") private String phone;
 		private string phone;
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @Size(max = 256, message = "maximum length is 256 characters") private String email;
 		private string email;
 
 		private string passwordStrength;
@@ -63,7 +53,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 
 		private string displayName;
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getUserName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string UserName
 		{
@@ -77,8 +66,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getOwner()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Owner
 		{
@@ -92,8 +79,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getDelegatedBy()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string DelegatedBy
 		{
@@ -107,7 +92,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getPassword()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Password
 		{
@@ -121,8 +105,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getFirstName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string FirstName
 		{
@@ -136,7 +118,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getLastName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string LastName
 		{
@@ -150,7 +131,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getPhone()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Phone
 		{
@@ -164,7 +144,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getEmail()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Email
 		{
@@ -178,7 +157,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getPasswordStrength()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string PasswordStrength
 		{
@@ -192,7 +170,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getShouldResetPassword()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? ShouldResetPassword
 		{
@@ -206,7 +183,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getSupportUserEnabled()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? SupportUserEnabled
 		{
@@ -220,7 +196,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getEnabled()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? Enabled
 		{
@@ -234,7 +209,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public Map<String, List<String>> getDevicePermissions()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IDictionary<string, IList<string>> DevicePermissions
 		{
@@ -248,7 +222,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public GroupReferenceCollectionRepresentation getGroups()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual GroupReferenceCollectionRepresentation Groups
 		{
@@ -262,8 +235,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public RoleReferenceCollectionRepresentation getRoles()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual RoleReferenceCollectionRepresentation Roles
 		{
@@ -277,8 +248,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Id
 		{
@@ -292,23 +261,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(value = "deprecated_LastPasswordChange", ignore = true) @Deprecated public Date getLastPasswordChange()
-		//[Obsolete]
-		//public virtual DateTime LastPasswordChange
-		//{
-		//	get
-		//	{
-		//		return lastPasswordChange == null ? null : lastPasswordChange.toDate();
-		//	}
-		//	set
-		//	{
-		//		this.lastPasswordChange = value == null ? null : newUTC(value);
-		//	}
-		//}
-
-		//ORIGINAL LINE: @JSONProperty(value = "lastPasswordChange", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getLastPasswordChangeDateTime()
-		[JsonProperty("lastPasswordChange",NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty("lastPasswordChange", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual DateTime LastPasswordChangeDateTime
 		{
 			get
@@ -321,7 +274,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public List<ApplicationRepresentation> getApplications()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IList<ApplicationRepresentation> Applications
 		{
@@ -335,8 +287,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getSendPasswordResetEmail()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? SendPasswordResetEmail
 		{
@@ -350,17 +300,13 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
 		public virtual bool shouldSendPasswordResetEmail()
 		{
-
 			if (sendPasswordResetEmail != null)
-				return (bool) sendPasswordResetEmail;
+				return (bool)sendPasswordResetEmail;
 			else return false;
-
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getTwoFactorAuthenticationEnabled()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? TwoFactorAuthenticationEnabled
 		{
@@ -388,7 +334,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<int> getSubusersCount()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual int? SubusersCount
 		{
@@ -402,7 +347,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getDisplayName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string DisplayName
 		{
@@ -415,6 +359,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 				this.displayName = value;
 			}
 		}
-
 	}
 }

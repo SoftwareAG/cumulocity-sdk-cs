@@ -40,7 +40,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 
         public virtual string toJSON()
         {
-            //return JSONBase.JSONGenerator.forValue(this);
             return JsonConvert.SerializeObject(this);
         }
     }

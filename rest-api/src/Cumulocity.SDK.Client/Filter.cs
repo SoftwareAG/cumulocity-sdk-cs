@@ -49,8 +49,8 @@ namespace Cumulocity.SDK.Client
 
         private string getParamName(FieldInfo field)
         {
-            var attrs = (ParamSource[])field.GetCustomAttributes
-                (typeof(ParamSource), false);
+            var attrs = (ParamSourceAttribute[])field.GetCustomAttributes
+                (typeof(ParamSourceAttribute), false);
             
             if (attrs.Length == 0)
             {

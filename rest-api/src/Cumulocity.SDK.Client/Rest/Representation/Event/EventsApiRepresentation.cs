@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Event
 {
 	public class EventsApiRepresentation : AbstractExtensibleRepresentation
 	{
-
 		private EventCollectionRepresentation events;
 
 		private string eventsForType;
@@ -52,7 +49,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForType
 		{
 			get
@@ -64,7 +60,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForType = value;
 			}
 		}
-
 
 		public virtual string EventsForSource
 		{
@@ -78,7 +73,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndType
 		{
 			get
@@ -90,7 +84,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForSourceAndType = value;
 			}
 		}
-
 
 		public virtual string EventsForTime
 		{
@@ -104,7 +97,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndTime
 		{
 			get
@@ -116,7 +108,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForSourceAndTime = value;
 			}
 		}
-
 
 		public virtual string EventsForTimeAndType
 		{
@@ -130,7 +121,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndTimeAndType
 		{
 			get
@@ -142,7 +132,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForSourceAndTimeAndType = value;
 			}
 		}
-
 
 		public virtual string EventsForFragmentType
 		{
@@ -156,7 +145,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndFragmentType
 		{
 			get
@@ -168,7 +156,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForSourceAndFragmentType = value;
 			}
 		}
-
 
 		public virtual string EventsForDateAndFragmentType
 		{
@@ -182,7 +169,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForFragmentTypeAndType
 		{
 			get
@@ -194,7 +180,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForFragmentTypeAndType = value;
 			}
 		}
-
 
 		public virtual string EventsForSourceAndDateAndFragmentType
 		{
@@ -208,7 +193,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndFragmentTypeAndType
 		{
 			get
@@ -220,7 +204,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				this.eventsForSourceAndFragmentTypeAndType = value;
 			}
 		}
-
 
 		public virtual string EventsForDateAndFragmentTypeAndType
 		{
@@ -234,7 +217,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-
 		public virtual string EventsForSourceAndDateAndFragmentTypeAndType
 		{
 			get
@@ -247,7 +229,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public List<String> getURITemplates()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IList<string> URITemplates
 		{
@@ -272,7 +253,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Event
 				return uriTemplates;
 			}
 		}
-
 	}
-
 }

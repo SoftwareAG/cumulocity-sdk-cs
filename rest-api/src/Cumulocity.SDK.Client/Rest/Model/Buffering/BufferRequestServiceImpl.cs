@@ -3,46 +3,34 @@ using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 {
-    public class BufferRequestServiceImpl : IBufferRequestService
-    {
-        private readonly ConcurrentDictionary<long, TaskCompletionSource<object>> _queue = new ConcurrentDictionary<long, TaskCompletionSource<object>>();
+	public class BufferRequestServiceImpl : IBufferRequestService
+	{
+		private readonly ConcurrentDictionary<long, TaskCompletionSource<object>> _queue = new ConcurrentDictionary<long, TaskCompletionSource<object>>();
 
-        private readonly PersistentProvider persistentProvider;
+		private readonly PersistentProvider persistentProvider;
 
-        public BufferRequestServiceImpl(PersistentProvider persistentProvider)
-        {
-            this.persistentProvider = persistentProvider;
-        }
+		public BufferRequestServiceImpl(PersistentProvider persistentProvider)
+		{
+			this.persistentProvider = persistentProvider;
+		}
 
-        public virtual Task<object> create(BufferedRequest request)
-        {
-			//var requestId = persistentProvider.generateId();
-			//var future = initAsyncResponse(requestId);
-			//persistentProvider.offer(new ProcessingRequest(requestId, request));
-			//return future;
-
+		public virtual Task<object> create(BufferedRequest request)
+		{
 			var tcs = new TaskCompletionSource<object>();
 			var requestId = persistentProvider.generateId();
 			persistentProvider.offer(new ProcessingRequest(requestId, request));
-			_queue.TryAdd(requestId, tcs); 
+			_queue.TryAdd(requestId, tcs);
 			return tcs.Task;
 		}
 
-        public virtual void addResponse(long requestId, object result)
-        {
-            _queue.TryGetValue(requestId, out TaskCompletionSource<object> future);
-            if (future != null)
-            {
-	            future.SetResult(result);
+		public virtual void addResponse(long requestId, object result)
+		{
+			_queue.TryGetValue(requestId, out TaskCompletionSource<object> future);
+			if (future != null)
+			{
+				future.SetResult(result);
 				_queue.TryRemove(requestId, out future);
-            }
-        }
-
-        //private Task initAsyncResponse(long requestId)
-        //{
-        //    var future = new Task(() => { });
-        //    futures.TryAdd(requestId, future);
-        //    return future;
-        //}
-    }
+			}
+		}
+	}
 }

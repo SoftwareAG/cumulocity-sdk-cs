@@ -4,7 +4,7 @@ using Cumulocity.SDK.Client.Rest.Model;
 namespace Cumulocity.SDK.Client.Rest.Representation
 {
     public class
-        BaseCumulocityMediaType : BaseMediaType //, ICumulocityMediaType //( BaseCumulocityMediaType ERROR_MESSAGE)
+        BaseCumulocityMediaType : BaseMediaType 
     {
         protected internal const string VND_COM_NSN_CUMULOCITY = "vnd.com.nsn.cumulocity.";
 

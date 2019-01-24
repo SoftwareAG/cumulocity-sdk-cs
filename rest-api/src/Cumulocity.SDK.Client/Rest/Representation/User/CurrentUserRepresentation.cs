@@ -36,7 +36,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 
 		private bool? supportUserEnabled;
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Id
 		{
@@ -50,7 +49,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getUserName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string UserName
 		{
@@ -64,7 +62,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getPassword()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Password
 		{
@@ -78,7 +75,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getFirstName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string FirstName
 		{
@@ -92,7 +88,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getLastName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string LastName
 		{
@@ -106,7 +101,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getPhone()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Phone
 		{
@@ -120,7 +114,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getEmail()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Email
 		{
@@ -134,8 +127,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public List<RoleRepresentation> getEffectiveRoles()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IList<RoleRepresentation> EffectiveRoles
 		{
@@ -149,7 +140,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getShouldResetPassword()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? ShouldResetPassword
 		{
@@ -163,7 +153,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<bool> getSupportUserEnabled()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual bool? SupportUserEnabled
 		{
@@ -177,22 +166,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(value = "deprecated_LastPasswordChange", ignore = true) @Deprecated public Date getLastPasswordChange()
-		//[Obsolete]
-		//public virtual DateTime LastPasswordChange
-		//{
-		//	get
-		//	{
-		//		return lastPasswordChange == null ? null : lastPasswordChange.toDate();
-		//	}
-		//	set
-		//	{
-		//		this.lastPasswordChange = value == null ? null : newUTC(value);
-		//	}
-		//}
-
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @JSONProperty(value = "lastPasswordChange", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getLastPasswordChangeDateTime()
 		[JsonProperty("lastPasswordChange", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual DateTime LastPasswordChangeDateTime
 		{

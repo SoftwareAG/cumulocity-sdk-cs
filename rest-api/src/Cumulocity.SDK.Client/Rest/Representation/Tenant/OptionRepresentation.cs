@@ -6,10 +6,8 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 {
 	public class OptionRepresentation : BaseResourceRepresentation
 	{
-		//ORIGINAL LINE: @Size(max = 256) private String category;
 		private string category;
 
-		//ORIGINAL LINE: @Size(max = 256) private String key;
 		private string key;
 
 		private string value;
@@ -51,7 +49,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getValue()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Value
 		{
@@ -65,7 +62,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public boolean isTrue()
 		[JsonIgnore]
 		public virtual bool IsTrue
 		{
@@ -75,7 +71,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public boolean isFalse()
 		[JsonIgnore]
 		public virtual bool IsFalse
 		{

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 {
 	public class AlarmsApiRepresentation : AbstractExtensibleRepresentation
 	{
-
 		private AlarmCollectionRepresentation alarms;
 
 		private string alarmsForStatus;
@@ -35,7 +32,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			}
 		}
 
-
 		public virtual string AlarmsForStatus
 		{
 			get
@@ -47,7 +43,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 				this.alarmsForStatus = value;
 			}
 		}
-
 
 		public virtual string AlarmsForSource
 		{
@@ -61,7 +56,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			}
 		}
 
-
 		public virtual string AlarmsForSourceAndStatus
 		{
 			get
@@ -73,7 +67,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 				this.alarmsForSourceAndStatus = value;
 			}
 		}
-
 
 		public virtual string AlarmsForTime
 		{
@@ -87,7 +80,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			}
 		}
 
-
 		public virtual string AlarmsForStatusAndTime
 		{
 			get
@@ -100,7 +92,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			}
 		}
 
-
 		public virtual string AlarmsForSourceAndTime
 		{
 			get
@@ -112,7 +103,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 				this.alarmsForSourceAndTime = value;
 			}
 		}
-
 
 		public virtual string AlarmsForSourceAndStatusAndTime
 		{
@@ -142,6 +132,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 				return uriTemplates;
 			}
 		}
-
 	}
 }

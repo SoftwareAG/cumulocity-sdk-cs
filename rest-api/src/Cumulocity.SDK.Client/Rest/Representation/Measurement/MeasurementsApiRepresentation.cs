@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Measurement
 {
-	//ORIGINAL LINE: @Getter @Setter public class MeasurementsApiRepresentation extends AbstractExtensibleRepresentation
 	public class MeasurementsApiRepresentation : AbstractExtensibleRepresentation
 	{
 

@@ -7,7 +7,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
 	public class OperationsQueue : BlockingCollection<OperationRepresentation>
 	{
-		private static long serialVersionUID = -2987475330088840639L;
 
 		private static OperationsQueue instance = null;
 

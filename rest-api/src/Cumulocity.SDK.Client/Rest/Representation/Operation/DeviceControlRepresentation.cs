@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Representation.Operation
+﻿namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
 	public class DeviceControlRepresentation : AbstractExtensibleRepresentation
 	{
-
 		private OperationCollectionRepresentation operations;
 
 		private string operationsByStatus;
@@ -27,7 +22,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			}
 		}
 
-
 		public virtual string OperationsByStatus
 		{
 			get
@@ -39,7 +33,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 				this.operationsByStatus = value;
 			}
 		}
-
 
 		public virtual string OperationsByAgentId
 		{
@@ -53,7 +46,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			}
 		}
 
-
 		public virtual string OperationsByAgentIdAndStatus
 		{
 			get
@@ -65,7 +57,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 				this.operationsByAgentIdAndStatus = value;
 			}
 		}
-
 
 		public virtual string OperationsByDeviceId
 		{
@@ -79,7 +70,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			}
 		}
 
-
 		public virtual string OperationsByDeviceIdAndStatus
 		{
 			get
@@ -91,6 +81,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 				this.operationsByDeviceIdAndStatus = value;
 			}
 		}
-
 	}
 }

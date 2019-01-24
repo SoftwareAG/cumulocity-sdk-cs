@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 {
-	//ORIGINAL LINE: @Builder(builderMethodName = "change") @EqualsAndHashCode @NoArgsConstructor @AllArgsConstructor public class Change
 	public class Change
 	{
-
 		public enum Type
 		{
 			REPLACED,
@@ -26,7 +21,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 
 		private Type changeType;
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public Type getChangeType()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual Type ChangeType
 		{
@@ -66,7 +60,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 			}
 		}
 
-
 		public virtual object PreviousValue
 		{
 			get
@@ -78,7 +71,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 				this.previousValue = value;
 			}
 		}
-
 
 		public virtual object NewValue
 		{
@@ -92,11 +84,9 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 			}
 		}
 
-
 		public override string ToString()
 		{
 			return "Change [attribute=" + attribute + ", type=" + type + ", previousValue=" + previousValue + ", newValue=" + newValue + "]";
 		}
 	}
-
 }

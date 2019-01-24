@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Representation.Cep
+﻿namespace Cumulocity.SDK.Client.Rest.Representation.Cep
 {
 	/// <summary>
 	/// We follow here convention from <seealso cref="MediaType"/> class, where we have both <seealso cref="MediaType"/>
-	/// instances, and string representations (with '_TYPE' suffix in name). 
+	/// instances, and string representations (with '_TYPE' suffix in name).
 	/// </summary>
 	public class CepMediaType : CumulocityMediaType
 	{
-
 		public static readonly CepMediaType CEP_MODULE = new CepMediaType("cepModule");
 
 		public static readonly string CEP_MODULE_TYPE = APPLICATION_VND_COM_NSN_CUMULOCITY + "cepModule+json;" + VND_COM_NSN_CUMULOCITY_PARAMS;

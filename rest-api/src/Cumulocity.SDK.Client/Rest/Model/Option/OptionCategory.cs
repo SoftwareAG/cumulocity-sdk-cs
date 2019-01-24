@@ -86,7 +86,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 		public const string ALARM_TYPE_MAPPING_VALUE_FORMAT = "(.*)\\|(.*)";
 
 		public const string SUPPORT_USER_NAME = "support-user";
-
+        
+        #pragma warning disable 0169
 		private readonly bool checkInParent;
 
 		internal OptionCategory(string name, InnerEnum innerEnum, string value) 

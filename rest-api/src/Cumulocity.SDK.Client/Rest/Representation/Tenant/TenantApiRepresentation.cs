@@ -5,8 +5,6 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 {
-	//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-	//ORIGINAL LINE: @Data public class TenantApiRepresentation extends AbstractExtensibleRepresentation
 	public class TenantApiRepresentation : AbstractExtensibleRepresentation
 	{
 

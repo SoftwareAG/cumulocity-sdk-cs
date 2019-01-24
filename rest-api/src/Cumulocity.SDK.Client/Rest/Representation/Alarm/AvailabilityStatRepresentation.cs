@@ -22,7 +22,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			this.downtimeDuration = downtimeDuration;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(value = "source", ignoreIfNull = true) public String getSource()
 		[JsonProperty(propertyName: "source", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Source
 		{
@@ -36,7 +35,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Alarm
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(value = "downtimeDuration", ignoreIfNull = true) public System.Nullable<long> getDowntimeDuration()
 		[JsonProperty(propertyName: "downtimeDuration", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual long? DowntimeDuration
 		{

@@ -2,40 +2,36 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 {
-    public class BufferProcessor: IDisposable
-    {
+	public class BufferProcessor : IDisposable
+	{
+		private readonly PersistentProvider persistentProvider;
+		private readonly RestConnector restConnector;
+		private readonly IBufferRequestService service;
 
-        private readonly PersistentProvider persistentProvider;
-        private readonly RestConnector restConnector;
-        private readonly IBufferRequestService service;
-
-        private CancellationTokenSource _tokenSource = null;
-        private readonly CancellationToken _token;
-        private Task _executionTask = null;
-        private bool disposedValue = false;
+		private CancellationTokenSource _tokenSource = null;
+		private readonly CancellationToken _token;
+		private Task _executionTask = null;
+		private bool disposedValue = false;
 
 		public BufferProcessor(PersistentProvider persistentProvider, IBufferRequestService service,
-            RestConnector restConnector)
-        {
-            this.persistentProvider = persistentProvider;
-            this.service = service;
-            this.restConnector = restConnector;
+			RestConnector restConnector)
+		{
+			this.persistentProvider = persistentProvider;
+			this.service = service;
+			this.restConnector = restConnector;
 			_tokenSource = new CancellationTokenSource();
 			_token = _tokenSource.Token;
 		}
 
-
-
 		public Task StartProcessing()
-        {
-	        _executionTask = Task.Factory.StartNew(this.LongRunningTask, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
-	        return Task.FromResult(0);
-
+		{
+			_executionTask = Task.Factory.StartNew(this.LongRunningTask, _token, TaskCreationOptions.LongRunning, TaskScheduler.Default);
+			return Task.FromResult(0);
 		}
+
 		public Task Shutdown()
 		{
 			Dispose();
@@ -66,23 +62,22 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 			}
 		}
 
-		void Dispose() => Dispose(true);
+		private void Dispose() => Dispose(true);
 
 		private void LongRunningTask()
 		{
 			while (true)
 			{
-
-					if (_token.IsCancellationRequested)
-					{
-						_token.ThrowIfCancellationRequested();
-					}
+				if (_token.IsCancellationRequested)
+				{
+					_token.ThrowIfCancellationRequested();
+				}
 				// do long running job here
 				ProcessingRequest processingRequest = persistentProvider.poll();
 				service.addResponse(processingRequest.Id, SendRequest(processingRequest.Entity));
-
 			}
 		}
+
 		private object SendRequest(BufferedRequest httpPostRequest)
 		{
 			Result result = new Result();
@@ -96,7 +91,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 				}
 				catch (SDKException e)
 				{
-
 					if (e.HttpStatus <= 500 && !e.Message.Contains(ResponseParser.NO_ERROR_REPRESENTATION))
 					{
 						result.Exception = e;
@@ -124,17 +118,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 				}
 			}
 		}
-		private  object DoSendRequest(BufferedRequest httpPostRequest)
+
+		private object DoSendRequest(BufferedRequest httpPostRequest)
 		{
 			string method = httpPostRequest.Method;
+			dynamic representation = Convert.ChangeType(httpPostRequest.Representation, httpPostRequest.Representation.GetType());
 			if (HttpMethod.Post.Method.Equals(method))
 			{
-				dynamic a = Convert.ChangeType(httpPostRequest.Representation, httpPostRequest.Representation.GetType());
-				return restConnector.Post(httpPostRequest.Path, httpPostRequest.MediaType,  a);
+				return restConnector.Post(httpPostRequest.Path, httpPostRequest.MediaType, representation);
 			}
 			else if (HttpMethod.Put.Method.Equals(method))
 			{
-				return restConnector.PutWithoutId(httpPostRequest.Path, httpPostRequest.MediaType, httpPostRequest.Representation);
+				return restConnector.PutWithoutId(httpPostRequest.Path, httpPostRequest.MediaType, representation);
 			}
 			else
 			{
@@ -144,21 +139,16 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 
 		private static void WaitForPlatform()
 		{
-
-				Thread.Sleep(5 * 60 * 1000);
-
+			Thread.Sleep(5 * 60 * 1000);
 		}
 
 		private static void WaitForConnection()
 		{
-				Thread.Sleep(30 * 1000);
-
+			Thread.Sleep(30 * 1000);
 		}
 
 		void IDisposable.Dispose()
 		{
-			
 		}
-
-    }
+	}
 }

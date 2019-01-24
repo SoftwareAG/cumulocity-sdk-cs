@@ -1,32 +1,27 @@
 namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 {
-    public class RestRepresentationObjectBuilder
-    {
+	public class RestRepresentationObjectBuilder
+	{
+		public static ManagedObjectRepresentationBuilder aManagedObjectRepresentation()
+		{
+			return new ManagedObjectRepresentationBuilder();
+		}
 
-        public static ManagedObjectRepresentationBuilder aManagedObjectRepresentation()
-        {
-            return new ManagedObjectRepresentationBuilder();
-        }
+		public static ManagedObjectReferenceRepresentationBuilder aManagedObjectReferenceRepresentation()
+		{
+			return new ManagedObjectReferenceRepresentationBuilder();
+		}
 
-        public static ManagedObjectReferenceRepresentationBuilder aManagedObjectReferenceRepresentation()
-        {
-            return new ManagedObjectReferenceRepresentationBuilder();
-        }
+		public static AlarmRepresentationBuilder anAlarmRepresentation()
+		{
+			return new AlarmRepresentationBuilder();
+		}
 
 		//        public static EventRepresentationBuilder anEventRepresentation()
 		//        {
 		//            return new EventRepresentationBuilder();
 		//        }
 		//
-		public static AlarmRepresentationBuilder anAlarmRepresentation()
-		{
-			return new AlarmRepresentationBuilder();
-		}
-		//
-		//        public static AlarmCollectionRepresentationBuilder anAlarmCollectionRepresentation()
-		//        {
-		//            return new AlarmCollectionRepresentationBuilder();
-		//        }
 		//
 		//        public static RetentionRuleCollectionRepresentationBuilder aRetentionRuleCollectionRepresentation()
 		//        {
@@ -47,6 +42,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 		//        {
 		//            return OperationRepresentationBuilder.builder();
 		//        }
-
 	}
 }

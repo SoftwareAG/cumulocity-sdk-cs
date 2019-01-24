@@ -2,14 +2,12 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
+	public class DeliveryLogEntryRepresentation //: AbstractDynamicProperties
+	{
+#pragma warning disable 0169
+		private string status;
 
-    //ORIGINAL LINE: @Data @NoArgsConstructor @AllArgsConstructor public class DeliveryLogEntryRepresentation extends AbstractDynamicProperties
-    public class DeliveryLogEntryRepresentation //: AbstractDynamicProperties
-    {
-        private string status;
-
-
-        //ORIGINAL LINE: @Getter(onMethod = @_(@JSONConverter(type = DateTimeConverter.class))) private DateTime time;
-        private DateTime time;
-    }
+#pragma warning disable 0169
+		private DateTime time;
+	}
 }

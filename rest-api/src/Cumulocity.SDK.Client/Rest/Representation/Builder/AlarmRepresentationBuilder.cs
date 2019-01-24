@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
+﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
+using System;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 {
-
 	public class AlarmRepresentationBuilder : AbstractObjectBuilder<AlarmRepresentation>
 	{
-
 		private readonly ISet<object> dynamicProperties = new System.Collections.Generic.HashSet<object>();
 
 		public virtual AlarmRepresentationBuilder withId(GId value)
@@ -98,6 +95,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 			dynamicProperties.Add(@object);
 			return this;
 		}
-
 	}
 }

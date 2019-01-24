@@ -3,11 +3,11 @@ using System;
 namespace Cumulocity.SDK.Client
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class ParamSource : System.Attribute
+    public sealed class ParamSourceAttribute : System.Attribute
     {
         internal string value;
 
-        public ParamSource(String value = "")
+        public ParamSourceAttribute(String value = "")
         {
             this.value = value;
         }

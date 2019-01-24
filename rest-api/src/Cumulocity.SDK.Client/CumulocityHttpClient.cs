@@ -1,101 +1,95 @@
+using Cumulocity.SDK.Client.Rest;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
-using Cumulocity.SDK.Client.Rest;
-using Cumulocity.SDK.Client.Rest.Representation;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 
 namespace Cumulocity.SDK.Client
 {
-    public class CumulocityHttpClient : HttpClient
-    {
-        //private readonly Pattern hostPattern = Pattern.compile("((http|https):\\/\\/.+?)(\\/|\\?|$)");
-        private readonly Regex hostPattern = new Regex(@"((http|https):\\/\\/.+?)(\\/|\\?|$)");
-        private PlatformParameters platformParameters;
-        private readonly SerializerSettings _serializerSettings;
+	public class CumulocityHttpClient : HttpClient
+	{
+		//private readonly Pattern hostPattern = Pattern.compile("((http|https):\\/\\/.+?)(\\/|\\?|$)");
+		private readonly Regex hostPattern = new Regex(@"((http|https):\\/\\/.+?)(\\/|\\?|$)");
 
-	    public CumulocityHttpClient(HttpClientHandler createDefaultClientHandler, bool disposeHandler) : base(
-            createDefaultClientHandler, disposeHandler)
-        {
-        }
+		private PlatformParameters platformParameters;
+		private readonly SerializerSettings _serializerSettings;
 
-        public virtual PlatformParameters PlatformParameters
-        {
-            set => platformParameters = value;
-        }
+		public CumulocityHttpClient(HttpClientHandler createDefaultClientHandler, bool disposeHandler) : base(
+			createDefaultClientHandler, disposeHandler)
+		{
+		}
 
-        private string InitialHost
-        {
-            get
-            {
-                var initialHost = platformParameters.Host;
-                if (initialHost.EndsWith("/", StringComparison.Ordinal))
-                    initialHost = initialHost.Substring(0, initialHost.Length - 1);
-                return initialHost;
-            }
-        }
+		public virtual PlatformParameters PlatformParameters
+		{
+			set => platformParameters = value;
+		}
 
-        public CumulocityHttpClient resource(string path)
-        {
-            BaseAddress = new Uri(resolvePath(path));
-            
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                Formatting = Newtonsoft.Json.Formatting.Indented,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-            
-            return this;
-        }
+		private string InitialHost
+		{
+			get
+			{
+				var initialHost = platformParameters.Host;
+				if (initialHost.EndsWith("/", StringComparison.Ordinal))
+					initialHost = initialHost.Substring(0, initialHost.Length - 1);
+				return initialHost;
+			}
+		}
 
-        protected internal virtual string resolvePath(string path)
-        {
-            if (path.StartsWith("/", StringComparison.Ordinal)) path = InitialHost + path;
-            return platformParameters.ForceInitialHost ? insertInitialHost(path) : path;
-        }
+		public CumulocityHttpClient resource(string path)
+		{
+			BaseAddress = new Uri(resolvePath(path));
 
-        private string insertInitialHost(string path)
-        {
-            var matcher = hostPattern.Match(path);
-            if (matcher.Success)
-            {
-                var capturedHost = matcher.Groups[1];
-                return path.Replace(capturedHost.Value, InitialHost);
-            }
+			JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+			{
+				Formatting = Newtonsoft.Json.Formatting.Indented,
+				ContractResolver = new CamelCasePropertyNamesContractResolver()
+			};
 
-            return path;
-        }
+			return this;
+		}
 
-        public void addBasicAuthFilter(string platformParametersPrincipal, string platformParametersPassword)
-        {
-           this.DefaultRequestHeaders.Authorization
-                = new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(
-                        System.Text.ASCIIEncoding.ASCII.GetBytes(
-                            string.Format("{0}:{1}", platformParameters.Principal, platformParameters.Password))));
-        }
-        
-        
-        
-        private class SerializerSettings : JsonSerializerSettings
+		protected internal virtual string resolvePath(string path)
+		{
+			if (path.StartsWith("/", StringComparison.Ordinal)) path = InitialHost + path;
+			return platformParameters.ForceInitialHost ? insertInitialHost(path) : path;
+		}
 
-        {
+		private string insertInitialHost(string path)
+		{
+			var matcher = hostPattern.Match(path);
+			if (matcher.Success)
+			{
+				var capturedHost = matcher.Groups[1];
+				return path.Replace(capturedHost.Value, InitialHost);
+			}
 
-            public SerializerSettings()
+			return path;
+		}
 
-            {
+		public void addBasicAuthFilter(string platformParametersPrincipal, string platformParametersPassword)
+		{
+			this.DefaultRequestHeaders.Authorization
+				 = new AuthenticationHeaderValue("Basic",
+					 Convert.ToBase64String(
+						 System.Text.ASCIIEncoding.ASCII.GetBytes(
+							 string.Format("{0}:{1}", platformParameters.Principal, platformParameters.Password))));
+		}
 
-                this.ContractResolver = new CamelCasePropertyNamesContractResolver();
+		private class SerializerSettings : JsonSerializerSettings
 
-                this.NullValueHandling = NullValueHandling.Ignore;
+		{
+			public SerializerSettings()
 
-                this.Converters.Add(new StringEnumConverter());
+			{
+				this.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            }
+				this.NullValueHandling = NullValueHandling.Ignore;
 
-        }
-    }
+				this.Converters.Add(new StringEnumConverter());
+			}
+		}
+	}
 }

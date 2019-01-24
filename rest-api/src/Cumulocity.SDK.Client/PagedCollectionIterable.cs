@@ -7,14 +7,12 @@ namespace Cumulocity.SDK.Client
 {
 public class PagedCollectionIterable<T, C> : IEnumerable<T>, IEnumerator<T> where C : BaseCollectionRepresentation<T>
 {
-    //ORIGINAL LINE: private final PagedCollectionResource<T, ? extends C> collectionResource;
 	private readonly IPagedCollectionResource<T, C> _collectionResource;
 
 	private C collection;
 
 	private readonly int limit;
 
-    //JAVA TO C# CONVERTER NOTE: Fields cannot have the same name as methods:
 	private IEnumerator<T> iterator_Renamed;
 
 	private int counter;

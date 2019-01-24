@@ -39,24 +39,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             this.msisdn = msisdn;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getImei()
         public virtual string Imei
         {
             get => imei;
             set => imei = value;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getCellId()
         public virtual string CellId
         {
             get => cellId;
             set => cellId = value;
         }
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getIccid()
         public virtual string Iccid
         {
             get => iccid;
@@ -64,8 +58,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getMcc()
         public virtual string Mcc
         {
             get => mcc;
@@ -73,8 +65,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getMnc()
         public virtual string Mnc
         {
             get => mnc;
@@ -82,8 +72,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getImsi()
         public virtual string Imsi
         {
             get => imsi;
@@ -91,8 +79,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getLac()
         public virtual string Lac
         {
             get => lac;
@@ -100,8 +86,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
 
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getMsisdn()
         public virtual string Msisdn
         {
             get => msisdn;

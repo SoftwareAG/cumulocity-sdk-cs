@@ -7,36 +7,28 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
-	//ORIGINAL LINE: @NoArgsConstructor @AllArgsConstructor(access = AccessLevel.PRIVATE) @Builder(builderMethodName = "aOperation") public class OperationRepresentation extends AbstractExtensibleRepresentation
+#pragma warning disable CS0169
+	[CLSCompliant(false)]  
 	public class OperationRepresentation : AbstractExtensibleRepresentation
 	{
 		private long? bulkOperationId;
 
-		//ORIGINAL LINE: @Getter(onMethod = @_(@JSONProperty(ignoreIfNull = true))) @Setter @Null(operation = { Command.UPDATE }) private ConnectorReferenceRepresentation connector;
 		private ConnectorReferenceRepresentation connector;
 
-		//ORIGINAL LINE: @Null(operation = { Command.CREATE, Command.UPDATE }) private DateTime creationTime;
 		private DateTime? creationTime;
 
-		//ORIGINAL LINE: @Getter(onMethod = @_(@JSONProperty(ignoreIfNull = true))) @Setter @Null(operation = { Command.CREATE, Command.UPDATE }) private DeliveryRepresentation delivery;
 		private DeliveryRepresentation delivery;
 
-		//ORIGINAL LINE: @Null(operation = { Command.CREATE, Command.UPDATE }) private ExternalIDCollectionRepresentation deviceExternalIDs;
 		private ExternalIDCollectionRepresentation deviceExternalIDs;
 
-		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) @Null(operation = Command.UPDATE) private GId deviceId;
 		private GId deviceId;
 
-		//ORIGINAL LINE: @Null(operation = Command.CREATE) private String failureReason;
 		private string failureReason;
 
-		//ORIGINAL LINE: @Null(operation = { Command.CREATE }) private GId id;
 		private GId id;
 
-		//ORIGINAL LINE: @NotNull(operation = Command.UPDATE) @Null(operation = Command.CREATE) private String status;
 		private string status;
 
-		//ORIGINAL LINE: @JSONConverter(type = IDTypeConverter.class) @JSONProperty(ignoreIfNull = true) public GId getId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(GidConverter))]
 		public virtual GId Id
@@ -45,7 +37,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => id = value;
 		}
 
-		//ORIGINAL LINE: @JSONConverter(type = IDTypeConverter.class) @JSONProperty(ignoreIfNull = true) public GId getDeviceId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(GidConverter))]
 		public virtual GId DeviceId
@@ -54,11 +45,10 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => deviceId = value;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getDeviceName()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string DeviceName { get; set; }
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getStatus()
+
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string Status
 		{
@@ -66,7 +56,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => status = value;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getFailureReason()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual string FailureReason
 		{
@@ -74,21 +63,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => failureReason = value;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(value = "deprecated_CreationTime", ignore = true) @Deprecated public Date getCreationTime()
-		//	[Obsolete]
-		//	public virtual DateTime CreationTime
-		//	{
-		//		get
-		//		{
-		//			return creationTime == null ? null : creationTime.toDate();
-		//		}
-		//		set
-		//		{
-		//			this.creationTime = value == null ? null : newLocal(value);
-		//		}
-		//	}
 
-		//ORIGINAL LINE: @JSONProperty(value = "creationTime", ignoreIfNull = true) @JSONConverter(type = DateTimeConverter.class) public DateTime getCreationDateTime()
 		[JsonProperty("creationTime", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual DateTime? CreationTime
 		{
@@ -96,7 +71,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => creationTime = value;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public ExternalIDCollectionRepresentation getDeviceExternalIDs()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual ExternalIDCollectionRepresentation DeviceExternalIDs
 		{
@@ -104,7 +78,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => deviceExternalIDs = value;
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public System.Nullable<long> getBulkOperationId()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual long? BulkOperationId
 		{

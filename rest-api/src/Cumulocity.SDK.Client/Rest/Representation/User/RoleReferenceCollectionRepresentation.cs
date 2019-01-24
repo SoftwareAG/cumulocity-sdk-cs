@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.User
 {
 	[JsonObject]
 	public class RoleReferenceCollectionRepresentation : BaseCollectionRepresentation<RoleReferenceRepresentation>, IReferenceRepresentation
 	{
-
 		private IList<RoleReferenceRepresentation> references;
 
 		public RoleReferenceCollectionRepresentation()
@@ -33,5 +30,4 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			return references.GetEnumerator();
 		}
 	}
-
 }

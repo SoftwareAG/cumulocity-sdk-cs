@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 {
-	//ORIGINAL LINE: @Builder
-	//@NoArgsConstructor
-	//@AllArgsConstructor
-	//public class OptionsRepresentation extends BaseResourceRepresentation implements DynamicProperties
 	[JsonObject]
 	public class OptionsRepresentation : BaseResourceRepresentation
 	{
@@ -22,7 +17,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 
 		public virtual string getProperty(string name)
 		{
-			//ORIGINAL LINE: final Object o = properties.get(name);
 			object o = Properties[name];
 			if (o != null)
 			{

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Cep
 {
@@ -10,7 +8,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Cep
 	{
 		private IList<CepModuleRepresentation> modules;
 
-	
 		public virtual IList<CepModuleRepresentation> Modules
 		{
 			get

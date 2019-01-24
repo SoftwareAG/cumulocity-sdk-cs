@@ -19,7 +19,6 @@ namespace Cumulocity.SDK.Client
         public const string NO_ERROR_REPRESENTATION = "Something went wrong. Failed to parse error message.";
         //private static readonly Logger LOG = LoggerFactory.getLogger(typeof(ResponseParser));
 
-        //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         public virtual T parse<T>(HttpResponseMessage response, Type type, params int[] expectedStatusCode)
         {
             checkStatus(response, expectedStatusCode);
@@ -45,8 +44,6 @@ namespace Cumulocity.SDK.Client
             return (T) new object();
         }
 
-
-        //ORIGINAL LINE: public void checkStatus(ClientResponse response, int... expectedStatusCodes) throws SDKException
         public virtual void checkStatus(HttpResponseMessage response, params int[] expectedStatusCodes)
         {
 	            var status = (int) response.StatusCode;
@@ -65,7 +62,7 @@ namespace Cumulocity.SDK.Client
         protected internal virtual string getErrorMessage(HttpResponseMessage response, int status)
         {
             var errorMessage = "Http status code: " + status;
-            //if (response.hasEntity())
+
             if (response != null)
             {
                 var errorRepresentation = getErrorRepresentation(response);

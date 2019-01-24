@@ -82,14 +82,11 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
         public static BufferedRequest parseCsvString(string content)
         {
             var parts = content.Split(new[] {SEPARATOR}, 5, StringSplitOptions.None);
-            //return new BufferedRequest(parts[0], parts[1], toMediaTypeMappings[parts[2]], JSONBase.fromJSON(parts[4], toClassMappings[parts[3]]));
-            //JsonConvert.DeserializeObject<CountResponse>(jsonString, settings);
             return new BufferedRequest(parts[0], parts[1], toMediaTypeMappings[parts[2]], null);
         }
 
         public virtual string toCsvString()
         {
-            //return method + SEPARATOR + path + SEPARATOR + fromMediaTypeMappings[mediaType] + SEPARATOR + fromClassMappings[representation.GetType()] + SEPARATOR + JSONBase.JSONGenerator.forValue(representation);
             return method + SEPARATOR + path + SEPARATOR + fromMediaTypeMappings[mediaType] + SEPARATOR +
                    fromClassMappings[representation.GetType()] + SEPARATOR +
                    JsonConvert.SerializeObject(representation);

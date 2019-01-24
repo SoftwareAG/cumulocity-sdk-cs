@@ -7,7 +7,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 		//note that id is actually same as name, name is not used in model
 		private string id;
 
-		//ORIGINAL LINE: @Size(max = 50) @Deprecated private String name;
 		[Obsolete]
 		private string name;
 

@@ -1,226 +1,205 @@
-﻿using System;
-using System.Threading.Tasks;
-using Cumulocity.SDK.Client.Rest.API.Base;
+﻿using Cumulocity.SDK.Client.Rest.API.Base;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using Cumulocity.SDK.Client.Rest.Model.Buffering;
+using System;
+using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.Rest
 {
-    public class PlatformParameters
-    {
-        public const int DEFAULT_PAGE_SIZE = 5;
-        private string applicationKey;
-        private BufferProcessor bufferProcessor;
-        private IBufferRequestService bufferRequestService;
-        private readonly ClientConfiguration clientConfiguration;
-        private CumulocityLogin cumulocityLogin;
-        private bool forceInitialHost;
-        private string host;
-        private string password;
-        private int proxyPort;
-        private string requestOrigin;
-        private bool requireResponseBody_Renamed;
-        private RestConnector restConnector;
-        private string tenantId;
-        private ISupplier<string> tfaToken;
+	public class PlatformParameters
+	{
+		public const int DEFAULT_PAGE_SIZE = 5;
+		private string applicationKey;
+		private BufferProcessor bufferProcessor;
+		private IBufferRequestService bufferRequestService;
+		private readonly ClientConfiguration clientConfiguration;
+		private CumulocityLogin cumulocityLogin;
+		private bool forceInitialHost;
+		private string host;
+		private string password;
+		private int proxyPort;
+		private string requestOrigin;
+		private bool requireResponseBody_Renamed;
+		private RestConnector restConnector;
+		private string tenantId;
+		private ISupplier<string> tfaToken;
 
-        private string user;
-        //internal ISet<HttpClientInterceptor> interceptorSet;
+		private string user;
 
-        public PlatformParameters()
-        {
-            proxyPort = -1;
-            requireResponseBody_Renamed = true;
-            forceInitialHost = false;
-            PageSize = 5;
-            //this.interceptorSet = Collections.newSetFromMap(new ConcurrentHashMap());
-        }
+		public PlatformParameters()
+		{
+			proxyPort = -1;
+			requireResponseBody_Renamed = true;
+			forceInitialHost = false;
+			PageSize = 5;
+		}
 
-        public PlatformParameters(string host, CumulocityCredentials credentials,
-            ClientConfiguration clientConfiguration) : this(host, credentials, clientConfiguration, 5)
-        {
-        }
+		public PlatformParameters(string host, CumulocityCredentials credentials,
+			ClientConfiguration clientConfiguration) : this(host, credentials, clientConfiguration, 5)
+		{
+		}
 
-        public PlatformParameters(string host, CumulocityCredentials credentials,
-            ClientConfiguration clientConfiguration, int pageSize)
-        {
-            proxyPort = -1;
-            requireResponseBody_Renamed = true;
-            forceInitialHost = false;
-            PageSize = 5;
-            //this.interceptorSet = Collections.newSetFromMap(new ConcurrentHashMap());
-            PageSize = pageSize;
-            this.clientConfiguration = clientConfiguration;
-            setMandatoryFields(host, credentials);
-        }
+		public PlatformParameters(string host, CumulocityCredentials credentials,
+			ClientConfiguration clientConfiguration, int pageSize)
+		{
+			proxyPort = -1;
+			requireResponseBody_Renamed = true;
+			forceInitialHost = false;
+			PageSize = 5;
+			PageSize = pageSize;
+			this.clientConfiguration = clientConfiguration;
+			setMandatoryFields(host, credentials);
+		}
 
-        public virtual int PageSize { get; }
+		public virtual int PageSize { get; }
 
-        public virtual string Host
-        {
-            get => host;
-            set => host = value;
-        }
+		public virtual string Host
+		{
+			get => host;
+			set => host = value;
+		}
 
-        public virtual string TenantId
-        {
-            get => tenantId;
-            set => tenantId = value;
-        }
+		public virtual string TenantId
+		{
+			get => tenantId;
+			set => tenantId = value;
+		}
 
-        public virtual string User
-        {
-            get => user;
-            set => user = value;
-        }
+		public virtual string User
+		{
+			get => user;
+			set => user = value;
+		}
 
-        public virtual string Password
-        {
-            get => password;
-            set => password = value;
-        }
+		public virtual string Password
+		{
+			get => password;
+			set => password = value;
+		}
 
-        public virtual string ProxyHost { get; set; }
+		public virtual string ProxyHost { get; set; }
 
+		public virtual int ProxyPort
+		{
+			get => proxyPort;
+			set => proxyPort = value;
+		}
 
-        public virtual int ProxyPort
-        {
-            get => proxyPort;
-            set => proxyPort = value;
-        }
+		public virtual string ProxyUserId { get; set; }
 
+		public virtual string ProxyPassword { get; set; }
 
-        public virtual string ProxyUserId { get; set; }
+		public virtual string ApplicationKey
+		{
+			get => applicationKey;
+			set => applicationKey = value;
+		}
 
+		public virtual bool RequireResponseBody
+		{
+			set => requireResponseBody_Renamed = value;
+		}
 
-        public virtual string ProxyPassword { get; set; }
+		public virtual bool ForceInitialHost
+		{
+			get => forceInitialHost;
+			set => forceInitialHost = value;
+		}
 
+		public virtual string Principal => cumulocityLogin.toLoginString();
 
-        public virtual string ApplicationKey
-        {
-            get => applicationKey;
-            set => applicationKey = value;
-        }
+		public virtual string RequestOrigin
+		{
+			get => requestOrigin;
+			set => requestOrigin = value;
+		}
 
+		internal virtual IBufferRequestService BufferRequestService => bufferRequestService;
 
-        public virtual bool RequireResponseBody
-        {
-            set => requireResponseBody_Renamed = value;
-        }
+		private void setMandatoryFields(string host, CumulocityCredentials credentials)
+		{
+			if (host[host.Length - 1] != '/') host = $"{host}/";
 
-        public virtual bool ForceInitialHost
-        {
-            get => forceInitialHost;
-            set => forceInitialHost = value;
-        }
+			this.host = host;
+			tenantId = credentials.TenantId;
+			user = credentials.Username;
+			password = credentials.Password;
+			applicationKey = credentials.ApplicationKey;
+			cumulocityLogin = credentials.Login;
+			requestOrigin = credentials.RequestOrigin;
+		}
 
-        public virtual string Principal => cumulocityLogin.toLoginString();
+		private void startBufferProcessing()
+		{
+			if (clientConfiguration.AsyncEnabled)
+			{
+				var persistentProvider = clientConfiguration.PersistentProvider;
+				bufferRequestService = new BufferRequestServiceImpl(persistentProvider);
+				bufferProcessor = new BufferProcessor(persistentProvider, bufferRequestService, restConnector);
+				bufferProcessor.StartProcessing();
+			}
+			else
+			{
+				bufferRequestService = new DisabledBufferRequestService(this);
+			}
+		}
 
+		public virtual RestConnector createRestConnector()
+		{
+			lock (this)
+			{
+				if (restConnector == null)
+				{
+					restConnector = new RestConnector(this, new ResponseParser());
+					startBufferProcessing();
+				}
 
-        public virtual string RequestOrigin
-        {
-            get => requestOrigin;
-            set => requestOrigin = value;
-        }
+				return restConnector;
+			}
+		}
 
+		public virtual bool requireResponseBody()
+		{
+			return requireResponseBody_Renamed;
+		}
 
-        internal virtual IBufferRequestService BufferRequestService => bufferRequestService;
+		public virtual string getTfaToken()
+		{
+			return tfaToken == null ? null : tfaToken.get();
+		}
 
-        private void setMandatoryFields(string host, CumulocityCredentials credentials)
-        {
-            if (host[host.Length - 1] != '/') host = $"{host}/";
+		public virtual void setTfaToken(string tfaToken)
+		{
+			this.tfaToken = Suppliers.ofInstance(tfaToken);
+		}
 
-            this.host = host;
-            tenantId = credentials.TenantId;
-            user = credentials.Username;
-            password = credentials.Password;
-            applicationKey = credentials.ApplicationKey;
-            cumulocityLogin = credentials.Login;
-            requestOrigin = credentials.RequestOrigin;
-        }
+		public virtual void setTfaToken(ISupplier<string> tfaToken)
+		{
+			this.tfaToken = tfaToken;
+		}
 
-        private void startBufferProcessing()
-        {
-            if (clientConfiguration.AsyncEnabled)
-            {
-                var persistentProvider = clientConfiguration.PersistentProvider;
-                bufferRequestService = new BufferRequestServiceImpl(persistentProvider);
-                bufferProcessor = new BufferProcessor(persistentProvider, bufferRequestService, restConnector);
-                bufferProcessor.StartProcessing();
-            }
-            else
-            {
-                bufferRequestService = new DisabledBufferRequestService(this);
-            }
-        }
+		public virtual void close()
+		{
+			if (bufferProcessor != null) bufferProcessor.Shutdown();
+		}
 
-        public virtual RestConnector createRestConnector()
-        {
-            lock (this)
-            {
-                if (restConnector == null)
-                {
-                    restConnector = new RestConnector(this, new ResponseParser());
-                    startBufferProcessing();
-                }
+		private sealed class DisabledBufferRequestService : IBufferRequestService
+		{
+			private readonly PlatformParameters outerInstance;
 
-                return restConnector;
-            }
-        }
+			internal DisabledBufferRequestService(PlatformParameters outerInstance)
+			{
+				this.outerInstance = outerInstance;
+			}
 
-        public virtual bool requireResponseBody()
-        {
-            return requireResponseBody_Renamed;
-        }
+			public Task<object> create(BufferedRequest request)
+			{
+				throw new Exception("Async feature is disabled in this platform client instance.");
+			}
 
-
-        public virtual string getTfaToken()
-        {
-            return tfaToken == null ? null : tfaToken.get();
-        }
-
-        public virtual void setTfaToken(string tfaToken)
-        {
-            this.tfaToken = Suppliers.ofInstance(tfaToken);
-        }
-
-        public virtual void setTfaToken(ISupplier<string> tfaToken)
-        {
-            this.tfaToken = tfaToken;
-        }
-
-        public virtual void close()
-        {
-            if (bufferProcessor != null) bufferProcessor.Shutdown();
-        }
-
-//	public virtual bool registerInterceptor(HttpClientInterceptor interceptor)
-//	{
-//		return this.interceptorSet.Add(interceptor);
-//	}
-//
-//	public virtual bool unregisterInterceptor(HttpClientInterceptor interceptor)
-//	{
-//		return this.interceptorSet.remove(interceptor);
-//	}
-
-        private class DisabledBufferRequestService : IBufferRequestService
-        {
-            private readonly PlatformParameters outerInstance;
-
-            internal DisabledBufferRequestService(PlatformParameters outerInstance)
-            {
-                this.outerInstance = outerInstance;
-            }
-
-            public virtual Task<object> create(BufferedRequest request)
-            {
-                throw new Exception("Async feature is disabled in this platform client instance.");
-            }
-
-            public virtual void addResponse(long requestId, object result)
-            {
-            }
-        }
-    }
+			public void addResponse(long requestId, object result)
+			{
+			}
+		}
+	}
 }

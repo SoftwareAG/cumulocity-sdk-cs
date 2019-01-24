@@ -25,7 +25,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Inventory
 		private string managedObjectsForType;
 
 		/// <returns> the managedObjectsForType </returns>
-		//ORIGINAL LINE: @JSONProperty(value = "managedObjectsForType", ignoreIfNull = true) public final String getManagedObjectsForType()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string ManagedObjectsForType
 		{
@@ -34,7 +33,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Inventory
 		}
 
 		/// <returns> the managedObjectsForFragmentType </returns>
-		//ORIGINAL LINE: @JSONProperty(value = "managedObjectsForFragmentType", ignoreIfNull = true) public final String getManagedObjectsForFragmentType()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string ManagedObjectsForFragmentType
 		{
@@ -43,7 +41,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Inventory
 		}
 
 		/// <returns> the managedObjects </returns>
-		//ORIGINAL LINE: @JSONProperty(value = "managedObjects", ignoreIfNull = false) public final ManagedObjectReferenceCollectionRepresentation getManagedObjects()
 		public ManagedObjectReferenceCollectionRepresentation ManagedObjects
 		{
 			get => managedObjects;

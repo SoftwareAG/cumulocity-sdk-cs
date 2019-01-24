@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
+﻿namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 {
 	/// <summary>
 	/// We follow here convention from <seealso cref="MediaType"/> class, where we have both <seealso cref="MediaType"/>
@@ -10,7 +6,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Tenant
 	/// </summary>
 	public class TenantMediaType : CumulocityMediaType
 	{
-
 		public static readonly TenantMediaType TENANT = new TenantMediaType("tenant");
 
 		public static readonly TenantMediaType TENANT_REFERENCE = new TenantMediaType("tenantReference");

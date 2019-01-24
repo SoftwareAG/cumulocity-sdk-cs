@@ -82,11 +82,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 
         public virtual IDictionary<string, string> Parameters => parameters;
 
-//		public static MediaType valueOf(string type)
-//		{
-//			return (MediaType) RuntimeDelegate.Instance.createHeaderDelegate(typeof(MediaType)).fromString(type);
-//		}
-//
         public static SortedDictionary<TKey, TValue> ConvertToSortedDictionary<TKey, TValue>(
             IDictionary<TKey, TValue> map)
         {
@@ -137,9 +132,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation
             }
         }
 
-//        public override string ToString()
-//        {
-//            return RuntimeDelegate.Instance.createHeaderDelegate(typeof(MediaType)).ToString(this);
-//        }
     }
 }

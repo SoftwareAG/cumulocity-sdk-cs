@@ -11,8 +11,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 
 		private long? id;
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @NotNull(operation = Command.CREATE) @Size(max = 254, message = "maximum length is 254 characters") private String name;
 		private string name;
 
 		private string description;

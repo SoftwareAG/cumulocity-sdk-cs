@@ -23,7 +23,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
         }
 
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-         //ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getUrl()
         public virtual string Url
         {
             get

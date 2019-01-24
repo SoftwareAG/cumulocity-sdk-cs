@@ -10,7 +10,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 
 		private IDictionary<string, object> customProperties;
 
-		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public Map<String, Object> getCustomProperties()
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public virtual IDictionary<string, object> CustomProperties
 		{

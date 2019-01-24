@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Representation.Operation.OperationsEnhanced
+﻿namespace Cumulocity.SDK.Client.Rest.Representation.Operation.OperationsEnhanced
 {
 	public class NewMeasurement
 	{

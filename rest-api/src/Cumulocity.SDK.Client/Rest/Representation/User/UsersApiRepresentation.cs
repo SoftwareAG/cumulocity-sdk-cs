@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Representation.User
+﻿namespace Cumulocity.SDK.Client.Rest.Representation.User
 {
 	public class UsersApiRepresentation : BaseResourceRepresentation
 	{
-
 		private string users;
 
 		private string userByName;
@@ -31,7 +26,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
 		public virtual string Groups
 		{
 			get
@@ -43,7 +37,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 				this.groups = value;
 			}
 		}
-
 
 		/// <summary>
 		/// Contains a placeholder name and point to a resource of Type User.
@@ -60,7 +53,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
 		public virtual string CurrentUser
 		{
 			get
@@ -72,7 +64,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 				this.currentUser = value;
 			}
 		}
-
 
 		public virtual string GroupByName
 		{
@@ -86,7 +77,6 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 			}
 		}
 
-
 		public virtual string Roles
 		{
 			set
@@ -98,7 +88,5 @@ namespace Cumulocity.SDK.Client.Rest.Representation.User
 				return roles;
 			}
 		}
-
 	}
-
 }
