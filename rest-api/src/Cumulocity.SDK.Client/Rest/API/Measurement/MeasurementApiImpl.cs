@@ -30,25 +30,25 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			set => measurementsApiRepresentation = value;
 		}
 
-		public MeasurementRepresentation getMeasurement(GId measurementId)
+		public MeasurementRepresentation GetMeasurement(GId measurementId)
 		{
 			string url = $"{MeasurementApiRepresentation.measurements.Self}/{measurementId.Value}";
 			return restConnector.Get<MeasurementRepresentation>(url, MeasurementMediaType.MEASUREMENT, typeof(MeasurementRepresentation));
 		}
 
 		[Obsolete]
-		public void deleteMeasurement(MeasurementRepresentation measurement)
+		public void DeleteMeasurement(MeasurementRepresentation measurement)
 		{
-			delete(measurement);
+			Delete(measurement);
 		}
 
-		public void delete(MeasurementRepresentation measurement)
+		public void Delete(MeasurementRepresentation measurement)
 		{
 			string url = $"{MeasurementApiRepresentation.measurements.Self}/{measurement.Id.Value}";
 			restConnector.Delete(url);
 		}
 
-		public void deleteMeasurementsByFilter(MeasurementFilter filter)
+		public void DeleteMeasurementsByFilter(MeasurementFilter filter)
 		{
 			if (filter == null)
 			{
@@ -61,7 +61,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			}
 		}
 
-		public IMeasurementCollection getMeasurementsByFilter(MeasurementFilter filter)
+		public IMeasurementCollection GetMeasurementsByFilter(MeasurementFilter filter)
 		{
 			if (filter == null)
 			{
@@ -80,27 +80,27 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			}
 		}
 
-		public MeasurementRepresentation create(MeasurementRepresentation measurementRepresentation)
+		public MeasurementRepresentation Create(MeasurementRepresentation measurementRepresentation)
 		{
 			return restConnector.Post(SelfUri, MeasurementMediaType.MEASUREMENT, measurementRepresentation);
 		}
 
-		public MeasurementCollectionRepresentation createBulk(MeasurementCollectionRepresentation measurementCollection)
+		public MeasurementCollectionRepresentation CreateBulk(MeasurementCollectionRepresentation measurementCollection)
 		{
 			return restConnector.Post(SelfUri, MeasurementMediaType.MEASUREMENT_COLLECTION, measurementCollection);
 		}
 
-		public void createBulkWithoutResponse(MeasurementCollectionRepresentation measurementCollection)
+		public void CreateBulkWithoutResponse(MeasurementCollectionRepresentation measurementCollection)
 		{
 			restConnector.PostWithoutResponse(SelfUri, MeasurementMediaType.MEASUREMENT_COLLECTION, measurementCollection);
 		}
 
-		public void createWithoutResponse(MeasurementRepresentation measurementRepresentation)
+		public void CreateWithoutResponse(MeasurementRepresentation measurementRepresentation)
 		{
 			restConnector.PostWithoutResponse(SelfUri, MeasurementMediaType.MEASUREMENT, measurementRepresentation);
 		}
 
-		public Task<MeasurementRepresentation> createAsync(MeasurementRepresentation measurementRepresentation)
+		public Task<MeasurementRepresentation> CreateAsync(MeasurementRepresentation measurementRepresentation)
 		{
 			return restConnector.PostAsync(SelfUri, MeasurementMediaType.MEASUREMENT, measurementRepresentation);
 		}

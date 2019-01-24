@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 			Prev = collection.Prev;
 		}
 
-		public IEnumerable<ExternalIDRepresentation> allPages()
+		public IEnumerable<ExternalIDRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<ExternalIDRepresentation, ExternalIDCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<ExternalIDRepresentation> elements(int limit)
+		public IEnumerable<ExternalIDRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<ExternalIDRepresentation, ExternalIDCollectionRepresentation>(collectionResource, this, limit);
 		}

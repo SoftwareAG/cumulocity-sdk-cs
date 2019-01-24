@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Cumulocity.SDK.Client.Rest.Model
 {
 	/// <summary>
-	/// Represents the common elements of any modeled entity. Can serialize into and
+	/// Represents the common Elements of any modeled entity. Can serialize into and
 	/// be deserialized from JSON.
 	/// </summary>
 	/// TODO: CleanUp !
@@ -206,14 +206,14 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// <seealso cref= #set(Object) </seealso>
 		/// <param name="clazz">
 		/// @return </param>
-		//ORIGINAL LINE: @SuppressWarnings("unchecked") public <C> C get(Class<C> clazz)
+		//ORIGINAL LINE: @SuppressWarnings("unchecked") public <C> C GetFirstPage(Class<C> clazz)
 		public virtual C get<C>(Type clazz)
 		{
 			//return (C)getProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz));
 			return default(C);
 		}
 
-		//ORIGINAL LINE: public <C> C get(final String propertyName, final Class<C> asClass)
+		//ORIGINAL LINE: public <C> C GetFirstPage(final String propertyName, final Class<C> asClass)
 		public virtual C get<C>(string propertyName, Type asClass)
 		{
 			object o = get(propertyName);
@@ -252,7 +252,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// Such an accessor is required when bean naming conventions are used to
 		/// discover available properties, eg in Esper.
 		///
-		/// Same as a call to <seealso cref="#get(String name)"/>
+		/// Same as a call to <seealso cref="#GetFirstPage(String name)"/>
 		/// </summary>
 		/// <param name="name">
 		/// @return </param>

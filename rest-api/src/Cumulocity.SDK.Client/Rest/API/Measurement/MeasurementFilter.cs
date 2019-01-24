@@ -8,7 +8,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 	/// <summary>
 	/// A filter to be used in measurement queries.
 	/// The setter (by*) methods return the filter itself to provide chaining:
-	/// {@code MeasurementFilter filter = new MeasurementFilter().byType(type).bySource(source);}
+	/// {@code MeasurementFilter filter = new MeasurementFilter().ByType(type).BySource(source);}
 	/// </summary>
 	public class MeasurementFilter : Filter
 	{

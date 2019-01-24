@@ -32,16 +32,16 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			}
 		}
 
-		public  AlarmRepresentation getAlarm(GId alarmId)
+		public  AlarmRepresentation GetAlarm(GId alarmId)
 		{
 			string url = $"{SelfUri}/{alarmId.Value}";
 			return restConnector.Get<AlarmRepresentation>(url, AlarmMediaType.ALARM, typeof(AlarmRepresentation));
 		}
 
 		[Obsolete]
-		public  AlarmRepresentation updateAlarm(AlarmRepresentation alarmToUpdate)
+		public  AlarmRepresentation UpdateAlarm(AlarmRepresentation alarmToUpdate)
 		{
-			return update(alarmToUpdate);
+			return Update(alarmToUpdate);
 		}
 
 		public Task<AlarmRepresentation> CreateAsync(AlarmRepresentation alarm)
@@ -49,13 +49,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			return restConnector.PostAsync(SelfUri, AlarmMediaType.ALARM, alarm);
 		}
 
-		public  AlarmRepresentation update(AlarmRepresentation alarmToUpdate)
+		public  AlarmRepresentation Update(AlarmRepresentation alarmToUpdate)
 		{
 			string url = $"{SelfUri}/{alarmToUpdate.Id.Value}";
 			return restConnector.PutWithoutId(url, AlarmMediaType.ALARM, prepareForUpdate(alarmToUpdate));
 		}
 
-		public IAlarmCollection getAlarms()
+		public IAlarmCollection GetAlarms()
 		{
 				string url = SelfUri;
 				return new AlarmCollectionImpl(restConnector, url, pageSize);			
@@ -89,7 +89,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			}
 		}
 
-		public  AlarmRepresentation create(AlarmRepresentation representation)
+		public  AlarmRepresentation Create(AlarmRepresentation representation)
 		{
 			return restConnector.Post(SelfUri, AlarmMediaType.ALARM, representation);
 		}
@@ -99,7 +99,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			return restConnector.PostAsync(SelfUri, AlarmMediaType.ALARM, representation);
 		}
 
-		public IAlarmCollection getAlarmsByFilter(AlarmFilter filter)
+		public IAlarmCollection GetAlarmsByFilter(AlarmFilter filter)
 		{
 			if (filter == null)
 			{
@@ -109,7 +109,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			return new AlarmCollectionImpl(restConnector, urlProcessor.replaceOrAddQueryParam(SelfUri, @params), pageSize);
 		}
 
-		public  void deleteAlarmsByFilter(AlarmFilter filter)
+		public  void DeleteAlarmsByFilter(AlarmFilter filter)
 		{
 
 			if (filter == null)

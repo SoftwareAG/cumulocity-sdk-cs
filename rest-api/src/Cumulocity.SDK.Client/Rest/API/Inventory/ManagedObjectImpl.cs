@@ -20,19 +20,19 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		}
 
 		[Obsolete]
-		public virtual ManagedObjectRepresentation get()
+		public virtual ManagedObjectRepresentation Get()
 		{
 			return this.restConnector.Get<ManagedObjectRepresentation>(this.url, InventoryMediaType.GetInstance.MANAGED_OBJECT, typeof(ManagedObjectRepresentation));
 		}
 
 		[Obsolete]
-		public virtual void delete()
+		public virtual void Delete()
 		{
 			this.restConnector.Delete(this.url);
 		}
 
 		[Obsolete]
-		public virtual ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation)
+		public virtual ManagedObjectRepresentation Update(ManagedObjectRepresentation managedObjectRepresentation)
 		{
 			return this.restConnector.Put(this.url, InventoryMediaType.GetInstance.MANAGED_OBJECT, managedObjectRepresentation);
 		}
@@ -46,7 +46,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 			else
 			{
-				throw new SDKException("Unable to get the child device URL");
+				throw new SDKException("Unable to GetFirstPage the child device URL");
 			}
 		}
 
@@ -59,28 +59,28 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 		}
 
-		public virtual ManagedObjectReferenceRepresentation addChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation)
+		public virtual ManagedObjectReferenceRepresentation AddChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation)
 		{
 			return this.restConnector.Post(this.createChildDevicePath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, refrenceReprsentation);
 		}
 
-		public virtual ManagedObjectReferenceRepresentation addChildDevice(GId childId)
+		public virtual ManagedObjectReferenceRepresentation AddChildDevice(GId childId)
 		{
 			return this.restConnector.Post(this.createChildDevicePath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, this.createChildObject(childId));
 		}
 
-		public virtual ManagedObjectRepresentation addChildDevice(ManagedObjectRepresentation representation)
+		public virtual ManagedObjectRepresentation AddChildDevice(ManagedObjectRepresentation representation)
 		{
 			return this.restConnector.Post(this.createChildDevicePath(), InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
 		}
 
-		public virtual ManagedObjectReferenceRepresentation getChildDevice(GId deviceId)
+		public virtual ManagedObjectReferenceRepresentation GetChildDevice(GId deviceId)
 		{
 			string path = $"{this.createChildDevicePath()}/{deviceId.Value}";
 			return this.restConnector.Get<ManagedObjectReferenceRepresentation>(path, InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, typeof(ManagedObjectReferenceRepresentation));
 		}
 
-		public virtual void deleteChildDevice(GId deviceId)
+		public virtual void DeleteChildDevice(GId deviceId)
 		{
 			string path = $"{this.createChildDevicePath()}/{deviceId.Value}";
 			this.restConnector.Delete(path);
@@ -91,12 +91,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			return this.restConnector.Post(this.createChildAssetPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, refrenceReprsentation);
 		}
 
-		public virtual ManagedObjectReferenceRepresentation addChildAssets(GId childId)
+		public virtual ManagedObjectReferenceRepresentation AddChildAssets(GId childId)
 		{
 			return this.restConnector.Post(this.createChildAssetPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, this.createChildObject(childId));
 		}
 
-		public virtual ManagedObjectRepresentation addChildAsset(ManagedObjectRepresentation representation)
+		public virtual ManagedObjectRepresentation AddChildAsset(ManagedObjectRepresentation representation)
 		{
 			return this.restConnector.Post(this.createChildAssetPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
 		}
@@ -119,7 +119,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 			else
 			{
-				throw new SDKException("Unable to get the child device URL");
+				throw new SDKException("Unable to GetFirstPage the child device URL");
 			}
 		}
 
@@ -132,29 +132,29 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 		}
 
-		public virtual ManagedObjectReferenceRepresentation getChildAsset(GId assetId)
+		public virtual ManagedObjectReferenceRepresentation GetChildAsset(GId assetId)
 		{
 			string path = $"{this.createChildAssetPath()}/{assetId.Value}";
 			return this.restConnector.Get<ManagedObjectReferenceRepresentation>(path, InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, typeof(ManagedObjectReferenceRepresentation));
 		}
 
-		public virtual void deleteChildAsset(GId assetId)
+		public virtual void DeleteChildAsset(GId assetId)
 		{
 			string path = $"{this.createChildAssetPath()}/{assetId.Value}";
 			this.restConnector.Delete(path);
 		}
 
-		public virtual ManagedObjectReferenceRepresentation addChildAdditions(ManagedObjectReferenceRepresentation refrenceReprsentation)
+		public virtual ManagedObjectReferenceRepresentation AddChildAdditions(ManagedObjectReferenceRepresentation refrenceReprsentation)
 		{
 			return this.restConnector.Post(this.createChildAdditionPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, refrenceReprsentation);
 		}
 
-		public virtual ManagedObjectReferenceRepresentation addChildAdditions(GId childId)
+		public virtual ManagedObjectReferenceRepresentation AddChildAdditions(GId childId)
 		{
 			return this.restConnector.Post(this.createChildAdditionPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, this.createChildObject(childId));
 		}
 
-		public virtual ManagedObjectRepresentation addChildAddition(ManagedObjectRepresentation representation)
+		public virtual ManagedObjectRepresentation AddChildAddition(ManagedObjectRepresentation representation)
 		{
 			return this.restConnector.Post(this.createChildAdditionPath(), InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
 		}
@@ -168,7 +168,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 			else
 			{
-				throw new SDKException("Unable to get the child device URL");
+				throw new SDKException("Unable to GetFirstPage the child device URL");
 			}
 		}
 
@@ -181,13 +181,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 		}
 
-		public virtual ManagedObjectReferenceRepresentation getChildAddition(GId additionId)
+		public virtual ManagedObjectReferenceRepresentation GetChildAddition(GId additionId)
 		{
 			string path = $"{this.createChildAdditionPath()}/{additionId.Value}";
 			return this.restConnector.Get<ManagedObjectReferenceRepresentation>(path, InventoryMediaType.GetInstance.MANAGED_OBJECT_REFERENCE, typeof(ManagedObjectReferenceRepresentation));
 		}
 
-		public virtual void deleteChildAddition(GId additionId)
+		public virtual void DeleteChildAddition(GId additionId)
 		{
 			string path = $"{this.createChildAdditionPath()}/{additionId.Value}";
 			this.restConnector.Delete(path);

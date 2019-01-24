@@ -26,22 +26,22 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			this.periodInterval = periodInterval;
 		}
 
-		public virtual bool start()
+		public virtual bool Start()
 		{
 			if (pollingTask == null)
 			{
-				//LOG.error("Poller start requested without pollingTask being set");
+				//LOG.error("Poller Start requested without pollingTask being set");
 				return false;
 			}
 
-			//start scheduled periodic polling for new operations (only one task in scheduler at any given time)
+			//Start scheduled periodic polling for new operations (only one task in scheduler at any given time)
 
 			pollingExecutor.ScheduleAtFixedRate(pollingTask, TimeSpan.FromMilliseconds(0), TimeSpan.FromMilliseconds(periodInterval));
 
 			return true;
 		}
 
-		public virtual void stop()
+		public virtual void Stop()
 		{
 			//shutdown operationsPollingExecutor if it's running or if it's no shutting down just now
 			pollingExecutor.Shutdown();

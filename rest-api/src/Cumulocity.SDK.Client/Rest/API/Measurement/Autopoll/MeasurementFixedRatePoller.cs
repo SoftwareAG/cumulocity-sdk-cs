@@ -16,10 +16,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 	{
 		public MeasurementFixedRatePoller(long periodInterval) : base(new ScheduledThreadPoolExecutor(1), periodInterval)
 		{
-			PollingTask = pollingResult;
+			PollingTask = PollingResult;
 		}
 
-		private void pollingResult()
+		private void PollingResult()
 		{
 			try
 			{

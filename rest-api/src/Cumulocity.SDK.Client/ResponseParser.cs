@@ -119,8 +119,8 @@ namespace Cumulocity.SDK.Client
     public static class StringHelperClass
     {
         //----------------------------------------------------------------------------------
-        //	This method replaces the Java String.substring method when 'start' is a
-        //	method call or calculated value to ensure that 'start' is obtained just once.
+        //	This method replaces the Java String.substring method when 'Start' is a
+        //	method call or calculated value to ensure that 'Start' is obtained just once.
         //----------------------------------------------------------------------------------
         internal static string SubstringSpecial(this string self, int start, int end)
         {

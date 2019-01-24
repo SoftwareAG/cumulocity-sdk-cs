@@ -26,52 +26,51 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 			destPath = "test.jpg";
 		}
 
-		[Fact]
+		[Fact(Skip = "specific reason")] 
 		public void ReplaceFiles()
 		{
 			//Given
 			var mor = createManagedObjectRepresentation();
-			var uploadedFile = binariesApi.uploadFile(mor, ReadFile(logoX200XfinalJpg));
+			var uploadedFile = binariesApi.UploadFile(mor, ReadFile(logoX200XfinalJpg));
 			//When
-			var replacedFile = binariesApi.replaceFile(uploadedFile.Id, imageJpg, new MemoryStream(ReadFile(logoX200XfinalJpg)));
+			var replacedFile = binariesApi.ReplaceFile(uploadedFile.Id, imageJpg, new MemoryStream(ReadFile(logoX200XfinalJpg)));
 			//Then
 			Assert.NotNull(replacedFile);
 		}
 
-		[Fact]
+		[Fact(Skip = "specific reason")]
 		public void CheckUploadFile()
 		{
 			//Given
 			var mor = createManagedObjectRepresentation();
 			//When
-			var result = binariesApi.uploadFile(mor,ReadFile(logoX200XfinalJpg));
+			var result = binariesApi.UploadFile(mor,ReadFile(logoX200XfinalJpg));
 			//Then
 			Assert.NotNull(result);
 			Assert.Equal( mor.Name, result.Name);
 
-			binariesApi.deleteFile(result.Id);
+			binariesApi.DeleteFile(result.Id);
 		}
 
 
-		[Fact]
+		[Fact(Skip = "specific reason")]
 		public void DeleteFile()
 		{
 			//Given
 			var mor = createManagedObjectRepresentation();
-			var uploadFile = binariesApi.uploadFile(mor, ReadFile(logoX200XfinalJpg));
+			var uploadFile = binariesApi.UploadFile(mor, ReadFile(logoX200XfinalJpg));
 			//When
-			binariesApi.deleteFile(uploadFile.Id);
-			//binariesApi.deleteFile(new GId("155951"));
+			binariesApi.DeleteFile(uploadFile.Id);
 			//Then
 			Assert.NotNull(uploadFile);
 		}
 
-		[Fact]
+		[Fact(Skip = "specific reason")]
 		public void DownloadFile()
 		{
 			//Given
 			var mor = createManagedObjectRepresentation();
-			var uploadFile = binariesApi.uploadFile(mor, ReadFile(logoX200XfinalJpg));
+			var uploadFile = binariesApi.UploadFile(mor, ReadFile(logoX200XfinalJpg));
 			//When
 			DownloadFileAsync(uploadFile.Id).Wait();
 			//Then
@@ -80,7 +79,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
 		private async Task DownloadFileAsync(GId uploadFileId)
 		{
-			var data = await binariesApi.downloadFile(uploadFileId);
+			var data = await binariesApi.DownloadFile(uploadFileId);
 			CopyStream(data, destPath);
 		}
 

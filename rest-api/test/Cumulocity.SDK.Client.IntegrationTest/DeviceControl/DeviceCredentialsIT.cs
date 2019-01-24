@@ -28,7 +28,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			int pollIntervalInSeconds = 2;
 			createNewDeviceRequest(deviceId);
 
-			DeviceCredentialsRepresentation credentials = deviceCredentialsResource.pollCredentials(deviceId, pollIntervalInSeconds, 100);
+			DeviceCredentialsRepresentation credentials = deviceCredentialsResource.PollCredentials(deviceId, pollIntervalInSeconds, 100);
 
 			var timer = new Timer(
 				callback: new TimerCallback((_) => { acceptNewDeviceRequest(deviceId); }),

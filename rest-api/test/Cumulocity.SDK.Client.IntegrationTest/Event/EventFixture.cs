@@ -38,13 +38,13 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		{
 			foreach (EventRepresentation e in mosOn1stPage)
 			{
-				this.platform.EventApi.delete(e);
+				this.platform.EventApi.Delete(e);
 			}
 		}
 
 		private IList<EventRepresentation> getEventsFrom1stPage()
 		{
-			return this.platform.EventApi.Events.get().Events;
+			return this.platform.EventApi.Events.GetFirstPage().Events;
 		}
 	}
 }

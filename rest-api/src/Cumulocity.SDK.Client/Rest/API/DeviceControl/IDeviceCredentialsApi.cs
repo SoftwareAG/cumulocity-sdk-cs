@@ -12,12 +12,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		/// <summary>
 		/// Register a new device.
 		/// </summary>
-		NewDeviceRequestRepresentation register(string id);
+		NewDeviceRequestRepresentation Register(string id);
 
 		/// <summary>
 		/// Remove a device registration.
 		/// </summary>
-		void delete(NewDeviceRequestRepresentation representation);
+		void Delete(NewDeviceRequestRepresentation representation);
 
 		/// <summary>
 		/// Schedule polling credentials task, invoking it at the specified execution time and subsequently with the given interval
@@ -26,9 +26,9 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		/// </summary>
 		/// <param name="deviceId"> </param>
 		/// <param name="interval"> - how often request is sent in seconds </param>
-		/// <param name="timeout"> - after how many seconds polling process will expire
+		/// <param name="timeout"> - after how many seconds polling Process will expire
 		///  </param>
-		DeviceCredentialsRepresentation pollCredentials(string deviceId, int interval, int timeout);
+		DeviceCredentialsRepresentation PollCredentials(string deviceId, int interval, int timeout);
 
 		/// <summary>
 		/// Device poll credentials
@@ -42,6 +42,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		/// </summary>
 		/// <param name="deviceId">
 		/// @return </param>
-		DeviceCredentialsRepresentation pollCredentials(string deviceId);
+		DeviceCredentialsRepresentation PollCredentials(string deviceId);
 	}
 }

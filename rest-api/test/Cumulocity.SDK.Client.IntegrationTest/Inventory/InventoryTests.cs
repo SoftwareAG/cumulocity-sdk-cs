@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 {
-    public class InventoryTests : IClassFixture<InventoryFixture>
+    public class InventoryTests : IClassFixture<InventoryFixture>,IDisposable
     {
         public InventoryTests(InventoryFixture fixture)
         {
@@ -36,15 +36,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         {
             // Given
             var rep = aSampleMo().build();
-            var result = inventory.create(rep);
+            var result = inventory.Create(rep);
 
             // When
-            var mo = inventory.getManagedObject(result.Id);
-            mo.delete();
+            var mo = inventory.GetManagedObject(result.Id);
+            mo.Delete();
 
             // Then
-            var deletedMo = inventory.getManagedObject(result.Id);
-            var ex = Record.Exception(() => deletedMo.get());
+            var deletedMo = inventory.GetManagedObject(result.Id);
+            var ex = Record.Exception(() => deletedMo.Get());
             Assert.NotNull(ex);
             Assert.IsType<SDKException>(ex);
             Assert.Equal((int) HttpStatusCode.NotFound, ((SDKException) ex).HttpStatus);
@@ -55,10 +55,10 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         {
             // Given
             var rep = aSampleMo().build();
-            var created = inventory.create(rep);
+            var created = inventory.Create(rep);
 
             // When
-            var result = inventory.getManagedObject(created.Id).get();
+            var result = inventory.GetManagedObject(created.Id).Get();
 
             // Then
             Assert.Equal(result.Id, created.Id);
@@ -71,7 +71,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         {
             // Given
             var rep = aSampleMo().build();
-            var result = inventory.create(rep);
+            var result = inventory.Create(rep);
 
             // When
             var coordinate = new Position {Lat = 100.0m, Lng = 10.0m};
@@ -81,7 +81,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             result.Id = null;
             result.LastUpdated = null;
 
-            var updated = inventory.getManagedObject(id).update(result);
+            var updated = inventory.GetManagedObject(id).Update(result);
             Assert.NotNull(updated);
             Assert.Equal(coordinate, updated.get<Position>());
         }
@@ -91,14 +91,14 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         {
             // Given
             var rep = aSampleMo().with(new Position()).build();
-            var created = inventory.create(rep);
+            var created = inventory.Create(rep);
 
             //When
             created.set(new object(), "c8y_Position");
             var id = created.Id;
             created.Id = null;
             created.LastUpdated = null;
-            var updated = inventory.getManagedObject(id).update(created);
+            var updated = inventory.GetManagedObject(id).Update(created);
 
             // Then
             Assert.NotNull(updated.Id);
@@ -112,7 +112,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var rep = aSampleMo().build();
 
             // When
-            var created = inventory.create(rep);
+            var created = inventory.Create(rep);
 
             // Then
             Assert.NotNull(created.Id);
@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
                 new ThreePhaseElectricitySensor()).build();
 
             // When
-            var result = inventory.create(rep);
+            var result = inventory.Create(rep);
 
             // Then
             Assert.NotNull(result.Id);
@@ -145,7 +145,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var rep = aSampleMo().with(coordinate).build();
 
             // When
-            var result = inventory.create(rep);
+            var result = inventory.Create(rep);
 
             // Then
             Assert.NotNull(result.Id);
@@ -161,7 +161,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var rep = aSampleMo().build();
 
             // When
-            var created = inventory.create(rep);
+            var created = inventory.Create(rep);
 
             // Then
             Assert.NotNull(created);
@@ -177,7 +177,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var rep = aSampleMo().with(new ThreePhaseElectricitySensor()).build();
 
             // When
-            var result = inventory.create(rep);
+            var result = inventory.Create(rep);
 
             // Then
             Assert.NotNull(result.Id);
@@ -198,7 +198,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             ManagedObjectRepresentation rep = aSampleMo().withID(new GId("1")).build();
     
             // Then
-         var ex = Record.Exception(() => inventory.getManagedObject(rep.Id).get());
+         var ex = Record.Exception(() => inventory.GetManagedObject(rep.Id).Get());
     
          Assert.NotNull(ex);
          Assert.IsType<SDKException>(ex);
@@ -212,7 +212,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 		ManagedObjectRepresentation rep = aSampleMo().withID(new GId("1")).build();
 	    
 	    // When
-	    var ex = Record.Exception(() => inventory.getManagedObject(rep.Id).delete());
+	    var ex = Record.Exception(() => inventory.GetManagedObject(rep.Id).Delete());
 	    
 	    // Then
 	    Assert.NotNull(ex);
@@ -227,7 +227,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 		ManagedObjectRepresentation rep = aSampleMo().build();
 	    
 	    // When
-	    var ex = Record.Exception(() => inventory.getManagedObject(new GId("1")).update(rep));
+	    var ex = Record.Exception(() => inventory.GetManagedObject(new GId("1")).Update(rep));
 	    
 	    // Then
 	    Assert.NotNull(ex);
@@ -239,7 +239,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	public  void getAllWhenNoManagedObjectPresent()
 	{
 		// When
-		ManagedObjectCollectionRepresentation mos = inventory.getManagedObjectsByFilter((new InventoryFilter()).byType("not_existing_mo_type")).get();
+		ManagedObjectCollectionRepresentation mos = inventory.GetManagedObjectsByFilter((new InventoryFilter()).ByType("not_existing_mo_type")).GetFirstPage();
 
 		// Then
 		Assert.Equal(0,mos.ManagedObjects.Count);
@@ -254,11 +254,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 		ManagedObjectRepresentation rep2 = aSampleMo().withType("type1").build();
 
 		// When
-		var c1 = inventory.create(rep1);
-		var c2 = inventory.create(rep2);
+		var c1 = inventory.Create(rep1);
+		var c2 = inventory.Create(rep2);
 
 		// Then
-		ManagedObjectCollectionRepresentation mos = inventory.getManagedObjectsByFilter((new InventoryFilter()).byType("type1")).get();
+		ManagedObjectCollectionRepresentation mos = inventory.GetManagedObjectsByFilter((new InventoryFilter()).ByType("type1")).GetFirstPage();
 		Assert.Equal(2, mos.ManagedObjects.Count);
 	}
 
@@ -266,30 +266,30 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	public void addGetAndRemoveChildDevices()
 	{
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent1").build());
-		ManagedObjectRepresentation child1 = inventory.create(aSampleMo().withName("child11").build());
-		ManagedObjectRepresentation child2 = inventory.create(aSampleMo().withName("child21").build());
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent1").build());
+		ManagedObjectRepresentation child1 = inventory.Create(aSampleMo().withName("child11").build());
+		ManagedObjectRepresentation child2 = inventory.Create(aSampleMo().withName("child21").build());
 
 		ManagedObjectReferenceRepresentation childRef1 = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child1).build();
 
 		// When
-		var parentMo = inventory.getManagedObject(parent.Id);
-		parentMo.addChildDevice(childRef1);
-		parentMo.addChildDevice(child2.Id);
+		var parentMo = inventory.GetManagedObject(parent.Id);
+		parentMo.AddChildDevice(childRef1);
+		parentMo.AddChildDevice(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.getManagedObject(parent.Id).ChildDevices.get();
+		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.GetManagedObject(parent.Id).ChildDevices.GetFirstPage();
 
 		IList<ManagedObjectReferenceRepresentation> refs = refCollection.References;
 		ISet<GId> childDeviceIDs = new HashSet<GId>() {refs[0].ManagedObject.Id, refs[1].ManagedObject.Id };
 		//Assert.Equal(childDeviceIDs, new HashSet<GId>() {child1.Id, child2.Id });
 		Assert.True(childDeviceIDs.SetEquals(new HashSet<GId>() {child1.Id, child2.Id}));
 		// When
-		parentMo.deleteChildDevice(child1.Id);
-		parentMo.deleteChildDevice(child2.Id);
+		parentMo.DeleteChildDevice(child1.Id);
+		parentMo.DeleteChildDevice(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation allChildDevices = inventory.getManagedObject(parent.Id).ChildDevices.get();
+		ManagedObjectReferenceCollectionRepresentation allChildDevices = inventory.GetManagedObject(parent.Id).ChildDevices.GetFirstPage();
 		Assert.Equal(0,allChildDevices.References.Count);
 	}
 	        
@@ -297,18 +297,18 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	public virtual void getPagedChildDevices()
 	{
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent").build());
-		var parentMo = inventory.getManagedObject(parent.Id);
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent").build());
+		var parentMo = inventory.GetManagedObject(parent.Id);
 
 		for (int i = 0; i < this.fixture.platform.PageSize+1; i++)
 		{
-			ManagedObjectRepresentation child = inventory.create(aSampleMo().withName("child" + i).build());
+			ManagedObjectRepresentation child = inventory.Create(aSampleMo().withName("child" + i).build());
 			ManagedObjectReferenceRepresentation childRef = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child).build();
-			parentMo.addChildDevice(childRef);
+			parentMo.AddChildDevice(childRef);
 		}
 
 		// When
-		var refCollection = inventory.getManagedObject(parent.Id).ChildDevices;
+		var refCollection = inventory.GetManagedObject(parent.Id).ChildDevices;
 
 		// Then
 		assertCollectionPaged(refCollection);
@@ -318,15 +318,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
    //ORIGINAL LINE: private void assertCollectionPaged(ManagedObjectReferenceCollection refCollection) throws SDKException
 	private void assertCollectionPaged(IManagedObjectReferenceCollection<ManagedObjectReferenceCollectionRepresentation> refCollection)
 	{
-		var test = refCollection.get();
-		Assert.Equal(refCollection.get().References.Count, this.fixture.platform.PageSize);
-		Assert.True(refCollection.get().Self.Contains("pageSize=" + this.fixture.platform.PageSize + "&currentPage=1"));
-		Assert.True(refCollection.get().Next.Contains("pageSize=" + this.fixture.platform.PageSize + "&currentPage=2"));
-		Assert.Null(refCollection.get().Prev);
+		var test = refCollection.GetFirstPage();
+		Assert.Equal(refCollection.GetFirstPage().References.Count, this.fixture.platform.PageSize);
+		Assert.True(refCollection.GetFirstPage().Self.Contains("pageSize=" + this.fixture.platform.PageSize + "&currentPage=1"));
+		Assert.True(refCollection.GetFirstPage().Next.Contains("pageSize=" + this.fixture.platform.PageSize + "&currentPage=2"));
+		Assert.Null(refCollection.GetFirstPage().Prev);
 		
-		Assert.Equal(refCollection.get().PageStatistics.CurrentPage, 1);
+		Assert.Equal(refCollection.GetFirstPage().PageStatistics.CurrentPage, 1);
 
-		ManagedObjectReferenceCollectionRepresentation secondPage = refCollection.getPage(refCollection.get(), 2);
+		ManagedObjectReferenceCollectionRepresentation secondPage = refCollection.GetPage(refCollection.GetFirstPage(), 2);
 		Assert.Equal(secondPage.References.Count, 1);
 	}
 
@@ -335,30 +335,30 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	public virtual void addGetAndRemoveChildAssets()
 	{
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent").build());
-		ManagedObjectRepresentation child1 = inventory.create(aSampleMo().withName("child1").build());
-		ManagedObjectRepresentation child2 = inventory.create(aSampleMo().withName("child2").build());
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent").build());
+		ManagedObjectRepresentation child1 = inventory.Create(aSampleMo().withName("child1").build());
+		ManagedObjectRepresentation child2 = inventory.Create(aSampleMo().withName("child2").build());
 
 		ManagedObjectReferenceRepresentation childRef1 = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child1).build();
 
 		// When
-		var parentMo = inventory.getManagedObject(parent.Id);
+		var parentMo = inventory.GetManagedObject(parent.Id);
 		parentMo.addChildAssets(childRef1);
-		parentMo.addChildAssets(child2.Id);
+		parentMo.AddChildAssets(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.getManagedObject(parent.Id).ChildAssets.get();
+		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.GetManagedObject(parent.Id).ChildAssets.GetFirstPage();
 		IList<ManagedObjectReferenceRepresentation> refs = refCollection.References;
 		ISet<GId> childDeviceIDs = new HashSet<GId>() {refs[0].ManagedObject.Id, refs[1].ManagedObject.Id };
 
 		Assert.True(childDeviceIDs.SetEquals(new HashSet<GId>() {child1.Id, child2.Id}));
 
 		// When
-		parentMo.deleteChildAsset(child1.Id);
-		parentMo.deleteChildAsset(child2.Id);
+		parentMo.DeleteChildAsset(child1.Id);
+		parentMo.DeleteChildAsset(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation allChildDevices = inventory.getManagedObject(parent.Id).ChildAssets.get();
+		ManagedObjectReferenceCollectionRepresentation allChildDevices = inventory.GetManagedObject(parent.Id).ChildAssets.GetFirstPage();
 		Assert.Equal(0,allChildDevices.References.Count);
 	}
 
@@ -367,30 +367,30 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 public virtual void addGetAndRemoveChildAdditions()
 {
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent").build());
-		ManagedObjectRepresentation child1 = inventory.create(aSampleMo().withName("child1").build());
-		ManagedObjectRepresentation child2 = inventory.create(aSampleMo().withName("child2").build());
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent").build());
+		ManagedObjectRepresentation child1 = inventory.Create(aSampleMo().withName("child1").build());
+		ManagedObjectRepresentation child2 = inventory.Create(aSampleMo().withName("child2").build());
 
 		ManagedObjectReferenceRepresentation childRef1 = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child1).build();
 
 		// When
-		var parentMo = inventory.getManagedObject(parent.Id);
-		parentMo.addChildAdditions(childRef1);
-		parentMo.addChildAdditions(child2.Id);
+		var parentMo = inventory.GetManagedObject(parent.Id);
+		parentMo.AddChildAdditions(childRef1);
+		parentMo.AddChildAdditions(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.getManagedObject(parent.Id).ChildAdditions.get();
+		ManagedObjectReferenceCollectionRepresentation refCollection = inventory.GetManagedObject(parent.Id).ChildAdditions.GetFirstPage();
 		IList<ManagedObjectReferenceRepresentation> refs = refCollection.References;
 	
 		ISet<GId> childDeviceIDs = new HashSet<GId>() {refs[0].ManagedObject.Id, refs[1].ManagedObject.Id };
 		//Assert.Equal(childDeviceIDs, new HashSet<GId>() {  child1.Id,child2.Id });
 	    Assert.True(childDeviceIDs.SetEquals(new HashSet<GId>() {child1.Id, child2.Id}));
 		// When
-		parentMo.deleteChildAddition(child1.Id);
-		parentMo.deleteChildAddition(child2.Id);
+		parentMo.DeleteChildAddition(child1.Id);
+		parentMo.DeleteChildAddition(child2.Id);
 
 		// Then
-		ManagedObjectReferenceCollectionRepresentation allChildAdditions = inventory.getManagedObject(parent.Id).ChildAdditions.get();
+		ManagedObjectReferenceCollectionRepresentation allChildAdditions = inventory.GetManagedObject(parent.Id).ChildAdditions.GetFirstPage();
 		//assertEquals(0, allChildAdditions.References.size());
 	    Assert.Equal(0,allChildAdditions.References.Count);
 }
@@ -401,18 +401,18 @@ public virtual void addGetAndRemoveChildAdditions()
 	public virtual void getPagedChildAssets()
 	{
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent").build());
-		var parentMo = inventory.getManagedObject(parent.Id);
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent").build());
+		var parentMo = inventory.GetManagedObject(parent.Id);
 
 		for (int i = 0; i < this.fixture.platform.PageSize+1; i++)
 		{
-			ManagedObjectRepresentation child = inventory.create(aSampleMo().withName("child" + i).build());
+			ManagedObjectRepresentation child = inventory.Create(aSampleMo().withName("child" + i).build());
 			ManagedObjectReferenceRepresentation childRef = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child).build();
 			parentMo.addChildAssets(childRef);
 		}
 
 		// When
-		var refCollection = inventory.getManagedObject(parent.Id).ChildAssets;
+		var refCollection = inventory.GetManagedObject(parent.Id).ChildAssets;
 
 		// Then
 		assertCollectionPaged(refCollection);
@@ -425,18 +425,18 @@ public virtual void addGetAndRemoveChildAdditions()
 	public virtual void getPagedChildAdditions()
 	{
 		// Given
-		ManagedObjectRepresentation parent = inventory.create(aSampleMo().withName("parent").build());
-		var parentMo = inventory.getManagedObject(parent.Id);
+		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().withName("parent").build());
+		var parentMo = inventory.GetManagedObject(parent.Id);
 
 		for (int i = 0; i < this.fixture.platform.PageSize+1; i++)
 		{
-			ManagedObjectRepresentation child = inventory.create(aSampleMo().withName("child" + i).build());
+			ManagedObjectRepresentation child = inventory.Create(aSampleMo().withName("child" + i).build());
 			ManagedObjectReferenceRepresentation childRef = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child).build();
-			parentMo.addChildAdditions(childRef);
+			parentMo.AddChildAdditions(childRef);
 		}
 
 		// When
-		var refCollection = inventory.getManagedObject(parent.Id).ChildAdditions;
+		var refCollection = inventory.GetManagedObject(parent.Id).ChildAdditions;
 
 		// Then
 		assertCollectionPaged(refCollection);
@@ -447,23 +447,23 @@ public virtual void addGetAndRemoveChildAdditions()
 	public virtual void queryWithManagedObjectType()
 	{
 		// Given
-		inventory.create(aSampleMo().withType("typeA").withName("A1").build());
-		inventory.create(aSampleMo().withType("typeA").withName("A2").build());
-		inventory.create(aSampleMo().withType("typeB").withName("B").build());
+		inventory.Create(aSampleMo().withType("typeA").withName("A1").build());
+		inventory.Create(aSampleMo().withType("typeA").withName("A2").build());
+		inventory.Create(aSampleMo().withType("typeB").withName("B").build());
 
 		// When
-		InventoryFilter filterA = (new InventoryFilter()).byType("typeA");
-		ManagedObjectCollectionRepresentation typeAMos = inventory.getManagedObjectsByFilter(filterA).get();
+		InventoryFilter filterA = (new InventoryFilter()).ByType("typeA");
+		ManagedObjectCollectionRepresentation typeAMos = inventory.GetManagedObjectsByFilter(filterA).GetFirstPage();
 
 		// Then
-		Assert.Equal(typeAMos.ManagedObjects.Count, 2);
+		Assert.Equal(2, typeAMos.ManagedObjects.Count);
 
 		// When
-		InventoryFilter filterB = (new InventoryFilter()).byType("typeB");
-		ManagedObjectCollectionRepresentation typeBMos = inventory.getManagedObjectsByFilter(filterB).get();
+		InventoryFilter filterB = (new InventoryFilter()).ByType("typeB");
+		ManagedObjectCollectionRepresentation typeBMos = inventory.GetManagedObjectsByFilter(filterB).GetFirstPage();
 
 		// Then
-		Assert.Equal(typeBMos.ManagedObjects.Count, 1);
+		Assert.Equal(1, typeBMos.ManagedObjects.Count);
 	}
 
     //JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
@@ -471,13 +471,13 @@ public virtual void addGetAndRemoveChildAdditions()
 	public virtual void bulkQuery()
 	{
 		// Given
-		ManagedObjectRepresentation mo1 = inventory.create(aSampleMo().withName("MO1").build());
-		ManagedObjectRepresentation mo3 = inventory.create(aSampleMo().withName("MO3").build());
-		inventory.create(aSampleMo().withName("MO2").build());
+		ManagedObjectRepresentation mo1 = inventory.Create(aSampleMo().withName("MO1").build());
+		ManagedObjectRepresentation mo3 = inventory.Create(aSampleMo().withName("MO3").build());
+		inventory.Create(aSampleMo().withName("MO2").build());
 
 		// When
-		ManagedObjectCollectionRepresentation moCollection = inventory.getManagedObjectsByFilter((new InventoryFilter())
-			.byIds(new List<GId>{ mo3.Id,mo1.Id})).get();
+		ManagedObjectCollectionRepresentation moCollection = inventory.GetManagedObjectsByFilter((new InventoryFilter())
+			.ByIds(new List<GId>{ mo3.Id,mo1.Id})).GetFirstPage();
 		
 		// Then
 		IList<ManagedObjectRepresentation> mos = moCollection.ManagedObjects;
@@ -494,12 +494,12 @@ public virtual void addGetAndRemoveChildAdditions()
 	public virtual void queryWithFragmentType()
 	{
 		//Given
-		inventory.create(aSampleMo().withName("MO1").with(new Coordinate()).build());
-		inventory.create(aSampleMo().withName("MO2").with(new SecondFragment()).build());
+		inventory.Create(aSampleMo().withName("MO1").with(new Coordinate()).build());
+		inventory.Create(aSampleMo().withName("MO2").with(new SecondFragment()).build());
 
 		//When
-		InventoryFilter filter = (new InventoryFilter()).byFragmentType(typeof(SecondFragment));
-		ManagedObjectCollectionRepresentation coordinates = inventory.getManagedObjectsByFilter(filter).get();
+		InventoryFilter filter = (new InventoryFilter()).ByFragmentType(typeof(SecondFragment));
+		ManagedObjectCollectionRepresentation coordinates = inventory.GetManagedObjectsByFilter(filter).GetFirstPage();
 
 		//Then
 		Assert.Equal(coordinates.ManagedObjects.Count, 1);
@@ -513,31 +513,31 @@ public virtual void addGetAndRemoveChildAdditions()
 		int numOfMos = 20;
 		for (int i = 0; i < numOfMos; i++)
 		{
-			inventory.create(aSampleMo().withName("MO" + i).with(new Coordinate()).build());
+			inventory.Create(aSampleMo().withName("MO" + i).with(new Coordinate()).build());
 		}
 
 		var item = inventory.ManagedObjects;
 
 		// When
-		ManagedObjectCollectionRepresentation mos = inventory.ManagedObjects.get();
+		ManagedObjectCollectionRepresentation mos = inventory.ManagedObjects.GetFirstPage();
 
 		// Then
 		//assertThat(mos.PageStatistics.TotalPages, @is(greaterThanOrEqualTo(4)));
 
 		// When
-		ManagedObjectCollectionRepresentation secondPage = inventory.ManagedObjects.getPage(mos, 2);
+		ManagedObjectCollectionRepresentation secondPage = inventory.ManagedObjects.GetPage(mos, 2);
 
 		// Then
 		Assert.Equal(secondPage.PageStatistics.CurrentPage, 2);
 
 		// When
-		ManagedObjectCollectionRepresentation thirdPage = inventory.ManagedObjects.getNextPage(secondPage);
+		ManagedObjectCollectionRepresentation thirdPage = inventory.ManagedObjects.GetNextPage(secondPage);
 
 		// Then
 		Assert.Equal(thirdPage.PageStatistics.CurrentPage, 3);
 
 		// When
-		ManagedObjectCollectionRepresentation firstPage = inventory.ManagedObjects.getPreviousPage(secondPage);
+		ManagedObjectCollectionRepresentation firstPage = inventory.ManagedObjects.GetPreviousPage(secondPage);
 		Assert.Equal(firstPage.PageStatistics.CurrentPage, 1);
 	}
 
@@ -545,7 +545,7 @@ public virtual void addGetAndRemoveChildAdditions()
 	{
 		foreach (ManagedObjectRepresentation mo in mosOn1stPage)
 		{
-			inventory.getManagedObject(mo.Id).delete();
+			inventory.GetManagedObject(mo.Id).Delete();
 		}
 	}
 
@@ -553,9 +553,13 @@ public virtual void addGetAndRemoveChildAdditions()
 	{
 		get
 		{
-			return inventory.ManagedObjects.get().ManagedObjects;
+			return inventory.ManagedObjects.GetFirstPage().ManagedObjects;
 		}
 	}
-	    
+
+	public void Dispose()
+	{
+
+	}
     }
 }

@@ -12,7 +12,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 		/// <param name="externalId"> the external to be created </param>
 		/// <returns> the created external id </returns>
 		/// <exception cref="SDKException"> if the external id could not be created </exception>
-		ExternalIDRepresentation create(ExternalIDRepresentation externalId);
+		ExternalIDRepresentation Create(ExternalIDRepresentation externalId);
 
 		/// <summary>
 		///     Gets external id representation from the platform by the given external id. The returned external id contains the
@@ -22,7 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 		/// <param name="extId"> id of the event to search for </param>
 		/// <returns> the external id representation including the managed object </returns>
 		/// <exception cref="SDKException"> if the external id is not found or if the query failed </exception>
-		ExternalIDRepresentation getExternalId(ID extId);
+		ExternalIDRepresentation GetExternalId(ID extId);
 
 		/// <summary>
 		///     Gets the external ids associated with the given global id
@@ -30,13 +30,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 		/// <param name="gid"> the global of the external ids to search for </param>
 		/// <returns> a collection of external ids with paging functionality </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		IExternalIDCollection getExternalIdsOfGlobalId(GId gid);
+		IExternalIDCollection GetExternalIdsOfGlobalId(GId gid);
 
 		/// <summary>
 		///     Deletes between the external id and its global id in the platform.
 		/// </summary>
 		/// <param name="externalId"> the external id to be deleted </param>
 		/// <exception cref="SDKException"> if the external could not be deleted </exception>
-		void deleteExternalId(ExternalIDRepresentation externalId);
+		void DeleteExternalId(ExternalIDRepresentation externalId);
 	}
 }

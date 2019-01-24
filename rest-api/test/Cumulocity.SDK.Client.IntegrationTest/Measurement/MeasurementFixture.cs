@@ -30,15 +30,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			var inventory = platform.InventoryApi;
 			List<GId> lst = new List<GId>();
-			foreach (var item in inventory.ManagedObjects.get().allPages())
+			foreach (var item in inventory.ManagedObjects.GetFirstPage().AllPages())
 			{
 				lst.Add(item.Id);
 			}
 
 			foreach (var id in lst)
 			{
-				var mo = inventory.getManagedObject(id);
-				mo.delete();
+				var mo = inventory.GetManagedObject(id);
+				mo.Delete();
 			}
 		}
 	}

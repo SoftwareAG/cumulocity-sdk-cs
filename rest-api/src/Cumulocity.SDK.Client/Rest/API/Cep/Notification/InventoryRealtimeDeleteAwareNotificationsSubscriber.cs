@@ -21,19 +21,19 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 			return SubscriberBuilder<string, ManagedObjectDeleteAwareNotification>.anSubscriber<string, ManagedObjectDeleteAwareNotification>().withParameters(parameters).withEndpoint(REALTIME_NOTIFICATIONS_URL).withSubscriptionNameResolver(new Identity()).withDataType(typeof(ManagedObjectDeleteAwareNotification)).build();
 		}
 
-		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler)
+		public virtual ISubscription<string> Subscribe(string channelID, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler)
 		{
-			return subscriber.subscribe(channelPrefix + channelID, handler);
+			return subscriber.Subscribe(channelPrefix + channelID, handler);
 		}
 
-		public ISubscription<string> subscribe(string agentId, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler, bool autoRetry)
+		public ISubscription<string> Subscribe(string agentId, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectDeleteAwareNotification> handler, bool autoRetry)
 		{
-			return subscriber.subscribe(agentId, subscribeOperationListener, handler, autoRetry);
+			return subscriber.Subscribe(agentId, subscribeOperationListener, handler, autoRetry);
 		}
 
-		public virtual void disconnect()
+		public virtual void Disconnect()
 		{
-			subscriber.disconnect();
+			subscriber.Disconnect();
 		}
 
 		private sealed class Identity : ISubscriptionNameResolver<string>

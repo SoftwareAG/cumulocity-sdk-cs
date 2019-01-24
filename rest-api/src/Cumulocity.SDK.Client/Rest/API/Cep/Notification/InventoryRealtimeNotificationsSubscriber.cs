@@ -31,19 +31,19 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 		/// <summary>
 		/// This method does NOT allow to receive device realtime DELETE actions
 		/// </summary>
-		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, ManagedObjectNotification> handler)
+		public virtual ISubscription<string> Subscribe(string channelID, ISubscriptionListener<string, ManagedObjectNotification> handler)
 		{
-			return subscriber.subscribe(channelPrefix + channelID, handler);
+			return subscriber.Subscribe(channelPrefix + channelID, handler);
 		}
 
-		public ISubscription<string> subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectNotification> handler, bool autoRetry)
+		public ISubscription<string> Subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, ManagedObjectNotification> handler, bool autoRetry)
 		{
-			return subscriber.subscribe(channelID, subscribeOperationListener, handler, autoRetry);
+			return subscriber.Subscribe(channelID, subscribeOperationListener, handler, autoRetry);
 		}
 
-		public virtual void disconnect()
+		public virtual void Disconnect()
 		{
-			subscriber.disconnect();
+			subscriber.Disconnect();
 		}
 
 		private sealed class Identity : ISubscriptionNameResolver<string>

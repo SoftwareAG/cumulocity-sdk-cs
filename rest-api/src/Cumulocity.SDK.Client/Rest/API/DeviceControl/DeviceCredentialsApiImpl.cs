@@ -22,26 +22,26 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			this.requestUrl = platformParameters.Host + DEVICE_REQUEST_URI;
 		}
 
-		public NewDeviceRequestRepresentation register(string id)
+		public NewDeviceRequestRepresentation Register(string id)
 		{
 			NewDeviceRequestRepresentation representation = new NewDeviceRequestRepresentation();
 			representation.Id = id;
 			return restConnector.Post(requestUrl, DeviceControlMediaType.NEW_DEVICE_REQUEST, representation);
 		}
 
-		public void delete(NewDeviceRequestRepresentation representation)
+		public void Delete(NewDeviceRequestRepresentation representation)
 		{
 			restConnector.Delete(representation.Self);
 		}
 
-		public DeviceCredentialsRepresentation pollCredentials(string deviceId)
+		public DeviceCredentialsRepresentation PollCredentials(string deviceId)
 		{
 			DeviceCredentialsRepresentation representation = new DeviceCredentialsRepresentation();
 			representation.Id = deviceId;
 			return restConnector.Post<DeviceCredentialsRepresentation>(credentialsUrl, DeviceControlMediaType.DEVICE_CREDENTIALS, representation);
 		}
 
-		public DeviceCredentialsRepresentation pollCredentials(string deviceId, int interval, int timeout)
+		public DeviceCredentialsRepresentation PollCredentials(string deviceId, int interval, int timeout)
 		{
 			PollingStrategy pollingStrategy = new PollingStrategy((long)timeout, TimeUnit.SECONDS, (long)interval);
 			return pollCredentials(deviceId, pollingStrategy);
@@ -73,7 +73,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			{
 				try
 				{
-					var readData = DeviceCredentialsApiImpl.pollCredentials(DeviceId);
+					var readData = DeviceCredentialsApiImpl.PollCredentials(DeviceId);
 					if (readData is DeviceCredentialsApiImpl)
 					{
 						return (K)(object)readData;

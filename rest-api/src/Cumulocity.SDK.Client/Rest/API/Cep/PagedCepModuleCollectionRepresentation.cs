@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<CepModuleRepresentation> allPages()
+		public IEnumerable<CepModuleRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<CepModuleRepresentation, CepModuleCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<CepModuleRepresentation> elements(int limit)
+		public IEnumerable<CepModuleRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<CepModuleRepresentation, CepModuleCollectionRepresentation>(collectionResource, this, limit);
 		}

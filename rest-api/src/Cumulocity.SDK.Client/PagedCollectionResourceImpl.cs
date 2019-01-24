@@ -27,40 +27,40 @@ namespace Cumulocity.SDK.Client
 
 		protected internal abstract Type ResponseClassProp { get; }
 
-		public virtual I getPage(BaseCollectionRepresentation<T> collectionRepresentation, int pageNumber)
+		public virtual I GetPage(BaseCollectionRepresentation<T> collectionRepresentation, int pageNumber)
 		{
 			if (collectionRepresentation == null)
 				throw new SDKException("Unable to determin the Resource URL. ");
-			return getPage(collectionRepresentation, pageNumber,
+			return GetPage(collectionRepresentation, pageNumber,
 				collectionRepresentation.PageStatistics == null ? 5 : collectionRepresentation.PageStatistics.PageSize);
 		}
 
-		public virtual I getPage(BaseCollectionRepresentation<T> collectionRepresentation, int pageNumber, int pageSize)
+		public virtual I GetPage(BaseCollectionRepresentation<T> collectionRepresentation, int pageNumber, int pageSize)
 		{
 			var pageUrl = getPageUrl(collectionRepresentation, pageNumber, pageSize);
 			return getCollection(pageUrl);
 		}
 
-		public virtual I getNextPage(BaseCollectionRepresentation<T> collectionRepresentation)
+		public virtual I GetNextPage(BaseCollectionRepresentation<T> collectionRepresentation)
 		{
 			if (collectionRepresentation == null)
 				throw new SDKException("Unable to determin the Resource URL. ");
 			return collectionRepresentation.Next == null ? default(I) : getCollection(collectionRepresentation.Next);
 		}
 
-		public virtual I getPreviousPage(BaseCollectionRepresentation<T> collectionRepresentation)
+		public virtual I GetPreviousPage(BaseCollectionRepresentation<T> collectionRepresentation)
 		{
 			if (collectionRepresentation == null)
 				throw new SDKException("Unable to determin the Resource URL. ");
 			return collectionRepresentation.Prev == null ? default(I) : getCollection(collectionRepresentation.Prev);
 		}
 
-		public virtual I get(params QueryParam[] queryParams)
+		public virtual I GetFirstPage(params QueryParam[] queryParams)
 		{
-			return get(pageSize, queryParams);
+			return GetFirstPage(pageSize, queryParams);
 		}
 
-		public virtual I get(int pageSize, params QueryParam[] queryParams)
+		public virtual I GetFirstPage(int pageSize, params QueryParam[] queryParams)
 		{
 			var @params = prepareGetParams(pageSize);
 			var arr = queryParams;

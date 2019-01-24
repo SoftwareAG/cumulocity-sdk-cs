@@ -10,17 +10,17 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Inventory
 		private ManagedObjectReferenceCollectionRepresentation managedObjects;
 
 		/// <summary>
-		///     The URL to get Managed Objects by fragment type
+		///     The URL to GetFirstPage Managed Objects by fragment type
 		/// </summary>
 		private string managedObjectsForFragmentType;
 
 		/// <summary>
-		///     The URL to get Managed Objects for a given list of ids
+		///     The URL to GetFirstPage Managed Objects for a given list of ids
 		/// </summary>
 		private string managedObjectsForListOfIds;
 
 		/// <summary>
-		///     The URL to get Managed Objects by type
+		///     The URL to GetFirstPage Managed Objects by type
 		/// </summary>
 		private string managedObjectsForType;
 

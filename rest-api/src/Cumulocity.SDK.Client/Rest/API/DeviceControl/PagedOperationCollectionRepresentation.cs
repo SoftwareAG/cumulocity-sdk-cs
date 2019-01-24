@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<OperationRepresentation> allPages()
+		public IEnumerable<OperationRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<OperationRepresentation, OperationCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<OperationRepresentation> elements(int limit)
+		public IEnumerable<OperationRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<OperationRepresentation, OperationCollectionRepresentation>(collectionResource, this, limit);
 		}

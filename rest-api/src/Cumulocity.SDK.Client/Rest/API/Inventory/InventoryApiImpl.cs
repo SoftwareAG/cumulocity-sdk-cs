@@ -24,40 +24,37 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			this.pageSize = pageSize;
 		}
 
-		public ManagedObjectRepresentation create(ManagedObjectRepresentation representation)
+		public ManagedObjectRepresentation Create(ManagedObjectRepresentation representation)
 		{
 			return restConnector.Post(MOCollectionUrl, InventoryMediaType.GetInstance.MANAGED_OBJECT, representation);
 		}
 
 		IManagedObjectCollection IInventoryApi.ManagedObjects => ManagedObjects;
 
-		public ManagedObjectRepresentation get(GId id)
+		public ManagedObjectRepresentation Get(GId id)
 		{
 			return restConnector.Get<ManagedObjectRepresentation>($"{MOCollectionUrl}/{id.Value}",
 				InventoryMediaType.GetInstance.MANAGED_OBJECT, typeof(ManagedObjectRepresentation));
 		}
 
-		public ManagedObjectRepresentation Get(GId id)
-		{
-			throw new NotImplementedException();
-		}
 
-		public void delete(GId id)
+
+		public void Delete(GId id)
 		{
 			restConnector.Delete($"{MOCollectionUrl}/{id.Value}");
 		}
 
-		public ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation)
+		public ManagedObjectRepresentation Update(ManagedObjectRepresentation managedObjectRepresentation)
 		{
 			return restConnector.Put($"{MOCollectionUrl}/{managedObjectRepresentation.Id.Value}", InventoryMediaType.GetInstance.MANAGED_OBJECT, managedObjectRepresentation);
 		}
 
-		public IManagedObject getManagedObject(GId globalId)
+		public IManagedObject GetManagedObject(GId globalId)
 		{
-			return getManagedObjectApi(globalId);
+			return GetManagedObjectApi(globalId);
 		}
 
-		public IManagedObject getManagedObjectApi(GId globalId)
+		public IManagedObject GetManagedObjectApi(GId globalId)
 		{
 			if ((globalId == null) || (globalId.Value == null))
 			{
@@ -76,7 +73,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			}
 		}
 
-		public IManagedObjectCollection getManagedObjectsByFilter(InventoryFilter filter)
+		public IManagedObjectCollection GetManagedObjectsByFilter(InventoryFilter filter)
 		{
 			if (filter == null)
 			{
@@ -87,9 +84,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		}
 
 		[Obsolete]
-		public IManagedObjectCollection getManagedObjectsByListOfIds(IList<GId> ids)
+		public IManagedObjectCollection GetManagedObjectsByListOfIds(IList<GId> ids)
 		{
-			return getManagedObjectsByFilter((new InventoryFilter()).byIds(ids));
+			return GetManagedObjectsByFilter((new InventoryFilter()).ByIds(ids));
 		}
 
 		protected internal virtual string MOCollectionUrl

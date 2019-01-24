@@ -75,7 +75,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
             IResourceRepresentation representation)
         {
             if (!fromClassMappings.ContainsKey(representation.GetType()))
-                throw new ArgumentException("Cannot create buffered request from class " + representation.GetType());
+                throw new ArgumentException("Cannot Create buffered request from class " + representation.GetType());
             return new BufferedRequest(method, path, mediaType, representation);
         }
 

@@ -66,9 +66,9 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 			List<OptionRepresentation> expectedOptions = sampleOptions(CATEGORY, KEY, 10);
 			saveOptions(expectedOptions);
 			ITenantOptionCollection options = tenantOptionApi.Options;
-			var optionCollection = options.get(1000);
+			var optionCollection = options.GetFirstPage(1000);
 
-			assertExpectedOptionsFound(optionCollection.allPages(), expectedOptions);
+			assertExpectedOptionsFound(optionCollection.AllPages(), expectedOptions);
 		}
 
 

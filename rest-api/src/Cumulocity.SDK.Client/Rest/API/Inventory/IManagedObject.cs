@@ -13,23 +13,23 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <exception cref="SDKException"> </exception>
 
 		[Obsolete]
-		ManagedObjectRepresentation get();
+		ManagedObjectRepresentation Get();
 
 		/// <summary>
 		/// Deletes the Managed Object from the Cumulocity Server.
 		/// </summary>
 		/// <exception cref="SDKException"> </exception>
 		[Obsolete]
-		void delete();
+		void Delete();
 
 		/// <summary>
-		/// This update the ManagedObject for the operationCollection. Cannot update the ID.
+		/// This Update the ManagedObject for the operationCollection. Cannot Update the ID.
 		/// </summary>
 		/// <param name="managedObjectRepresentation"> </param>
 		/// <returns> ManagedObjectRepresentation updated ManagedObject. </returns>
 		/// <exception cref="SDKException"> </exception>
 		[Obsolete]
-		ManagedObjectRepresentation update(ManagedObjectRepresentation managedObjectRepresentation);
+		ManagedObjectRepresentation Update(ManagedObjectRepresentation managedObjectRepresentation);
 
 		/// <summary>
 		/// Adds a child device to the ManagedObject.
@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation addChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation);
+		ManagedObjectReferenceRepresentation AddChildDevice(ManagedObjectReferenceRepresentation refrenceReprsentation);
 
 		/// <summary>
 		/// Adds a child device to the ManagedObject.
@@ -45,7 +45,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="childId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation addChildDevice(GId childId);
+		ManagedObjectReferenceRepresentation AddChildDevice(GId childId);
 
 		/// <summary>
 		/// Create ManagedObject and adds as child device to the parent ManagedObject.
@@ -53,7 +53,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectRepresentation addChildDevice(ManagedObjectRepresentation representation);
+		ManagedObjectRepresentation AddChildDevice(ManagedObjectRepresentation representation);
 
 		/// <summary>
 		/// Returns all the child Devices for the Managed Object in paged collection form.
@@ -68,14 +68,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="deviceId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation getChildDevice(GId deviceId);
+		ManagedObjectReferenceRepresentation GetChildDevice(GId deviceId);
 
 		/// <summary>
 		/// Deletes the child device  and its relation to the managed object.
 		/// </summary>
 		/// <param name="deviceId"> </param>
 		/// <exception cref="SDKException"> </exception>
-		void deleteChildDevice(GId deviceId);
+		void DeleteChildDevice(GId deviceId);
 
 		/// <summary>
 		/// Adds a child asset to the ManagedObject.
@@ -91,7 +91,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="refrenceReprsentation"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation addChildAssets(GId childId);
+		ManagedObjectReferenceRepresentation AddChildAssets(GId childId);
 
 		/// <summary>
 		/// Create ManagedObject and adds as child asset to the parent ManagedObject.
@@ -99,7 +99,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectRepresentation addChildAsset(ManagedObjectRepresentation representation);
+		ManagedObjectRepresentation AddChildAsset(ManagedObjectRepresentation representation);
 
 		/// <summary>
 		/// Returns all the child Assets for the Managed Object  in paged collection form
@@ -114,7 +114,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="assetId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child device. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation getChildAsset(GId assetId);
+		ManagedObjectReferenceRepresentation GetChildAsset(GId assetId);
 
 		/// <summary>
 		/// Deletes the child Asset  and its relation to the managed object.
@@ -122,7 +122,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="assetId"> </param>
 		/// <exception cref="SDKException"> </exception>
 
-		void deleteChildAsset(GId assetId);
+		void DeleteChildAsset(GId assetId);
 
 		/// <summary>
 		/// Adds a child addition to the ManagedObject.
@@ -131,7 +131,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child addition. </returns>
 		/// <exception cref="SDKException"> </exception>
 
-		ManagedObjectReferenceRepresentation addChildAdditions(
+		ManagedObjectReferenceRepresentation AddChildAdditions(
 			ManagedObjectReferenceRepresentation refrenceReprsentation);
 
 		/// <summary>
@@ -140,7 +140,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="childId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation with the id of th child addition. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation addChildAdditions(GId childId);
+		ManagedObjectReferenceRepresentation AddChildAdditions(GId childId);
 
 		/// <summary>
 		/// Create ManagedObject and adds as child addition to the parent ManagedObject.
@@ -148,7 +148,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="representation"> </param>
 		/// <returns> ManagedObjectRepresentation with the managed object. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectRepresentation addChildAddition(ManagedObjectRepresentation representation);
+		ManagedObjectRepresentation AddChildAddition(ManagedObjectRepresentation representation);
 
 		/// <summary>
 		/// Returns all the child additions for the Managed Object in paged collection form
@@ -163,13 +163,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 		/// <param name="additionId"> </param>
 		/// <returns> ManagedObjectReferenceRepresentation of the child additions. </returns>
 		/// <exception cref="SDKException"> </exception>
-		ManagedObjectReferenceRepresentation getChildAddition(GId additionId);
+		ManagedObjectReferenceRepresentation GetChildAddition(GId additionId);
 
 		/// <summary>
 		/// Deletes the child addition and its relation to the managed object.
 		/// </summary>
 		/// <param name="additionId"> </param>
 		/// <exception cref="SDKException"> </exception>
-		void deleteChildAddition(GId additionId);
+		void DeleteChildAddition(GId additionId);
 	}
 }

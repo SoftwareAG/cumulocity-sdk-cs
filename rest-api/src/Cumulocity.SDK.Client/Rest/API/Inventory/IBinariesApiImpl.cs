@@ -31,12 +31,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
 	public interface IBinariesApi
 	{
-		ManagedObjectRepresentation uploadFile(ManagedObjectRepresentation container, byte[] bytes);
+		ManagedObjectRepresentation UploadFile(ManagedObjectRepresentation container, byte[] bytes);
 
-		ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream);
+		ManagedObjectRepresentation ReplaceFile(GId containerId, string contentType, Stream fileStream);
 
-		void deleteFile(GId containerId);
+		void DeleteFile(GId containerId);
 
-		Task<Stream> downloadFile(GId id);
+		Task<Stream> DownloadFile(GId id);
 	}
 }

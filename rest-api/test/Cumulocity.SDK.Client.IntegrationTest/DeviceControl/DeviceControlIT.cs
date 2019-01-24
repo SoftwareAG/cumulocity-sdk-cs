@@ -69,11 +69,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		{
 			if (poller != null)
 			{
-				poller.stop();
+				poller.Stop();
 			}
 			if (subscriber != null)
 			{
-				subscriber.disconnect();
+				subscriber.Disconnect();
 				subscriber = null;
 			}
 		}
@@ -89,10 +89,10 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			ManagedObjectRepresentation device2 = aSampleMo().withName("Device2").withType("com.type")
 				.build();
 
-			agent = inventoryApi.create(agent);
-			device = inventoryApi.create(device);
-			agent2 = inventoryApi.create(agent2);
-			device2 = inventoryApi.create(device2);
+			agent = inventoryApi.Create(agent);
+			device = inventoryApi.Create(device);
+			agent2 = inventoryApi.Create(agent2);
+			device2 = inventoryApi.Create(device2);
 
 			managedObjects.Add(agent);
 			managedObjects.Add(device);
@@ -106,7 +106,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		private void addChildDevice(ManagedObjectRepresentation parent, ManagedObjectRepresentation child)
 		{
 			ManagedObjectReferenceRepresentation deviceRef = RestRepresentationObjectMother.anMoRefRepresentationLike(SampleManagedObjectReferenceRepresentation.MO_REF_REPRESENTATION).withMo(child).build();
-			inventoryApi.getManagedObject(parent.Id).addChildDevice(deviceRef);
+			inventoryApi.GetManagedObject(parent.Id).AddChildDevice(deviceRef);
 		}
 
 		private static ManagedObjectRepresentationBuilder aSampleMo()
@@ -121,7 +121,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		{
 			//    Given I have a poller for agent '0'
 			iHaveAPollerForAgent(0);
-			//    When I create an operation for device '1'
+			//    When I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
 			//    Then poller should receive operation
 			pollerShouldRecieveOperation();
@@ -132,25 +132,25 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		[Fact]
 		public void addingOperationToQueue()
 		{
-			//    When I get all operations for device '1'
+			//    When I GetFirstPage all operations for device '1'
 			iGetAllOperationsForAgent(1);
 			//    Then I should receive '0' operations
 			iShouldReceiveXOperations(0);
-			//    When I create an operation for device '1'
+			//    When I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
-			//    And I get all operations for device '1'
+			//    And I GetFirstPage all operations for device '1'
 			iGetAllOperationsForDeviceX(1);
 			//    Then I should receive '1' operations
 			iShouldReceiveXOperations(1);
 		}
 
-		//  Scenario: get notification about new operation
+		//  Scenario: GetFirstPage notification about new operation
 		[Fact]
 		public void getNotificationAboutNewOperation()
 		{
 			//      Given I have a operation subscriber for agent '0'
 			iHaveAOperationSubscriberForAgent(0);
-			//    When I create an operation for device '1'
+			//    When I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
 			//    Then subscriber should receive operation
 			subscriberShouldReceiveOperation();
@@ -162,15 +162,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		[Fact]
 		public void operationCRUD()
 		{
-			//    When I create an operation for device '1'
+			//    When I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
-			//    And I call get on created operation
+			//    And I call GetFirstPage on created operation
 			iCallGetOnCreatedOperation();
 			//    Then I should receive operation with status 'PENDING'
 			iShouldReceiveOperationWithStatusX("PENDING");
-			//    When I update created operation with status 'EXECUTING'
+			//    When I Update created operation with status 'EXECUTING'
 			iUpdateCreatedOperationWithStatusX("EXECUTING");
-			//    And I call get on created operation
+			//    And I call GetFirstPage on created operation
 			iCallGetOnCreatedOperation();
 			//    Then I should receive operation with status 'EXECUTING'
 			iShouldReceiveOperationWithStatusX("EXECUTING");
@@ -185,11 +185,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			int numOfExecuting = allOperations.Operations.Count;
 			iQueryOperationsWithStatusX("PENDING");
 			int numOfPending = allOperations.Operations.Count;
-			//    When I create an operation for device '1'
+			//    When I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
-			//    And I update created operation with status 'EXECUTING'
+			//    And I Update created operation with status 'EXECUTING'
 			iUpdateCreatedOperationWithStatusX("EXECUTING");
-			//    And I create an operation for device '1'
+			//    And I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
 			//    When I query operations with status 'PENDING'
 			iQueryOperationsWithStatusX("PENDING");
@@ -211,17 +211,17 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		[Fact]
 		public void queryOperationsByDevice() 
 		{
-			//    And I create an operation for device '1'
+			//    And I Create an operation for device '1'
 			iCreateAnOperationForDevice(1);
-		//    And I create an operation for device '1'
+		//    And I Create an operation for device '1'
 		iCreateAnOperationForDevice(1);
-		//    And I create an operation for device '3'
+		//    And I Create an operation for device '3'
 		iCreateAnOperationForDevice(3);
-		//    When I get all operations for device '1'
+		//    When I GetFirstPage all operations for device '1'
 		iGetAllOperationsForDeviceX(1);
 		//    Then I should receive '2' operations
 		iShouldReceiveXOperations(2);
-		//    When I get all operations for device '3'
+		//    When I GetFirstPage all operations for device '3'
 		iGetAllOperationsForDeviceX(3);
 		//    Then I should receive '1' operations
 		iShouldReceiveXOperations(1);
@@ -233,17 +233,17 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		[Fact]
 		public void queryOperationsByAgent()
 	{
-	//    And I create an operation for device '1'
+	//    And I Create an operation for device '1'
 	iCreateAnOperationForDevice(1);
-	//    And I create an operation for device '1'
+	//    And I Create an operation for device '1'
 	iCreateAnOperationForDevice(1);
-	//    And I create an operation for device '3'
+	//    And I Create an operation for device '3'
 	iCreateAnOperationForDevice(3);
-	//    When I get all operations for agent '0'
+	//    When I GetFirstPage all operations for agent '0'
 	iGetAllOperationsForAgent(0);
 	//    Then I should receive '2' operations
 	iShouldReceiveXOperations(2);
-	//    When I get all operations for agent '2'
+	//    When I GetFirstPage all operations for agent '2'
 	iGetAllOperationsForAgent(2);
 	//    Then I should receive '1' operations
 	iShouldReceiveXOperations(1);
@@ -259,7 +259,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		{
 			GId agentId = getMoId(arg1);
 			poller = new OperationsByAgentAndStatusPollerImpl(deviceControlResource, agentId.Value, OperationStatus.PENDING, operationProcessor);
-			poller.start();
+			poller.Start();
 		}
 
 		private GId getMoId(int arg1)
@@ -274,7 +274,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			GId agentId = getMoId(arg1);
 			subscriber = new OperationNotificationSubscriber(fixture.platform);
 
-			subscriber.subscribe(agentId, new Handler(operationProcessor));
+			subscriber.Subscribe(agentId, new Handler(operationProcessor));
 
 			try
 			{
@@ -290,50 +290,50 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//When
 		//
 
-		//@When("^I create an operation for device '([^']*)'$")
+		//@When("^I Create an operation for device '([^']*)'$")
 		public void iCreateAnOperationForDevice(int deviceNum)
 		{
 			GId deviceId = getMoId(deviceNum);
 			OperationRepresentation operationRepresentation = new OperationRepresentation();
 			operationRepresentation.DeviceId = deviceId;
 			operationRepresentation.set("smaple_value", "sample_operation_type");
-			operation1 = deviceControlResource.create(operationRepresentation);
+			operation1 = deviceControlResource.Create(operationRepresentation);
 		}
 
-		//@When("^I get all operations for agent '([^']*)'$")
+		//@When("^I GetFirstPage all operations for agent '([^']*)'$")
 
 		public void iGetAllOperationsForAgent(int agentNum)
 		{
-			OperationFilter filter = new OperationFilter().byAgent(getMoId(agentNum).Value);
-			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+			OperationFilter filter = new OperationFilter().ByAgent(getMoId(agentNum).Value);
+			allOperations = deviceControlResource.GetOperationsByFilter(filter).GetFirstPage();
 		}
 
-		//@When("^I get all operations for device '([^']*)'$")
+		//@When("^I GetFirstPage all operations for device '([^']*)'$")
 		public void iGetAllOperationsForDeviceX(int deviceNum)
 		{
-			OperationFilter filter = new OperationFilter().byDevice(getMoId(deviceNum).Value);
-			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+			OperationFilter filter = new OperationFilter().ByDevice(getMoId(deviceNum).Value);
+			allOperations = deviceControlResource.GetOperationsByFilter(filter).GetFirstPage();
 		}
 
-		//@When("^I call get on created operation$")
+		//@When("^I call GetFirstPage on created operation$")
 		public void iCallGetOnCreatedOperation()
 		{
 			GId operationId = operation1.Id;
-			operation1 = deviceControlResource.getOperation(operationId);
+			operation1 = deviceControlResource.GetOperation(operationId);
 		}
 
-		//@When("^I update created operation with status '([^']*)'$")
+		//@When("^I Update created operation with status '([^']*)'$")
 		public void iUpdateCreatedOperationWithStatusX(String status)
 		{
 			operation1.Status = status;
-			operation1 = deviceControlResource.update(operation1);
+			operation1 = deviceControlResource.Update(operation1);
 		}
 
 		//@When("^I query operations with status '([^']*)'$")
 		public void iQueryOperationsWithStatusX(String status)
 		{
-			OperationFilter filter = new OperationFilter().byStatus(OperationStatus.valueOf(status));
-			allOperations = deviceControlResource.getOperationsByFilter(filter).get();
+			OperationFilter filter = new OperationFilter().ByStatus(OperationStatus.valueOf(status));
+			allOperations = deviceControlResource.GetOperationsByFilter(filter).GetFirstPage();
 		}
 
 		//
@@ -411,7 +411,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 			public void onNotification(ISubscription<GId> subscription, OperationRepresentation notification)
 			{
-				operationProcessor.process(notification);
+				operationProcessor.Process(notification);
 			}
 		}
 	}

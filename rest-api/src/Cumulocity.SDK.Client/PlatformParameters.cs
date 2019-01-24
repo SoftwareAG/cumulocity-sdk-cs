@@ -165,12 +165,12 @@ namespace Cumulocity.SDK.Client.Rest
 
 		public virtual string getTfaToken()
 		{
-			return tfaToken == null ? null : tfaToken.get();
+			return tfaToken == null ? null : tfaToken.Get();
 		}
 
 		public virtual void setTfaToken(string tfaToken)
 		{
-			this.tfaToken = Suppliers.ofInstance(tfaToken);
+			this.tfaToken = Suppliers.OfInstance(tfaToken);
 		}
 
 		public virtual void setTfaToken(ISupplier<string> tfaToken)

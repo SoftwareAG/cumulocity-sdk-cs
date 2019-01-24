@@ -65,7 +65,7 @@ public class PagedCollectionIterable<T, C> : IEnumerable<T>, IEnumerator<T> wher
 		{
 			return false;
 		}
-		collection = _collectionResource.getNextPage(collection);
+		collection = _collectionResource.GetNextPage(collection);
 		iterator_Renamed = collection.GetEnumerator();
 		//TODO TASK: Java iterators are only converted within the context of 'while' and 'for' loops:
 		return iterator_Renamed.MoveNext();

@@ -27,7 +27,7 @@ namespace ConsoleApp1
 			mo_hw.Name = "Hello, world!";
 			mo_hw.set(new IsDevice());
 			//mo_hw.set(new Firmware() { Name = "A", Url = "U" });
-			var mo_hw3 = inventory.create(mo_hw);
+			var mo_hw3 = inventory.Create(mo_hw);
 			Console.WriteLine($"Url: {mo_hw.Self}");
 
 			////New electricity meter with a relay
@@ -38,14 +38,14 @@ namespace ConsoleApp1
 			//mo_mm.set(relay);
 			//SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
 			//mo_mm.set(meter);
-			//inventory.create(mo_mm);
+			//inventory.Create(mo_mm);
 
 			//InventoryFilter inventoryFilter = new InventoryFilter();
-			//inventoryFilter.byFragmentType(typeof(Position));
+			//inventoryFilter.ByFragmentType(typeof(Position));
 
-			//IManagedObjectCollection moc = inventory.getManagedObjectsByFilter(inventoryFilter);
+			//IManagedObjectCollection moc = inventory.GetManagedObjectsByFilter(inventoryFilter);
 
-			//foreach (ManagedObjectRepresentation mo in moc.get().allPages())
+			//foreach (ManagedObjectRepresentation mo in moc.GetFirstPage().AllPages())
 			//{
 			//	Console.WriteLine(mo.Id);
 			//}

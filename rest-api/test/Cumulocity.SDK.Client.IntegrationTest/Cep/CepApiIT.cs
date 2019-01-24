@@ -23,12 +23,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 
 		public void Dispose()
 		{
-			PagedCepModuleCollectionRepresentation<CepModuleCollectionRepresentation> cep = cepApi.Modules.get();
-			IEnumerable<CepModuleRepresentation> it = cep.allPages();
+			PagedCepModuleCollectionRepresentation<CepModuleCollectionRepresentation> cep = cepApi.Modules.GetFirstPage();
+			IEnumerable<CepModuleRepresentation> it = cep.AllPages();
 
 			foreach (CepModuleRepresentation cepModule in it)
 			{
-				cepApi.delete(cepModule);
+				cepApi.Delete(cepModule);
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 			//Given
 			string cepModuleFile = readCepModuleFile("cep/test-module.epl");
 			//When
-			CepModuleRepresentation cepModule = cepApi.create(cepModuleFile);
+			CepModuleRepresentation cepModule = cepApi.Create(cepModuleFile);
 			//Then
 			Assert.NotNull(cepModule);
 			Assert.NotNull(cepModule.Id);
@@ -49,9 +49,9 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 		public void shouldDeleteCepModule()
 		{
 			//Given
-			CepModuleRepresentation cepModule = cepApi.create(readCepModuleFile("cep/test-module.epl"));
+			CepModuleRepresentation cepModule = cepApi.Create(readCepModuleFile("cep/test-module.epl"));
 			//When
-			cepApi.delete(cepModule);
+			cepApi.Delete(cepModule);
 			//Then
 			Assert.NotNull(cepModule);
 			Assert.NotNull(cepModule.Id);

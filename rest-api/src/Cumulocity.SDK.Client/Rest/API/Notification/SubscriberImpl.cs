@@ -52,12 +52,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 		}
 
 
-		public virtual ISubscription<T> subscribe(T @object, ISubscriptionListener<T, IMessage> handler)
+		public virtual ISubscription<T> Subscribe(T @object, ISubscriptionListener<T, IMessage> handler)
 		{
-			return this.subscribe(@object, new LoggingSubscribeOperationListener(), handler, true);
+			return this.Subscribe(@object, new LoggingSubscribeOperationListener(), handler, true);
 		}
 
-		public virtual ISubscription<T> subscribe(T @object, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<T, IMessage> handler, bool autoRetry)
+		public virtual ISubscription<T> Subscribe(T @object, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<T, IMessage> handler, bool autoRetry)
 		{
 			return subscribe(@object, subscribeOperationListener, handler, autoRetry, 0);
 		}
@@ -115,7 +115,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			return session.getChannel(channelId);
 		}
 
-		public void disconnect()
+		public void Disconnect()
 		{
 			lock (@lock)
 			{
@@ -152,7 +152,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 			foreach (var subscribed in allSubscriptions)
 			{
-				ISubscription<T> subscription = subscribe(subscribed.Id, subscribed.subscribeOperationListener, subscribed.Listener, true);
+				ISubscription<T> subscription = Subscribe(subscribed.Id, subscribed.subscribeOperationListener, subscribed.Listener, true);
 				try
 				{
 					subscribed.Listener.onError(subscription, new ReconnectedSDKException("bayeux client reconnected clientId: " + session.Id));

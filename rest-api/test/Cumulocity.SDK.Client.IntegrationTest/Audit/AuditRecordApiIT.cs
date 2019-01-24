@@ -48,50 +48,50 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			this.result2 = new List<AuditRecordRepresentation>();
 			this.auditRecordsApi = platform.AuditRecordApi;
 			//    Given I have '3' managed objects
-			//    And I create all
+			//    And I Create all
 			for (int i = 0; i < 3; ++i)
 			{
-				ManagedObjectRepresentation mo = platform.InventoryApi.create(aSampleMo().withName("MO" + i).build());
+				ManagedObjectRepresentation mo = platform.InventoryApi.Create(aSampleMo().withName("MO" + i).build());
 				managedObjects.Add(mo);
 			}
 		}
 
-		//    Scenario: Create and get audit records
+		//    Scenario: Create and GetFirstPage audit records
 		[Fact]
 		public void createAndGetAuditRecords()
 		{
 			//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			iHaveAuditRecord(3, "com.type1", "app1", "user1");
-			//    When I create all audit records
+			//    When I Create all audit records
 			iCreateAll();
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I get all audit records
+			//    And I GetFirstPage all audit records
 			iGetAllAuditRecords();
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I should I get all the audit records
+			//    And I should I GetFirstPage all the audit records
 			shouldGetAllMeasurements();
 		}
 
 		//
 		//
-		//    Scenario: Create and get audit record
+		//    Scenario: Create and GetFirstPage audit record
 
 		[Fact]
 		public void createAndGetAuditRecord()
 		{
 			//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			iHaveAuditRecord(1, "com.type1", "app1", "user1");
-			//    When I create all audit records
+			//    When I Create all audit records
 			iCreateAll();
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I get the audit record with the created id
+			//    And I GetFirstPage the audit record with the created id
 			iGetWithCreatedId();
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I should get the audit record
+			//    And I should GetFirstPage the audit record
 			shouldGetTheMeasurement();
 		}
 
@@ -104,7 +104,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			iHaveAuditRecord(1, "com.type1", "app1", "user1");
 			//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 			iHaveAuditRecord(3, "com.type1", "app1", "user2");
-			//    When I create all audit records
+			//    When I Create all audit records
 			iCreateAll();
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
@@ -112,19 +112,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			iQueryByUser("user2");
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I should get '3' audit records
+			//    And I should GetFirstPage '3' audit records
 			iShouldGetNumberOfMeasurements(3);
 			//    And I query the audit record collection by user 'user1'
 			iQueryByUser("user1");
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I should get '1' audit records
+			//    And I should GetFirstPage '1' audit records
 			iShouldGetNumberOfMeasurements(1);
 			//    And I query the audit record collection by user 'user3'
 			iQueryByUser("user3");
 			//    Then Audit record response status should be success
 			shouldBeSuccess();
-			//    And I should get '0' audit records
+			//    And I should GetFirstPage '0' audit records
 			iShouldGetNumberOfMeasurements(0);
 		}
 
@@ -138,7 +138,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			iHaveAuditRecord(1, "com.type1", "app1", "user1");
 //    Given I have '3' audit records of type 'com.type2' and application 'app1' and user 'user1' for the managed object
         iHaveAuditRecord(3, "com.type2", "app1", "user1");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -146,19 +146,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iQueryByType("com.type2");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '3' audit records
+		//    And I should GetFirstPage '3' audit records
 		iShouldGetNumberOfMeasurements(3);
 		//    And I query the audit record collection by type 'com.type1'
 		iQueryByType("com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '1' audit records
+		//    And I should GetFirstPage '1' audit records
 		iShouldGetNumberOfMeasurements(1);
 		//    And I query the audit record collection by type 'com.type3'
 		iQueryByType("com.type3");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '0' audit records
+		//    And I should GetFirstPage '0' audit records
 		iShouldGetNumberOfMeasurements(0);
 	}
 
@@ -173,7 +173,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(1, "com.type1", "app1", "user1");
 		//    Given I have '3' audit records of type 'com.type1' and application 'app2' and user 'user1' for the managed object
 		iHaveAuditRecord(3, "com.type1", "app2", "user1");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -181,19 +181,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iQueryByApp("app2");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '3' audit records
+		//    And I should GetFirstPage '3' audit records
 		iShouldGetNumberOfMeasurements(3);
 		//    And I query the audit record collection by application 'app1'
 		iQueryByApp("app1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '1' audit records
+		//    And I should GetFirstPage '1' audit records
 		iShouldGetNumberOfMeasurements(1);
 		//    And I query the audit record collection by application 'app3'
 		iQueryByApp("app3");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '0' audit records
+		//    And I should GetFirstPage '0' audit records
 		iShouldGetNumberOfMeasurements(0);
 	}
 
@@ -207,7 +207,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(1, "com.type1", "app1", "user1");
 		//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 		iHaveAuditRecord(3, "com.type1", "app1", "user2");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -215,19 +215,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iQueryByUserAndType("user2", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '3' audit records
+		//    And I should GetFirstPage '3' audit records
 		iShouldGetNumberOfMeasurements(3);
 		//    And I query the audit record collection by user 'user1' and type 'com.type1'
 		iQueryByUserAndType("user1", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '1' audit records
+		//    And I should GetFirstPage '1' audit records
 		iShouldGetNumberOfMeasurements(1);
 		//    And I query the audit record collection by user 'user3' and type 'com.type1'
 		iQueryByUserAndType("user3", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '0' audit records
+		//    And I should GetFirstPage '0' audit records
 		iShouldGetNumberOfMeasurements(0);
 	}
 
@@ -241,7 +241,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(1, "com.type1", "app1", "user1");
 		//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 		iHaveAuditRecord(3, "com.type1", "app1", "user2");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -249,19 +249,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iQueryByUserAndApp("user2", "app1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '3' audit records
+		//    And I should GetFirstPage '3' audit records
 		iShouldGetNumberOfMeasurements(3);
 		//    And I query the audit record collection by user 'user1' and application 'app1'
 		iQueryByUserAndApp("user1", "app1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '1' audit records
+		//    And I should GetFirstPage '1' audit records
 		iShouldGetNumberOfMeasurements(1);
 		//    And I query the audit record collection by user 'user3' and application 'app1'
 		iQueryByUserAndApp("user3", "app1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '0' audit records
+		//    And I should GetFirstPage '0' audit records
 		iShouldGetNumberOfMeasurements(0);
 	}
 
@@ -276,7 +276,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(1, "com.type1", "app1", "user1");
 		//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 		iHaveAuditRecord(3, "com.type1", "app1", "user2");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -284,19 +284,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iQueryByUserAndAppAndType("user2", "app1", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '3' audit records
+		//    And I should GetFirstPage '3' audit records
 		iShouldGetNumberOfMeasurements(3);
 		//    And I query the audit record collection by user 'user1' and application 'app1' and type 'com.type1'
 		iQueryByUserAndAppAndType("user1", "app1", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '1' audit records
+		//    And I should GetFirstPage '1' audit records
 		iShouldGetNumberOfMeasurements(1);
 		//    And I query the audit record collection by user 'user3' and application 'app1' and type 'com.type1'
 		iQueryByUserAndAppAndType("user3", "app1", "com.type1");
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I should get '0' audit records
+		//    And I should GetFirstPage '0' audit records
 		iShouldGetNumberOfMeasurements(0);
 	}
 
@@ -310,7 +310,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(10, "com.type1", "app1", "user1");
 		//    Given I have '10' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 		iHaveAuditRecord(10, "com.type1", "app1", "user2");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -321,7 +321,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	}
 
 	//
-	//    Scenario: Query to test the paging to get all AuditRecords
+	//    Scenario: Query to test the paging to GetFirstPage all AuditRecords
 
 	[Fact]
 	public void queryToTestThePagingToGetAllAuditRecords()
@@ -330,11 +330,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		iHaveAuditRecord(10, "com.type1", "app1", "user1");
 		//    Given I have '10' audit records of type 'com.type1' and application 'app1' and user 'user2' for the managed object
 		iHaveAuditRecord(10, "com.type1", "app1", "user2");
-		//    When I create all audit records
+		//    When I Create all audit records
 		iCreateAll();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
-		//    And I get all audit records
+		//    And I GetFirstPage all audit records
 		iGetAllAuditRecords();
 		//    Then Audit record response status should be success
 		shouldBeSuccess();
@@ -365,7 +365,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		// ------------------------------------------------------------------------
 		// When
 		// ------------------------------------------------------------------------
-		//@When("I create all audit records$")
+		//@When("I Create all audit records$")
 
 		public void iCreateAll()
 		{
@@ -373,7 +373,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			{
 				foreach (var rep in input)
 				{
-					result1.Add(auditRecordsApi.create(rep));
+					result1.Add(auditRecordsApi.Create(rep));
 				}
 			}
 			catch (SDKException ex)
@@ -383,12 +383,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			}
 		}
 
-		//@When("I get all audit records$")
+		//@When("I GetFirstPage all audit records$")
 		public void iGetAllAuditRecords()
 		{
 			try
 			{
-				collection1 = auditRecordsApi.AuditRecords.get();
+				collection1 = auditRecordsApi.AuditRecords.GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -398,13 +398,13 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			}
 		}
 
-		//@When("I get the audit record with the created id$")
+		//@When("I GetFirstPage the audit record with the created id$")
 
 		public void iGetWithCreatedId()
 		{
 			try
 			{
-				AuditRecordRepresentation auditRecordRepresentation = auditRecordsApi.getAuditRecord(result1[0].Id);
+				AuditRecordRepresentation auditRecordRepresentation = auditRecordsApi.GetAuditRecord(result1[0].Id);
 				Assert.NotNull(auditRecordRepresentation);
 				result2.Add(auditRecordRepresentation);
 			}
@@ -421,8 +421,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = new AuditRecordFilter().byUser(user);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = new AuditRecordFilter().ByUser(user);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -436,8 +436,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byType(type);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByType(type);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -451,8 +451,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byApplication(app);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByApplication(app);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -467,8 +467,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byUser(user).byType(type);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByUser(user).ByType(type);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -482,8 +482,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byUser(user).byApplication(application);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByUser(user).ByApplication(application);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -497,8 +497,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byUser(user).byType(type).byApplication(application);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByUser(user).ByType(type).ByApplication(application);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -512,8 +512,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		{
 			try
 			{
-				AuditRecordFilter filter = (new AuditRecordFilter()).byType(type).byApplication(application);
-				collection1 = auditRecordsApi.getAuditRecordsByFilter(filter).get();
+				AuditRecordFilter filter = (new AuditRecordFilter()).ByType(type).ByApplication(application);
+				collection1 = auditRecordsApi.GetAuditRecordsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
 			{
@@ -536,21 +536,21 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 			Assert.True(status < 300);
 		}
 
-		//@Then("I should get the audit record$")
+		//@Then("I should GetFirstPage the audit record$")
 
 		public void shouldGetTheMeasurement()
 		{
 			Assert.Equal(result2[0].Id, result1[0].Id);
 		}
 
-		//@Then("I should get '(\\d+)' audit records$")
+		//@Then("I should GetFirstPage '(\\d+)' audit records$")
 
 		public void iShouldGetNumberOfMeasurements(int count)
 		{
 			Assert.Equal(count, collection1.AuditRecords.Count);
 		}
 
-		//ORIGINAL LINE: @Then("I should I get all the audit records$") public void shouldGetAllMeasurements()
+		//ORIGINAL LINE: @Then("I should I GetFirstPage all the audit records$") public void shouldGetAllMeasurements()
 		public virtual void shouldGetAllMeasurements()
 		{
 			Assert.Equal(result1.Count, collection1.AuditRecords.Count);

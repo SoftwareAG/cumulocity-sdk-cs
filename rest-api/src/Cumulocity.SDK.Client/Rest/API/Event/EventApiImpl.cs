@@ -31,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			}
 		}
 
-		public EventRepresentation getEvent(GId eventId)
+		public EventRepresentation GetEvent(GId eventId)
 		{
 			string url = $"{SelfUri}/{eventId.Value}";
 			return restConnector.Get<EventRepresentation>(url, EventMediaType.EVENT, typeof(EventRepresentation));
@@ -46,23 +46,23 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			}
 		}
 
-		public EventRepresentation create(EventRepresentation representation)
+		public EventRepresentation Create(EventRepresentation representation)
 		{
 			return restConnector.Post(SelfUri, EventMediaType.EVENT, representation);
 		}
 
-		public Task<EventRepresentation> createAsync(EventRepresentation representation)
+		public Task<EventRepresentation> CreateAsync(EventRepresentation representation)
 		{
 			return restConnector.PostAsync(SelfUri, EventMediaType.EVENT, representation);
 		}
 
-		public void delete(EventRepresentation @event)
+		public void Delete(EventRepresentation @event)
 		{
 			string url = $"{SelfUri}/{@event.Id.Value}";
 			restConnector.Delete(url);
 		}
 
-		public void deleteEventsByFilter(EventFilter filter)
+		public void DeleteEventsByFilter(EventFilter filter)
 		{
 			if (filter == null)
 			{
@@ -81,7 +81,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			return new EventCollectionImpl(restConnector, url, pageSize);
 		}
 
-		public IEventCollection getEventsByFilter(EventFilter filter)
+		public IEventCollection GetEventsByFilter(EventFilter filter)
 		{
 			if (filter == null)
 			{
@@ -99,7 +99,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			}
 		}
 
-		public EventRepresentation update(EventRepresentation eventRepresentation)
+		public EventRepresentation Update(EventRepresentation eventRepresentation)
 		{
 			string url = $"{SelfUri}/{eventRepresentation.Id.Value}";
 			return restConnector.PutWithoutId(url, EventMediaType.EVENT, eventRepresentation);

@@ -18,17 +18,17 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		{
 			this.deviceControlApi = deviceControlApi;
 			this.queueHandler = new OperationsQueueHandler(operationProcessor, OperationsQueue.Instance, deviceControlApi);
-			this.filter = new OperationFilter().byAgent(agentId).byStatus(status);
+			this.filter = new OperationFilter().ByAgent(agentId).ByStatus(status);
 
-			base.PollingTask = pollingResult;
+			base.PollingTask = PollingResult;
 		}
 
-		private void pollingResult()
+		private void PollingResult()
 		{
 			try
 			{
 				// polls for new operationRep representations and queue them
-				var collectionReps = deviceControlApi.getOperationsByFilter(filter).get();
+				var collectionReps = deviceControlApi.GetOperationsByFilter(filter).GetFirstPage();
 				OperationsQueue.Instance.addAll(collectionReps.Operations);
 			}
 			catch (Exception e)
@@ -37,24 +37,24 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 		}
 
-		public override bool start()
+		public override bool Start()
 		{
-			if (!base.start())
+			if (!base.Start())
 			{
 				return false;
 			}
 
-			//start operationRep handler, which is getting operations from blocking queue
-			queueHandler.start();
+			//Start operationRep handler, which is getting operations from blocking queue
+			queueHandler.Start();
 			return true;
 		}
 
-		public override void stop()
+		public override void Stop()
 		{
-			base.stop();
+			base.Stop();
 
-			//stop operationRep handler, which is getting operations from blocking queue
-			queueHandler.stop();
+			//Stop operationRep handler, which is getting operations from blocking queue
+			queueHandler.Stop();
 		}
 	}
 }

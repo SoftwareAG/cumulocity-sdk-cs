@@ -52,7 +52,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		}
 
 		/// <summary>
-		/// get next polling interval </summary>
+		/// GetFirstPage next polling interval </summary>
 		/// <returns> interval in milliseconds </returns>
 		public virtual long? peakNext()
 		{
@@ -65,7 +65,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		}
 
 		/// <summary>
-		/// get and remove next polling interval </summary>
+		/// GetFirstPage and remove next polling interval </summary>
 		/// <returns> interval </returns>
 		public virtual long? popNext()
 		{

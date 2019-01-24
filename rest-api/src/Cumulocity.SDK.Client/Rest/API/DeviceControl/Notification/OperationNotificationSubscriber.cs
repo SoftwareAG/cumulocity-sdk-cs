@@ -13,27 +13,27 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification
 
 		public OperationNotificationSubscriber(PlatformParameters parameters)
 		{
-			subscriber = createSubscriber(parameters);
+			subscriber = CreateSubscriber(parameters);
 		}
 
-		private ISubscriber<GId, OperationRepresentation> createSubscriber(PlatformParameters parameters)
+		private ISubscriber<GId, OperationRepresentation> CreateSubscriber(PlatformParameters parameters)
 		{
 			return SubscriberBuilder<GId, OperationRepresentation>.anSubscriber<GId, OperationRepresentation>().withEndpoint(DEVICE_CONTROL_NOTIFICATIONS_URL).withSubscriptionNameResolver(new AgentDeviceIdAsSubscriptonName()).withParameters(parameters).withDataType(typeof(OperationRepresentation)).withMessageDeliveryAcknowlage(true).build();
 		}
 
-		public virtual ISubscription<GId> subscribe(GId agentId, ISubscriptionListener<GId, OperationRepresentation> handler)
+		public virtual ISubscription<GId> Subscribe(GId agentId, ISubscriptionListener<GId, OperationRepresentation> handler)
 		{
-			return subscriber.subscribe(agentId, handler);
+			return subscriber.Subscribe(agentId, handler);
 		}
 
-		public ISubscription<GId> subscribe(GId agentId, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<GId, OperationRepresentation> handler, bool autoRetry)
+		public ISubscription<GId> Subscribe(GId agentId, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<GId, OperationRepresentation> handler, bool autoRetry)
 		{
-			return subscriber.subscribe(agentId, subscribeOperationListener, handler, autoRetry);
+			return subscriber.Subscribe(agentId, subscribeOperationListener, handler, autoRetry);
 		}
 
-		public virtual void disconnect()
+		public virtual void Disconnect()
 		{
-			subscriber.disconnect();
+			subscriber.Disconnect();
 		}
 
 		private sealed class AgentDeviceIdAsSubscriptonName : ISubscriptionNameResolver<GId>

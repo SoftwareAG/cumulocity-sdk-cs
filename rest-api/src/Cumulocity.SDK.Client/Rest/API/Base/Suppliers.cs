@@ -2,7 +2,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Base
 {
 	public class Suppliers
 	{
-		public static ISupplier<T> ofInstance<T>(T instance)
+		public static ISupplier<T> OfInstance<T>(T instance)
 		{
 			return new SupplierAnonymousInnerClass<T>(instance);
 		}
@@ -16,7 +16,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Base
 				this.instance = instance;
 			}
 
-			public virtual T get()
+			public virtual T Get()
 			{
 				return instance;
 			}

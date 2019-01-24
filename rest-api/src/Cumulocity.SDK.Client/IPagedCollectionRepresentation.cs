@@ -4,9 +4,9 @@ namespace Cumulocity.SDK.Client
 {
     public interface IPagedCollectionRepresentation<T>
     {
-        IEnumerable<T> allPages();
+        IEnumerable<T> AllPages();
 
-        IEnumerable<T> elements(int var1);
+        IEnumerable<T> Elements(int var1);
     }
 
 }

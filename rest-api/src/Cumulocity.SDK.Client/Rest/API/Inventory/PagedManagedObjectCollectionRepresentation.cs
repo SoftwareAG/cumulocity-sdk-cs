@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<ManagedObjectRepresentation> allPages()
+		public IEnumerable<ManagedObjectRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<ManagedObjectRepresentation, ManagedObjectCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<ManagedObjectRepresentation> elements(int limit)
+		public IEnumerable<ManagedObjectRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<ManagedObjectRepresentation, ManagedObjectCollectionRepresentation>(collectionResource, this, limit);
 		}

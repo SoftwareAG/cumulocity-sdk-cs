@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<AuditRecordRepresentation> allPages()
+		public IEnumerable<AuditRecordRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<AuditRecordRepresentation, AuditRecordCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<AuditRecordRepresentation> elements(int limit)
+		public IEnumerable<AuditRecordRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<AuditRecordRepresentation, AuditRecordCollectionRepresentation>(collectionResource, this, limit);
 		}

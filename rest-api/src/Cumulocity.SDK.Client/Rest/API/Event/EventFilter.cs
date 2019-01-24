@@ -9,7 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 	/// <summary>
 	/// A filter to be used in event queries.
 	/// The setter (by*) methods return the filter itself to provide chaining:
-	/// {@code EventFilter filter = new EventFilter().byType(type).bySource(source);}
+	/// {@code EventFilter filter = new EventFilter().ByType(type).BySource(source);}
 	/// </summary>
 	public class EventFilter : Filter
 	{
@@ -32,7 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// </summary>
 		/// <param name="type"> the type of the event(s) </param>
 		/// <returns> the event filter with {@code type} set </returns>
-		public virtual EventFilter byType(string type)
+		public virtual EventFilter ByType(string type)
 		{
 			this.type = type;
 			return this;
@@ -43,7 +43,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// </summary>
 		/// <param name="source"> the managed object that generated the event(s) </param>
 		/// <returns> the event filter with {@code source} set </returns>
-		public virtual EventFilter bySource(GId id)
+		public virtual EventFilter BySource(GId id)
 		{
 			this.source = id.Value;
 			return this;
@@ -55,7 +55,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// <param name="source"> the managed object that generated the event(s) </param>
 		/// <returns> the event filter with {@code source} set </returns>
 		[Obsolete]
-		public virtual EventFilter bySource(ManagedObjectRepresentation source)
+		public virtual EventFilter BySource(ManagedObjectRepresentation source)
 		{
 			this.source = source.Id.Value;
 			return this;
@@ -79,7 +79,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			return this;
 		}
 
-		public virtual EventFilter byFragmentType(string fragmentType)
+		public virtual EventFilter ByFragmentType(string fragmentType)
 		{
 			this.fragmentType = fragmentType;
 			return this;
@@ -108,14 +108,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 
 		public virtual string CreatedTo => createdTo;
 
-		public virtual EventFilter byCreationDate(DateTime fromDate, DateTime toDate)
+		public virtual EventFilter ByCreationDate(DateTime fromDate, DateTime toDate)
 		{
 			this.createdFrom = fromDate.ToLongDateString();
 			this.createdTo = toDate.ToLongDateString();
 			return this;
 		}
 
-		public virtual EventFilter byFromCreationDate(DateTime fromDate)
+		public virtual EventFilter ByFromCreationDate(DateTime fromDate)
 		{
 			this.createdFrom = fromDate.ToLongDateString();
 			return this;

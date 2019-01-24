@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<OptionRepresentation> allPages()
+		public IEnumerable<OptionRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<OptionRepresentation, OptionCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<OptionRepresentation> elements(int limit)
+		public IEnumerable<OptionRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<OptionRepresentation, OptionCollectionRepresentation>(collectionResource, this, limit);
 		}

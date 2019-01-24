@@ -10,11 +10,11 @@
 		/// Starts poller
 		/// </summary>
 		/// <returns> true if the poller was successfully started </returns>
-		bool start();
+		bool Start();
 
 		/// <summary>
 		/// Stops poller after finishing all started jobs
 		/// </summary>
-		void stop();
+		void Stop();
 	}
 }

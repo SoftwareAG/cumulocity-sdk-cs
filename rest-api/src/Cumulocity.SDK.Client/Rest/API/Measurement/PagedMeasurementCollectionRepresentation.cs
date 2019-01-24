@@ -21,12 +21,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<MeasurementRepresentation> allPages()
+		public IEnumerable<MeasurementRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<MeasurementRepresentation, MeasurementCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<MeasurementRepresentation> elements(int limit)
+		public IEnumerable<MeasurementRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<MeasurementRepresentation, MeasurementCollectionRepresentation>(collectionResource, this, limit);
 		}

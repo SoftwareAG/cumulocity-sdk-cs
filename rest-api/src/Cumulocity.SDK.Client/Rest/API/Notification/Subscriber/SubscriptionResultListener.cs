@@ -85,7 +85,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 				}
 				else
 				{
-					//log.debug("Detected a short network failure, retrying to subscribe channel: {}", channel.Id);
+					//log.debug("Detected a short network failure, retrying to Subscribe channel: {}", channel.Id);
 					channel.unsubscribe(new UnsubscribeListener<T>(subscription, channel, this.subscriberImpl));
 				}
 			}

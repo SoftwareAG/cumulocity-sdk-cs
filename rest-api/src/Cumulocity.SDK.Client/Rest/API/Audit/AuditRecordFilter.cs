@@ -3,7 +3,7 @@
 	/// <summary>
 	/// A filter to be used in audit record queries.
 	/// The setter (by*) methods return the filter itself to provide chaining:
-	/// {@code AuditRecordFilter filter = new AuditRecordFilter().byUser(user).byType(type);}
+	/// {@code AuditRecordFilter filter = new AuditRecordFilter().ByUser(user).ByType(type);}
 	/// </summary>
 	public class AuditRecordFilter : Filter
 	{
@@ -18,7 +18,7 @@
 		/// </summary>
 		/// <param name="user"> the user associated with the audit record(s) </param>
 		/// <returns> the audit record filter with {@code user} set </returns>
-		public virtual AuditRecordFilter byUser(string user)
+		public virtual AuditRecordFilter ByUser(string user)
 		{
 			this.user = user;
 			return this;
@@ -29,7 +29,7 @@
 		/// </summary>
 		/// <param name="type"> the type of the audit record(s) </param>
 		/// <returns> the audit record filter with {@code type} set </returns>
-		public virtual AuditRecordFilter byType(string type)
+		public virtual AuditRecordFilter ByType(string type)
 		{
 			this.type = type;
 			return this;
@@ -40,7 +40,7 @@
 		/// </summary>
 		/// <param name="application"> the application associated with the audit record(s) </param>
 		/// <returns> the audit record filter with {@code application} set </returns>
-		public virtual AuditRecordFilter byApplication(string application)
+		public virtual AuditRecordFilter ByApplication(string application)
 		{
 			this.application = application;
 			return this;

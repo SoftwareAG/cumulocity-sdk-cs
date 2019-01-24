@@ -195,7 +195,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 					postStream.Close();
 				}
 
-				// Start the asynchronous operation to get the response
+				// Start the asynchronous operation to GetFirstPage the response
 				exchange.listener.onSending(ObjectConverter.ToListOfIMessage(exchange.messages));
 				IAsyncResult result = (IAsyncResult)exchange.request.BeginGetResponse(new AsyncCallback(GetResponseCallback), exchange);
 

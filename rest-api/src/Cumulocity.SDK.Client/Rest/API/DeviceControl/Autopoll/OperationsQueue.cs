@@ -41,7 +41,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 			OperationRepresentation operation = (OperationRepresentation)arg0;
 
-			//iterate over all elements in queue and compare theirs ids
+			//iterate over all Elements in queue and compare theirs ids
 			//var iterator = base.GetConsumingEnumerable();
 			foreach (var current in base.ToArray())
 			{

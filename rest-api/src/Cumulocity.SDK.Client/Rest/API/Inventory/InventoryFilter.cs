@@ -36,7 +36,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="fragmentClass"> the class representation of the type of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code fragmentType} set </returns>
-	public virtual InventoryFilter byFragmentType(Type fragmentClass)
+	public virtual InventoryFilter ByFragmentType(Type fragmentClass)
 	{
 		this.fragmentType = Cumulocity.SDK.Client.Rest.Model.util.ExtensibilityConverter.ClassToStringRepresentation(fragmentClass);
 		return this;
@@ -47,7 +47,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="fragmentType"> the string representation of the type of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code fragmentType} set </returns>
-	public virtual InventoryFilter byFragmentType(string fragmentType)
+	public virtual InventoryFilter ByFragmentType(string fragmentType)
 	{
 		this.fragmentType = fragmentType;
 		return this;
@@ -67,7 +67,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="type"> the type of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code type} set </returns>
-	public virtual InventoryFilter byType(string type)
+	public virtual InventoryFilter ByType(string type)
 	{
 		this.type = type;
 		return this;
@@ -87,7 +87,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="owner"> the owner of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code owner} set </returns>
-	public virtual InventoryFilter byOwner(string owner)
+	public virtual InventoryFilter ByOwner(string owner)
 	{
 		this.owner = owner;
 		return this;
@@ -107,7 +107,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="text"> the text of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code text} set </returns>
-	public virtual InventoryFilter byText(string text)
+	public virtual InventoryFilter ByText(string text)
 	{
 		this.text = text;
 		return this;
@@ -127,9 +127,9 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="ids"> the ids of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code ids} set </returns>
-	public virtual InventoryFilter byIds(IList<GId> ids)
+	public virtual InventoryFilter ByIds(IList<GId> ids)
 	{
-		this.ids = createCommaSeparatedStringFromGids(ids);
+		this.ids = CreateCommaSeparatedStringFromGids(ids);
 		return this;
 	}
 
@@ -138,9 +138,9 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="ids"> the ids of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code ids} set </returns>
-	public virtual InventoryFilter byIds(params GId[] ids)
+	public virtual InventoryFilter ByIds(params GId[] ids)
 	{
-		this.ids = createCommaSeparatedStringFromGids(ids.ToList());
+		this.ids = CreateCommaSeparatedStringFromGids(ids.ToList());
 		return this;
 	}
 
@@ -149,7 +149,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="childAssetId"> the child asset of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code childAssetId} set </returns>
-	public virtual InventoryFilter byChildAssetId(GId childAssetId)
+	public virtual InventoryFilter ByChildAssetId(GId childAssetId)
 	{
 		this.childAssetId = childAssetId.Value;
 		return this;
@@ -168,7 +168,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="childDeviceId"> the child asset of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code childDeviceId} set </returns>
-	public virtual InventoryFilter byChildDeviceId(GId childDeviceId)
+	public virtual InventoryFilter ByChildDeviceId(GId childDeviceId)
 	{
 		this.childDeviceId = childDeviceId.Value;
 		return this;
@@ -187,7 +187,7 @@ public class InventoryFilter : Filter
 	/// </summary>
 	/// <param name="childAdditionId"> the child addition of the managed object(s) </param>
 	/// <returns> the managed object filter with {@code childAdditionId} set </returns>
-	public virtual InventoryFilter byChildAdditionId(GId childAdditionId)
+	public virtual InventoryFilter ByChildAdditionId(GId childAdditionId)
 	{
 		this.childAdditionId = childAdditionId.Value;
 		return this;
@@ -201,7 +201,7 @@ public class InventoryFilter : Filter
 		}
 	}
 
-	private string createCommaSeparatedStringFromGids(IList<GId> ids)
+	private string CreateCommaSeparatedStringFromGids(IList<GId> ids)
 	{
 		bool atLeastOneItemProcessed = false;
 		StringBuilder builder = new StringBuilder();

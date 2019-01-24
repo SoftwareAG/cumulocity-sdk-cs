@@ -10,7 +10,7 @@ namespace Cumulocity.SDK.Client.UnitTest.Devicecontrol
 	{
 		private IList<OperationRepresentation> operations = new List<OperationRepresentation>();
 
-		public bool process(OperationRepresentation operation)
+		public bool Process(OperationRepresentation operation)
 		{
 			operations.Add(operation);
 			return true;

@@ -26,12 +26,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// 
 		///      {@literal @}Override
 		///      public void onNotification(Subscription<GId> subscription, Object operation) {
-		///             //process notification from cep module 
+		///             //Process notification from cep module 
 		///      }
 		/// 
 		///      {@literal @}Override
 		///      public void onError(Subscription<GId> subscription, Throwable ex) {
-		///          // handle subscribe error
+		///          // handle Subscribe error
 		///      }
 		///  });
 		///  </code>
@@ -47,7 +47,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// <param name="id"> of the cep module to search for </param>
 		/// <returns> the cep module with the given id </returns>
 		/// <exception cref="SDKException"> if the cep module is not found or if the query failed </exception>
-		CepModuleRepresentation get(string id);
+		CepModuleRepresentation Get(string id);
 
 		/// <summary>
 		/// Gets a cep module text by id
@@ -55,7 +55,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// <param name="id"> of the cep module to search for </param>
 		/// <returns> the cep module text </returns>
 		/// <exception cref="SDKException"> if the cep module is not found or if the query failed </exception>
-		string getText(string id);
+		string GetText(string id);
 
 		/// <summary>
 		/// Creates an cep module in the platform.
@@ -64,7 +64,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// <returns> the created cep module with the generated id </returns>
 		/// <exception cref="SDKException"> if the cep module could not be created </exception>
 		[Obsolete]
-		CepModuleRepresentation create(Stream content);
+		CepModuleRepresentation Create(Stream content);
 
 		/// <summary>
 		/// Creates an cep module in the platform.
@@ -72,20 +72,20 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// <param name="content"> of cep module definition </param>
 		/// <returns> the created cep module with the generated id </returns>
 		/// <exception cref="SDKException"> if the cep module could not be created </exception>
-		CepModuleRepresentation create(string content);
+		CepModuleRepresentation Create(string content);
 		/// <summary>
 		/// Updates an cep module in the platform.
 		/// The cep module to be updated is identified by the id.
 		/// </summary>
-		/// <param name="id"> of cep module to update </param>
+		/// <param name="id"> of cep module to Update </param>
 		/// <param name="content"> input stream to resource with cep module definition </param>
 		/// <returns> the updated cep module </returns>
 		/// <exception cref="SDKException"> if the cep module could not be updated </exception>
-		CepModuleRepresentation update(string id, Stream content);
+		CepModuleRepresentation Update(string id, Stream content);
 
-		CepModuleRepresentation update(string id, string content);
+		CepModuleRepresentation Update(string id, string content);
 
-		CepModuleRepresentation update(CepModuleRepresentation module);
+		CepModuleRepresentation Update(CepModuleRepresentation module);
 
 		/// <summary>
 		/// Gets all cep modules from the platform
@@ -98,17 +98,17 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		/// Deletes the cep module from the platform.
 		/// </summary>
 		/// <exception cref="SDKException"> </exception>
-		void delete(CepModuleRepresentation module);
+		void Delete(CepModuleRepresentation module);
 
 		/// <summary>
 		/// Deletes the cep module from the platform.
 		/// </summary>
 		/// <exception cref="SDKException"> </exception>
-		void delete(string id);
+		void Delete(string id);
 
 		/// <summary>
 		/// Checks state of cep microservice.
 		/// </summary>
-		T health<T>(Type clazz);
+		T Health<T>(Type clazz);
 	}
 }

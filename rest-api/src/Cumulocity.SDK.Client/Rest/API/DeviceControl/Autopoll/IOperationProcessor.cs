@@ -7,8 +7,8 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		/// <summary>
 		/// Processes operation
 		/// </summary>
-		/// <param name="operation"> operation to process </param>
+		/// <param name="operation"> operation to Process </param>
 		/// <returns> true - if processing was successful, false - otherwise </returns>
-		bool process(OperationRepresentation operation);
+		bool Process(OperationRepresentation operation);
 	}
 }

@@ -41,7 +41,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 
 		public void StartRun(int initialDelayMin)
 		{
-			// Should throw if you try to start twice...
+			// Should throw if you try to Start twice...
 			try
 			{
 				TheNeverEndingTask.Start();

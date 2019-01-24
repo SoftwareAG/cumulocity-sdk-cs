@@ -31,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			}
 		}
 
-		public AuditRecordRepresentation getAuditRecord(GId gid)
+		public AuditRecordRepresentation GetAuditRecord(GId gid)
 		{
 			string url = $"{SelfUri}/{gid.Value}";
 			return restConnector.Get<AuditRecordRepresentation>(url, AuditMediaType.AUDIT_RECORD, typeof(AuditRecordRepresentation));
@@ -54,12 +54,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Audit
 			}
 		}
 
-		public AuditRecordRepresentation create(AuditRecordRepresentation representation)
+		public AuditRecordRepresentation Create(AuditRecordRepresentation representation)
 		{
 			return restConnector.Post<AuditRecordRepresentation>(SelfUri, AuditMediaType.AUDIT_RECORD, representation);
 		}
 
-		public IAuditRecordCollection getAuditRecordsByFilter(AuditRecordFilter filter)
+		public IAuditRecordCollection GetAuditRecordsByFilter(AuditRecordFilter filter)
 		{
 			if (filter == null)
 			{

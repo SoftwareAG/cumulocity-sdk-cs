@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<EventRepresentation> allPages()
+		public IEnumerable<EventRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<EventRepresentation, EventCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<EventRepresentation> elements(int limit)
+		public IEnumerable<EventRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<EventRepresentation, EventCollectionRepresentation>(collectionResource, this, limit);
 		}

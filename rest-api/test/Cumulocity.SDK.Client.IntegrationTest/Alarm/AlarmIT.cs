@@ -31,6 +31,8 @@ using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using Cumulocity.SDK.Client.Rest.Model.Idtype;
+using Microsoft.DotNet.PlatformAbstractions;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
@@ -40,14 +42,26 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public AlarmIT(AlarmFixture fixture)
 		{
 			AlarmApi = fixture.platform.AlarmApi;
-
-			mo1 = fixture.platform.InventoryApi.create(aSampleMo().withName("MO" + 1).build());
-			mo2 = fixture.platform.InventoryApi.create(aSampleMo().withName("MO" + 2).build());
-			mo3 = fixture.platform.InventoryApi.create(aSampleMo().withName("MO" + 3).build());
+			Platform = fixture.platform;
+			mo1 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 1).build());
+			mo2 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 2).build());
+			mo3 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 3).build());
 		}
 
 		public void Dispose()
 		{
+			var inventory = Platform.InventoryApi;
+			List<GId> lst = new List<GId>();
+			foreach (var item in inventory.ManagedObjects.GetFirstPage().AllPages())
+			{
+				lst.Add(item.Id);
+			}
+
+			foreach (var id in lst)
+			{
+				var mo = inventory.GetManagedObject(id);
+				mo.Delete();
+			}
 		}
 
 		private readonly ManagedObjectRepresentation mo1;
@@ -56,6 +70,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		private int t;
 
 		public IAlarmApi AlarmApi { get; set; }
+		public  PlatformImpl Platform { get; set; }
 
 		private static ManagedObjectRepresentationBuilder aSampleMo()
 		{
@@ -81,7 +96,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			// Given
 			var rep = aSampleAlarm(mo1);
 			// When
-			var created = AlarmApi.create(rep);
+			var created = AlarmApi.Create(rep);
 			// Then
 			Assert.NotNull(created.Id);
 		}
@@ -95,7 +110,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			.withSource(mo1).withText(null).build();
 
 			// When
-			var ex = Record.Exception(() => AlarmApi.create(alarm));
+			var ex = Record.Exception(() => AlarmApi.Create(alarm));
 
 			// Then
 			Assert.NotNull(ex);
@@ -112,7 +127,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			   .withSource(mo1).withSeverity(null).build();
 
 			// When
-			var ex = Record.Exception(() => AlarmApi.create(alarm));
+			var ex = Record.Exception(() => AlarmApi.Create(alarm));
 
 			// Then
 			Assert.NotNull(ex);
@@ -128,11 +143,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 			for (int i = 0; i < 10; i++)
 			{
-				AlarmApi.create(aSampleAlarm(source));
+				AlarmApi.Create(aSampleAlarm(source));
 			}
 
 			int resultNumber = 0;
-			var pager = AlarmApi.getAlarmsByFilter(new AlarmFilter().bySource(source.Id)).get().allPages();
+			var pager = AlarmApi.GetAlarmsByFilter(new AlarmFilter().BySource(source.Id)).GetFirstPage().AllPages();
 			foreach (AlarmRepresentation alarm in pager)
 			{
 				resultNumber++;
@@ -153,7 +168,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			}
 
 			int resultNumber = 0;
-			var pager = AlarmApi.getAlarmsByFilter(new AlarmFilter().bySource(source.Id)).get().allPages();
+			var pager = AlarmApi.GetAlarmsByFilter(new AlarmFilter().BySource(source.Id)).GetFirstPage().AllPages();
 			foreach (AlarmRepresentation alarm in pager)
 			{
 				resultNumber++;
@@ -166,11 +181,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldReturnNoAlarmWithUnmatchedFilter()
 		{
 			// Given
-			AlarmApi.create(aSampleAlarm(mo1));
+			AlarmApi.Create(aSampleAlarm(mo1));
 
 			// When
-			AlarmFilter filter = new AlarmFilter().bySource(mo3);
-			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+			AlarmFilter filter = new AlarmFilter().BySource(mo3);
+			AlarmCollectionRepresentation bySource = AlarmApi.GetAlarmsByFilter(filter).GetFirstPage();
 
 			// Then
 			var alarms = bySource.Alarms;
@@ -181,12 +196,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldReturnMultipleAlarmsWithMatchedFilter()
 		{
 			// Given
-			AlarmApi.create(aSampleAlarm(mo1));
-			AlarmApi.create(aSampleAlarm(mo1));
+			AlarmApi.Create(aSampleAlarm(mo1));
+			AlarmApi.Create(aSampleAlarm(mo1));
 
 			// When
-			AlarmFilter filter = new AlarmFilter().bySource(mo1);
-			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+			AlarmFilter filter = new AlarmFilter().BySource(mo1);
+			AlarmCollectionRepresentation bySource = AlarmApi.GetAlarmsByFilter(filter).GetFirstPage();
 
 			// Then
 			var alarms = bySource.Alarms;
@@ -197,12 +212,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldReturnFilterBySource()
 		{
 			// Given
-			AlarmApi.create(aSampleAlarm(mo1));
-			AlarmApi.create(aSampleAlarm(mo2));
+			AlarmApi.Create(aSampleAlarm(mo1));
+			AlarmApi.Create(aSampleAlarm(mo2));
 
 			// When
-			AlarmFilter filter = new AlarmFilter().bySource(mo1);
-			AlarmCollectionRepresentation bySource = AlarmApi.getAlarmsByFilter(filter).get();
+			AlarmFilter filter = new AlarmFilter().BySource(mo1);
+			AlarmCollectionRepresentation bySource = AlarmApi.GetAlarmsByFilter(filter).GetFirstPage();
 
 			// Then
 			var alarms = bySource.Alarms;
@@ -214,23 +229,23 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void getAlarmCollectionByStatus()
 		{
 			// Given
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 					.withType("com_nsn_bts_TrxFaulty" + t++)
 					.withStatus("ACTIVE")
 					.withSource(mo1).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 					.withType("com_nsn_bts_TrxFaulty" + t++)
 					.withStatus("ACKNOWLEDGED")
 					.withSource(mo1).build());
 
 			// When
-			AlarmFilter acknowledgedFilter = new AlarmFilter().byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
+			AlarmFilter acknowledgedFilter = new AlarmFilter().ByStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
 
 			// Then
-			foreach (AlarmRepresentation result in AlarmApi.getAlarmsByFilter(acknowledgedFilter).get().allPages())
+			foreach (AlarmRepresentation result in AlarmApi.GetAlarmsByFilter(acknowledgedFilter).GetFirstPage().AllPages())
 			{
 				Assert.Equal("ACKNOWLEDGED", result.Status);
 			}
@@ -240,19 +255,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void getAlarmCollectionByStatusAndSource()
 		{
 			// Given
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("CLEARED")
 						.withSource(mo1).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("ACKNOWLEDGED")
 						.withSource(mo1).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("CUSTOM")
@@ -260,8 +275,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 			// When
 			AlarmFilter acknowledgedFilter = new AlarmFilter()
-				.byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED")).bySource(mo1);
-			AlarmCollectionRepresentation acknowledgedAlarms = AlarmApi.getAlarmsByFilter(acknowledgedFilter).get();
+				.ByStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED")).BySource(mo1);
+			AlarmCollectionRepresentation acknowledgedAlarms = AlarmApi.GetAlarmsByFilter(acknowledgedFilter).GetFirstPage();
 
 			// Then
 			var alarms = acknowledgedAlarms.Alarms;
@@ -274,12 +289,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldGetAlarmById()
 		{
 			// Given
-			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 				.withStatus("ACTIVE")
 				.withSource(mo1).build());
 
-			AlarmRepresentation returned = AlarmApi.getAlarm(created.Id);
+			AlarmRepresentation returned = AlarmApi.GetAlarm(created.Id);
 
 			Assert.Equal("ACTIVE", returned.Status);
 			Assert.Equal(mo1.Id, returned.Source.Id);
@@ -289,7 +304,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldReturnTheUpdatedAlarm()
 		{
 			// Given
-			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 					.withStatus("ACTIVE")
 					.withSource(mo1).build());
@@ -298,7 +313,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			AlarmRepresentation alarm = new AlarmRepresentation();
 			alarm.Status = "ACKNOWLEDGED";
 			alarm.Id = created.Id;
-			AlarmRepresentation updated = AlarmApi.updateAlarm(alarm);
+			AlarmRepresentation updated = AlarmApi.UpdateAlarm(alarm);
 
 			// Then
 			Assert.Equal("ACKNOWLEDGED", updated.Status);
@@ -309,7 +324,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		public void shouldUpdateAlarm()
 		{
 			// Given
-			AlarmRepresentation created = AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withStatus("ACTIVE")
 						.withSource(mo1).build());
@@ -318,10 +333,10 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			AlarmRepresentation alarm = new AlarmRepresentation();
 			alarm.Status ="ACKNOWLEDGED";
 			alarm.Id = created.Id;
-			AlarmApi.updateAlarm(alarm);
+			AlarmApi.UpdateAlarm(alarm);
 
 			// Then
-			AlarmRepresentation returned = AlarmApi.getAlarm(created.Id);
+			AlarmRepresentation returned = AlarmApi.GetAlarm(created.Id);
 
 			Assert.Equal("ACKNOWLEDGED", returned.Status);
 			Assert.Equal(mo1.Id, returned.Source.Id);
@@ -333,19 +348,19 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			// Given
 			for (int i = 0; i < 5; i++)
 			{
-				AlarmApi.create(aSampleAlarm(mo1));
-				AlarmApi.create(aSampleAlarm(mo2));
-				AlarmApi.create(aSampleAlarm(mo3));
+				AlarmApi.Create(aSampleAlarm(mo1));
+				AlarmApi.Create(aSampleAlarm(mo2));
+				AlarmApi.Create(aSampleAlarm(mo3));
 			}
 
 			AlarmFilter emptyFilter = new AlarmFilter();
 
 			//When
-			AlarmApi.deleteAlarmsByFilter(emptyFilter);
+			AlarmApi.DeleteAlarmsByFilter(emptyFilter);
 
 			//Then
 			int resultNumber = 0;
-			var pager = AlarmApi.getAlarms().get().allPages();
+			var pager = AlarmApi.GetAlarms().GetFirstPage().AllPages();
 			foreach (AlarmRepresentation alarm in pager)
 			{
 				resultNumber++;
@@ -357,39 +372,39 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		[Fact]
 		public void shouldDeleteByFilterStatus()
 		{
-			var allAlarmsT = AlarmApi.getAlarms().get().Alarms;
+			var allAlarmsT = AlarmApi.GetAlarms().GetFirstPage().Alarms;
 			// Given
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("ACTIVE")
 						.withSource(mo1).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("ACKNOWLEDGED")
 						.withSource(mo1).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("ACKNOWLEDGED")
 						.withSource(mo2).build());
 
-			AlarmApi.create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("CLEARED")
 						.withSource(mo2).build());
 
-			AlarmFilter alarmFilter = new AlarmFilter().byStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
+			AlarmFilter alarmFilter = new AlarmFilter().ByStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
 
 			// When
-			AlarmApi.deleteAlarmsByFilter(alarmFilter);
+			AlarmApi.DeleteAlarmsByFilter(alarmFilter);
 
 			// Then
-			var allAlarms = AlarmApi.getAlarms().get().Alarms;
+			var allAlarms = AlarmApi.GetAlarms().GetFirstPage().Alarms;
 
 			Assert.Equal(2, allAlarms.Count);
 			List<string> wantedStatus = new List<string>();

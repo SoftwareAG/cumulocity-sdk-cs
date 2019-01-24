@@ -11,27 +11,27 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 
 		public CepCustomNotificationsSubscriber(PlatformParameters parameters)
 		{
-			subscriber = createSubscriber(parameters);
+			subscriber = CreateSubscriber(parameters);
 		}
 
-		private ISubscriber<string, object> createSubscriber(PlatformParameters parameters)
+		private ISubscriber<string, object> CreateSubscriber(PlatformParameters parameters)
 		{
 			return SubscriberBuilder<string, object>.anSubscriber<string, object>().withParameters(parameters).withEndpoint(CEP_CUSTOM_NOTIFICATIONS_URL).withSubscriptionNameResolver(new Identity()).withDataType(typeof(object)).build();
 		}
 
-		public virtual ISubscription<string> subscribe(string channelID, ISubscriptionListener<string, object> handler)
+		public virtual ISubscription<string> Subscribe(string channelID, ISubscriptionListener<string, object> handler)
 		{
-			return subscriber.subscribe(channelID, handler);
+			return subscriber.Subscribe(channelID, handler);
 		}
 
-		public ISubscription<string> subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, object> handler, bool autoRetry)
+		public ISubscription<string> Subscribe(string channelID, ISubscribeOperationListener subscribeOperationListener, ISubscriptionListener<string, object> handler, bool autoRetry)
 		{
-			return subscriber.subscribe(channelID, subscribeOperationListener, handler, autoRetry);
+			return subscriber.Subscribe(channelID, subscribeOperationListener, handler, autoRetry);
 		}
 
-		public virtual void disconnect()
+		public virtual void Disconnect()
 		{
-			subscriber.disconnect();
+			subscriber.Disconnect();
 		}
 
 		private sealed class Identity : ISubscriptionNameResolver<string>

@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		/// <summary>
 		/// Stops after finishing operation in progress
 		/// </summary>
-		public virtual void stop()
+		public virtual void Stop()
 		{
 			lock (this)
 			{
@@ -48,7 +48,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		/// <summary>
 		/// Starts, if it's not started yet
 		/// </summary>
-		public virtual void start()
+		public virtual void Start()
 		{
 			lock (this)
 			{
@@ -93,10 +93,10 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 						{
 							// change status of operation in REST to "executing"
 							op.Status = OperationStatus.EXECUTING.ToString();
-							executingOperation = deviceControlApi.update(op);
+							executingOperation = deviceControlApi.Update(op);
 						}
 
-						bool result = operationProcessor.process(op);
+						bool result = operationProcessor.Process(op);
 
 						if (!internalOperation.Value)
 						{
@@ -110,7 +110,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 							{
 								executingOperation.Status = OperationStatus.FAILED.ToString();
 							}
-							deviceControlApi.update(executingOperation);
+							deviceControlApi.Update(executingOperation);
 						}
 					}
 				}

@@ -18,12 +18,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 			this.collectionResource = collectionResource;
 		}
 
-		public IEnumerable<AlarmRepresentation> allPages()
+		public IEnumerable<AlarmRepresentation> AllPages()
 		{
 			return new PagedCollectionIterable<AlarmRepresentation, AlarmCollectionRepresentation>(collectionResource, this);
 		}
 
-		public IEnumerable<AlarmRepresentation> elements(int limit)
+		public IEnumerable<AlarmRepresentation> Elements(int limit)
 		{
 			return new PagedCollectionIterable<AlarmRepresentation, AlarmCollectionRepresentation>(collectionResource, this, limit);
 		}

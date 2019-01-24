@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			}
 		}
 
-		public OperationRepresentation getOperation(GId gid)
+		public OperationRepresentation GetOperation(GId gid)
 		{
 			string url = $"{SelfUri}/{gid.Value}";
 			return restConnector.Get<OperationRepresentation>(url, DeviceControlMediaType.OPERATION, typeof(OperationRepresentation));
@@ -52,18 +52,18 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			}
 		}
 
-		public OperationRepresentation create(OperationRepresentation operation)
+		public OperationRepresentation Create(OperationRepresentation operation)
 		{
 			return restConnector.Post(SelfUri, DeviceControlMediaType.OPERATION, operation);
 		}
 
-		public OperationRepresentation update(OperationRepresentation operation)
+		public OperationRepresentation Update(OperationRepresentation operation)
 		{
 			string url = $"{SelfUri}/{operation.Id.Value}";
 			return restConnector.PutWithoutId(url, DeviceControlMediaType.OPERATION, prepareOperationForUpdate(operation));
 		}
 
-		public Task<OperationRepresentation> updateAsync(OperationRepresentation operation)
+		public Task<OperationRepresentation> UpdateAsync(OperationRepresentation operation)
 		{
 			string url = $"{SelfUri}/{operation.Id.Value}";
 			return restConnector.PutAsync(url, DeviceControlMediaType.OPERATION, prepareOperationForUpdate(operation));
@@ -89,7 +89,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 			return toSend;
 		}
 
-		public IOperationCollection getOperationsByFilter(OperationFilter filter)
+		public IOperationCollection GetOperationsByFilter(OperationFilter filter)
 		{
 			if (filter == null)
 			{

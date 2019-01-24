@@ -19,21 +19,21 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			this.dataType = dataType;
 		}
 
-		public virtual ISubscription<T> subscribe(T @object, ISubscriptionListener<T, R> handler)
+		public virtual ISubscription<T> Subscribe(T @object, ISubscriptionListener<T, R> handler)
 		{
-			return subscriber.subscribe(@object, new MappingSubscriptionListener<T, R>(handler, dataType));
+			return subscriber.Subscribe(@object, new MappingSubscriptionListener<T, R>(handler, dataType));
 		}
 
-		public ISubscription<T> subscribe(T agentId, ISubscribeOperationListener subscribeOperationListener,
+		public ISubscription<T> Subscribe(T agentId, ISubscribeOperationListener subscribeOperationListener,
 			ISubscriptionListener<T, R> handler, bool autoRetry)
 		{
-			return subscriber.subscribe(agentId, subscribeOperationListener,
+			return subscriber.Subscribe(agentId, subscribeOperationListener,
 				new MappingSubscriptionListener<T, R>(handler, dataType), autoRetry);
 		}
 
-		public virtual void disconnect()
+		public virtual void Disconnect()
 		{
-			subscriber.disconnect();
+			subscriber.Disconnect();
 		}
 
 	}

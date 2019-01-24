@@ -18,22 +18,22 @@ namespace Cumulocity.SDK.Client.Rest.API.Inventory
 			this.inventoryRepresentation = inventoryRepresentation;
 		}
 
-		public ManagedObjectRepresentation uploadFile(ManagedObjectRepresentation container, byte[] bytes)
+		public ManagedObjectRepresentation UploadFile(ManagedObjectRepresentation container, byte[] bytes)
 		{
 			return restConnector.postFile<ManagedObjectRepresentation>(BinariesUrl, container, bytes, container);
 		}
 
-		public ManagedObjectRepresentation replaceFile(GId containerId, string contentType, Stream fileStream)
+		public ManagedObjectRepresentation ReplaceFile(GId containerId, string contentType, Stream fileStream)
 		{
 			return restConnector.putStream<ManagedObjectRepresentation>(BinariesUrl + V + containerId.Value, contentType, fileStream, typeof(ManagedObjectRepresentation));
 		}
 
-		public void deleteFile(GId containerId)
+		public void DeleteFile(GId containerId)
 		{
 			restConnector.Delete(BinariesUrl + V + containerId.Value);
 		}
 
-		public Task<Stream> downloadFile(GId id)
+		public Task<Stream> DownloadFile(GId id)
 		{
 			return restConnector.GetStream(BinariesUrl + V + id.Value, MediaType.APPLICATION_OCTET_STREAM_TYPE);
 		}

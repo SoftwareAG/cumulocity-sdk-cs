@@ -53,7 +53,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 		}
 		private IdentityRepresentation IdentityRepresentation { get; }
 
-		public ExternalIDRepresentation create(ExternalIDRepresentation representation)
+		public ExternalIDRepresentation Create(ExternalIDRepresentation representation)
 		{
 			if (representation == null || representation.ManagedObject == null ||
 				representation.ManagedObject.Id == null) throw new SDKException("Cannot determine global id value");
@@ -65,7 +65,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 			return restConnector.Post(path, IdentityMediaType.EXTERNAL_ID, representation);
 		}
 
-		public ExternalIDRepresentation getExternalId(ID extId)
+		public ExternalIDRepresentation GetExternalId(ID extId)
 		{
 			if (extId == null || extId.Value == null || extId.Type == null)
 				throw new SDKException("XtId without value/type or null");
@@ -78,7 +78,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 				typeof(ExternalIDRepresentation));
 		}
 
-		public IExternalIDCollection getExternalIdsOfGlobalId(GId gid)
+		public IExternalIDCollection GetExternalIdsOfGlobalId(GId gid)
 		{
 			if (gid == null || gid.Value == null)
 			{
@@ -91,7 +91,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Identity
 			return new ExternalIDCollectionImpl(restConnector, uri, pageSize);
 		}
 
-		public void deleteExternalId(ExternalIDRepresentation externalId)
+		public void DeleteExternalId(ExternalIDRepresentation externalId)
 		{
 			IDictionary<string, string> filter = new Dictionary<string, string>();
 			filter[TYPE] = externalId.Type;
