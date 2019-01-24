@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Cumulocity.SDK.Client.Rest.Model.Idtype
+﻿namespace Cumulocity.SDK.Client.Rest.Model.Idtype
 {
 	public class XtId : ID
 	{
-
 		public XtId(string id) : base(id)
 		{
 		}
@@ -16,5 +11,4 @@ namespace Cumulocity.SDK.Client.Rest.Model.Idtype
 		{
 		}
 	}
-
 }

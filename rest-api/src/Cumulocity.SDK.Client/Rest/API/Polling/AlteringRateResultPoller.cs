@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
+﻿using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
+using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Polling
 {
 	public class AlteringRateResultPoller<K>
 	{
-
-		IGetResultTask<K> getResultTask;
-		PollingStrategy pollingStrategy;
-		ScheduledThreadPoolExecutor pollingExecutor = new ScheduledThreadPoolExecutor(1);
-		CountDownLatch latch;
-		Exception lastException;
-		K result;
-		Action pollingTask;
+		private readonly IGetResultTask<K> getResultTask;
+		private readonly PollingStrategy pollingStrategy;
+		private readonly ScheduledThreadPoolExecutor pollingExecutor = new ScheduledThreadPoolExecutor(1);
+		private readonly Action pollingTask;
+		private CountDownLatch latch;
+		private Exception lastException;
+		private K result;
 
 		public AlteringRateResultPoller(IGetResultTask<K> getResultTask, PollingStrategy strategy)
 		{
@@ -44,7 +40,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				//pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(pollingStrategy.popNext()??1));
 				pollingExecutor.Schedule(pollingTask, TimeSpan.FromMilliseconds(2000));
 			}
-
 		}
 
 		private void pollingAppendResult()
@@ -101,6 +96,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				stop();
 			}
 		}
+
 		public bool start()
 		{
 			if (pollingTask == null)
@@ -112,6 +108,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			scheduleNextTaskExecution();
 			return true;
 		}
+
 		public void stop()
 		{
 			//shutdown operationsPollingExecutor if it's running or if it's no shutting down just now
@@ -129,6 +126,5 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				latch.Wait((int)pollingStrategy.Timeout);
 			}
 		}
-
 	}
 }

@@ -5,7 +5,6 @@ using Cumulocity.SDK.Client.Rest.Utils;
 
 namespace Cumulocity.SDK.Client.Rest.Model
 {
-    //com.cumulocity.model
     [PackageName("com_cumulocity_model_id")]
     public class ID
     {

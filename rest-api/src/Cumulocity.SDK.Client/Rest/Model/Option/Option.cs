@@ -1,6 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 using System;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
 {
@@ -100,7 +101,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public System.Nullable<int> getIntValue()
+		[JsonIgnore]
 		public virtual int? IntValue
 		{
 			get
@@ -120,8 +121,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 				}
 			}
 		}
-
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public System.Nullable<long> getLongValue()
+		[JsonIgnore]
 		public virtual long? LongValue
 		{
 			get
@@ -138,7 +138,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public System.Nullable<int> getIntValue(System.Nullable<int> defaultValue)
+
 		public virtual int? getIntValue(int? defaultValue)
 		{
 			if (IntValue != null) return IntValue;
@@ -149,7 +149,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public Optional<boolean> getBoolean()
+		[JsonIgnore]
 		public virtual bool? Boolean
 		{
 			get
@@ -166,7 +166,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public Optional<DateTime> getDateTime()
+		[JsonIgnore]
 		public virtual DateTime? DateTime
 		{
 			get
@@ -184,7 +184,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public boolean isEncrypted()
+		[JsonIgnore]
 		public virtual bool Encrypted
 		{
 			get
@@ -235,7 +235,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			return long.Parse(option.value);
 		}
 
-		//ORIGINAL LINE: @Override @JSONProperty(ignore = true) public String getLogSource()
+		[JsonIgnore]
 		public string LogSource
 		{
 			get
@@ -244,7 +244,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			}
 		}
 
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public OptionPK getOptionPK()
+		[JsonIgnore]
 		public virtual OptionPK OptionPK
 		{
 			get
@@ -252,8 +252,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 				return new OptionPK(category, key);
 			}
 		}
-
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public String buildOptionId()
 		public virtual string buildOptionId()
 		{
 			return Category + "::" + Key;

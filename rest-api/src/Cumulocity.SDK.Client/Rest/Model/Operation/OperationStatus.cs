@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Operation
 {
 	public sealed class OperationStatus
 	{
-
 		public static readonly OperationStatus PENDING = new OperationStatus("PENDING", InnerEnum.PENDING);
 		public static readonly OperationStatus SUCCESSFUL = new OperationStatus("SUCCESSFUL", InnerEnum.SUCCESSFUL);
 		public static readonly OperationStatus FAILED = new OperationStatus("FAILED", InnerEnum.FAILED);
@@ -58,7 +55,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Operation
 		{
 			return string.ReferenceEquals(status, null) ? null : valueOf(status);
 		}
-
 
 		public static IList<OperationStatus> values()
 		{

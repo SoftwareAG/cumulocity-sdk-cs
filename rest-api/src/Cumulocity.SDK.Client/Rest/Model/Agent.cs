@@ -23,9 +23,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
         /// </summary>
         private bool? primary;
 
-        /// <summary>
-        /// @deprecated
-        /// </summary>
+
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public virtual string Address
         {
@@ -40,9 +38,6 @@ namespace Cumulocity.SDK.Client.Rest.Model
         }
 
 
-        /// <summary>
-        /// @deprecated
-        /// </summary>
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public virtual int? Port
         {

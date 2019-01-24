@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Event
 {
@@ -75,5 +73,4 @@ namespace Cumulocity.SDK.Client.Rest.Model.Event
 			throw new System.ArgumentException(name);
 		}
 	}
-
 }

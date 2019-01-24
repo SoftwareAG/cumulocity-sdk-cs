@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
 {
 	public sealed class OptionCategory
 	{
-
 		public static readonly OptionCategory ACCESS_CONTROL = new OptionCategory("ACCESS_CONTROL", InnerEnum.ACCESS_CONTROL, "access.control");
 
 		public static readonly OptionCategory FILES = new OptionCategory("FILES", InnerEnum.FILES, "files");
@@ -86,21 +84,20 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 		public const string ALARM_TYPE_MAPPING_VALUE_FORMAT = "(.*)\\|(.*)";
 
 		public const string SUPPORT_USER_NAME = "support-user";
-        
-        #pragma warning disable 0169
+
+#pragma warning disable 0169
 		private readonly bool checkInParent;
 
-		internal OptionCategory(string name, InnerEnum innerEnum, string value) 
+		internal OptionCategory(string name, InnerEnum innerEnum, string value)
 		{
-
 			nameValue = value;
 			ordinalValue = nextOrdinal++;
 			innerEnumValue = innerEnum;
 			flag = false;
 		}
-		internal OptionCategory(string name, InnerEnum innerEnum, string value,bool flagValue)
-		{
 
+		internal OptionCategory(string name, InnerEnum innerEnum, string value, bool flagValue)
+		{
 			nameValue = value;
 			ordinalValue = nextOrdinal++;
 			innerEnumValue = innerEnum;
@@ -115,9 +112,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 			{
 				foreach (OptionCategory optionCategory in OptionCategory.values())
 				{
-					if (optionCategory.Name.Equals(name,StringComparison.InvariantCultureIgnoreCase))
+					if (optionCategory.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
 					{
-						
 						return optionCategory;
 					}
 				}
@@ -125,7 +121,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 
 			return null;
 		}
-
 
 		public OptionPK optionPk(string value)
 		{

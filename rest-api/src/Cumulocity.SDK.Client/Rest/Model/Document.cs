@@ -94,7 +94,6 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		}
 
 		//Not use in current repository implementation, to remove
-		//ORIGINAL LINE: @Deprecated @JSONProperty(value = "_id", ignoreIfNull = true) public String getInternalId()
 		[Obsolete]
 		public virtual string InternalId
 		{
@@ -111,7 +110,6 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		//Not use in current repository implementation, to remove
 
 		//Not use in current repository implementation, to remove
-		//ORIGINAL LINE: @Deprecated @JSONProperty(value = "_rev", ignoreIfNull = true) public String getRevision()
 		[Obsolete]
 		public virtual string Revision
 		{
@@ -218,13 +216,11 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		//ORIGINAL LINE: public <C> C get(final String propertyName, final Class<C> asClass)
 		public virtual C get<C>(string propertyName, Type asClass)
 		{
-			//ORIGINAL LINE: final Object o = get(propertyName);
 			object o = get(propertyName);
 			if (o == null)
 			{
 				return default(C);
 			}
-			//return fromJSON(JSONGenerator.forValue(o), asClass);
 			return (C) o;
 		}
 
@@ -293,29 +289,9 @@ namespace Cumulocity.SDK.Client.Rest.Model
 
 		public override string ToString()
 		{
-			//return toJSON();
 			return String.Empty;
 		}
 
-		//ORIGINAL LINE: public static <T extends ID> Function<? super Document<T>,T> asId()
-		//JAVA TO C# CONVERTER WARNING: Java wildcard generics have no direct equivalent in .NET:
-		//public static Function<object, T> asId<T>() where T : ID
-		//{
-		//	return new FunctionAnonymousInnerClass();
-		//}
-
-		//private class FunctionAnonymousInnerClass : Function<Document<T>, T>
-		//{
-		//	public FunctionAnonymousInnerClass()
-		//	{
-		//	}
-
-		//	//ORIGINAL LINE: @Nullable @Override public T apply(@Nullable Document<T> input)
-		//	public override T apply(Document<T> input)
-		//	{
-		//		return input.Id;
-		//	}
-		//}
 	}
 
 	internal static class HashMapHelperClass

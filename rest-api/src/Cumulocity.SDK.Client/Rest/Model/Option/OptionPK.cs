@@ -2,8 +2,6 @@
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
 {
-	//ORIGINAL LINE: @SuppressWarnings("serial")
-	//public class OptionPK implements Serializable
 	[Serializable]
 	public class OptionPK
 	{
