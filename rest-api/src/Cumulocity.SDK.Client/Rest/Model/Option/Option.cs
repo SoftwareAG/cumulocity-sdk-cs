@@ -1,6 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 using System;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
@@ -8,7 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 #pragma warning disable CS0168
 	public class Option : Document<GId>, IAuditLogSource<string>
 	{
-		//private static readonly Logger<> logger =new LoggerFactory<Option>();
+		private readonly ILogger _logger;
 
 		public static readonly string SECURE_PREFIX = "credentials.";
 
