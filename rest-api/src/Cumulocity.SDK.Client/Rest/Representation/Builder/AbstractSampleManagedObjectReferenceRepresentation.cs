@@ -4,11 +4,11 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 {
     public abstract class AbstractSampleManagedObjectReferenceRepresentation
     {
-        public abstract ManagedObjectReferenceRepresentationBuilder builder();
+        public abstract ManagedObjectReferenceRepresentationBuilder Builder();
 
-        public virtual ManagedObjectReferenceRepresentation build()
+        public virtual ManagedObjectReferenceRepresentation Build()
         {
-            return builder().build();
+	        return Builder().Build();
         }
     }
 }

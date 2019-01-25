@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Model
 {
+#pragma warning disable CS0612
 	/// <summary>
 	/// Represents the common Elements of any modeled entity. Can serialize into and
 	/// be deserialized from JSON.

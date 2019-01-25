@@ -35,12 +35,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 			
 			// Given
 			UserRepresentation userRepresentation = CreateUserRepresentation();
-			var u1 = userApi.create(tenant, userRepresentation);
+			var u1 = userApi.Create(tenant, userRepresentation);
 			Assert.NotNull(u1);
 
 			// When
-			userApi.delete(tenant, userRepresentation.UserName);
-			var ex = Record.Exception(() => userApi.getUser(tenant, userRepresentation.UserName));
+			userApi.Delete(tenant, userRepresentation.UserName);
+			var ex = Record.Exception(() => userApi.GetUser(tenant, userRepresentation.UserName));
 
 			// Then
 			Assert.NotNull(ex);
@@ -54,10 +54,10 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 		{
 			// Given
 			UserRepresentation ur = CreateUserRepresentation();
-			var u1 = userApi.create(tenant, ur);
+			var u1 = userApi.Create(tenant, ur);
 			// When
-			var u2 = userApi.getUser(tenant, ur.UserName);
-			userApi.delete(tenant, ur.UserName);
+			var u2 = userApi.GetUser(tenant, ur.UserName);
+			userApi.Delete(tenant, ur.UserName);
 			//Then
 			Assert.NotNull(u2);
 			Assert.Equal(ur.UserName, u2.UserName);
@@ -68,16 +68,16 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 		{
 			// Given
 			UserRepresentation ur = CreateUserRepresentation();
-			var u1 = userApi.create(tenant, ur);
+			var u1 = userApi.Create(tenant, ur);
 			u1.UserName = userName;
 			u1.LastName = "lastName";
 			// When
-			var u2 = userApi.update(tenant, u1);
-			var u3 = userApi.getUser(tenant, u2.UserName);
+			var u2 = userApi.Update(tenant, u1);
+			var u3 = userApi.GetUser(tenant, u2.UserName);
 			//Then
 			Assert.NotNull(u2);
 			Assert.Equal(u1.LastName, u3.LastName);
-			userApi.delete(tenant, u3.UserName);
+			userApi.Delete(tenant, u3.UserName);
 		}
 
 		private  UserRepresentation CreateUserRepresentation()
@@ -96,9 +96,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 		{
 			try
 			{
-				userApi.delete(tenant, userName);
+				userApi.Delete(tenant, userName);
 			}
-			catch(SDKException ex){}
+			catch 
+			{
+
+			}
 		}
 		
 	}

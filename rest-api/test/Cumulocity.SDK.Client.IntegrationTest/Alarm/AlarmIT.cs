@@ -37,15 +37,16 @@ using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 {
+#pragma warning disable 0612
 	public class AlarmIT : IClassFixture<AlarmFixture>, IDisposable
 	{
 		public AlarmIT(AlarmFixture fixture)
 		{
 			AlarmApi = fixture.platform.AlarmApi;
 			Platform = fixture.platform;
-			mo1 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 1).build());
-			mo2 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 2).build());
-			mo3 = fixture.platform.InventoryApi.Create(aSampleMo().withName("MO" + 3).build());
+			mo1 = fixture.platform.InventoryApi.Create(aSampleMo().WithName("MO" + 1).build());
+			mo2 = fixture.platform.InventoryApi.Create(aSampleMo().WithName("MO" + 2).build());
+			mo3 = fixture.platform.InventoryApi.Create(aSampleMo().WithName("MO" + 3).build());
 		}
 
 		public void Dispose()
@@ -59,6 +60,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 			foreach (var id in lst)
 			{
+#pragma warning disable 0612
 				var mo = inventory.GetManagedObject(id);
 				mo.Delete();
 			}
@@ -153,7 +155,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 				resultNumber++;
 			}
 
-			Assert.Equal(resultNumber, 10);
+			Assert.Equal( 10, resultNumber);
 		}
 
 		[Fact]
@@ -412,7 +414,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			wantedStatus.Add("CLEARED");
 			foreach (AlarmRepresentation alarm in allAlarms)
 			{
-				Assert.True(wantedStatus.Contains(alarm.Status));
+				Assert.Contains(alarm.Status, wantedStatus);
 			}
 		}
 	}

@@ -23,7 +23,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 		}
 
-		public bool Add(OperationRepresentation arg0)
+		public new bool Add(OperationRepresentation arg0)
 		{
 			if (contains(arg0))
 			{

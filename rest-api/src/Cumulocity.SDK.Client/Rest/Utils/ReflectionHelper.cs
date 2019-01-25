@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 
@@ -131,9 +132,10 @@ namespace Cumulocity.SDK.Client.Rest.Utils
 	        }
 	        catch (Exception ex)
 	        {
+		        Debug.WriteLine(ex.Message);
 		        throw new Exception("Failed to set property value for our Foreign Key");
 	        }
-			propertyInfo.SetValue(obj, val);
+
         }
         
         public static IEnumerable<Type> GetTypesWithPackageName() {

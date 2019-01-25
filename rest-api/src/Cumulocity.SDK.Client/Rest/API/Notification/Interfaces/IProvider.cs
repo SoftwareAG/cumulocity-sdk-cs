@@ -2,6 +2,6 @@
 {
 	public interface IProvider<T>
 	{
-		T get();
+		T Get();
 	}
 }

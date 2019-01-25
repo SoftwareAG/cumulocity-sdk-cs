@@ -32,6 +32,8 @@ using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Event
 {
+#pragma warning disable xUnit1013
+#pragma warning disable 0612
 	public class EventIT : IClassFixture<EventFixture>, IDisposable
 	{
 		public EventIT(EventFixture fixture)
@@ -86,7 +88,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 
 		//@Given("I have a Event with no type value for the managed object$")
 
-		public void iHaveAEventWithNoType()
+		public void IHaveAEventWithNoType()
 		{
 			EventRepresentation rep = new EventRepresentation();
 			rep.DateTime = DateTime.UtcNow;
@@ -95,7 +97,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			Input.Add(rep);
 		}
 		//@Given("I have a Event with no text value for the managed object$")
-		public void iHaveAEventWithNoText()
+		public void IHaveAEventWithNoText()
 		{
 			EventRepresentation rep = new EventRepresentation();
 			rep.Type = "type";
@@ -105,7 +107,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@Given("I have a Event with no time value for the managed object$")
-		public void iHaveAEventWithNoTime()
+		public void IHaveAEventWithNoTime()
 		{
 			EventRepresentation rep = new EventRepresentation();
 			rep.Type = "type";
@@ -114,7 +116,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			Input.Add(rep);
 		}
 		//@Given("I have '(\\d+)' Events for the source '(\\d+)' the managed object$")
-		public void iHaveEventsForSource(int n, int index) { 
+		public void IHaveEventsForSource(int n, int index) { 
 			for (int i = 0; i<n; i++) {
 				var rep = new EventRepresentation();
 				rep.Type = "type";
@@ -126,7 +128,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@Given("I have a Event with time '([^']*)' with type '([^']*)' and for '(\\d+)' managed object$")
-		public void iHaveAEventWithTypeAndTime(String time, String type, int index) 
+		public void IHaveAEventWithTypeAndTime(String time, String type, int index) 
 			{
 				DateTime dateTime = DateTime.ParseExact(time, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
@@ -143,7 +145,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 	// ------------------------------------------------------------------------
 
 	//@When("I Create all Events$")
-	public void iCreateAll()
+	public void ICreateAll()
 		{
 			try
 			{
@@ -161,7 +163,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I GetFirstPage all Events$")
-		public void iGetAllEvents()
+		public void IGetAllEvents()
 		{
 			try
 			{
@@ -173,7 +175,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			}
 		}
 		//@When("I query all Events by type '([^']*)'$")
-		public void iQueryAllByType(String type) {
+		public void IQueryAllByType(String type) {
 			try {
 				EventFilter filter = new EventFilter().ByType(type);
 				collection = EventApi.GetEventsByFilter(filter).GetFirstPage();
@@ -184,7 +186,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			}
 		}
 		//@When("I query all Events by source '(\\d+)'$")
-		public void iQueryAllBySource(int index)
+		public void IQueryAllBySource(int index)
 		{
 			try {
 			ManagedObjectRepresentation mo = managedObject;
@@ -198,7 +200,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
     }
 		//@When("I query all Events by source '(\\d+)' and type '([^']*)'$")
 
-		public void iQueryAllBySourceAndType(int index, String type)
+		public void IQueryAllBySourceAndType(int index, String type)
 		{
 			try {
 				ManagedObjectRepresentation mo = managedObject;
@@ -210,7 +212,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I query all Events by source '(\\d+)' and time '([^']*)'$")
-		public void iQueryAllBySourceAndTime(int index, String time)
+		public void IQueryAllBySourceAndTime(int index, String time)
 		{
 			try {
 				DateTime dateTime = DateTime.ParseExact(time, "o",
@@ -223,7 +225,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 			}
 		}
 		//@When("I GetFirstPage the Events with the created id$")
-		public void iGetEventsWithCreatedId() 
+		public void IGetEventsWithCreatedId() 
 		{
 			try {
 				Result1.Add(EventApi.GetEvent(Result[0].Id));
@@ -234,7 +236,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I Delete the Events with the created id$")
-		public void iDeleteEventsWithCreatedId() 
+		public void IDeleteEventsWithCreatedId() 
 		{
 		        try {
 						EventApi.Delete(Result[0]);
@@ -244,7 +246,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I Delete all Event collection$")
-		public void iDeleteEventCollection() 
+		public void IDeleteEventCollection() 
 		{
 		        try {
 			        EventApi.DeleteEventsByFilter(new EventFilter());
@@ -254,7 +256,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I Delete all Events by type '([^']*)'$")
-		public void iDeleteAllByType(String type) 
+		public void IDeleteAllByType(String type) 
 		{
 		        try {
 				EventFilter typeFilter = new EventFilter().ByType(type);
@@ -265,7 +267,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 		//@When("I query all Events by page '(\\d+)'$")
-		public void iQueryAllByPageNumber(int pageNumber) 
+		public void IQueryAllByPageNumber(int pageNumber) 
 		{
 		    try {
 				collection1 = EventApi.Events.GetPage(collection, pageNumber);
@@ -275,7 +277,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		}
 
 //@When("I should GetFirstPage next page which has current page '(\\d+)' and events '(\\d+)'$")
-	public void iQueryAllByNextPage(int currentPage, int numEvents) 
+	public void IQueryAllByNextPage(int currentPage, int numEvents) 
 {
         try {
 		EventCollectionRepresentation collectionRepresentation = EventApi.Events.GetNextPage(collection1);
@@ -289,7 +291,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 
 //@When("I should GetFirstPage previous page which has current page '(\\d+)' and events '(\\d+)'$")
 
-	public void iQueryAllByPreviousPage(int currentPage, int numEvents) 
+	public void IQueryAllByPreviousPage(int currentPage, int numEvents) 
 	{
 	    try {
 			EventCollectionRepresentation collectionRepresentation = EventApi.Events.GetPreviousPage(collection1);
@@ -304,37 +306,37 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 // ------------------------------------------------------------------------
 // Then
 // ------------------------------------------------------------------------
-public void iShouldGetNumberOfEvents(int count)
+public void IShouldGetNumberOfEvents(int count)
 		{
 			Assert.Equal(count, collection.Events.Count);
 		}
 		//@Then("Event response should be unprocessable$")
-		public void shouldBeBadRequest()
+		public void ShouldBeBadRequest()
 		{
 			Assert.Equal(422, Status);
 		}
 
 		//@Then("I should GetFirstPage all the Events$")
-		public void shouldGetAllEvents()
+		public void ShouldGetAllEvents()
 		{
 			Assert.Equal(collection.Events.Count, Result.Count);
 		}
 
 		//@Then("I should GetFirstPage the Events$")
 
-		public void shouldGetTheEvent()
+		public void ShouldGetTheEvent()
 		{
 			Assert.Equal(Result1[0], Result1[0]);
 		}
 
 		//@Then("Events should not be found$")
 
-		public void shouldNotBeFound()
+		public void ShouldNotBeFound()
 		{
-			Assert.Equal(Status, 404);
+			Assert.Equal( 404, Status);
 		}
 		//@Then("I should GetFirstPage '(\\d+)' Events of paging$")
-		public void iShouldGetNumberOfEventsOfPaging(int count)
+		public void IShouldGetNumberOfEventsOfPaging(int count)
 		{
 			Assert.Equal(collection1.Events.Count, count);
 		}
@@ -349,11 +351,11 @@ public void iShouldGetNumberOfEvents(int count)
 			//    Given I have '2' Events of type 'type1' for the managed object
 			iHaveEvents(2, "type1");
 			//    When I Create all Events
-			iCreateAll();
+			ICreateAll();
 			//    And I GetFirstPage all Events
-			iGetAllEvents();
+			IGetAllEvents();
 			//    Then I should GetFirstPage '2' Events
-			iShouldGetNumberOfEvents(2);
+			IShouldGetNumberOfEvents(2);
 		}
 
 		//    Scenario: Create Events without type
@@ -361,11 +363,11 @@ public void iShouldGetNumberOfEvents(int count)
 		public void createEventsWithoutType() 
 		{
 			//    Given I have a Event with no type value for the managed object
-			iHaveAEventWithNoType();
+			IHaveAEventWithNoType();
 			//    When I Create all Events
-			iCreateAll();
+			ICreateAll();
 			//    Then Event response should be unprocessable
-			shouldBeBadRequest();
+			ShouldBeBadRequest();
 		}
 
 		//
@@ -375,11 +377,11 @@ public void iShouldGetNumberOfEvents(int count)
 		public void createEventsWithoutTime() 
 		{
 			//    Given I have a Event with no time value for the managed object
-			iHaveAEventWithNoTime();
+			IHaveAEventWithNoTime();
 			//    When I Create all Events
-			iCreateAll();
+			ICreateAll();
 			//    Then Event response should be unprocessable
-			shouldBeBadRequest();
+			ShouldBeBadRequest();
 		}
 
 	//
@@ -388,11 +390,11 @@ public void iShouldGetNumberOfEvents(int count)
 	public void createEventsWithoutText() 
 	{
 		//    Given I have a Event with no text value for the managed object
-		iHaveAEventWithNoText();
+		IHaveAEventWithNoText();
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    Then Event response should be unprocessable
-		shouldBeBadRequest();
+		ShouldBeBadRequest();
 	}
 
 		//
@@ -403,11 +405,11 @@ public void iShouldGetNumberOfEvents(int count)
 			//    Given I have '2' Events of type 'type1' for the managed object
 			iHaveEvents(2, "type1");
 			//    When I Create all Events
-			iCreateAll();
+			ICreateAll();
 			//    And I GetFirstPage all Events
-			iGetAllEvents();
+			IGetAllEvents();
 			//    Then I should GetFirstPage all the Events
-			shouldGetAllEvents();
+			ShouldGetAllEvents();
 	}
 
 		//
@@ -422,23 +424,23 @@ public void iShouldGetNumberOfEvents(int count)
 		//    And I have '3' Events of type 'type1' for the managed object
 		iHaveEvents(3, "type1");
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '5' Events
-		iShouldGetNumberOfEvents(5);
+		IShouldGetNumberOfEvents(5);
 		//    And I query all Events by type 'type'
-		iQueryAllByType("type");
+		IQueryAllByType("type");
 		//    Then I should GetFirstPage '2' Events
-		iShouldGetNumberOfEvents(2);
+		IShouldGetNumberOfEvents(2);
 		//    And I query all Events by type 'type1'
-		iQueryAllByType("type1");
+		IQueryAllByType("type1");
 		//    Then I should GetFirstPage '3' Events
-		iShouldGetNumberOfEvents(3);
+		IShouldGetNumberOfEvents(3);
 		//    And I query all Events by type 'type2'
-		iQueryAllByType("type2");
+		IQueryAllByType("type2");
 		//    Then I should GetFirstPage '0' Events
-		iShouldGetNumberOfEvents(0);
+		IShouldGetNumberOfEvents(0);
 		}
 
 		//
@@ -449,17 +451,17 @@ public void iShouldGetNumberOfEvents(int count)
 		public void getEventCollectionBySource()
 		{
 		//    Given I have '3' Events for the source '0' the managed object
-		iHaveEventsForSource(3, 0);
+		IHaveEventsForSource(3, 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '3' Events
-		iShouldGetNumberOfEvents(3);
+		IShouldGetNumberOfEvents(3);
 		//    And I query all Events by source '0'
-		iQueryAllBySource(0);
+		IQueryAllBySource(0);
 		//    Then I should GetFirstPage '3' Events
-		iShouldGetNumberOfEvents(3);
+		IShouldGetNumberOfEvents(3);
 
 		}
 
@@ -468,50 +470,50 @@ public void iShouldGetNumberOfEvents(int count)
 		//    Scenario: Get event collection by source and type
 
 		[Fact]
-		public void getEventCollectionbySourceAndType()
+		public void GetEventCollectionbySourceAndType()
 		{ 
 		//    Given I have a Event with time '2011-11-03T11:01:00.000+05:30' with type 'type' and for '0' managed object
-		iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
+		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
         //    And I have a Event with time '2011-11-03T11:05:00.000+05:30' with type 'type1' and for '0' managed object
-        iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type1", 0);
+        IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type1", 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '2' Events
-		iShouldGetNumberOfEvents(2);
+		IShouldGetNumberOfEvents(2);
 		//    And I query all Events by source '0' and type 'type'
-		iQueryAllBySourceAndType(0, "type");
+		IQueryAllBySourceAndType(0, "type");
 		//    Then I should GetFirstPage '1' Events
-		iShouldGetNumberOfEvents(1);
+		IShouldGetNumberOfEvents(1);
 		//    And I query all Events by source '0' and type 'type1'
-		iQueryAllBySourceAndType(0, "type1");
+		IQueryAllBySourceAndType(0, "type1");
 		//    Then I should GetFirstPage '1' Events
-		iShouldGetNumberOfEvents(1);
+		IShouldGetNumberOfEvents(1);
 		//    And I query all Events by source '0' and type 'type2'
-		iQueryAllBySourceAndType(0, "type2");
+		IQueryAllBySourceAndType(0, "type2");
 		//    Then I should GetFirstPage '0' Events
-		iShouldGetNumberOfEvents(0);
+		IShouldGetNumberOfEvents(0);
 	}
 
 
 		[Fact]
-		public void getEventCollectionbyTime() 
+		public void GetEventCollectionbyTime() 
 	{
 		//    Given I have a Event with time '2011-11-03T11:01:00.000+05:30' with type 'type' and for '0' managed object
-		iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
+		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
 		//    And I have a Event with time '2011-11-03T11:05:00.000+05:30' with type 'type1' and for '0' managed object
-		iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type1", 0);
+		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type1", 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '2' Events
-		iShouldGetNumberOfEvents(2);
+		IShouldGetNumberOfEvents(2);
 		//    And I query all Events by source '0' and type 'type'
-		iQueryAllBySourceAndTime(0, "2018-12-17T10:01:14.9072393Z");
+		IQueryAllBySourceAndTime(0, "2018-12-17T10:01:14.9072393Z");
 		//    Then I should GetFirstPage '1' Events
-		iShouldGetNumberOfEvents(1);
+		IShouldGetNumberOfEvents(1);
 
 	}
 
@@ -519,16 +521,16 @@ public void iShouldGetNumberOfEvents(int count)
 		//    Scenario: Get Event
 
 		[Fact]
-		public void getEvent() 
+		public void GetEvent() 
 	{
 		//    Given I have a Event with time '2011-11-03T11:01:00.000+05:30' with type 'type' and for '0' managed object
-		iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
+		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage the Events with the created id
-		iGetEventsWithCreatedId();
+		IGetEventsWithCreatedId();
 		//    Then I should GetFirstPage the Events
-		shouldGetTheEvent();
+		ShouldGetTheEvent();
 	}
 
 		//
@@ -538,15 +540,15 @@ public void iShouldGetNumberOfEvents(int count)
 		public void deleteEvent() 
 	{
 		//    Given I have a Event with time '2011-11-03T11:01:00.000+05:30' with type 'type' and for '0' managed object
-		iHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
+		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I Delete the Events with the created id
-		iDeleteEventsWithCreatedId();
+		IDeleteEventsWithCreatedId();
 		//    And I GetFirstPage the Events with the created id
-		iGetEventsWithCreatedId();
+		IGetEventsWithCreatedId();
 		//    Then Events should not be found
-		shouldNotBeFound();
+		ShouldNotBeFound();
 	}
 
 		//
@@ -560,17 +562,17 @@ public void iShouldGetNumberOfEvents(int count)
 		//    And I have '2' Events of type 'type2' for the managed object
 		iHaveEvents(2, "type2");
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '5' Events
-		iShouldGetNumberOfEvents(5);
+		IShouldGetNumberOfEvents(5);
 		//    And I Delete all Event collection
-		iDeleteEventCollection();
+		IDeleteEventCollection();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '0' Events
-		iShouldGetNumberOfEvents(0);
+		IShouldGetNumberOfEvents(0);
 	}
 
 		//
@@ -584,25 +586,25 @@ public void iShouldGetNumberOfEvents(int count)
 		//    And I have '2' Events of type 'type2' for the managed object
 		iHaveEvents(2, "type2");
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '5' Events
-		iShouldGetNumberOfEvents(5);
+		IShouldGetNumberOfEvents(5);
 		//    And I Delete all Events by type 'type2'
-		iDeleteAllByType("type2");
+		IDeleteAllByType("type2");
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '3' Events
-		iShouldGetNumberOfEvents(3);
+		IShouldGetNumberOfEvents(3);
 		//    And I query all Events by type 'type1'
-		iQueryAllByType("type1");
+		IQueryAllByType("type1");
 		//    Then I should GetFirstPage '3' Events
-		iShouldGetNumberOfEvents(3);
+		IShouldGetNumberOfEvents(3);
 		//    And I query all Events by type 'type2'
-		iQueryAllByType("type2");
+		IQueryAllByType("type2");
 		//    Then I should GetFirstPage '0' Events
-		iShouldGetNumberOfEvents(0);
+		IShouldGetNumberOfEvents(0);
 	}
 
 		//
@@ -612,33 +614,33 @@ public void iShouldGetNumberOfEvents(int count)
 		public void getEventCollectionByPaging() 
 	{
 		//    Given I have '17' Events for the source '0' the managed object
-		iHaveEventsForSource(17, 0);
+		IHaveEventsForSource(17, 0);
 		//    When I Create all Events
-		iCreateAll();
+		ICreateAll();
 		//    And I GetFirstPage all Events
-		iGetAllEvents();
+		IGetAllEvents();
 		//    Then I should GetFirstPage '5' Events
-		iShouldGetNumberOfEvents(5);
+		IShouldGetNumberOfEvents(5);
 		//    And I query all Events by page '1'
-		iQueryAllByPageNumber(1);
+		IQueryAllByPageNumber(1);
 		//    Then I should GetFirstPage '5' Events of paging
-		iShouldGetNumberOfEventsOfPaging(5);
+		IShouldGetNumberOfEventsOfPaging(5);
 		//    And I query all Events by page '2'
-		iQueryAllByPageNumber(2);
+		IQueryAllByPageNumber(2);
 		//    Then I should GetFirstPage '5' Events of paging
-		iShouldGetNumberOfEventsOfPaging(5);
+		IShouldGetNumberOfEventsOfPaging(5);
 		//    And I query all Events by page '3'
-		iQueryAllByPageNumber(3);
+		IQueryAllByPageNumber(3);
 		//    Then I should GetFirstPage '5' Events of paging
-		iShouldGetNumberOfEventsOfPaging(5);
+		IShouldGetNumberOfEventsOfPaging(5);
 		//      And I query all Events by page '4'
-		iQueryAllByPageNumber(4);
+		IQueryAllByPageNumber(4);
 		//    Then I should GetFirstPage '2' Events of paging
-		iShouldGetNumberOfEventsOfPaging(2);
+		IShouldGetNumberOfEventsOfPaging(2);
 		//    And I query all Events by page '5'
-		iQueryAllByPageNumber(5);
+		IQueryAllByPageNumber(5);
 		//    Then I should GetFirstPage '0' Events of paging
-		iShouldGetNumberOfEventsOfPaging(0);
+		IShouldGetNumberOfEventsOfPaging(0);
 		//    Then I should GetFirstPage previous page which has current page '4' and events '2'
 	}
 }

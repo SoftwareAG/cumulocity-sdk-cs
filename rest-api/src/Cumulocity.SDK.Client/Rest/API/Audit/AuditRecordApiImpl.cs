@@ -1,5 +1,4 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
-using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 using System.Collections.Generic;
 

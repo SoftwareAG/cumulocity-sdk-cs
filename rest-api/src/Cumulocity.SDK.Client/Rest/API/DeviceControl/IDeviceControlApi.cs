@@ -76,12 +76,12 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 		///  subscriber.subscirbe( agentId , new SubscriptionListener<GId, OperationRepresentation>() {
 		///
 		///      {@literal @}Override
-		///      public void onNotification(Subscription<GId> subscription, OperationRepresentation operation) {
+		///      public void OnNotification(Subscription<GId> subscription, OperationRepresentation operation) {
 		///             //Process operation
 		///      }
 		///
 		///      {@literal @}Override
-		///      public void onError(Subscription<GId> subscription, Throwable ex) {
+		///      public void OnError(Subscription<GId> subscription, Throwable ex) {
 		///          // handle Subscribe operation error
 		///      }
 		///  });

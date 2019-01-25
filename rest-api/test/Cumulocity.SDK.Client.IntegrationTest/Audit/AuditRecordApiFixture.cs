@@ -1,5 +1,4 @@
 ﻿using Cumulocity.SDK.Client.HelperTest;
-using Cumulocity.SDK.Client.IntegrationTest.Common;
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using System;
@@ -12,7 +11,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 {
 	public class AuditRecordApiFixture:IDisposable
 	{
-		private TenantCreator tenantCreator;
 		public PlatformImpl platform;
 
 
@@ -60,7 +58,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 
 		public void Dispose()
 		{
-			//tenantCreator.removeTenant();
+			
 		}
 	}
 }

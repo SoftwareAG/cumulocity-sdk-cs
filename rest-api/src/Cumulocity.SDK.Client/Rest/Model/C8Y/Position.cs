@@ -4,6 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Cumulocity.SDK.Client.Rest.Model
 {
+#pragma warning disable 0472
 	[PackageName("c8y_Position")]
 	public class Position
 	{

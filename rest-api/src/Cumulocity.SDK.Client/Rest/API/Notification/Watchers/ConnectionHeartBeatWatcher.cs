@@ -80,7 +80,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 			Debug.WriteLine(String.Format("{0} canceling the long poll request because of inactivity", DateTime.Now.ToString("HH:mm:ss.fff")));
 			foreach (IConnectionIdleListener listener in listeners)
 			{
-				listener.onConnectionIdle();
+				listener.OnConnectionIdle();
 			}
 		}
 	}

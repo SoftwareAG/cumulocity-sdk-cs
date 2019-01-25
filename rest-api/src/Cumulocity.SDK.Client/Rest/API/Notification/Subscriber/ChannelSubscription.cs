@@ -19,7 +19,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			this.@object = @object;
 		}
 
-		public void unsubscribe()
+		public void Unsubscribe()
 		{
 			Debug.WriteLine("unsubscribing from channel {}", channel.Id);
 			channel.unsubscribe(listener);

@@ -38,7 +38,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			this.extensions = extensions.ToList();
 		}
 
-		public IClientSession get()
+		public IClientSession Get()
 		{
 			return openSession(createSession());
 		}

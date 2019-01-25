@@ -25,12 +25,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep
 		///  subscriber.subscirbe( "channelId" , new SubscriptionListener<String, Object>() {
 		/// 
 		///      {@literal @}Override
-		///      public void onNotification(Subscription<GId> subscription, Object operation) {
+		///      public void OnNotification(Subscription<GId> subscription, Object operation) {
 		///             //Process notification from cep module 
 		///      }
 		/// 
 		///      {@literal @}Override
-		///      public void onError(Subscription<GId> subscription, Throwable ex) {
+		///      public void OnError(Subscription<GId> subscription, Throwable ex) {
 		///          // handle Subscribe error
 		///      }
 		///  });

@@ -4,6 +4,7 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {
+#pragma warning disable 0618
 	public class LoggingSubscribeOperationListener : ISubscribeOperationListener
 	{
 		private static ILoggerFactory loggerFactory = new LoggerFactory()
@@ -11,12 +12,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 
 		private ILogger LOG = loggerFactory.CreateLogger<LoggingSubscribeOperationListener>();
 
-		public void onSubscribingSuccess(string channelId)
+		public void OnSubscribingSuccess(string channelId)
 		{
 			LOG.LogInformation("Successfully subscribed: {}", channelId);
 		}
 
-		public void onSubscribingError(string channelId, string message, Exception throwable)
+		public void OnSubscribingError(string channelId, string message, Exception throwable)
 		{
 			LOG.LogError("Error when subscribing channel: {}, error: {}", channelId, message, throwable);
 		}

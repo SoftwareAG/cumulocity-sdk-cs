@@ -2,6 +2,7 @@
 
 namespace Cumulocity.SDK.Client.Rest.Representation.User
 {
+#pragma warning disable 0612
 	public class RoleRepresentation : BaseResourceRepresentation
 	{
 		//note that id is actually same as name, name is not used in model

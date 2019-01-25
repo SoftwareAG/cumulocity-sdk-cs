@@ -29,8 +29,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 				Debug.WriteLine("bayeux client received 401 too many times -> do no longer reconnect");
 				foreach (IConnectionListener listener in listeners)
 				{
-					//listener.onDisconnection(SC_UNAUTHORIZED);
-					listener.onDisconnection(401);
+					//listener.OnDisconnection(SC_UNAUTHORIZED);
+					listener.OnDisconnection(401);
 				}
 			}
 		}

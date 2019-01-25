@@ -4,6 +4,7 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
+#pragma warning disable CS0168
 	public class OperationsByAgentAndStatusPollerImpl : FixedRatePoller
 	{
 		private static long PERIOD_INTERVAL = 10000;

@@ -8,19 +8,19 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 
 		private string self;
 
-		public virtual ManagedObjectReferenceRepresentationBuilder withMo(ManagedObjectRepresentation mo)
+		public virtual ManagedObjectReferenceRepresentationBuilder WithMo(ManagedObjectRepresentation mo)
 		{
 			this.mo = mo;
 			return this;
 		}
 
-		public virtual ManagedObjectReferenceRepresentationBuilder withSelf(string self)
+		public virtual ManagedObjectReferenceRepresentationBuilder WithSelf(string self)
 		{
 			this.self = self;
 			return this;
 		}
 
-		public virtual ManagedObjectReferenceRepresentation build()
+		public virtual ManagedObjectReferenceRepresentation Build()
 		{
 			ManagedObjectReferenceRepresentation @ref = new ManagedObjectReferenceRepresentation();
 			@ref.ManagedObject = mo;

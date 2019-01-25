@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.API.Inventory
 {
+#pragma warning disable CS0169
 	public class InventoryApiImpl : IInventoryApi//<T> where T : ManagedObjectCollectionRepresentation
 	{
 		private readonly RestConnector restConnector;

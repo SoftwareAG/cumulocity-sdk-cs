@@ -51,7 +51,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 					IClientSessionChannel unsubscribeChannel = subscriberImpl.GetUnsubscribeChannel();
 					unsubscribeChannel.addListener(new UnsubscribeListener<T>(subscription, unsubscribeChannel, subscriberImpl));
 					subscriberImpl.AddSubscription(subscription);
-					subscribeOperationListener.onSubscribingSuccess(this.channel.Id);
+					subscribeOperationListener.OnSubscribingSuccess(this.channel.Id);
 				}
 				else
 				{
@@ -117,7 +117,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			{
 				errorMessage = (string)error;
 			}
-			subscribeOperationListener.onSubscribingError(channel.Id, errorMessage, throwable);
+			subscribeOperationListener.OnSubscribingError(channel.Id, errorMessage, throwable);
 		}
 
 		private bool isShortNetworkFailure(IMessage message)

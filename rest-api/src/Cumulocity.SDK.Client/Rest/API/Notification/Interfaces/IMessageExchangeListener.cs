@@ -2,6 +2,6 @@
 {
 	public interface IMessageExchangeListener
 	{
-		void onFinish();
+		void OnFinish();
 	}
 }

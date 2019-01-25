@@ -2,6 +2,6 @@
 {
 	public interface IConnectionIdleListener
 	{
-		void onConnectionIdle();
+		void OnConnectionIdle();
 	}
 }

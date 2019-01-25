@@ -3,7 +3,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 	public class Tracking
 	{
 		// Reporting interval in seconds
-		protected internal int interval;
+		protected internal  int interval;
 
 		public virtual int Interval
 		{
@@ -19,6 +19,20 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
 			var rhs = (Tracking)obj;
 			return interval == rhs.interval;
+		}
+
+		protected bool Equals(Tracking other)
+		{
+			if (other == null) return false;
+			if (ReferenceEquals(other, this)) return true;
+			if (!(other is MotionTracking)) return false;
+
+			return interval == other.interval;
+		}
+
+		public override int GetHashCode()
+		{
+			return interval;
 		}
 	}
 }

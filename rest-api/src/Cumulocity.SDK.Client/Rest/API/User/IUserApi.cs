@@ -6,16 +6,16 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 	{
 		CurrentUserRepresentation CurrentUser { get; }
 
-		CurrentUserRepresentation updateCurrentUser(CurrentUserRepresentation currentUserRepresentation);
+		CurrentUserRepresentation UpdateCurrentUser(CurrentUserRepresentation currentUserRepresentation);
 
 		UserRepresentation GetCurrentUserWithCustomProperties();
 
-		UserRepresentation getUser(string tenant, string user);
+		UserRepresentation GetUser(string tenant, string user);
 
-		UserRepresentation create(string tenant, UserRepresentation userRepresentation);
+		UserRepresentation Create(string tenant, UserRepresentation userRepresentation);
 
-		UserRepresentation update(string tenant, UserRepresentation userRepresentation);
+		UserRepresentation Update(string tenant, UserRepresentation userRepresentation);
 
-		void delete(string tenant, string userName);
+		void Delete(string tenant, string userName);
 	}
 }

@@ -2,6 +2,6 @@
 {
 	public interface IConnectionListener
 	{
-		void onDisconnection(int httpCode);
+		void OnDisconnection(int httpCode);
 	}
 }

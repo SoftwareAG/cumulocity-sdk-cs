@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Application
 {
+#pragma warning disable CS0169
+#pragma warning disable 0649
 	public class ApplicationRepresentation : AbstractExtensibleRepresentation
 	{
 

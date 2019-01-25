@@ -2,6 +2,6 @@
 {
 	public interface ISubscriptionNameResolver<T>
 	{
-		string apply(T o);
+		string Apply(T o);
 	}
 }

@@ -181,7 +181,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		{
 			foreach (var listener in listeners)
 			{
-				listener.onFinish();
+				listener.OnFinish();
 			}
 
 			Debug.WriteLine(String.Format("stopping heartbeat watcher {0}", JsonConvert.SerializeObject(messages)));
@@ -250,7 +250,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			this.messageExchange = messageExchange;
 		}
 
+#pragma warning disable 1998
 		public async Task RunAsync()
+#pragma warning restore 1998
 		{
 			bool isHeartBeat = false;
 			try

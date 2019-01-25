@@ -36,7 +36,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Cep.Notification
 
 		private sealed class Identity : ISubscriptionNameResolver<string>
 		{
-			public string apply(string id)
+			public string Apply(string id)
 			{
 				return id;
 			}

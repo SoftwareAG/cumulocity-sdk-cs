@@ -4,6 +4,6 @@
 	{
 		T Object { get; }
 
-		void unsubscribe();
+		void Unsubscribe();
 	}
 }

@@ -10,6 +10,7 @@ using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 {
+#pragma warning disable xUnit1013
 	public class MeasurementIT : IClassFixture<MeasurementFixture>, IDisposable
 	{
 		private static List<ManagedObjectRepresentation> managedObjects = new List<ManagedObjectRepresentation>();
@@ -46,7 +47,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			//    And I Create all
 			for (int i = 0; i < 3; ++i)
 			{
-				var mo = _fixture.InventoryApi.Create(aSampleMo().withName("MO" + i).build());
+				var mo = _fixture.InventoryApi.Create(aSampleMo().WithName("MO" + i).build());
 				managedObjects.Add(mo);
 			}
 		}
@@ -71,6 +72,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			foreach (MeasurementRepresentation m in measOn1stPage)
 			{
+#pragma warning disable 0612
 				MeasurementApi.DeleteMeasurement(m);
 			}
 		}
@@ -104,22 +106,22 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void createMeasurements()
 		{
 			//    Given I have '2' measurements of type 'com.type1' for the managed object
-			iHaveMeasurements(2, "com.type1");
+			IHaveMeasurements(2, "com.type1");
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    Then All measurements should be created
-			allShouldBeCreated();
+			AllShouldBeCreated();
 		}
 
 		[Fact]
 		public void createMeasurementsWithoutTime()
 		{
 			//    Given I have a measurement of type 'com.type1' and no time value for the managed object
-			iHaveAMeasurementWithNoTime("com.type1");
+			IHaveAMeasurementWithNoTime("com.type1");
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    Then Measurement response should be unprocessable
-			shouldBeBadRequest();
+			ShouldBeBadRequest();
 		}
 
 		//
@@ -129,23 +131,23 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void getMeasurementCollectionByFragmentType()
 		{
 			//    Given I have '2' measurements with fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' for the managed object
-			iHaveMeasurementsWithFragments(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			IHaveMeasurementsWithFragments(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
 			//    And I have '3' measurements with fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' for the managed object
-			iHaveMeasurementsWithFragments(3, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			IHaveMeasurementsWithFragments(3, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne'
-			iQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			IQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
 			//    Then I should GetFirstPage '2' measurements
-			iShouldGetNumberOfMeasurements(2);
+			IShouldGetNumberOfMeasurements(2);
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo'
-			iQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			IQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
 			//    Then I should GetFirstPage '3' measurements
-			iShouldGetNumberOfMeasurements(3);
+			IShouldGetNumberOfMeasurements(3);
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentThree'
-			iQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentThree");
+			IQueryAllByFragmentType("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentThree");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -156,23 +158,23 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void getMeasurementCollectionBySource()
 		{
 			//    Given I have '1' measurements for the source '0' the managed object
-			iHaveMeasurementsForSource(1, 0);
+			IHaveMeasurementsForSource(1, 0);
 			//    And I have '2' measurements for the source '1' the managed object
-			iHaveMeasurementsForSource(2, 1);
+			IHaveMeasurementsForSource(2, 1);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by source '0'
-			iQueryAllBySource(0);
+			IQueryAllBySource(0);
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '1'
-			iQueryAllBySource(1);
+			IQueryAllBySource(1);
 			//    Then I should GetFirstPage '2' measurements
-			iShouldGetNumberOfMeasurements(2);
+			IShouldGetNumberOfMeasurements(2);
 			//    And I query all measurements by source '2'
-			iQueryAllBySource(2);
+			IQueryAllBySource(2);
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -184,21 +186,21 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			var a = getMeasurementsFrom1stPage();
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-18T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-18T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-18T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-18T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by time from '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllByTime("2018-12-18T10:00:14.9072393Z", "2018-12-18T10:10:14.9072393Z");
+			IQueryAllByTime("2018-12-18T10:00:14.9072393Z", "2018-12-18T10:10:14.9072393Z");
 			//    Then I should GetFirstPage '2' measurements
-			iShouldGetNumberOfMeasurements(2);
+			IShouldGetNumberOfMeasurements(2);
 
 			//    And I query all measurements by time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllByTime("2018-12-18T09:00:14.9072393Z", "2018-12-18T09:10:14.9072393Z");
+			IQueryAllByTime("2018-12-18T09:00:14.9072393Z", "2018-12-18T09:10:14.9072393Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -209,28 +211,28 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '1' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by source '0' and time from '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceAndTime(0, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			IQueryAllBySourceAndTime(0, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '1' and time from '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceAndTime(1, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
+			IQueryAllBySourceAndTime(1, "2018-12-19T10:00:14.9072393Z", "2018-12-19T10:10:14.9072393Z");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '0' and time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceAndTime(0, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
+			IQueryAllBySourceAndTime(0, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and time from '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceAndTime(1, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
+			IQueryAllBySourceAndTime(1, "2018-12-19T09:00:14.9072393Z", "2018-12-19T09:10:14.9072393Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -240,28 +242,28 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '1' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne'
-			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			IQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne'
-			iQueryAllBySourceAndType(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
+			IQueryAllBySourceAndType(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo'
-			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			IQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo'
-			iQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
+			IQueryAllBySourceAndType(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -273,30 +275,30 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '1' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from '2011-11-03T11:00:00
 			// .000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
+			IQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
 					"2018-12-19T10:10:14.9072393Z");
 			//    Then I should GetFirstPage '2' measurements
-			iShouldGetNumberOfMeasurements(2);
+			IShouldGetNumberOfMeasurements(2);
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from '2011-11-03T11:00:00
 			// .000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:14.9072393Z",
+			IQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:14.9072393Z",
 					"2018-12-19T10:10:14.9072393Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from '2011-11-03T10:00:00
 			// .000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:14.9072393Z",
+			IQueryAllByTypeAndTime("Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:14.9072393Z",
 					"2018-12-19T10:00:14.9072393Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -308,84 +310,84 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    And I have a measurement with time '2011-11-03T11:05:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '1' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:05:14.9072393Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 1);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
+			IQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:01:14.9072393Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:01:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:01:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '0' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(0, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '1' measurements
-			iShouldGetNumberOfMeasurements(1);
+			IShouldGetNumberOfMeasurements(1);
 			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '1' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(1, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T10:00:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T11:00:00.000+05:30' and time to '2011-11-03T11:10:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T10:00:00.0000000Z",
 					"2018-12-19T10:10:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 			//    And I query all measurements by source '2' and fragment type 'com.cumulocity.sdk.client.measurement.FragmentTwo' and time from
 			// '2011-11-03T10:00:00.000+05:30' and time to '2011-11-03T11:00:00.000+05:30'
-			iQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
+			IQueryAllBySourceTypeAndTime(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentTwo", "2018-12-19T09:00:00.0000000Z",
 					"2018-12-19T10:00:00.0000000Z");
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 		//
@@ -396,13 +398,13 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I GetFirstPage the measurement with the created id
-			iGetMeasurementWithCreatedId();
+			IGetMeasurementWithCreatedId();
 			//    Then I should GetFirstPage the measurement
-			shouldGetTheMeasurement();
+			ShouldGetTheMeasurement();
 		}
 
 		//
@@ -413,15 +415,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
-			iHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
+			IHaveAMeasurementWithTypeAndTime("2018-12-19T10:01:00.0000000Z", "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne", 0);
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    And I Delete the measurement with the created id
-			iDeleteMeasurementWithCreatedId();
+			IDeleteMeasurementWithCreatedId();
 			//    And I GetFirstPage the measurement with the created id
-			iGetMeasurementWithCreatedId();
+			IGetMeasurementWithCreatedId();
 			//    Then Measurement should not be found
-			shouldNotBeFound();
+			ShouldNotBeFound();
 		}
 
 		//
@@ -430,23 +432,23 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void deleteMeasurementCollectionByEmptyFilter()
 		{
 			//    Given I have '3' measurements of type 'com.type1' for the managed object
-			iHaveMeasurements(3, "com.type1");
+			IHaveMeasurements(3, "com.type1");
 			//    And I have '2' measurements of type 'com.type2' for the managed object
-			iHaveMeasurements(2, "com.type2");
+			IHaveMeasurements(2, "com.type2");
 			//    When I Create all measurements
-			iCreateAll();
+			ICreateAll();
 			//    Then All measurements should be created
-			allShouldBeCreated();
+			AllShouldBeCreated();
 			//    When I query all measurements
-			iQueryAll();
+			IQueryAll();
 			//    Then I should GetFirstPage '5' measurements
-			iShouldGetNumberOfMeasurements(5);
+			IShouldGetNumberOfMeasurements(5);
 			//    When I Delete all measurement collection
-			iDeleteMeasurementCollection();
+			IDeleteMeasurementCollection();
 			//    And I query all measurements
-			iQueryAll();
+			IQueryAll();
 			//    Then I should GetFirstPage '0' measurements
-			iShouldGetNumberOfMeasurements(0);
+			IShouldGetNumberOfMeasurements(0);
 		}
 
 
@@ -457,31 +459,31 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	public void deleteMeasurementsByTypeFilter() 
 		{
 		//    Given I have '3' measurements of type 'com.type1' for the managed object
-		iHaveMeasurements(3, "com.type1");
+		IHaveMeasurements(3, "com.type1");
         //    And I have '2' measurements of type 'com.type2' for the managed object
-        iHaveMeasurements(2, "com.type2");
+        IHaveMeasurements(2, "com.type2");
 		//    When I Create all measurements
-		iCreateAll();
+		ICreateAll();
 		//    Then All measurements should be created
-		allShouldBeCreated();
+		AllShouldBeCreated();
 		//    When I query all measurements
-		iQueryAll();
+		IQueryAll();
 		//    Then I should GetFirstPage '5' measurements
-		iShouldGetNumberOfMeasurements(5);
+		IShouldGetNumberOfMeasurements(5);
 		//    When I Delete all measurements by type 'com.type2'
-		iDeleteMeasurementsByType("com.type2");
+		IDeleteMeasurementsByType("com.type2");
 		//    And I query all measurements
-		iQueryAll();
+		IQueryAll();
 		//    Then I should GetFirstPage '3' measurements
-		iShouldGetNumberOfMeasurements(3);
+		IShouldGetNumberOfMeasurements(3);
 		//    When I query all measurements by type 'com.type1'
-		iQueryAllByType("com.type1");
+		IQueryAllByType("com.type1");
 		//    Then I should GetFirstPage '3' measurements
-		iShouldGetNumberOfMeasurements(3);
+		IShouldGetNumberOfMeasurements(3);
 		//    When I query all measurements by type 'com.type2'
-		iQueryAllByType("com.type2");
+		IQueryAllByType("com.type2");
 		//    Then I should GetFirstPage '0' measurements
-		iShouldGetNumberOfMeasurements(0);
+		IShouldGetNumberOfMeasurements(0);
 	}
 
 	//    Scenario: Create measurement in bulk
@@ -490,11 +492,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	public void createMeasurementsInBulk()
 	{
 		//    Given I have '2' measurements of type 'com.type1' for the managed object
-		iHaveMeasurements(3, "com.type2");
+		IHaveMeasurements(3, "com.type2");
 		//    When I Create all measurements in bulk
-		iCreateAllBulk();
+		ICreateAllBulk();
 		//    Then All measurements should be created
-		allShouldBeCreated();
+		AllShouldBeCreated();
 	}
 
 	//
@@ -534,7 +536,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 	//@Given("I have '(\\d+)' measurements of type '([^']*)' for the managed object")
 
-	public void iHaveMeasurements(int n, String type)
+	public void IHaveMeasurements(int n, String type)
 		{
 			for (int i = 0; i < n; i++)
 			{
@@ -547,7 +549,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@Given("I have '(\\d+)' measurements with fragment type '([^']*)' for the managed object")
-		public void iHaveMeasurementsWithFragments(int n, String fragmentType)
+		public void IHaveMeasurementsWithFragments(int n, String fragmentType)
 		{
 			for (int i = 0; i < n; i++)
 			{
@@ -565,7 +567,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@Given("I have a measurement of type '([^']*)' and no time value for the managed object")
-		public void iHaveAMeasurementWithNoTime(String type)
+		public void IHaveAMeasurementWithNoTime(String type)
 		{
 			MeasurementRepresentation rep = new MeasurementRepresentation();
 			rep.Type = type;
@@ -574,7 +576,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@Given("I have '(\\d+)' measurements for the source '(\\d+)' the managed object")
-		public void iHaveMeasurementsForSource(int n, int index)
+		public void IHaveMeasurementsForSource(int n, int index)
 		{
 			for (int i = 0; i < n; i++)
 			{
@@ -591,7 +593,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		// ------------------------------------------------------------------------
 
 		//@When("I Create all measurements")
-		public void iCreateAll()
+		public void ICreateAll()
 		{
 			try
 			{
@@ -607,7 +609,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I Create all measurements as bulk")
-		public void iCreateAllBulk()
+		public void ICreateAllBulk()
 		{
 			try
 			{
@@ -622,7 +624,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by fragment type '([^']*)'")
-		public void iQueryAllByFragmentType(String fragmentType)
+		public void IQueryAllByFragmentType(String fragmentType)
 		{
 			try
 			{
@@ -637,7 +639,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by source '(\\d+)'")
-		public void iQueryAllBySource(int index)
+		public void IQueryAllBySource(int index)
 		{
 			try
 			{
@@ -653,7 +655,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@Given("I have a measurement with time '([^']*)' with fragment type '([^']*)' and for '(\\d+)' managed object")
 
-		public void iHaveAMeasurementWithTypeAndTime(String time, String fragmentType, int index)
+		public void IHaveAMeasurementWithTypeAndTime(String time, String fragmentType, int index)
 		{
 			MeasurementRepresentation rep = new MeasurementRepresentation();
 			rep.DateTime = DateTime.ParseExact(time, "o",
@@ -668,7 +670,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by source '(\\d+)' and time from '([^']*)' and time to '([^']*)'")
-		public void iQueryAllBySourceAndTime(int index, String from, String to)
+		public void IQueryAllBySourceAndTime(int index, String from, String to)
 		{
 			try
 			{
@@ -687,7 +689,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by time from '([^']*)' and time to '([^']*)'")
-		public void iQueryAllByTime(String from, String to)
+		public void IQueryAllByTime(String from, String to)
 		{
 			try
 			{
@@ -705,7 +707,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by source '(\\d+)' and fragment type '([^']*)'")
-		public void iQueryAllBySourceAndType(int index, String fragmentType)
+		public void IQueryAllBySourceAndType(int index, String fragmentType)
 		{
 			try
 			{
@@ -724,7 +726,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I query all measurements by fragment type '([^']*)' and time from '([^']*)' and time to '([^']*)'")
 
-		public void iQueryAllByTypeAndTime(String fragmentType, String from, String to)
+		public void IQueryAllByTypeAndTime(String fragmentType, String from, String to)
 		{
 			try
 			{
@@ -743,7 +745,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by source '(\\d+)' and fragment type '([^']*)' and time from '([^']*)' and time to '([^']*)'")
-		public void iQueryAllBySourceTypeAndTime(int index, String fragmentType, String from, String to)
+		public void IQueryAllBySourceTypeAndTime(int index, String fragmentType, String from, String to)
 		{
 			try
 			{
@@ -764,7 +766,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I GetFirstPage the measurement with the created id")
 
-		public void iGetMeasurementWithCreatedId()
+		public void IGetMeasurementWithCreatedId()
 		{
 			try
 			{
@@ -778,7 +780,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I Delete the measurement with the created id")
 
-		public void iDeleteMeasurementWithCreatedId()
+		public void IDeleteMeasurementWithCreatedId()
 		{
 			try
 			{
@@ -792,7 +794,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I Delete all measurement collection")
 
-		public void iDeleteMeasurementCollection()
+		public void IDeleteMeasurementCollection()
 		{
 			try
 			{
@@ -806,7 +808,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I Delete all measurements by type '([^']*)'")
 
-		public void iDeleteMeasurementsByType(String type)
+		public void IDeleteMeasurementsByType(String type)
 		{
 			try
 			{
@@ -821,7 +823,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 		//@When("I query all measurements")
 
-		public void iQueryAll()
+		public void IQueryAll()
 		{
 			try
 			{
@@ -834,7 +836,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		//@When("I query all measurements by type '([^']*)'")
-		public void iQueryAllByType(String type) 
+		public void IQueryAllByType(String type) 
 		{
 			try {
 			MeasurementFilter typeFilter = new MeasurementFilter().byType(type);
@@ -849,7 +851,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 // ------------------------------------------------------------------------
 
 //@Then("All measurements should be created")
-public void allShouldBeCreated()
+public void AllShouldBeCreated()
 		{
 			Assert.Equal(Input.Count, Result1.Count);
 			foreach (MeasurementRepresentation rep in Result1)
@@ -859,27 +861,26 @@ public void allShouldBeCreated()
 		}
 
 		//@Then("Measurement response should be unprocessable")
-		public void shouldBeBadRequest()
+		public void ShouldBeBadRequest()
 		{
 			Assert.Equal(422, Status);
 		}
 
 		//@Then("I should GetFirstPage '(\\d+)' measurements")
-		public void iShouldGetNumberOfMeasurements(int count)
+		public void IShouldGetNumberOfMeasurements(int count)
 		{
 			Assert.Equal(count, Collection1.Measurements.Count());
 		}
 
 		//@Then("Measurement should not be found")
-
-		public void shouldNotBeFound()
+		public void ShouldNotBeFound()
 		{
 			Assert.Equal(404,Status);
 		}
 
 		//@Then("I should GetFirstPage the measurement")
 
-		public void shouldGetTheMeasurement()
+		public void ShouldGetTheMeasurement()
 		{
 			Assert.Equal( Result2[0].Id, Result1[0].Id);
 		}

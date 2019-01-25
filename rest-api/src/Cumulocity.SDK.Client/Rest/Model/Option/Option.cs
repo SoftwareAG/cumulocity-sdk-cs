@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
 {
-	//ORIGINAL LINE: @Builder(builderMethodName = "option") @IncludeFieldInAuditLog({"key", "category", "value", "editable"}) public class Option extends Document<GId> implements AuditLogSource<String>
+#pragma warning disable CS0168
 	public class Option : Document<GId>, IAuditLogSource<string>
 	{
 		//private static readonly Logger<> logger =new LoggerFactory<Option>();

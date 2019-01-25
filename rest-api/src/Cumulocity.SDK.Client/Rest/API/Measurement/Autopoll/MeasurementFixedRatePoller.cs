@@ -7,6 +7,7 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 {
+#pragma warning disable CS0168
 	/// <summary>
 	/// Starts a regular poller that adds measurement operation requests to the
 	/// operations queue at a regular interval. Note: this only adds the request -

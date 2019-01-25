@@ -24,11 +24,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 
 		public void Dispose()
 		{
-			foreach (var option in tenantOptionApi.getAllOptionsForCategory(CATEGORY))
+			foreach (var option in tenantOptionApi.GetAllOptionsForCategory(CATEGORY))
 			{
-				tenantOptionApi.delete(new OptionPK(option.Category, option.Key));
+				tenantOptionApi.Delete(new OptionPK(option.Category, option.Key));
 			}
-			tenantOptionApi.getAllOptionsForCategory(CATEGORY);
+			tenantOptionApi.GetAllOptionsForCategory(CATEGORY);
 			_fixture?.Dispose();
 		}
 
@@ -36,8 +36,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		public void ShouldCreateOption()
 		{
 			OptionRepresentation expectedOption = OptionRepresentation.asOptionRepresetation(CATEGORY, KEY, "value");
-			OptionRepresentation option = tenantOptionApi.save(expectedOption);
-			OptionRepresentation savedOption = tenantOptionApi.getOption(new OptionPK(CATEGORY, KEY));
+			OptionRepresentation option = tenantOptionApi.Save(expectedOption);
+			OptionRepresentation savedOption = tenantOptionApi.GetOption(new OptionPK(CATEGORY, KEY));
 
 			Assert.Equal(expectedOption, option);
 			Assert.Equal(expectedOption, savedOption);
@@ -47,15 +47,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		public void ShouldUpdateOption()
 		{
 			OptionRepresentation expectedOption = OptionRepresentation.asOptionRepresetation(CATEGORY, KEY, "value");
-			OptionRepresentation option = tenantOptionApi.save(expectedOption);
+			OptionRepresentation option = tenantOptionApi.Save(expectedOption);
 
-			OptionRepresentation savedOption = tenantOptionApi.getOption(new OptionPK(CATEGORY, KEY));
+			OptionRepresentation savedOption = tenantOptionApi.GetOption(new OptionPK(CATEGORY, KEY));
 			Assert.Equal(expectedOption, option);
 			Assert.Equal(expectedOption, savedOption);
 
 			expectedOption = OptionRepresentation.asOptionRepresetation(CATEGORY, KEY, "value3");
-			option = tenantOptionApi.save(expectedOption);
-			savedOption = tenantOptionApi.getOption(new OptionPK(CATEGORY, KEY));
+			option = tenantOptionApi.Save(expectedOption);
+			savedOption = tenantOptionApi.GetOption(new OptionPK(CATEGORY, KEY));
 			Assert.Equal(expectedOption, option);
 			Assert.Equal(expectedOption, savedOption);
 		}
@@ -79,7 +79,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 			int expectedCount = 5;
 			List<OptionRepresentation> expectedOptions = sampleOptions(CATEGORY, KEY, expectedCount);
 			saveOptions(expectedOptions);
-			var options = tenantOptionApi.getAllOptionsForCategory(CATEGORY);
+			var options = tenantOptionApi.GetAllOptionsForCategory(CATEGORY);
 
 			Assert.Equal(expectedCount, options.Count);
 			assertExpectedOptionsFound(options, expectedOptions);
@@ -90,18 +90,18 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		{
 			OptionPK optionPK = new OptionPK(CATEGORY, KEY);
 
-			tenantOptionApi.save(OptionRepresentation.asOptionRepresetation(CATEGORY, KEY, "value"));
-			OptionRepresentation savedOption = tenantOptionApi.getOption(optionPK);
+			tenantOptionApi.Save(OptionRepresentation.asOptionRepresetation(CATEGORY, KEY, "value"));
+			OptionRepresentation savedOption = tenantOptionApi.GetOption(optionPK);
 			Assert.NotNull(savedOption);
 
-			tenantOptionApi.delete(new OptionPK(CATEGORY, KEY));
+			tenantOptionApi.Delete(new OptionPK(CATEGORY, KEY));
 			try
 			{
-				tenantOptionApi.getOption(optionPK);
+				tenantOptionApi.GetOption(optionPK);
 			}
 			catch (SDKException e)
 			{
-				Assert.Equal(e.HttpStatus, 404);
+				Assert.Equal( 404, e.HttpStatus);
 				return;
 			}
 			Assert.Equal(false,true);
@@ -121,7 +121,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		{
 			foreach (var option in options)
 			{
-				tenantOptionApi.save(option);
+				tenantOptionApi.Save(option);
 			}
 		}
 

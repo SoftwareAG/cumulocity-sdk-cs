@@ -17,7 +17,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// <param name="optionPK"> id of the option to search for </param>
 		/// <returns> the option with the given id </returns>
 		/// <exception cref="SDKException"> if the option is not found or if the query failed </exception>
-		OptionRepresentation getOption(OptionPK optionPK);
+		OptionRepresentation GetOption(OptionPK optionPK);
 
 		/// <summary>
 		/// Gets all options from the platform
@@ -34,7 +34,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// <param name="option"> option to be created </param>
 		/// <returns> the created option with the generated id </returns>
 		/// <exception cref="SDKException"> if the option could not be created </exception>
-		OptionRepresentation save(OptionRepresentation option);
+		OptionRepresentation Save(OptionRepresentation option);
 
 		/// <summary>
 		/// Creates or updates an option in the platform. Immediate response is available through the Future object.
@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// <param name="option"> option to be created </param>
 		/// <returns> the created option with the generated id </returns>
 		/// <exception cref="SDKException"> if the option could not be created </exception>
-		Task<OptionRepresentation> saveAsync(OptionRepresentation option);
+		Task<OptionRepresentation> SaveAsync(OptionRepresentation option);
 
 		/// <summary>
 		/// Deletes option from the platform.
@@ -52,7 +52,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// </summary>
 		/// <param name="optionPK"> to be deleted </param>
 		/// <exception cref="SDKException"> if the measurement could not be deleted </exception>
-		void delete(OptionPK optionPK);
+		void Delete(OptionPK optionPK);
 
 		/// <summary>
 		/// Gets all options from the platform for the specific category
@@ -60,6 +60,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 		/// </summary>
 		/// <returns> collection of options </returns>
 		/// <exception cref="SDKException"> if the query failed </exception>
-		IList<OptionRepresentation> getAllOptionsForCategory(string category);
+		IList<OptionRepresentation> GetAllOptionsForCategory(string category);
 	}
 }

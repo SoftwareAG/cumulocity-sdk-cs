@@ -73,11 +73,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 			{
 			}
 
-			public void onError(ISubscription<string> subscription, Exception ex)
+			public void OnError(ISubscription<string> subscription, Exception ex)
 			{
 			}
 
-			public void onNotification(ISubscription<string> subscription, object notification)
+			public void OnNotification(ISubscription<string> subscription, object notification)
 			{
 			}
 		}

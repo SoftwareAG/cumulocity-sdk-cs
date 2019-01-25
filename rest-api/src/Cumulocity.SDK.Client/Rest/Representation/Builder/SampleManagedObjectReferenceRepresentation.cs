@@ -11,14 +11,14 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 		static SampleManagedObjectReferenceRepresentation()
 		{
 			MO_REF_REPRESENTATION = () =>
-				RestRepresentationObjectBuilder.aManagedObjectReferenceRepresentation().withSelf(SELF);
+				RestRepresentationObjectBuilder.aManagedObjectReferenceRepresentation().WithSelf(SELF);
 		}
 
 		public static Func<ManagedObjectReferenceRepresentationBuilder> MO_REF_REPRESENTATION { get; }
 
-		public ManagedObjectReferenceRepresentation build()
+		public override ManagedObjectReferenceRepresentation Build()
 		{
-			return builder().build();
+			return Builder().Build();
 		}
 	}
 }

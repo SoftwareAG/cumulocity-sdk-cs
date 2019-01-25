@@ -34,6 +34,7 @@ using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 {
+#pragma warning disable xUnit1013
 	public class IdentityIT : IClassFixture<IdentityFixture>,IDisposable
 	{
 		public IdentityIT(IdentityFixture fixture)
@@ -51,7 +52,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		public List<ExternalIDRepresentation> Result1 { get; set; }
 		public bool NotFound { get; set; }
 
-		public void iHaveManagedObject(long globalId, string extId, string type)
+		public void IHaveManagedObject(long globalId, string extId, string type)
 		{
 			var rep = new ExternalIDRepresentation();
 			rep.ExternalId = extId;
@@ -64,14 +65,14 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 			Input.Add(rep);
 		}
 
-		public virtual void iCallCreate()
+		public virtual void ICallCreate()
 		{
 			var io = Input.First();
 			var id = IdentityApi.Create(io);
 			Result1.Add(id);
 		}
 
-		public virtual void shouldGetBackTheExternalId()
+		public virtual void ShouldGetBackTheExternalId()
 		{
 			var collection1 = IdentityApi.GetExternalIdsOfGlobalId(Input.First().ManagedObject.Id).GetFirstPage();
 			Assert.Equal(1, collection1.ExternalIds.Count);
@@ -80,7 +81,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 			Assert.Equal(Input.First().ManagedObject.Id.Value, collection1.ExternalIds.First().ManagedObject.Id.Value);
 		}
 
-		public virtual void iGetTheExternalId()
+		public virtual void IGetTheExternalId()
 		{
 			Result1.Clear();
 			try
@@ -96,7 +97,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		}
 
 		//@When("I Create all external ids")
-		public void iCreateAll()
+		public void ICreateAll()
 		{
 			foreach (ExternalIDRepresentation rep in Input)
 			{
@@ -105,7 +106,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		}
 
 		//@Then("I should GetFirstPage back all the external ids")
-		public void shouldGetBackAllTheIds()
+		public void ShouldGetBackAllTheIds()
 		{
 			var collection1 = IdentityApi.GetExternalIdsOfGlobalId(Input.First().ManagedObject.Id).GetFirstPage();
 			Assert.Equal(Input.Count, collection1.ExternalIds.Count);
@@ -127,7 +128,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		}
 
 		//@When("I Delete the external id")
-		public void iDeleteTheExternalId() {  
+		public void IDeleteTheExternalId() {  
 			ExternalIDRepresentation extIdRep = new ExternalIDRepresentation();
 			extIdRep.ExternalId = Input.First().ExternalId;
 			extIdRep.Type = Input.First().Type;
@@ -135,7 +136,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 	}
 
 		//@Then("External id should not be found")
-		public void shouldNotBeFound()
+		public void ShouldNotBeFound()
 		{
 			Assert.True(NotFound);
 		}
@@ -146,11 +147,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		public void createExternalIdAndGetAllForTheGlobalId()
 		{
 			//Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
-			iHaveManagedObject(100, "DN-1", "com.nsn.DN");
+			IHaveManagedObject(100, "DN-1", "com.nsn.DN");
 			//When I Create the external id
-			iCallCreate();
+			ICallCreate();
 			//Then I should GetFirstPage back the external id
-			shouldGetBackTheExternalId();
+			ShouldGetBackTheExternalId();
 		}
 
 		//
@@ -162,12 +163,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 			//            | type | value |
 			//            | com.type1 | 1002 |
 			//            | com.dn | DN-1 |
-			iHaveManagedObject(200, "com.type1", "1002");
-			iHaveManagedObject(200, "com.dn", "DN-1");
+			IHaveManagedObject(200, "com.type1", "1002");
+			IHaveManagedObject(200, "com.dn", "DN-1");
 			//    When I Create all external ids
-			iCreateAll();
+			ICreateAll();
 			//    Then I should GetFirstPage back all the external ids
-			shouldGetBackAllTheIds();
+			ShouldGetBackAllTheIds();
 		}
 
 		//
@@ -176,13 +177,13 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		public void createOneExternalIdAndGetTheExternalId()
 		{
 			//    Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
-			iHaveManagedObject(100, "DN-1", "com.nsn.DN");
+			IHaveManagedObject(100, "DN-1", "com.nsn.DN");
 			//    When I Create the external id
-			iCallCreate();
+			ICallCreate();
 			//    And I GetFirstPage the external id
-			iGetTheExternalId();
+			IGetTheExternalId();
 			//    Then I should GetFirstPage back the external id
-			shouldGetBackTheExternalId();
+			ShouldGetBackTheExternalId();
 		}
 
 		//
@@ -192,15 +193,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		public void createOneExternalIdAndDeleteIdAndGetTheExternalId()
 		{
 		//    Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
-			iHaveManagedObject(100, "DN-1", "com.nsn.DN");
+			IHaveManagedObject(100, "DN-1", "com.nsn.DN");
         //    When I Create the external id
-		iCallCreate();
+		ICallCreate();
 		//    And I Delete the external id
-		iDeleteTheExternalId();
+		IDeleteTheExternalId();
 		//    And I GetFirstPage the external id
-		iGetTheExternalId();
+		IGetTheExternalId();
 		//    Then External id should not be found
-		shouldNotBeFound();
+		ShouldNotBeFound();
 	}
 
 		public void Dispose()

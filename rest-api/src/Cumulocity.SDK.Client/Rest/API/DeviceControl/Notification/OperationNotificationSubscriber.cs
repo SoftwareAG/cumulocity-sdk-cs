@@ -38,7 +38,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification
 
 		private sealed class AgentDeviceIdAsSubscriptonName : ISubscriptionNameResolver<GId>
 		{
-			public string apply(GId id)
+			public string Apply(GId id)
 			{
 				return $"/{id.Value}";
 			}

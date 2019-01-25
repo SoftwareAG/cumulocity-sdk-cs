@@ -8,6 +8,7 @@ using Cumulocity.SDK.Client.Rest.Model.Idtype;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 {
+#pragma warning disable 0612
 	public class MeasurementFixture
 	{
 		public PlatformImpl platform;

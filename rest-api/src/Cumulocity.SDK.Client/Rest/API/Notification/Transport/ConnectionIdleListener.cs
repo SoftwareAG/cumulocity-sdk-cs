@@ -12,7 +12,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			this.action = action;
 		}
 
-		public void onConnectionIdle()
+		public void OnConnectionIdle()
 		{
 			this.action();
 		}

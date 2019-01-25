@@ -8,6 +8,7 @@ using System.Linq;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
+#pragma warning disable CS0693
 	public class SubscriberBuilder<T, R>
 	{
 		public const string NOTIFICATIONS = "cep/notifications";

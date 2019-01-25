@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
+#pragma warning disable CS0618
 	public class SubscriberImpl<T> : ISubscriber<T, IMessage>, IConnectionListener
 	{
 		private static ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
@@ -34,7 +35,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 		{
 			//log.trace("starting new subscriber");
 			checkState(!Connected, "subscriber already started");
-			session = bayeuxSessionProvider.get();
+			session = bayeuxSessionProvider.Get();
 		}
 
 		public bool isHandshake(IMutableMessage message)
@@ -109,8 +110,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private IClientSessionChannel getChannel(T @object)
 		{
-			//ORIGINAL LINE: final String channelId = subscriptionNameResolver.apply(object);
-			string channelId = subscriptionNameResolver.apply(@object);
+			//ORIGINAL LINE: final String channelId = subscriptionNameResolver.Apply(object);
+			string channelId = subscriptionNameResolver.Apply(@object);
 			checkState(!string.ReferenceEquals(channelId, null) && channelId.Length > 0, "channelId is null or empty for object : " + @object);
 			return session.getChannel(channelId);
 		}
@@ -155,19 +156,19 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 				ISubscription<T> subscription = Subscribe(subscribed.Id, subscribed.subscribeOperationListener, subscribed.Listener, true);
 				try
 				{
-					subscribed.Listener.onError(subscription, new ReconnectedSDKException("bayeux client reconnected clientId: " + session.Id));
+					subscribed.Listener.OnError(subscription, new ReconnectedSDKException("bayeux client reconnected clientId: " + session.Id));
 				}
 				catch (Exception e)
 				{
-					log.LogWarning("Error when executing onError of listener: {}, {}", subscribed.Listener, e.Message);
+					log.LogWarning("Error when executing OnError of listener: {}, {}", subscribed.Listener, e.Message);
 				}
 			}
 		}
-		public void onDisconnection(int httpCode)
+		public void OnDisconnection(int httpCode)
 		{
 			foreach (var subscription in subscriptions)
 			{
-				subscription.Listener.onError(new DummySubscription<T>(subscription), new SDKException(httpCode, "bayeux client disconnected  clientId: " + session.Id));
+				subscription.Listener.OnError(new DummySubscription<T>(subscription), new SDKException(httpCode, "bayeux client disconnected  clientId: " + session.Id));
 			}
 		}
 
@@ -193,7 +194,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		public string GetSubscriptionName(T o)
 		{
-			return subscriptionNameResolver.apply(o);
+			return subscriptionNameResolver.Apply(o);
 		}
 	}
 }

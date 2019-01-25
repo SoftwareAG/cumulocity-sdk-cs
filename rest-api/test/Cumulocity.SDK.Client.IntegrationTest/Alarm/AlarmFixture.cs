@@ -37,6 +37,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 
 			foreach (var id in lst)
 			{
+#pragma warning disable 0612
 				var mo = inventory.GetManagedObject(id);
 				mo.Delete();
 			}

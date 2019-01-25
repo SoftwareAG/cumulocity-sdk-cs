@@ -17,7 +17,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         {
             this.fixture = fixture;
             inventory = fixture.platform.InventoryApi;	
-            ManagedObjectRepresentation parentRep = inventory.Create(aSampleMo().withName("parentRep").build());
+            ManagedObjectRepresentation parentRep = inventory.Create(aSampleMo().WithName("parentRep").build());
         }
         
         private static ManagedObjectRepresentationBuilder aSampleMo()

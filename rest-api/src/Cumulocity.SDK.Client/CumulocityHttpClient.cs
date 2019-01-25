@@ -9,9 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace Cumulocity.SDK.Client
 {
+#pragma warning disable CS0168
+#pragma warning disable CS0169
 	public class CumulocityHttpClient : HttpClient
 	{
-		//private readonly Pattern hostPattern = Pattern.compile("((http|https):\\/\\/.+?)(\\/|\\?|$)");
 		private readonly Regex hostPattern = new Regex(@"((http|https):\\/\\/.+?)(\\/|\\?|$)");
 
 		private PlatformParameters platformParameters;

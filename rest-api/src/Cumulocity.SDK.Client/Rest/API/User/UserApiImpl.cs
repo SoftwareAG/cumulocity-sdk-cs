@@ -29,7 +29,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			}
 		}
 
-		public CurrentUserRepresentation updateCurrentUser(CurrentUserRepresentation currentUserRepresentation)
+		public CurrentUserRepresentation UpdateCurrentUser(CurrentUserRepresentation currentUserRepresentation)
 		{
 			string url = usersApiRepresentation.CurrentUser;
 			return restConnector.PutWithoutId(url, UserMediaType.CURRENT_USER, currentUserRepresentation);
@@ -50,7 +50,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			}
 		}
 
-		public UserRepresentation getUser(string tenant, string user)
+		public UserRepresentation GetUser(string tenant, string user)
 		{
 			IDictionary<string, string> @params = new Dictionary<string, string>();
 			@params[REALM] = tenant;
@@ -60,7 +60,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			return restConnector.Get<UserRepresentation>(url, UserMediaType.USER, typeof(UserRepresentation));
 		}
 
-		public UserRepresentation create(string tenant, UserRepresentation userRepresentation)
+		public UserRepresentation Create(string tenant, UserRepresentation userRepresentation)
 		{
 			IDictionary<string, string> @params = new Dictionary<string, string>();
 			@params[REALM] = tenant;
@@ -68,7 +68,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			return restConnector.Post(url, UserMediaType.USER, userRepresentation);
 		}
 
-		public UserRepresentation update(string tenant, UserRepresentation userRepresentation)
+		public UserRepresentation Update(string tenant, UserRepresentation userRepresentation)
 		{
 			IDictionary<string, string> @params = new Dictionary<string, string>();
 			@params[REALM] = tenant;
@@ -77,7 +77,7 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			return restConnector.PutWithoutId(url, UserMediaType.USER, userRepresentation);
 		}
 
-		public void delete(string tenant, string userName)
+		public void Delete(string tenant, string userName)
 		{
 			IDictionary<string, string> @params = new Dictionary<string, string>();
 			@params[REALM] = tenant;

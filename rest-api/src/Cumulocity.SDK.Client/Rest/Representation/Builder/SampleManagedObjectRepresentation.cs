@@ -15,13 +15,13 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 		{
 			MO_REPRESENTATION = () =>
 				RestRepresentationObjectBuilder.aManagedObjectRepresentation()
-					.withName(MANAGED_OBJECT_NAME)
-					.withType(MANAGED_OBJECT_TYPE);
+					.WithName(MANAGED_OBJECT_NAME)
+					.WithType(MANAGED_OBJECT_TYPE);
 		}
 
 		public static Func<ManagedObjectRepresentationBuilder> MO_REPRESENTATION { get; }
 
-		public virtual ManagedObjectRepresentation build()
+		public virtual ManagedObjectRepresentation Build()
 		{
 			return builder().build();
 		}

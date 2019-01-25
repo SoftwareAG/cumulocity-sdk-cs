@@ -14,7 +14,8 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client
 {
-    public class ResponseParser
+#pragma warning disable CS0168
+	public class ResponseParser
     {
         public const string NO_ERROR_REPRESENTATION = "Something went wrong. Failed to parse error message.";
         //private static readonly Logger LOG = LoggerFactory.getLogger(typeof(ResponseParser));

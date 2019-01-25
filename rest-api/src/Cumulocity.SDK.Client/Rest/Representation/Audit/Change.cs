@@ -2,6 +2,7 @@
 
 namespace Cumulocity.SDK.Client.Rest.Representation.Audit
 {
+#pragma warning disable 0649
 	public class Change
 	{
 		public enum Type

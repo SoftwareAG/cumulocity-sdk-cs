@@ -11,7 +11,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			this.subscription = subscription;
 		}
 
-		public void unsubscribe()
+		public void Unsubscribe()
 		{
 		}
 

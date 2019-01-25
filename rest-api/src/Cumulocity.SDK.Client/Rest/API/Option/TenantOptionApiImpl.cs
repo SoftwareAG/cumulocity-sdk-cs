@@ -22,7 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			this.pageSize = pageSize;
 		}
 
-		public OptionRepresentation getOption(OptionPK optionPK)
+		public OptionRepresentation GetOption(OptionPK optionPK)
 		{
 			string url = TenantApiRepresentation.TenantOptionForCategoryAndKey.Replace("{category}", optionPK.Category).Replace("{key}", optionPK.Key);
 			return restConnector.Get<OptionRepresentation>(url, OptionMediaType.OPTION, typeof(OptionRepresentation));
@@ -45,23 +45,23 @@ namespace Cumulocity.SDK.Client.Rest.API.Option
 			}
 		}
 
-		public OptionRepresentation save(OptionRepresentation representation)
+		public OptionRepresentation Save(OptionRepresentation representation)
 		{
 			return restConnector.Post<OptionRepresentation>(SelfUri, OptionMediaType.OPTION, representation);
 		}
 
-		public Task<OptionRepresentation> saveAsync(OptionRepresentation representation)
+		public Task<OptionRepresentation> SaveAsync(OptionRepresentation representation)
 		{
 			return restConnector.PostAsync(SelfUri, OptionMediaType.OPTION, representation);
 		}
 
-		public void delete(OptionPK optionPK)
+		public void Delete(OptionPK optionPK)
 		{
 			string url = TenantApiRepresentation.TenantOptionForCategoryAndKey.Replace("{category}", optionPK.Category).Replace("{key}", optionPK.Key);
 			restConnector.Delete(url);
 		}
 
-		public IList<OptionRepresentation> getAllOptionsForCategory(string category)
+		public IList<OptionRepresentation> GetAllOptionsForCategory(string category)
 		{
 			string url = TenantApiRepresentation.TenantOptionsForCategory.Replace("{category}", category);
 			OptionsRepresentation optionsRepresentation = restConnector.Get<OptionsRepresentation>(url, CumulocityMediaType.APPLICATION_JSON_TYPE, typeof(OptionsRepresentation));

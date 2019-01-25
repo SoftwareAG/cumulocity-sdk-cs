@@ -4,6 +4,7 @@ using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {
+#pragma warning disable CS0628
 	public sealed class MessageListenerAdapter<T> : IMessageListener
 	{
 		private readonly ISubscriptionListener<T, IMessage> handler;
@@ -23,7 +24,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 
 		public void onMessage(IClientSessionChannel channel, IMessage message)
 		{
-			handler.onNotification(subscription, message);
+			handler.OnNotification(subscription, message);
 		}
 
 		public ISubscription<T> Subscription

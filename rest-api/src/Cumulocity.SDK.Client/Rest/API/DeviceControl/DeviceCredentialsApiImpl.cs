@@ -6,6 +6,7 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl
 {
+#pragma warning disable CS0184
 	public class DeviceCredentialsApiImpl : IDeviceCredentialsApi
 	{
 		public const string DEVICE_CREDENTIALS_URI = "devicecontrol/deviceCredentials";

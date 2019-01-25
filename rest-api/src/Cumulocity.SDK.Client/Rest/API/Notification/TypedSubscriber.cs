@@ -50,15 +50,15 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			this.dataType = dataType;
 		}
 
-		public void onError(ISubscription<T> subscription, Exception ex)
+		public void OnError(ISubscription<T> subscription, Exception ex)
 		{
-			handler.onError(subscription, ex);
+			handler.OnError(subscription, ex);
 		}
 
-		public void onNotification(ISubscription<T> subscription, IMessage notification)
+		public void OnNotification(ISubscription<T> subscription, IMessage notification)
 		{
 			R data = asDataType(notification);
-			handler.onNotification(subscription, data);
+			handler.OnNotification(subscription, data);
 		}
 
 		internal R asDataType(IMessage notification)

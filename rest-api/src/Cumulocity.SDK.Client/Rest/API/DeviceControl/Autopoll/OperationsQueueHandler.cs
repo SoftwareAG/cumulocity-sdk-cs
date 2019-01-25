@@ -7,6 +7,8 @@ using Thread = System.Threading.Thread;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
+#pragma warning disable CS0618
+#pragma warning disable CS0168
 	public class OperationsQueueHandler
 	{
 		public const string INTERNAL = "Internal";

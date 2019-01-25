@@ -8,7 +8,6 @@ using System;
 namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 {
 #pragma warning disable CS0169
-	[CLSCompliant(false)]  
 	public class OperationRepresentation : AbstractExtensibleRepresentation
 	{
 		private long? bulkOperationId;
