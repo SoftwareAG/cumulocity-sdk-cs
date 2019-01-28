@@ -1,12 +1,14 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
+using Cumulocity.SDK.Client.Logging;
+using Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {
 	public class ReconnectOnSuccessfulConnected<T> : IExtension
 	{
 		private readonly SubscriberImpl<T> subscriberImpl;
-
+		private static readonly ILog LOG = LogProvider.For<ReconnectOnSuccessfulConnected<T>>();
 		public ReconnectOnSuccessfulConnected(SubscriberImpl<T> subscriberImpl)
 		{
 			this.subscriberImpl = subscriberImpl;
@@ -43,7 +45,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			// Resubscribe only there is a successful handshake and successfully connected.
 			if (reHandshakeSuccessful && reconnectedSuccessful)
 			{
-				//log.debug("reconnect operation detected for session {} - {} ", bayeuxSessionProvider, session.Id);
+				LOG.Debug("reconnect operation detected for session {} - {} ",  session.Id);
 				reHandshakeSuccessful = false;
 				reconnectedSuccessful = false;
 				subscriberImpl.resubscribe();

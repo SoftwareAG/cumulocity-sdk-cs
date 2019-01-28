@@ -1,7 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Audit;
 using System;
-using Microsoft.Extensions.Logging;
+using Cumulocity.SDK.Client.Logging;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Option
@@ -9,8 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 #pragma warning disable CS0168
 	public class Option : Document<GId>, IAuditLogSource<string>
 	{
-		private readonly ILogger _logger;
-
+		private static readonly ILog LOG = LogProvider.For<Option>();
 		public static readonly string SECURE_PREFIX = "credentials.";
 
 		private string key;
@@ -117,7 +116,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 				}
 				catch (System.FormatException)
 				{
-					//logger.warn("Value for key {} is not a number: {}!", Key, value);
+					LOG.Warn("Value for key {} is not a number: {}!", Key, value);
 					return null;
 				}
 			}
@@ -133,7 +132,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Option
 				}
 				catch (System.FormatException)
 				{
-					//logger.warn("Value for key {} is not a number: {}!", Key, value);
+					LOG.Warn("Value for key {} is not a number: {}!", Key, value);
 					return null;
 				}
 			}

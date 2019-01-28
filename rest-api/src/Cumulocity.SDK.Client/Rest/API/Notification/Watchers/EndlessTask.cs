@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 {
@@ -10,6 +11,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 		protected readonly int ExecutionLoopDelayMs = 0;
 		protected Task TheNeverEndingTask;
 		private readonly CancellationTokenSource _cts = new CancellationTokenSource();
+		private static readonly ILog LOG = LogProvider.For<EndlessTask>();
 
 		protected EndlessTask(int executionLoopDelayMin)
 		{

@@ -1,6 +1,8 @@
 ﻿using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Model.Operation;
 using System;
+using Cumulocity.SDK.Client.Logging;
+using Cumulocity.SDK.Client.Rest.API.Notification.Subscriber;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 {
@@ -12,6 +14,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 		private OperationsQueueHandler queueHandler;
 		private IDeviceControlApi deviceControlApi;
 		private OperationFilter filter;
+		private static readonly ILog LOG = LogProvider.For<OperationsByAgentAndStatusPollerImpl>();
 
 		public OperationsByAgentAndStatusPollerImpl(IDeviceControlApi deviceControlApi, String agentId,
 			OperationStatus status, IOperationProcessor operationProcessor)
@@ -34,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 			}
 			catch (Exception e)
 			{
-				//logger.error("Problem polling for operations", e);
+				LOG.Error("Problem polling for operations", e);
 			}
 		}
 

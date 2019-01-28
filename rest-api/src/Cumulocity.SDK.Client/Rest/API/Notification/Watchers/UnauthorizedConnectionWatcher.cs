@@ -2,13 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 {
 	public class UnauthorizedConnectionWatcher
 	{
-		//private readonly Logger log = LoggerFactory.getLogger(typeof(UnauthorizedConnectionWatcher));
-
+		private static readonly ILog LOG = LogProvider.For<UnauthorizedConnectionWatcher>();
 		private const int RETRY_COUNT_AFTER_UNAUTHORIZED = 5;
 
 		private readonly IList<IConnectionListener> listeners = new List<IConnectionListener>();
@@ -20,12 +20,12 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 			retryCounter--;
 			if (shouldRetry())
 			{
-				//log.info("bayeux client received 401, still trying '{}' times before stopping reconnection", retryCounter);
+				LOG.Info("bayeux client received 401, still trying '{}' times before stopping reconnection", retryCounter);
 				Debug.WriteLine(String.Format("bayeux client received 401, still trying '{0}' times before stopping reconnection", retryCounter));
 			}
 			else
 			{
-				//log.warn("bayeux client received 401 too many times -> do no longer reconnect");
+				LOG.Warn("bayeux client received 401 too many times -> do no longer reconnect");
 				Debug.WriteLine("bayeux client received 401 too many times -> do no longer reconnect");
 				foreach (IConnectionListener listener in listeners)
 				{

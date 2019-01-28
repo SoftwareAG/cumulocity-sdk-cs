@@ -1,5 +1,6 @@
 ﻿using Cumulocity.SDK.Client.Rest.API.Polling.Threads;
 using System;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Polling
 {
@@ -12,7 +13,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		private CountDownLatch latch;
 		private Exception lastException;
 		private K result;
-
+		private static readonly ILog LOG = LogProvider.For<AlteringRateResultPoller<K>>();
 		public AlteringRateResultPoller(IGetResultTask<K> getResultTask, PollingStrategy strategy)
 		{
 			this.getResultTask = getResultTask;
@@ -25,7 +26,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			if (pollingTask == null)
 			{
 				Console.WriteLine("Poller Start requested without pollingTask being set");
-				//LOG.error("Poller Start requested without pollingTask being set");
+				LOG.Error("Poller Start requested without pollingTask being set");
 				return false;
 			}
 
@@ -65,10 +66,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			catch (Exception ex)
 			{
 				lastException = ex;
-				//LOG.info("Polling with wrong result: " + digest(ex.getMessage()));
+				LOG.Info("Polling with wrong result: " + Digest(ex.Message));
 				if (pollingStrategy != null)
 				{
-					//LOG.info("Try again in " + pollingStrategy.peakNext() / 1000 + " seconds.");
+					LOG.Info("Try again in " + pollingStrategy.peakNext() / 1000 + " seconds.");
 				}
 				scheduleNextTaskExecution();
 			}
@@ -83,7 +84,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 				waitForResult();
 				if (result == null && lastException != null)
 				{
-					//LOG.error("Timeout occured, last exception: " + lastException);
+					LOG.Error("Timeout occured, last exception: " + lastException);
 				}
 				return result;
 			}
@@ -101,7 +102,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		{
 			if (pollingTask == null)
 			{
-				//LOG.error("Poller Start requested without pollingTask being set");
+				LOG.Error("Poller Start requested without pollingTask being set");
 				return false;
 			}
 
@@ -124,6 +125,18 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 			else
 			{
 				latch.Wait((int)pollingStrategy.Timeout);
+			}
+		}
+
+		private static String Digest(String message)
+		{
+			if (message == null || message.Length < 200)
+			{
+				return message;
+			}
+			else
+			{
+				return message.Substring(0, Math.Min(message.Length - 1, 200));
 			}
 		}
 	}

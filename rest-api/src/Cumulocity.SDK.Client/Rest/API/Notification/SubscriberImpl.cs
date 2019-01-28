@@ -7,14 +7,14 @@ using Cumulocity.SDK.Client.Rest.API.Notification.Watchers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification
 {
 #pragma warning disable CS0618
 	public class SubscriberImpl<T> : ISubscriber<T, IMessage>, IConnectionListener
 	{
-		private static ILoggerFactory loggerFactory = new LoggerFactory().AddConsole();
-		private ILogger log = loggerFactory.CreateLogger<SubscriberImpl<T>>();
+		private static readonly ILog LOG = LogProvider.For<SubscriberImpl<T>>();
 
 		private readonly Interfaces.ISubscriptionNameResolver<T> subscriptionNameResolver;
 		private readonly Interfaces.IBayeuxSessionProvider bayeuxSessionProvider;
@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		public virtual void start()
 		{
-			//log.trace("starting new subscriber");
+			LOG.Trace("starting new subscriber");
 			checkState(!Connected, "subscriber already started");
 			session = bayeuxSessionProvider.Get();
 		}
@@ -72,7 +72,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 			ensureConnection();
 
 			IClientSessionChannel channel = getChannel(@object);
-			log.LogDebug("subscribing to channel {}", channel.Id);
+			LOG.Debug("subscribing to channel {}", channel.Id);
 
 			var listener = new MessageListenerAdapter<T>(handler, channel, @object);
 
@@ -110,7 +110,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private IClientSessionChannel getChannel(T @object)
 		{
-			//ORIGINAL LINE: final String channelId = subscriptionNameResolver.Apply(object);
 			string channelId = subscriptionNameResolver.Apply(@object);
 			checkState(!string.ReferenceEquals(channelId, null) && channelId.Length > 0, "channelId is null or empty for object : " + @object);
 			return session.getChannel(channelId);
@@ -160,7 +159,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 				}
 				catch (Exception e)
 				{
-					log.LogWarning("Error when executing OnError of listener: {}, {}", subscribed.Listener, e.Message);
+					LOG.Warn("Error when executing OnError of listener: {}, {}", subscribed.Listener, e.Message);
 				}
 			}
 		}

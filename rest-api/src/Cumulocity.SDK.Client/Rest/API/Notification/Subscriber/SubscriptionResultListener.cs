@@ -5,6 +5,7 @@ using System;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 {
+
 	public sealed class SubscriptionResultListener<T> : IMessageListener
 	{
 		private const int RETRIES_ON_SHORT_NETWORK_FAILURES = 5;

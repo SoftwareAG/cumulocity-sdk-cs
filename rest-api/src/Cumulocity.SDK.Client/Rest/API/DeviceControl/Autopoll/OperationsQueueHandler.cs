@@ -3,6 +3,7 @@ using Cumulocity.SDK.Client.Rest.Model.Operation;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using System;
 using System.Threading;
+using Cumulocity.SDK.Client.Logging;
 using Thread = System.Threading.Thread;
 
 namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
@@ -12,8 +13,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 	public class OperationsQueueHandler
 	{
 		public const string INTERNAL = "Internal";
-
-		//private static Logger logger = LoggerFactory.getLogger(typeof(OperationsQueueHandler));
+		private static readonly ILog LOG = LogProvider.For<OperationsQueueHandler>();
 
 		internal double queuePollTimeOut = 1000;
 
@@ -21,8 +21,6 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 
 		internal IOperationProcessor operationProcessor;
 
-		//internal AtomicBoolean running = new AtomicBoolean(false);
-		//0 for false, 1 for true.
 		private static long usingResource = 0;
 
 		internal OperationsQueue queue;

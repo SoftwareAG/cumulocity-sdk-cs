@@ -4,6 +4,7 @@ using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation.Operation;
 using Cumulocity.SDK.Client.Rest.Utils;
 using System;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 {
@@ -15,6 +16,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 	/// </summary>
 	public sealed class MeasurementFixedRatePoller : FixedRatePoller
 	{
+		private static readonly ILog LOG = LogProvider.For<MeasurementFixedRatePoller>();
 		public MeasurementFixedRatePoller(long periodInterval) : base(new ScheduledThreadPoolExecutor(1), periodInterval)
 		{
 			PollingTask = PollingResult;
@@ -30,7 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement.Autopoll
 			}
 			catch (Exception e)
 			{
-				//logger.error("Problem polling for operations", e);
+				LOG.Error("Problem polling for operations", e);
 			}
 		}
 	}

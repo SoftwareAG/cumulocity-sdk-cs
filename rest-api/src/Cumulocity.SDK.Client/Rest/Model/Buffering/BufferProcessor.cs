@@ -2,6 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 {
@@ -15,7 +16,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 		private readonly CancellationToken _token;
 		private Task _executionTask = null;
 		private bool disposedValue = false;
-
+		private static readonly ILog LOG = LogProvider.For<BufferProcessor>();
 		public BufferProcessor(PersistentProvider persistentProvider, IBufferRequestService service,
 			RestConnector restConnector)
 		{
@@ -97,7 +98,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 						return result;
 					}
 					//platform is down
-					//LOG.warn("Couldn't connect to platform. Waiting..." + e.Message);
+					LOG.Warn("Couldn't connect to platform. Waiting..." + e.Message);
 					WaitForPlatform();
 				}
 				//catch (ClientHandlerException e)
@@ -107,7 +108,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 					if (e.InnerException != null && e.InnerException is Exception)
 					{
 						//lack of connection
-						//LOG.warn("Couldn't connect to platform. Waiting..." + e.Message);
+						LOG.Warn("Couldn't connect to platform. Waiting..." + e.Message);
 						WaitForConnection();
 					}
 					else

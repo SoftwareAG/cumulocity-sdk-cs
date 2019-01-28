@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Cumulocity.SDK.Client.Logging;
 using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
-using Cumulocity.SDK.Client.Rest.Representation;
-using Cumulocity.SDK.Client.Rest.Representation.Platform;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client
@@ -18,9 +14,9 @@ namespace Cumulocity.SDK.Client
 	public class ResponseParser
     {
         public const string NO_ERROR_REPRESENTATION = "Something went wrong. Failed to parse error message.";
-        //private static readonly Logger LOG = LoggerFactory.getLogger(typeof(ResponseParser));
+        private static readonly ILog LOG = LogProvider.For<ResponseParser>();
 
-        public virtual T parse<T>(HttpResponseMessage response, Type type, params int[] expectedStatusCode)
+		public virtual T parse<T>(HttpResponseMessage response, Type type, params int[] expectedStatusCode)
         {
             checkStatus(response, expectedStatusCode);
             var r = response.Content.ReadAsStringAsync().Result;
@@ -37,7 +33,6 @@ namespace Cumulocity.SDK.Client
 	    }
 
 
-		//ORIGINAL LINE: public <T> T parseObject(ClientResponse response, int expectedStatusCode, Class<T> type) throws SDKException
 		public virtual T parseObject<T>(HttpResponseMessage response, int expectedStatusCode, T type)
         {
             checkStatus(response, expectedStatusCode);
@@ -82,12 +77,12 @@ namespace Cumulocity.SDK.Client
             {
                 if (isJsonResponse(response)) return "ErrorMessageRepresentation";
 
-                //LOG.error("Failed to parse error message to json. Getting error string... ");
-                //LOG.error((string) response.getEntity(typeof(string)));
+                LOG.Error("Failed to parse error message to json. Getting error string... ");
+                //LOG.Error((string) response.getEntity(typeof(string)));
             }
             catch (Exception var3)
             {
-                //LOG.error("Failed to parse error message", var3);
+                LOG.Error("Failed to parse error message", var3);
             }
 
             return null;

@@ -2,6 +2,7 @@ using Cumulocity.SDK.Client.Rest;
 using Cumulocity.SDK.Client.Rest.Representation;
 using System;
 using System.Collections.Generic;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client
 {
@@ -12,7 +13,7 @@ namespace Cumulocity.SDK.Client
 		private readonly string url;
 
 		protected internal int pageSize = 5;
-
+		private static readonly ILog LOG = LogProvider.For<PagedCollectionResourceImpl<T, C, I>>();
 		//private static readonly Logger LOG = LoggerFactory.getLogger(typeof(PagedCollectionResourceImpl));
 		private readonly UrlProcessor urlProcessor = new UrlProcessor();
 
@@ -85,7 +86,7 @@ namespace Cumulocity.SDK.Client
 				@params["currentPage"] = pageNumber.ToString();
 				var url = urlProcessor.replaceOrAddQueryParam(collectionRepresentation.Self, @params);
 				url = urlProcessor.removeQueryParam(url, new List<string> { "startkey", "startkey_docid" });
-				//LOG.debug(" URL : " + url);
+				LOG.Debug(" URL : " + url);
 				return url;
 			}
 

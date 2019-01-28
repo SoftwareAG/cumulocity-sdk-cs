@@ -1,4 +1,5 @@
 ﻿using System;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client.Rest.API.Polling
 {
@@ -8,7 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 	/// </summary>
 	public abstract class FixedRatePoller : IPoller
 	{
-		//private static readonly Logger LOG = LoggerFactory.getLogger(typeof(FixedRatePoller));
+		private static readonly ILog LOG = LogProvider.For<FixedRatePoller>();
 
 		private ScheduledThreadPoolExecutor pollingExecutor;
 
@@ -30,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		{
 			if (pollingTask == null)
 			{
-				//LOG.error("Poller Start requested without pollingTask being set");
+				LOG.Error("Poller Start requested without pollingTask being set");
 				return false;
 			}
 
