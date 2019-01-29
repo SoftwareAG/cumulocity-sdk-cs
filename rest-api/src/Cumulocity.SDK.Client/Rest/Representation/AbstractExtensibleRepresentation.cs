@@ -49,12 +49,12 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 			throw new ArgumentException(nameof(name));
 		}
 
-		public virtual void setProperty(string name, object value)
+		public virtual void SetProperty(string name, object value)
 		{
 			attrs[name] = JToken.FromObject(value);
 		}
 
-		public virtual object removeProperty(string name)
+		public virtual object RemoveProperty(string name)
 		{
 			return attrs.Remove(name);
 		}
@@ -82,9 +82,9 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 		///                 <ul>"com_cumulocity_model_Coordinate"</ul>
 		/// </summary>
 		/// <param name="object"> </param>
-		public virtual void set(object @object)
+		public virtual void Set(object @object)
 		{
-			set(@object, @object.GetType().GetCustomAttribute<PackageName>().Name);
+			Set(@object, @object.GetType().GetCustomAttribute<PackageName>().Name);
 		}
 
 		/// <summary>
@@ -93,9 +93,9 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 		/// </summary>
 		/// <param name="object"> </param>
 		/// <param name="propertyName"> </param>
-		public virtual void set(object @object, string propertyName)
+		public virtual void Set(object @object, string propertyName)
 		{
-			setProperty(propertyName, @object);
+			SetProperty(propertyName, @object);
 		}
 
 		/// <summary>
@@ -115,28 +115,28 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 		/// </summary>
 		/// <param name="object"> </param>
 		/// <param name="clazz"> </param>
-		public virtual void set<T>(object @object, Type clazz)
+		public virtual void Set<T>(object @object, Type clazz)
 		{
-			setProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz), @object);
+			SetProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz), @object);
 		}
 
 		/// <summary>
 		///     Returns the object whose parameter name is given by clazz, or null
 		///     if no such property exists.
 		/// </summary>
-		/// <seealso cref= # set( Object
+		/// <seealso cref= # Set( Object
 		/// )
 		/// </seealso>
 		/// <param name="clazz">
 		///     @return
 		/// </param>
-		public virtual T get<T>(T clazz)
+		public virtual T Get<T>(T clazz)
 		{
 			var claz = typeof(T);
 			return (T)getProperty(ExtensibilityConverter.ClassToStringRepresentation(claz));
 		}
 
-		public virtual T get<T>()
+		public virtual T Get<T>()
 		{
 			var clazz = typeof(T);
 			return (T)getProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz));
@@ -149,7 +149,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation
 		/// <param name="name">
 		///     @return
 		/// </param>
-		public virtual object get(string name)
+		public virtual object Get(string name)
 		{
 			return getProperty(name);
 		}

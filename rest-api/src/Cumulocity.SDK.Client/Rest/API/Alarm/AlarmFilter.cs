@@ -26,7 +26,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="source"> the managed object that generated the alarm(s) </param>
-		/// <returns> the alarm filter with {@code source} set </returns>
+		/// <returns> the alarm filter with {@code source} Set </returns>
 		public virtual AlarmFilter BySource(GId source)
 		{
 			this.source = source.Value;
@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="source"> the managed object that generated the alarm(s) </param>
-		/// <returns> the alarm filter with {@code source} set </returns>
+		/// <returns> the alarm filter with {@code source} Set </returns>
 		[Obsolete]
 		public virtual AlarmFilter BySource(ManagedObjectRepresentation source)
 		{
@@ -49,7 +49,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// Specifies the {@code status} query parameter
 		/// </summary>
 		/// <param name="status"> status of the alarm(s) </param>
-		/// <returns> the alarm filter with {@code status} set </returns>
+		/// <returns> the alarm filter with {@code status} Set </returns>
 		public virtual AlarmFilter ByStatus(params CumulocityAlarmStatuses[] statuses)
 		{
 			if (statuses == null)
@@ -83,7 +83,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// Specifies the {@code status} query parameter
 		/// </summary>
 		/// <param name="status"> status of the alarm(s) </param>
-		/// <returns> the alarm filter with {@code status} set </returns>
+		/// <returns> the alarm filter with {@code status} Set </returns>
 		public virtual AlarmFilter BySeverity(CumulocitySeverities severity)
 		{
 			this.severity = severity.ToString();
@@ -114,7 +114,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// </summary>
 		/// <param name="fromDate"> the Start date time of the range </param>
 		/// <param name="toDate"> the end date time of the range </param>
-		/// <returns> the alarm filter with {@code fromDate} and {@code toDate} set. </returns>
+		/// <returns> the alarm filter with {@code fromDate} and {@code toDate} Set. </returns>
 		public virtual AlarmFilter ByDate(DateTime fromDate, DateTime toDate)
 		{
 			//DateConverter.date2String
@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Alarm
 		/// for querying all alarms from the specified date time.
 		/// </summary>
 		/// <param name="fromDate"> the date time from which all alarms to be returned. </param>
-		/// <returns> the alarm filter with {@code fromDate} set </returns>
+		/// <returns> the alarm filter with {@code fromDate} Set </returns>
 		public virtual AlarmFilter ByFromDate(DateTime fromDate)
 		{
 			this.dateFrom = fromDate.ToString("o");

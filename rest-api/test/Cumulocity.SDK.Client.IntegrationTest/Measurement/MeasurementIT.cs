@@ -85,7 +85,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			rep.Source = source;
 			Input.Add(rep);
 
-			rep.set(new FragmentOne());
+			rep.Set(new FragmentOne());
 			return rep;
 		}
 
@@ -560,7 +560,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 				// Set fragment
 				Object fragment = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
-				rep.set(fragment);
+				rep.Set(fragment);
 
 				Input.Add(rep);
 			}
@@ -644,7 +644,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			try
 			{
 				ManagedObjectRepresentation source = managedObjects[index];
-				MeasurementFilter filter = new MeasurementFilter().bySource(source);
+				MeasurementFilter filter = new MeasurementFilter().BySource(source);
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -665,7 +665,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 
 			// Set fragment
 			var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
-			rep.set(fragmentClass);
+			rep.Set(fragmentClass);
 			Input.Add(rep);
 		}
 
@@ -679,7 +679,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().byDate(fromDate, toDate).bySource(source);
+				MeasurementFilter filter = new MeasurementFilter().ByDate(fromDate, toDate).BySource(source);
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -697,7 +697,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().byDate(fromDate, toDate);
+				MeasurementFilter filter = new MeasurementFilter().ByDate(fromDate, toDate);
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -714,7 +714,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
 
 				ManagedObjectRepresentation source = managedObjects[index];
-				MeasurementFilter filter = new MeasurementFilter().byFragmentType(fragmentClass.GetType()).bySource(source);
+				MeasurementFilter filter = new MeasurementFilter().byFragmentType(fragmentClass.GetType()).BySource(source);
 
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
@@ -735,7 +735,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().byDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				MeasurementFilter filter = new MeasurementFilter().ByDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -755,7 +755,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().bySource(source).byDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				MeasurementFilter filter = new MeasurementFilter().BySource(source).ByDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -812,7 +812,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		{
 			try
 			{
-				MeasurementFilter typeFilter = new MeasurementFilter().byType(type);
+				MeasurementFilter typeFilter = new MeasurementFilter().ByType(type);
 				MeasurementApi.DeleteMeasurementsByFilter(typeFilter);
 			}
 			catch (SDKException ex)
@@ -839,7 +839,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		public void IQueryAllByType(String type) 
 		{
 			try {
-			MeasurementFilter typeFilter = new MeasurementFilter().byType(type);
+			MeasurementFilter typeFilter = new MeasurementFilter().ByType(type);
 			Collection1 = MeasurementApi.GetMeasurementsByFilter(typeFilter).GetFirstPage();
 		} catch (SDKException ex) {
 			Status = ex.HttpStatus;

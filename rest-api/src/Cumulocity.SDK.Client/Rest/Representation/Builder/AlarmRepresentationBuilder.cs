@@ -84,7 +84,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 			AlarmRepresentation alarm = new AlarmRepresentation();
 			foreach (object @object in dynamicProperties)
 			{
-				alarm.set(@object);
+				alarm.Set(@object);
 			}
 			return alarm;
 		}

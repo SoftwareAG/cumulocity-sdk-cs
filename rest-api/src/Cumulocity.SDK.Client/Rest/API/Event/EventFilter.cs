@@ -31,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// Specifies the {@code type} query parameter
 		/// </summary>
 		/// <param name="type"> the type of the event(s) </param>
-		/// <returns> the event filter with {@code type} set </returns>
+		/// <returns> the event filter with {@code type} Set </returns>
 		public virtual EventFilter ByType(string type)
 		{
 			this.type = type;
@@ -42,7 +42,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="source"> the managed object that generated the event(s) </param>
-		/// <returns> the event filter with {@code source} set </returns>
+		/// <returns> the event filter with {@code source} Set </returns>
 		public virtual EventFilter BySource(GId id)
 		{
 			this.source = id.Value;
@@ -53,7 +53,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Event
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="source"> the managed object that generated the event(s) </param>
-		/// <returns> the event filter with {@code source} set </returns>
+		/// <returns> the event filter with {@code source} Set </returns>
 		[Obsolete]
 		public virtual EventFilter BySource(ManagedObjectRepresentation source)
 		{

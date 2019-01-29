@@ -30,8 +30,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// Specifies the {@code type} query parameter
 		/// </summary>
 		/// <param name="type"> the type of the event(s) </param>
-		/// <returns> the event filter with {@code type} set </returns>
-		public virtual MeasurementFilter byType(string type)
+		/// <returns> the event filter with {@code type} Set </returns>
+		public virtual MeasurementFilter ByType(string type)
 		{
 			this.type = type;
 			return this;
@@ -41,8 +41,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="id"> the managed object that generated the event(s) </param>
-		/// <returns> the event filter with {@code source} set </returns>
-		public virtual MeasurementFilter bySource(GId id)
+		/// <returns> the event filter with {@code source} Set </returns>
+		public virtual MeasurementFilter BySource(GId id)
 		{
 			this.source = id.Value;
 			return this;
@@ -52,9 +52,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// Specifies the {@code source} query parameter
 		/// </summary>
 		/// <param name="source"> the managed object that generated the event(s) </param>
-		/// <returns> the event filter with {@code source} set </returns>
+		/// <returns> the event filter with {@code source} Set </returns>
 		[Obsolete]
-		public virtual MeasurementFilter bySource(ManagedObjectRepresentation source)
+		public virtual MeasurementFilter BySource(ManagedObjectRepresentation source)
 		{
 			this.source = source.Id.Value;
 			return this;
@@ -78,7 +78,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			return this;
 		}
 
-		public virtual MeasurementFilter byFragmentType(string fragmentType)
+		public virtual MeasurementFilter ByFragmentType(string fragmentType)
 		{
 			this.fragmentType = fragmentType;
 			return this;
@@ -91,35 +91,35 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 		/// structured data and filtering via this parameter is lighter than filtering via {@code fragmentType}.
 		/// </summary>
 		/// <param name="valueFragmentType"> the value fragment type to filter. </param>
-		/// <returns> the event filter with {@code valueFragmentType} set. </returns>
-		/// <seealso cref= #byValueFragmentSeries(String) </seealso>
-		/// <seealso cref= #byValueFragmentTypeAndSeries(String, String) </seealso>
-		public virtual MeasurementFilter byValueFragmentType(string valueFragmentType)
+		/// <returns> the event filter with {@code valueFragmentType} Set. </returns>
+		/// <seealso cref= #ByValueFragmentSeries(String) </seealso>
+		/// <seealso cref= #ByValueFragmentTypeAndSeries(String, String) </seealso>
+		public virtual MeasurementFilter ByValueFragmentType(string valueFragmentType)
 		{
 			this.valueFragmentType = valueFragmentType;
 			return this;
 		}
 
 		/// <summary>
-		/// Specify value fragment series, usually use in conjunction with <seealso cref="#byValueFragmentType(String)"/>
+		/// Specify value fragment series, usually use in conjunction with <seealso cref="#ByValueFragmentType(String)"/>
 		/// </summary>
 		/// <param name="valueFragmentSeries"> value fragment series to filter. </param>
-		/// <returns> the event filter with {@code valueFragmentSeries} set. </returns>
-		/// <seealso cref= #byValueFragmentType(String) </seealso>
-		/// <seealso cref= #byValueFragmentTypeAndSeries(String, String) </seealso>
-		public virtual MeasurementFilter byValueFragmentSeries(string valueFragmentSeries)
+		/// <returns> the event filter with {@code valueFragmentSeries} Set. </returns>
+		/// <seealso cref= #ByValueFragmentType(String) </seealso>
+		/// <seealso cref= #ByValueFragmentTypeAndSeries(String, String) </seealso>
+		public virtual MeasurementFilter ByValueFragmentSeries(string valueFragmentSeries)
 		{
 			this.valueFragmentSeries = valueFragmentSeries;
 			return this;
 		}
 
 		/// <summary>
-		/// A short version combining of <seealso cref="#byValueFragmentType(String)"/> and <seealso cref="#byValueFragmentSeries(String)"/>.
+		/// A short version combining of <seealso cref="#ByValueFragmentType(String)"/> and <seealso cref="#ByValueFragmentSeries(String)"/>.
 		/// </summary>
 		/// <param name="valueFragmentType"> value fragment type to filter, example: {@code c8y_TemperatureMeasurement} </param>
 		/// <param name="valueFragmentSeries"> value fragment series to filter, example: {@code T} </param>
-		/// <returns> the event filter with {@code valueFragmentType} and {@code valueFragmentSeries} set. </returns>
-		public virtual MeasurementFilter byValueFragmentTypeAndSeries(string valueFragmentType, string valueFragmentSeries)
+		/// <returns> the event filter with {@code valueFragmentType} and {@code valueFragmentSeries} Set. </returns>
+		public virtual MeasurementFilter ByValueFragmentTypeAndSeries(string valueFragmentType, string valueFragmentSeries)
 		{
 			this.valueFragmentType = valueFragmentType;
 			this.valueFragmentSeries = valueFragmentSeries;
@@ -130,14 +130,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 
 		public virtual string ValueFragmentSeries => valueFragmentSeries;
 
-		public virtual MeasurementFilter byDate(DateTime fromDate, DateTime toDate)
+		public virtual MeasurementFilter ByDate(DateTime fromDate, DateTime toDate)
 		{
 			this.dateFrom = fromDate.ToString("o");
 			this.dateTo = toDate.ToString("o");
 			return this;
 		}
 
-		public virtual MeasurementFilter byFromDate(DateTime fromDate)
+		public virtual MeasurementFilter ByFromDate(DateTime fromDate)
 		{
 			this.dateFrom = fromDate.ToString("o");
 			return this;

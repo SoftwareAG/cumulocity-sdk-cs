@@ -17,7 +17,7 @@
 		/// Specifies the {@code user} query parameter.
 		/// </summary>
 		/// <param name="user"> the user associated with the audit record(s) </param>
-		/// <returns> the audit record filter with {@code user} set </returns>
+		/// <returns> the audit record filter with {@code user} Set </returns>
 		public virtual AuditRecordFilter ByUser(string user)
 		{
 			this.user = user;
@@ -28,7 +28,7 @@
 		/// Specifies the {@code type} query parameter.
 		/// </summary>
 		/// <param name="type"> the type of the audit record(s) </param>
-		/// <returns> the audit record filter with {@code type} set </returns>
+		/// <returns> the audit record filter with {@code type} Set </returns>
 		public virtual AuditRecordFilter ByType(string type)
 		{
 			this.type = type;
@@ -39,7 +39,7 @@
 		/// Specifies the {@code application} query parameter
 		/// </summary>
 		/// <param name="application"> the application associated with the audit record(s) </param>
-		/// <returns> the audit record filter with {@code application} set </returns>
+		/// <returns> the audit record filter with {@code application} Set </returns>
 		public virtual AuditRecordFilter ByApplication(string application)
 		{
 			this.application = application;

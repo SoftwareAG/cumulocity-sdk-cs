@@ -19,7 +19,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 		public static OperationRepresentation createNewMeasurementOperation()
 		{
 			OperationRepresentation newOp = new OperationRepresentation();
-			newOp.set(new NewMeasurement());
+			newOp.Set(new NewMeasurement());
 			return newOp;
 		}
 

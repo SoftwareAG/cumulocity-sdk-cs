@@ -133,7 +133,7 @@ namespace Cumulocity.SDK.Client.Rest.Utils
 	        catch (Exception ex)
 	        {
 		        Debug.WriteLine(ex.Message);
-		        throw new Exception("Failed to set property value for our Foreign Key");
+		        throw new Exception("Failed to Set property value for our Foreign Key");
 	        }
 
         }

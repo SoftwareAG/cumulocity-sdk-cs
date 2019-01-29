@@ -77,7 +77,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             // When
             var coordinate = new Position {Lat = 100.0m, Lng = 10.0m};
-            result.set(coordinate);
+            result.Set(coordinate);
 
             var id = result.Id;
             result.Id = null;
@@ -85,7 +85,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             var updated = inventory.GetManagedObject(id).Update(result);
             Assert.NotNull(updated);
-            Assert.Equal(coordinate, updated.get<Position>());
+            Assert.Equal(coordinate, updated.Get<Position>());
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
             var created = inventory.Create(rep);
 
             //When
-            created.set(new object(), "c8y_Position");
+            created.Set(new object(), "c8y_Position");
             var id = created.Id;
             created.Id = null;
             created.LastUpdated = null;
@@ -105,7 +105,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             // Then
             Assert.NotNull(updated.Id);
-            Assert.NotNull(updated.get<Position>());
+            Assert.NotNull(updated.Get<Position>());
         }
 
         [Fact]
@@ -135,7 +135,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             // Then
             Assert.NotNull(result.Id);
-            Assert.NotNull(result.get<ThreePhaseElectricitySensor>());
+            Assert.NotNull(result.Get<ThreePhaseElectricitySensor>());
         }
 
         [Fact]
@@ -152,7 +152,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             // Then
             Assert.NotNull(result.Id);
-            var fragment = result.get<Position>();
+            var fragment = result.Get<Position>();
             Assert.IsType(coordinate.GetType(), fragment);
         }
 
@@ -184,7 +184,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 
             // Then
             Assert.NotNull(result.Id);
-            Assert.NotNull(result.get<ThreePhaseElectricitySensor>());
+            Assert.NotNull(result.Get<ThreePhaseElectricitySensor>());
         }
         
         [Fact]

@@ -145,10 +145,10 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// </ul>
 		/// </summary>
 		/// <param name="object"> </param>
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public void set(Object object)
+		//ORIGINAL LINE: @JSONProperty(ignore = true) public void Set(Object object)
 		public virtual void set(object @object)
 		{
-			//set(@object, @object.GetType().Name);
+			//Set(@object, @object.GetType().Name);
 		}
 
 		/// <summary>
@@ -158,10 +158,10 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// <param name="object"> </param>
 		/// <param name="propertyName"> </param>
 		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public void set(Object object, String propertyName)
+		//ORIGINAL LINE: @JSONProperty(ignore = true) public void Set(Object object, String propertyName)
 		public virtual void set(object @object, string propertyName)
 		{
-			//setProperty(propertyName, @object);
+			//SetProperty(propertyName, @object);
 		}
 
 		/// <summary>
@@ -181,10 +181,10 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// </summary>
 		/// <param name="object"> </param>
 		/// <param name="clazz"> </param>
-		//ORIGINAL LINE: @JSONProperty(ignore = true) public <C> void set(Object object, Class<C> clazz)
+		//ORIGINAL LINE: @JSONProperty(ignore = true) public <C> void Set(Object object, Class<C> clazz)
 		public virtual void set<C>(object @object, Type clazz)
 		{
-			//setProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz), @object);
+			//SetProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz), @object);
 		}
 
 		//ORIGINAL LINE: @JSONProperty(ignore = true) public void add(Map<String, Object> fragments)
@@ -196,7 +196,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 			}
 			foreach (var fragment in fragments.SetOfKeyValuePairs())
 			{
-				//setProperty(fragment.Key, fragment.Value);
+				//SetProperty(fragment.Key, fragment.Value);
 			}
 		}
 
@@ -204,7 +204,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// Returns the object whose parameter name is given by clazz, or null if no
 		/// such property exists.
 		/// </summary>
-		/// <seealso cref= #set(Object) </seealso>
+		/// <seealso cref= #Set(Object) </seealso>
 		/// <param name="clazz">
 		/// @return </param>
 		//ORIGINAL LINE: @SuppressWarnings("unchecked") public <C> C GetFirstPage(Class<C> clazz)
@@ -232,7 +232,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		/// @return </param>
 		public virtual void remove(Type clazz)
 		{
-			//removeProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz));
+			//RemoveProperty(ExtensibilityConverter.ClassToStringRepresentation(clazz));
 		}
 
 		/// <summary>

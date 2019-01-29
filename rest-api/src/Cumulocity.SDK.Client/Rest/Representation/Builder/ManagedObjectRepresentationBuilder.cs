@@ -111,7 +111,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Builder
 			ManagedObjectRepresentation rep = new ManagedObjectRepresentation();
 			foreach (object @object in dynamicProperties)
 			{
-				rep.set(@object);
+				rep.Set(@object);
 			}
 			return rep;
 		}

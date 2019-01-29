@@ -35,7 +35,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code fragmentType} query parameter
 	/// </summary>
 	/// <param name="fragmentClass"> the class representation of the type of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code fragmentType} set </returns>
+	/// <returns> the managed object filter with {@code fragmentType} Set </returns>
 	public virtual InventoryFilter ByFragmentType(Type fragmentClass)
 	{
 		this.fragmentType = Cumulocity.SDK.Client.Rest.Model.util.ExtensibilityConverter.ClassToStringRepresentation(fragmentClass);
@@ -46,7 +46,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code fragmentType} query parameter
 	/// </summary>
 	/// <param name="fragmentType"> the string representation of the type of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code fragmentType} set </returns>
+	/// <returns> the managed object filter with {@code fragmentType} Set </returns>
 	public virtual InventoryFilter ByFragmentType(string fragmentType)
 	{
 		this.fragmentType = fragmentType;
@@ -66,7 +66,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code type} query parameter
 	/// </summary>
 	/// <param name="type"> the type of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code type} set </returns>
+	/// <returns> the managed object filter with {@code type} Set </returns>
 	public virtual InventoryFilter ByType(string type)
 	{
 		this.type = type;
@@ -86,7 +86,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code owner} query parameter
 	/// </summary>
 	/// <param name="owner"> the owner of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code owner} set </returns>
+	/// <returns> the managed object filter with {@code owner} Set </returns>
 	public virtual InventoryFilter ByOwner(string owner)
 	{
 		this.owner = owner;
@@ -106,7 +106,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code text} query parameter
 	/// </summary>
 	/// <param name="text"> the text of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code text} set </returns>
+	/// <returns> the managed object filter with {@code text} Set </returns>
 	public virtual InventoryFilter ByText(string text)
 	{
 		this.text = text;
@@ -126,7 +126,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code ids} query parameter
 	/// </summary>
 	/// <param name="ids"> the ids of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code ids} set </returns>
+	/// <returns> the managed object filter with {@code ids} Set </returns>
 	public virtual InventoryFilter ByIds(IList<GId> ids)
 	{
 		this.ids = CreateCommaSeparatedStringFromGids(ids);
@@ -137,7 +137,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code ids} query parameter
 	/// </summary>
 	/// <param name="ids"> the ids of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code ids} set </returns>
+	/// <returns> the managed object filter with {@code ids} Set </returns>
 	public virtual InventoryFilter ByIds(params GId[] ids)
 	{
 		this.ids = CreateCommaSeparatedStringFromGids(ids.ToList());
@@ -148,7 +148,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code childAssetId} query parameter
 	/// </summary>
 	/// <param name="childAssetId"> the child asset of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code childAssetId} set </returns>
+	/// <returns> the managed object filter with {@code childAssetId} Set </returns>
 	public virtual InventoryFilter ByChildAssetId(GId childAssetId)
 	{
 		this.childAssetId = childAssetId.Value;
@@ -167,7 +167,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code childDeviceId} query parameter
 	/// </summary>
 	/// <param name="childDeviceId"> the child asset of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code childDeviceId} set </returns>
+	/// <returns> the managed object filter with {@code childDeviceId} Set </returns>
 	public virtual InventoryFilter ByChildDeviceId(GId childDeviceId)
 	{
 		this.childDeviceId = childDeviceId.Value;
@@ -186,7 +186,7 @@ public class InventoryFilter : Filter
 	/// Specifies the {@code childAdditionId} query parameter
 	/// </summary>
 	/// <param name="childAdditionId"> the child addition of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code childAdditionId} set </returns>
+	/// <returns> the managed object filter with {@code childAdditionId} Set </returns>
 	public virtual InventoryFilter ByChildAdditionId(GId childAdditionId)
 	{
 		this.childAdditionId = childAdditionId.Value;

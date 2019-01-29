@@ -7,6 +7,11 @@ using Cumulocity.SDK.Client.Rest.Model.Authentication;
 using Cumulocity.SDK.Client.Rest.Model.C8Y;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
+using System.Globalization;
+using Cumulocity.SDK.Client.Rest.API.Identity;
+using Cumulocity.SDK.Client.Rest.API.Measurement;
+using Cumulocity.SDK.Client.Rest.Representation.Identity;
+using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 
 namespace ConsoleApp1
 {
@@ -25,19 +30,23 @@ namespace ConsoleApp1
 			//Hello, world
 			var mo_hw = new ManagedObjectRepresentation();
 			mo_hw.Name = "Hello, world!";
-			mo_hw.set(new IsDevice());
-			//mo_hw.set(new Firmware() { Name = "A", Url = "U" });
+			mo_hw.Set(new IsDevice());
+			//mo_hw.Set(new Firmware() { Name = "A", Url = "U" });
 			var mo_hw3 = inventory.Create(mo_hw);
 			Console.WriteLine($"Url: {mo_hw.Self}");
+
+			InventoryFilter inventoryFilter = new InventoryFilter();
+			inventoryFilter.ByFragmentType(typeof(Position));
+			var moc = inventory.GetManagedObjectsByFilter(inventoryFilter);
 
 			////New electricity meter with a relay
 			//ManagedObjectRepresentation mo_mm = new ManagedObjectRepresentation();
 			//mo_mm.Name = "MyMeter-1";
 			//Relay relay = new Relay();
-			//mo_mm.set(new IsDevice());
-			//mo_mm.set(relay);
+			//mo_mm.Set(new IsDevice());
+			//mo_mm.Set(relay);
 			//SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
-			//mo_mm.set(meter);
+			//mo_mm.Set(meter);
 			//inventory.Create(mo_mm);
 
 			//InventoryFilter inventoryFilter = new InventoryFilter();
@@ -50,7 +59,33 @@ namespace ConsoleApp1
 			//	Console.WriteLine(mo.Id);
 			//}
 
+			ManagedObjectRepresentation mo = new ManagedObjectRepresentation();
+			mo.Name = "MyMeter-1";
+			Relay relay = new Relay();
+			mo.Set(relay);
+			SinglePhaseElectricitySensor meter = new SinglePhaseElectricitySensor();
+			mo.Set(meter);
+			// Set additional properties, e.g., tariff tables, ...
+			mo = inventory.Create(mo);
+			Console.WriteLine(mo.Id);
 			Console.ReadKey();
+
+			IMeasurementApi measurementApi = platform.MeasurementApi;
+			MeasurementFilter measurementFilter = new MeasurementFilter();
+
+			var toDate = DateTime.Now;
+			var fromDate = DateTime.Now.AddDays(-14);
+			measurementFilter.ByDate(fromDate, toDate);
+			measurementFilter.byFragmentType(typeof(SignalStrength));
+			IMeasurementCollection mc = measurementApi.GetMeasurementsByFilter(measurementFilter);
+
+			MeasurementCollectionRepresentation measurements = mc.GetFirstPage();
+
+			foreach (var measurement in mc.GetFirstPage().AllPages())
+			{
+				SignalStrength signal = measurement.Get<SignalStrength>();
+				Console.WriteLine(measurement.Source.Id + " " + measurement.DateTime + " " + signal.RssiValue + " " + signal.BerValue);
+			}
 		}
 	}
 }

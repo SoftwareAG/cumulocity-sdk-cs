@@ -298,7 +298,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 			GId deviceId = getMoId(deviceNum);
 			OperationRepresentation operationRepresentation = new OperationRepresentation();
 			operationRepresentation.DeviceId = deviceId;
-			operationRepresentation.set("smaple_value", "sample_operation_type");
+			operationRepresentation.Set("smaple_value", "sample_operation_type");
 			operation1 = deviceControlResource.Create(operationRepresentation);
 		}
 

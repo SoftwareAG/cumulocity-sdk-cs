@@ -230,7 +230,7 @@ namespace Cumulocity.SDK.Client.Rest
 				var applicationKey = GetProperty(CUMOLOCITY_APPLICATION_KEY);
 				if (ReferenceEquals(host, null) || ReferenceEquals(tenantId, null) || ReferenceEquals(user, null) ||
 					ReferenceEquals(password, null))
-					throw new SDKException("Cannot Create Platform as Mandatory Param are not set");
+					throw new SDKException("Cannot Create Platform as Mandatory Param are not Set");
 				if (GetProperty(CUMULOCITY_PAGE_SIZE) != null)
 				{
 					var pageSize = int.Parse(GetProperty(CUMULOCITY_PAGE_SIZE));
