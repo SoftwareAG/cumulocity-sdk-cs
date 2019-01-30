@@ -20,7 +20,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 		}
 
 		/// <param name="relayState"> the relayState to Set </param>
-		public void setRelayState(RelayState relayState)
+		public void SetRelayState(RelayState relayState)
 		{
 			_relayState = relayState;
 		}
