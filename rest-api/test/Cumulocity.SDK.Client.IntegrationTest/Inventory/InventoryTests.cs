@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
 
         [Fact]
-        public void createAndDeleteManagedObject()
+        public void CreateAndDeleteManagedObject()
         {
             // Given
             var rep = aSampleMo().build();
@@ -52,7 +52,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
 
         [Fact]
-        public void createAndGetManagedObject()
+        public void CreateAndGetManagedObject()
         {
             // Given
             var rep = aSampleMo().build();
@@ -69,7 +69,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
 
         [Fact]
-        public void createAndUpdateManagedObject()
+        public void CreateAndUpdateManagedObject()
         {
             // Given
             var rep = aSampleMo().build();
@@ -89,7 +89,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
 
         [Fact]
-        public void createAndUpdateManagedObjectByRemovingFragment()
+        public void CreateAndUpdateManagedObjectByRemovingFragment()
         {
             // Given
             var rep = aSampleMo().With(new Position()).build();
@@ -124,7 +124,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
 
         [Fact]
-        public void createManagedObjectWith2ThreePhaseElectricityFragments()
+        public void CreateManagedObjectWith2ThreePhaseElectricityFragments()
         {
             // Given
             var rep = aSampleMo().With(new ThreePhaseElectricitySensor()).With(
@@ -188,14 +188,14 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
         }
         
         [Fact]
-        public  void updatingManagedObjectByMultipleThreads()
+        public  void UpdatingManagedObjectByMultipleThreads()
         {
             //
         }
         
 
      [Fact]
-     public  void tryToGetNonExistentManagedObject()
+     public  void TryToGetNonExistentManagedObject()
      {
             // Given
             ManagedObjectRepresentation rep = aSampleMo().WithID(new GId("1")).build();
@@ -209,7 +209,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
      }
 
     [Fact]
-	public void tryToDeleteNonExistentManagedObject()
+	public void TryToDeleteNonExistentManagedObject()
 	{
 		// Given
 		ManagedObjectRepresentation rep = aSampleMo().WithID(new GId("1")).build();
@@ -224,7 +224,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 	[Fact]
-	public  void tryToUpdateNonExistentManagedObject()
+	public  void TryToUpdateNonExistentManagedObject()
 	{
 		// Given
 		ManagedObjectRepresentation rep = aSampleMo().build();
@@ -239,7 +239,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 	[Fact]
-	public  void getAllWhenNoManagedObjectPresent()
+	public  void GetAllWhenNoManagedObjectPresent()
 	{
 		// When
 		ManagedObjectCollectionRepresentation mos = inventory.GetManagedObjectsByFilter((new InventoryFilter()).ByType("not_existing_mo_type")).GetFirstPage();
@@ -249,7 +249,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 	[Fact]
-	public  void getAllWhen2ManagedObjectArePresent()
+	public  void GetAllWhen2ManagedObjectArePresent()
 	{
 		
 		// Given
@@ -266,7 +266,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 	[Fact]
-	public void addGetAndRemoveChildDevices()
+	public void AddGetAndRemoveChildDevices()
 	{
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent1").build());
@@ -296,7 +296,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 	        
 	[Fact]
-	public virtual void getPagedChildDevices()
+	public virtual void GetPagedChildDevices()
 	{
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent").build());
@@ -331,7 +331,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 	[Fact]
-	public virtual void addGetAndRemoveChildAssets()
+	public virtual void AddGetAndRemoveChildAssets()
 	{
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent").build());
@@ -362,7 +362,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Inventory
 	}
 
 [Fact]
-public virtual void addGetAndRemoveChildAdditions()
+public virtual void AddGetAndRemoveChildAdditions()
 {
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent").build());
@@ -393,7 +393,7 @@ public virtual void addGetAndRemoveChildAdditions()
 
 
 	[Fact]
-	public virtual void getPagedChildAssets()
+	public virtual void GetPagedChildAssets()
 	{
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent").build());
@@ -416,7 +416,7 @@ public virtual void addGetAndRemoveChildAdditions()
 
 
 	[Fact]    
-	public virtual void getPagedChildAdditions()
+	public virtual void GetPagedChildAdditions()
 	{
 		// Given
 		ManagedObjectRepresentation parent = inventory.Create(aSampleMo().WithName("parent").build());
@@ -437,7 +437,7 @@ public virtual void addGetAndRemoveChildAdditions()
 	}
 
 	[Fact]  
-	public virtual void queryWithManagedObjectType()
+	public virtual void QueryWithManagedObjectType()
 	{
 		// Given
 		inventory.Create(aSampleMo().WithType("typeA").WithName("A1").build());
@@ -460,7 +460,7 @@ public virtual void addGetAndRemoveChildAdditions()
 	}
 
 	[Fact]      
-	public virtual void bulkQuery()
+	public virtual void BulkQuery()
 	{
 		// Given
 		ManagedObjectRepresentation mo1 = inventory.Create(aSampleMo().WithName("MO1").build());
@@ -482,7 +482,7 @@ public virtual void addGetAndRemoveChildAdditions()
 	}
 
 	[Fact]
-	public virtual void queryWithFragmentType()
+	public virtual void QueryWithFragmentType()
 	{
 		//Given
 		inventory.Create(aSampleMo().WithName("MO1").With(new Coordinate()).build());
@@ -498,7 +498,7 @@ public virtual void addGetAndRemoveChildAdditions()
 
     //ORIGINAL LINE: @Test public void getAllWhen20ManagedObjectsPresent() throws Exception
 	[Fact]
-	public virtual void getAllWhen20ManagedObjectsPresent()
+	public virtual void GetAllWhen20ManagedObjectsPresent()
 	{
 		// Given
 		int numOfMos = 20;

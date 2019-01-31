@@ -103,7 +103,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//
 		//    Scenario: Create measurements
 		[Fact]
-		public void createMeasurements()
+		public void CreateMeasurements()
 		{
 			//    Given I have '2' measurements of type 'com.type1' for the managed object
 			IHaveMeasurements(2, "com.type1");
@@ -114,7 +114,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		}
 
 		[Fact]
-		public void createMeasurementsWithoutTime()
+		public void CreateMeasurementsWithoutTime()
 		{
 			//    Given I have a measurement of type 'com.type1' and no time value for the managed object
 			IHaveAMeasurementWithNoTime("com.type1");
@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by fragment type
 
 		[Fact]
-		public void getMeasurementCollectionByFragmentType()
+		public void GetMeasurementCollectionByFragmentType()
 		{
 			//    Given I have '2' measurements with fragment type 'com.cumulocity.sdk.client.measurement.FragmentOne' for the managed object
 			IHaveMeasurementsWithFragments(2, "Cumulocity.SDK.Client.IntegrationTest.Measurement.FragmentOne");
@@ -155,7 +155,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by source
 
 		[Fact]
-		public void getMeasurementCollectionBySource()
+		public void GetMeasurementCollectionBySource()
 		{
 			//    Given I have '1' measurements for the source '0' the managed object
 			IHaveMeasurementsForSource(1, 0);
@@ -181,7 +181,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by time
 
 		[Fact]
-		public void getMeasurementCollectionByTime()
+		public void GetMeasurementCollectionByTime()
 		{
 			var a = getMeasurementsFrom1stPage();
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
@@ -207,7 +207,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by source and time
 
 		[Fact]
-		public void getMeasurementCollectionBySourceAndTime()
+		public void GetMeasurementCollectionBySourceAndTime()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -238,7 +238,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//
 		//    Scenario: Get measurement collection by source and fragment type
 		[Fact]
-		public void getMeasurementCollectionBySourceAndFragmentType()
+		public void GetMeasurementCollectionBySourceAndFragmentType()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -271,7 +271,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by fragment type and time
 
 		[Fact]
-		public void getMeasurementCollectionByFragmentTypeAndTime()
+		public void GetMeasurementCollectionByFragmentTypeAndTime()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -306,7 +306,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement collection by source and fragment type and time
 
 		[Fact]
-		public void getMeasurementCollectionBySourceAndFragmentTypeAndTime()
+		public void GetMeasurementCollectionBySourceAndFragmentTypeAndTime()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -394,7 +394,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Get measurement
 		//.......
 		[Fact]
-		public void getMeasurement()
+		public void GetMeasurement()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -411,7 +411,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    Scenario: Delete measurement
 
 		[Fact]
-		public void deleteMeasurement()
+		public void DeleteMeasurement()
 		{
 			//    Given I have a measurement with time '2011-11-03T11:01:00.000+05:30' with fragment type 'com.cumulocity.sdk.client.measurement
 			// .FragmentOne' and for '0' managed object
@@ -429,7 +429,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//
 		// Scenario: Delete all measurement collection by an empty filter
 		[Fact]
-		public void deleteMeasurementCollectionByEmptyFilter()
+		public void DeleteMeasurementCollectionByEmptyFilter()
 		{
 			//    Given I have '3' measurements of type 'com.type1' for the managed object
 			IHaveMeasurements(3, "com.type1");
@@ -456,7 +456,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	// Scenario: Delete measurements by filter
 	//......
 	[Fact]
-	public void deleteMeasurementsByTypeFilter() 
+	public void DeleteMeasurementsByTypeFilter() 
 		{
 		//    Given I have '3' measurements of type 'com.type1' for the managed object
 		IHaveMeasurements(3, "com.type1");
@@ -489,7 +489,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	//    Scenario: Create measurement in bulk
 
 	[Fact]
-	public void createMeasurementsInBulk()
+	public void CreateMeasurementsInBulk()
 	{
 		//    Given I have '2' measurements of type 'com.type1' for the managed object
 		IHaveMeasurements(3, "com.type2");
@@ -503,7 +503,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	//    Scenario: Get measurements collection by default page settings
 
 	[Fact]
-	public void getMeasurementCollectionByDefaultPageSettings() 
+	public void GetMeasurementCollectionByDefaultPageSettings() 
 	{
         // Given
         for (int i = 0; i < 12; i++) {

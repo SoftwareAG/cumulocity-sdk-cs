@@ -8,10 +8,12 @@ using Cumulocity.SDK.Client.Rest.Model.C8Y;
 using Cumulocity.SDK.Client.Rest.Representation.Inventory;
 using System;
 using System.Globalization;
+using Cumulocity.SDK.Client.Rest.API.DeviceControl;
 using Cumulocity.SDK.Client.Rest.API.Identity;
 using Cumulocity.SDK.Client.Rest.API.Measurement;
 using Cumulocity.SDK.Client.Rest.Representation.Identity;
 using Cumulocity.SDK.Client.Rest.Representation.Measurement;
+using Cumulocity.SDK.Client.Rest.Representation.Operation;
 
 namespace ConsoleApp1
 {
@@ -23,21 +25,33 @@ namespace ConsoleApp1
 
 			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
 
+			//
+			//Connecting to Cumulocity
+			//
+
 			IPlatform platform = new PlatformImpl("https://piotr.staging.c8y.io",
 				new CumulocityCredentials(secretRevealer.Reveal().user, secretRevealer.Reveal().pass));
 			IInventoryApi inventory = platform.InventoryApi;
 
-			//Hello, world
+			//Accessing the inventory
 			var mo_hw = new ManagedObjectRepresentation();
 			mo_hw.Name = "Hello, world!";
 			mo_hw.Set(new IsDevice());
-			//mo_hw.Set(new Firmware() { Name = "A", Url = "U" });
-			var mo_hw3 = inventory.Create(mo_hw);
+			mo_hw.Set(new Position(){Alt = 0.1m, Lat = 40.0m , Lng = 50m } );
+			var mo_hw1 = inventory.Create(mo_hw);
 			Console.WriteLine($"Url: {mo_hw.Self}");
+
+
 
 			InventoryFilter inventoryFilter = new InventoryFilter();
 			inventoryFilter.ByFragmentType(typeof(Position));
-			var moc = inventory.GetManagedObjectsByFilter(inventoryFilter);
+
+			IManagedObjectCollection moc = inventory.GetManagedObjectsByFilter(inventoryFilter);
+
+			foreach (ManagedObjectRepresentation mor in moc.GetFirstPage().AllPages())
+			{
+				Console.WriteLine(mor.Id);
+			}
 
 			////New electricity meter with a relay
 			//ManagedObjectRepresentation mo_mm = new ManagedObjectRepresentation();
@@ -86,6 +100,13 @@ namespace ConsoleApp1
 				SignalStrength signal = measurement.Get<SignalStrength>();
 				Console.WriteLine(measurement.Source.Id + " " + measurement.DateTime + " " + signal.RssiValue + " " + signal.BerValue);
 			}
+
+			IDeviceControlApi control = platform.DeviceControlApi;
+			OperationRepresentation operation = new OperationRepresentation();
+			operation.DeviceId= mo.Id;
+			relay.SetRelayState(Relay.RelayState.OPEN);
+			operation.Set(relay);
+			control.Create(operation);
 		}
 	}
 }

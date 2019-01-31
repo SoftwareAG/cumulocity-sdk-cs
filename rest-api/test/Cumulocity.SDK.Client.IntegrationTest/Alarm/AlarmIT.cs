@@ -93,7 +93,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldHaveIdAfterCreateAlarm()
+		public void ShouldHaveIdAfterCreateAlarm()
 		{
 			// Given
 			var rep = aSampleAlarm(mo1);
@@ -104,7 +104,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void createAlarmWithoutText()
+		public void CreateAlarmWithoutText()
 		{
 			// Given
 			AlarmRepresentation alarm = RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -121,7 +121,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void createAlarmsWithoutSeverity()
+		public void CreateAlarmsWithoutSeverity()
 		{
 			// Given
 			AlarmRepresentation alarm = RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -138,7 +138,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnAllCreatedAlarms()
+		public void ShouldReturnAllCreatedAlarms()
 		{
 			// Given
 			ManagedObjectRepresentation source = mo1;
@@ -159,7 +159,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnAllCreatedAsyncAlarms()
+		public void ShouldReturnAllCreatedAsyncAlarms()
 		{
 			// Given
 			ManagedObjectRepresentation source = mo1;
@@ -180,7 +180,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnNoAlarmWithUnmatchedFilter()
+		public void ShouldReturnNoAlarmWithUnmatchedFilter()
 		{
 			// Given
 			AlarmApi.Create(aSampleAlarm(mo1));
@@ -195,7 +195,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnMultipleAlarmsWithMatchedFilter()
+		public void ShouldReturnMultipleAlarmsWithMatchedFilter()
 		{
 			// Given
 			AlarmApi.Create(aSampleAlarm(mo1));
@@ -211,7 +211,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnFilterBySource()
+		public void ShouldReturnFilterBySource()
 		{
 			// Given
 			AlarmApi.Create(aSampleAlarm(mo1));
@@ -228,7 +228,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void getAlarmCollectionByStatus()
+		public void GetAlarmCollectionByStatus()
 		{
 			// Given
 			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -254,7 +254,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void getAlarmCollectionByStatusAndSource()
+		public void GetAlarmCollectionByStatusAndSource()
 		{
 			// Given
 			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -288,7 +288,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldGetAlarmById()
+		public void ShouldGetAlarmById()
 		{
 			// Given
 			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -303,7 +303,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldReturnTheUpdatedAlarm()
+		public void ShouldReturnTheUpdatedAlarm()
 		{
 			// Given
 			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -323,7 +323,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldUpdateAlarm()
+		public void ShouldUpdateAlarm()
 		{
 			// Given
 			AlarmRepresentation created = AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
@@ -345,7 +345,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldDeleteAlarmCollectionByEmptyFilter()
+		public void ShouldDeleteAlarmCollectionByEmptyFilter()
 		{
 			// Given
 			for (int i = 0; i < 5; i++)
@@ -372,7 +372,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		}
 
 		[Fact]
-		public void shouldDeleteByFilterStatus()
+		public void ShouldDeleteByFilterStatus()
 		{
 			var allAlarmsT = AlarmApi.GetAlarms().GetFirstPage().Alarms;
 			// Given

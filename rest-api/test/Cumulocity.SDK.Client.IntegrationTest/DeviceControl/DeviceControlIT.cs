@@ -119,7 +119,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 		//    Scenario: Create Operation and poll it
 		[Fact]
-		public void createOperationAndPollIt()
+		public void CreateOperationAndPollIt()
 		{
 			//    Given I have a poller for agent '0'
 			IHaveAPollerForAgent(0);
@@ -132,7 +132,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//
 		//    Scenario: adding operations to queue
 		[Fact]
-		public void addingOperationToQueue()
+		public void AddingOperationToQueue()
 		{
 			//    When I GetFirstPage all operations for device '1'
 			IGetAllOperationsForAgent(1);
@@ -148,7 +148,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 		//  Scenario: GetFirstPage notification about new operation
 		[Fact]
-		public void getNotificationAboutNewOperation()
+		public void GetNotificationAboutNewOperation()
 		{
 			//      Given I have a operation subscriber for agent '0'
 			IHaveAOperationSubscriberForAgent(0);
@@ -162,7 +162,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//    Scenario: Operation CRUD
 
 		[Fact]
-		public void operationCRUD()
+		public void OperationCRUD()
 		{
 			//    When I Create an operation for device '1'
 			ICreateAnOperationForDevice(1);
@@ -181,7 +181,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//
 		//    Scenario: query operations by status
 		[Fact]
-		public void queryOperationByStatus()
+		public void QueryOperationByStatus()
 		{
 			IQueryOperationsWithStatusX("EXECUTING");
 			int numOfExecuting = allOperations.Operations.Count;
@@ -211,7 +211,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//    Scenario: query operations by device
 
 		[Fact]
-		public void queryOperationsByDevice() 
+		public void QueryOperationsByDevice() 
 		{
 			//    And I Create an operation for device '1'
 			ICreateAnOperationForDevice(1);
@@ -233,7 +233,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		//    Scenario: query operations by agent
 
 		[Fact]
-		public void queryOperationsByAgent()
+		public void QueryOperationsByAgent()
 	{
 	//    And I Create an operation for device '1'
 	ICreateAnOperationForDevice(1);

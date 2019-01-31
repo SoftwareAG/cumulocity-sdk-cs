@@ -144,7 +144,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 
 		//Scenario: Create one external id and GetFirstPage all for the global id
 		[Fact]
-		public void createExternalIdAndGetAllForTheGlobalId()
+		public void CreateExternalIdAndGetAllForTheGlobalId()
 		{
 			//Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
 			IHaveManagedObject(100, "DN-1", "com.nsn.DN");
@@ -157,7 +157,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		//
 		//    Scenario: Create multiple external ids and GetFirstPage all for the global id
 		[Fact]
-		public void createMultipleExternalIdsAndGetAllForTheGlobalId()
+		public void CreateMultipleExternalIdsAndGetAllForTheGlobalId()
 		{
 			//    Given I have the global id '200' with following external ids:
 			//            | type | value |
@@ -174,7 +174,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		//
 		//    Scenario: Create one external id and GetFirstPage the external id
 		[Fact]
-		public void createOneExternalIdAndGetTheExternalId()
+		public void CreateOneExternalIdAndGetTheExternalId()
 		{
 			//    Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
 			IHaveManagedObject(100, "DN-1", "com.nsn.DN");
@@ -190,7 +190,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Identity
 		//    Scenario: Create one external id, Delete it and GetFirstPage the external id
 
 		[Fact]
-		public void createOneExternalIdAndDeleteIdAndGetTheExternalId()
+		public void CreateOneExternalIdAndDeleteIdAndGetTheExternalId()
 		{
 		//    Given I have external id for '100' with value 'DN-1' and type 'com.nsn.DN'
 			IHaveManagedObject(100, "DN-1", "com.nsn.DN");

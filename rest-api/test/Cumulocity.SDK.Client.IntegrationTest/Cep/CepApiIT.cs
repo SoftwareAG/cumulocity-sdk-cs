@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 		}
 
 		[Fact]
-		public void shouldCreateCepModule()
+		public void ShouldCreateCepModule()
 		{
 			//Given
 			string cepModuleFile = readCepModuleFile("cep/test-module.epl");
@@ -46,7 +46,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Cep
 		}
 
 		[Fact]
-		public void shouldDeleteCepModule()
+		public void ShouldDeleteCepModule()
 		{
 			//Given
 			CepModuleRepresentation cepModule = cepApi.Create(readCepModuleFile("cep/test-module.epl"));

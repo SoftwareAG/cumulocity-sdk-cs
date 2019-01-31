@@ -22,11 +22,11 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		}
 
 		[Fact]
-		public void shouldPollCredentialsUntilDeviceAccepted()
+		public void ShouldPollCredentialsUntilDeviceAccepted()
 		{
 			string deviceId = "3000";
 			int pollIntervalInSeconds = 2;
-			createNewDeviceRequest(deviceId);
+			CreateNewDeviceRequest(deviceId);
 
 			DeviceCredentialsRepresentation credentials = deviceCredentialsResource.PollCredentials(deviceId, pollIntervalInSeconds, 100);
 
@@ -42,7 +42,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 
 		}
 
-		private void createNewDeviceRequest(String deviceId)
+		private void CreateNewDeviceRequest(String deviceId)
 		{
 			NewDeviceRequestRepresentation representation = new NewDeviceRequestRepresentation();
 			representation.Id = deviceId;

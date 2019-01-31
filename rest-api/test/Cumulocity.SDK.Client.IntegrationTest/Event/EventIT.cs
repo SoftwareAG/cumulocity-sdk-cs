@@ -364,7 +364,7 @@ public void IShouldGetNumberOfEvents(int count)
 
 		//    Scenario: Create Events
 		[Fact]
-		public void createEvents()
+		public void CreateEvents()
 		{
 			//    Given I have '2' Events of type 'type1' for the managed object
 			iHaveEvents(2, "type1");
@@ -378,7 +378,7 @@ public void IShouldGetNumberOfEvents(int count)
 
 		//    Scenario: Create Events without type
 		[Fact]
-		public void createEventsWithoutType() 
+		public void CreateEventsWithoutType() 
 		{
 			//    Given I have a Event with no type value for the managed object
 			IHaveAEventWithNoType();
@@ -392,7 +392,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//
 		//    Scenario: Create Events without time
 		[Fact]
-		public void createEventsWithoutTime() 
+		public void CreateEventsWithoutTime() 
 		{
 			//    Given I have a Event with no time value for the managed object
 			IHaveAEventWithNoTime();
@@ -405,7 +405,7 @@ public void IShouldGetNumberOfEvents(int count)
 	//
 	//    Scenario: Create Events without text
 	[Fact]
-	public void createEventsWithoutText() 
+	public void CreateEventsWithoutText() 
 	{
 		//    Given I have a Event with no text value for the managed object
 		IHaveAEventWithNoText();
@@ -418,7 +418,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//
 		//    Scenario: Get Event collection
 		[Fact]
-		public void getEventCollection() 
+		public void GetEventCollection() 
 		{
 			//    Given I have '2' Events of type 'type1' for the managed object
 			iHaveEvents(2, "type1");
@@ -435,7 +435,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Get event collection by type
 
 		[Fact]
-		public void getEventCollectionByType()
+		public void GetEventCollectionByType()
 		{
 		//    Given I have '2' Events of type 'type' for the managed object
 		iHaveEvents(2, "type");
@@ -466,7 +466,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Get event collection by source
 
 		[Fact]
-		public void getEventCollectionBySource()
+		public void GetEventCollectionBySource()
 		{
 		//    Given I have '3' Events for the source '0' the managed object
 		IHaveEventsForSource(3, 0);
@@ -555,7 +555,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Delete Event
 
 		[Fact]
-		public void deleteEvent() 
+		public void DeleteEvent() 
 	{
 		//    Given I have a Event with time '2011-11-03T11:01:00.000+05:30' with type 'type' and for '0' managed object
 		IHaveAEventWithTypeAndTime("2018-12-17T10:01:14.9072393Z", "type", 0);
@@ -573,7 +573,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Delete all Event collection by an empty filter
 
 		[Fact]
-		public void deleteEventCollectionByEmptyFilter() 
+		public void DeleteEventCollectionByEmptyFilter() 
 	{
 		//    Given I have '3' Events of type 'type1' for the managed object
 		iHaveEvents(3, "type1");
@@ -597,7 +597,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Delete Events by filter
 
 		[Fact]
-		public void deleteEventsByTypeFilter()
+		public void DeleteEventsByTypeFilter()
 	{
 		//    Given I have '3' Events of type 'type1' for the managed object
 		iHaveEvents(3, "type1");
@@ -629,7 +629,7 @@ public void IShouldGetNumberOfEvents(int count)
 		//    Scenario: Get event collection by paging
 
 		[Fact]
-		public void getEventCollectionByPaging() 
+		public void GetEventCollectionByPaging() 
 	{
 		//    Given I have '17' Events for the source '0' the managed object
 		IHaveEventsForSource(17, 0);

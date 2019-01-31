@@ -61,7 +61,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		}
 
 		[Fact]
-		public void shouldGetAllOptions()
+		public void ShouldGetAllOptions()
 		{
 			List<OptionRepresentation> expectedOptions = sampleOptions(CATEGORY, KEY, 10);
 			saveOptions(expectedOptions);
@@ -74,7 +74,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 
 
 		[Fact]
-		public void shouldGetOptionsForSingleCategory()
+		public void ShouldGetOptionsForSingleCategory()
 		{
 			int expectedCount = 5;
 			List<OptionRepresentation> expectedOptions = sampleOptions(CATEGORY, KEY, expectedCount);
@@ -86,7 +86,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Option
 		}
 
 		[Fact]
-		public void shouldDeleteOption()
+		public void ShouldDeleteOption()
 		{
 			OptionPK optionPK = new OptionPK(CATEGORY, KEY);
 

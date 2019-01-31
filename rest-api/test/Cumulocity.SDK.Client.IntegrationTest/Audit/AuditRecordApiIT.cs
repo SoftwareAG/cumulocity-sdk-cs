@@ -59,7 +59,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 
 		//    Scenario: Create and GetFirstPage audit records
 		[Fact]
-		public void createAndGetAuditRecords()
+		public void CreateAndGetAuditRecords()
 		{
 			//    Given I have '3' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			IHaveAuditRecord(3, "com.type1", "app1", "user1");
@@ -80,7 +80,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		//    Scenario: Create and GetFirstPage audit record
 
 		[Fact]
-		public void createAndGetAuditRecord()
+		public void CreateAndGetAuditRecord()
 		{
 			//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -99,7 +99,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		//    Scenario: Query by user
 
 		[Fact]
-		public void queryByUser()
+		public void QueryByUser()
 		{
 			//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -133,7 +133,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 		//    Scenario: Query by type
 
 		[Fact]
-		public void queryByType() 
+		public void QueryByType() 
 		{
 			//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 			IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -168,7 +168,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query by application
 
 	[Fact]
-	public void queryByApplication() 
+	public void QueryByApplication() 
 	{
 		//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -202,7 +202,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query by user and type
 
 	[Fact]
-	public void queryByUserAndType() 
+	public void QueryByUserAndType() 
 	{
 		//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -236,7 +236,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query by user and application
 
 	[Fact]
-	public void queryByUserAndApplication() 
+	public void QueryByUserAndApplication() 
 	{
 		//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -271,7 +271,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query by user, application and type
 
 	[Fact]
-	public void queryByUserApplicationAndType() 
+	public void QueryByUserApplicationAndType() 
 	{
 		//    Given I have '1' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(1, "com.type1", "app1", "user1");
@@ -305,7 +305,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query to test the paging with user
 
 	[Fact]
-	public void queryToTestThePagingWithUser() 
+	public void QueryToTestThePagingWithUser() 
 	{
 		//    Given I have '10' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(10, "com.type1", "app1", "user1");
@@ -325,7 +325,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Audit
 	//    Scenario: Query to test the paging to GetFirstPage all AuditRecords
 
 	[Fact]
-	public void queryToTestThePagingToGetAllAuditRecords()
+	public void QueryToTestThePagingToGetAllAuditRecords()
 	{
 		//    Given I have '10' audit records of type 'com.type1' and application 'app1' and user 'user1' for the managed object
 		IHaveAuditRecord(10, "com.type1", "app1", "user1");
