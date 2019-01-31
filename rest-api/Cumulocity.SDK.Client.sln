@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cumulocity.SDK.Client.Helpe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cometd.NetStandard", "src\cometd.NetStandard\cometd.NetStandard.csproj", "{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleApp", "ExampleApp\ExampleApp.csproj", "{0ED35933-92BB-415B-8A8E-C9072C95B642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ED35933-92BB-415B-8A8E-C9072C95B642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED35933-92BB-415B-8A8E-C9072C95B642}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED35933-92BB-415B-8A8E-C9072C95B642}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED35933-92BB-415B-8A8E-C9072C95B642}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{57038569-7FFE-40C0-A628-90DB34908398} = {239B1328-BECA-4D5A-A5C0-5DB7C2C95770}
 		{81C53500-5A18-4DC9-B779-819689C95130} = {239B1328-BECA-4D5A-A5C0-5DB7C2C95770}
 		{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB} = {AF409482-6397-490D-90D1-F600BCC6609A}
+		{0ED35933-92BB-415B-8A8E-C9072C95B642} = {AF409482-6397-490D-90D1-F600BCC6609A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7A0128D-00FC-41B4-89A0-0EB5AE504067}

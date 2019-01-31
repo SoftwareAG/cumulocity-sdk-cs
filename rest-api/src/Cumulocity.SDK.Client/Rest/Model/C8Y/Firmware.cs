@@ -22,7 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             this.url = url;
         }
 
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("url",NullValueHandling = NullValueHandling.Ignore)]
         public virtual string Url
         {
             get
@@ -34,8 +34,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 this.url = value;
             }
         }
-
-
+        
+        [JsonProperty("name")]
         public virtual string Name
         {
             get
@@ -47,7 +47,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 this.name = value;
             }
         }
-
+        [JsonProperty("version")]
         public virtual string Version
         {
             get

@@ -1,4 +1,5 @@
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
@@ -38,54 +39,54 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             this.lac = lac;
             this.msisdn = msisdn;
         }
-
+        [JsonProperty("imei")]
         public virtual string Imei
         {
             get => imei;
             set => imei = value;
         }
-
+        [JsonProperty("cellId")]
         public virtual string CellId
         {
             get => cellId;
             set => cellId = value;
         }
-
+        [JsonProperty("iccid")]
         public virtual string Iccid
         {
             get => iccid;
             set => iccid = value;
         }
 
-
+        [JsonProperty("mcc")]
         public virtual string Mcc
         {
             get => mcc;
             set => mcc = value;
         }
 
-
+        [JsonProperty("mnc")]
         public virtual string Mnc
         {
             get => mnc;
             set => mnc = value;
         }
 
-
+        [JsonProperty("imsi")]
         public virtual string Imsi
         {
             get => imsi;
             set => imsi = value;
         }
 
-
+        [JsonProperty("lac")]
         public virtual string Lac
         {
             get => lac;
             set => lac = value;
         }
 
-
+        [JsonProperty("msisdn")]
         public virtual string Msisdn
         {
             get => msisdn;

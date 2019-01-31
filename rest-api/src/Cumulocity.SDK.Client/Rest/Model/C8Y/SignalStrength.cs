@@ -17,7 +17,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
 		private MeasurementValue rssi;
 		private MeasurementValue ber;
-
+		
+		[JsonProperty("rssi")]
 		public virtual MeasurementValue Rssi
 		{
 			get
@@ -31,6 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 		}
 
 		[JsonIgnore]
+		[JsonProperty("ber")]
 		public virtual MeasurementValue Ber
 		{
 			get

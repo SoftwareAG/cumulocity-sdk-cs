@@ -1,10 +1,12 @@
+using Newtonsoft.Json;
+
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
 	public class Tracking
 	{
 		// Reporting interval in seconds
 		protected internal  int interval;
-
+		[JsonProperty("interval")]
 		public virtual int Interval
 		{
 			get => interval;

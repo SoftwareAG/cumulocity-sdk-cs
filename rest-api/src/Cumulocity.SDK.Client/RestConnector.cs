@@ -302,10 +302,13 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
+
+			
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
-					ContractResolver = new CamelCasePropertyNamesContractResolver()
+					ContractResolver = new CamelCasePropertyNamesContractResolver(),
+					Formatting = Formatting.Indented
 				});
 			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
 
@@ -473,4 +476,5 @@ namespace Cumulocity.SDK.Client
 			return client.SendAsync(request);
 		}
 	}
+	
 }

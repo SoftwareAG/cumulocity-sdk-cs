@@ -1,5 +1,6 @@
 using Cumulocity.SDK.Client.Rest.Utils;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
@@ -31,19 +32,19 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 			this.version = version;
 			this.url = url;
 		}
-
+		[JsonProperty("name")]
 		public virtual string Name
 		{
 			get => name;
 			set => name = value;
 		}
-
+		[JsonProperty("version")]
 		public virtual string Version
 		{
 			get => version;
 			set => version = value;
 		}
-
+		[JsonProperty("url")]
 		public virtual string Url
 		{
 			get => url;

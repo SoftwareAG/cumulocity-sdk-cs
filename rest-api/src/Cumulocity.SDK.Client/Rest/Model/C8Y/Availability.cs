@@ -21,7 +21,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 			this.status = status;
 		}
 
-		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty("lastMessage", NullValueHandling = NullValueHandling.Ignore)]
 		public virtual DateTime LastMessage
 		{
 			get
@@ -33,7 +33,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 				this.lastMessage = value;
 			}
 		}
-
+		[JsonProperty("status")]
 		public virtual ConnectionState Status
 		{
 			get

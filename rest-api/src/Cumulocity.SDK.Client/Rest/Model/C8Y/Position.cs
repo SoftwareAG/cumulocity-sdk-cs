@@ -19,7 +19,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 		public Position()
 		{
 		}
-
+		[JsonProperty("lat")]
 		public virtual decimal Lat
 		{
 			get
@@ -31,7 +31,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 				this.lat = value;
 			}
 		}
-
+		[JsonProperty("lng")]
 		public virtual decimal Lng
 		{
 			get
@@ -43,7 +43,7 @@ namespace Cumulocity.SDK.Client.Rest.Model
 				this.lng = value;
 			}
 		}
-
+		[JsonProperty("alt")]
 		public virtual decimal Alt
 		{
 			get

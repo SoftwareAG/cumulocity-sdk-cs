@@ -1,4 +1,5 @@
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
@@ -6,7 +7,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
     public class MotionTracking : Tracking
     {
         private bool active;
-
+        [JsonProperty("active")]
         public virtual bool Active
         {
             get => active;

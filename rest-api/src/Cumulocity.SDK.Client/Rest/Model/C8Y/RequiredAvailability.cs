@@ -1,4 +1,5 @@
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
@@ -15,7 +16,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 		{
 			this.responseInterval = responseInterval;
 		}
-
+		[JsonProperty("responseInterval")]
 		public virtual int ResponseInterval
 		{
 			get

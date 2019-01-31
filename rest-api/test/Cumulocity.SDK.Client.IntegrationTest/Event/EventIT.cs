@@ -51,6 +51,24 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 
 		public void Dispose()
 		{
+			IList<EventRepresentation> eventsOn1stPage = getEventsFrom1stPage();
+			while (eventsOn1stPage.Count > 0)
+			{
+				deleteMOs(eventsOn1stPage);
+				eventsOn1stPage = getEventsFrom1stPage();
+			}
+		}
+		private void deleteMOs(IList<EventRepresentation> mosOn1stPage)
+		{
+			foreach (EventRepresentation e in mosOn1stPage)
+			{
+				EventApi.Delete(e);
+			}
+		}
+
+		private IList<EventRepresentation> getEventsFrom1stPage()
+		{
+			return EventApi.Events.GetFirstPage().Events;
 		}
 
 		private readonly ManagedObjectRepresentation managedObject;

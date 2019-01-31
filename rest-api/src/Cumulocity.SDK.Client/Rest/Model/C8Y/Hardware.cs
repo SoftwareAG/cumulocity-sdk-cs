@@ -1,4 +1,5 @@
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
@@ -19,7 +20,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 			this.serialNumber = serialNumber;
 			this.revision = revision;
 		}
-
+		[JsonProperty("model")]
 		public virtual string Model
 		{
 			get
@@ -31,7 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 				this.model = value;
 			}
 		}
-
+		[JsonProperty("serialNumber")]
 		public virtual string SerialNumber
 		{
 			get
@@ -43,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 				this.serialNumber = value;
 			}
 		}
-
+		[JsonProperty("revision")]
 		public virtual string Revision
 		{
 			get
