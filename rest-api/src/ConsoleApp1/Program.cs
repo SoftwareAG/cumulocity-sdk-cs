@@ -90,7 +90,7 @@ namespace ConsoleApp1
 			var toDate = DateTime.Now;
 			var fromDate = DateTime.Now.AddDays(-14);
 			measurementFilter.ByDate(fromDate, toDate);
-			measurementFilter.byFragmentType(typeof(SignalStrength));
+			measurementFilter.ByFragmentType(typeof(SignalStrength));
 			IMeasurementCollection mc = measurementApi.GetMeasurementsByFilter(measurementFilter);
 
 			MeasurementCollectionRepresentation measurements = mc.GetFirstPage();

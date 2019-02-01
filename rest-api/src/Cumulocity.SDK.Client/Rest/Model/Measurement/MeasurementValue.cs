@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 {
@@ -10,11 +11,11 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 
 		private const long serialVersionUID = 82786895631760488L;
 
-		private decimal value;
+		private decimal? value;
 
 		private string unit;
 
-		private ValueType type;
+		private ValueType? type;
 
 		private string quantity;
 
@@ -44,9 +45,9 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 			this.state = state;
 		}
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = false) public BigDecimal getValue()
-		public virtual decimal Value
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore,PropertyName = "value")]
+		public virtual decimal? Value
 		{
 			get
 			{
@@ -59,8 +60,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 		}
 
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = false) public String getUnit()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "unit")]
 		public virtual string Unit
 		{
 			get
@@ -74,9 +75,9 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 		}
 
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public ValueType getType()
-		public virtual ValueType Type
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "type")]
+		public virtual ValueType? Type
 		{
 			get
 			{
@@ -89,8 +90,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 		}
 
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public String getQuantity()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "quantity")]
 		public virtual string Quantity
 		{
 			get
@@ -104,8 +105,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.Measurement
 		}
 
 
-		//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
 		//ORIGINAL LINE: @JSONProperty(ignoreIfNull = true) public StateType getState()
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "state")]
 		public virtual StateType State
 		{
 			get

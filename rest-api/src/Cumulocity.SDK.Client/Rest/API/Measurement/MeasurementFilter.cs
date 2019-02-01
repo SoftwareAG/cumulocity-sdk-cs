@@ -72,7 +72,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Measurement
 			}
 		}
 
-		public virtual MeasurementFilter byFragmentType(Type fragmentType)
+		public virtual MeasurementFilter ByFragmentType(Type fragmentType)
 		{
 			this.fragmentType = ExtensibilityConverter.ClassToStringRepresentation(fragmentType);
 			return this;

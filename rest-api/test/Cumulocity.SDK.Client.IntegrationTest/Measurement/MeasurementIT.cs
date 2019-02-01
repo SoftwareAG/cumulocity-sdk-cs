@@ -629,7 +629,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			try
 			{
 				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
-				MeasurementFilter filter = new MeasurementFilter().byFragmentType(fragmentClass.GetType());
+				MeasurementFilter filter = new MeasurementFilter().ByFragmentType(fragmentClass.GetType());
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -714,7 +714,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 				var fragmentClass = System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(fragmentType);
 
 				ManagedObjectRepresentation source = managedObjects[index];
-				MeasurementFilter filter = new MeasurementFilter().byFragmentType(fragmentClass.GetType()).BySource(source);
+				MeasurementFilter filter = new MeasurementFilter().ByFragmentType(fragmentClass.GetType()).BySource(source);
 
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
@@ -735,7 +735,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().ByDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				MeasurementFilter filter = new MeasurementFilter().ByDate(fromDate, toDate).ByFragmentType(fragmentClass.GetType());
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
@@ -755,7 +755,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 					System.Globalization.CultureInfo.InvariantCulture);
 				var toDate = DateTime.ParseExact(to, "o",
 					System.Globalization.CultureInfo.InvariantCulture);
-				MeasurementFilter filter = new MeasurementFilter().BySource(source).ByDate(fromDate, toDate).byFragmentType(fragmentClass.GetType());
+				MeasurementFilter filter = new MeasurementFilter().BySource(source).ByDate(fromDate, toDate).ByFragmentType(fragmentClass.GetType());
 				Collection1 = MeasurementApi.GetMeasurementsByFilter(filter).GetFirstPage();
 			}
 			catch (SDKException ex)
