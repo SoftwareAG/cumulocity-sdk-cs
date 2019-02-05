@@ -45,9 +45,9 @@ namespace HelloExample
             //configure MQTT connection
             var cnf = new Configuration()
             {
-                Server = "ws://url/mqtt",
-                UserName = @"tenant/user",
-                Password = @"p@ssword",
+                Server = "ws://piotr.staging.c8y.io/mqtt",
+                UserName = @"piotr/admin",
+                Password = @"test1234",
                 ClientId = "4927468bdd4b4171a23e31476ff82675",
                 Port = "80",
                 ConnectionType = "WS"
@@ -60,18 +60,17 @@ namespace HelloExample
             Console.WriteLine(String.Format("Connected {0}", cl.IsConnected));
 
             //create device
-            await CreateDevice(cl);
+            //await CreateDevice(cl);
             //set hardware information
-            await ConfigureHardware(cl);
+            //await ConfigureHardware(cl);
             //listen for operation
             await SetExecutingOperations(cl);
             //Create a measurement
-            await CreateCustomMeasurement(cl);
+            //await CreateCustomMeasurement(cl);
             //Create an event
-            await CreateBasicEvent(cl);
+            //await CreateBasicEvent(cl);
             //Create an alarm
-            await CreateCriticalAlarm(cl);
-
+            //await CreateCriticalAlarm(cl);
         }
 
         private static async Task CreateDevice(Client cl)
@@ -88,8 +87,8 @@ namespace HelloExample
         private static async Task SetExecutingOperations(Client cl)
         {
             cl.RestartEvt += Cl_RestartEvt;
-            await cl.StaticOperationTemplates
-                    .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
+            //await cl.StaticOperationTemplates
+            //        .SetExecutingOperationsAsync("c8y_Restart", (e) => { return Task.FromResult(false); });
         }
 
         private static async Task CreateCustomMeasurement(Client cl)

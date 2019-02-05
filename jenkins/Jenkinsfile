@@ -1,0 +1,133 @@
+pipeline {
+    agent {
+        dockerfile {
+            dir 'jenkins/build'
+            args '-v /var/lib/jenkins/.mono:/root/.mono'
+        }
+    }
+	triggers { pollSCM('H/5 * * * *') }
+    options{
+     buildDiscarder(logRotator(numToKeepStr: '10'))
+     timeout(time: 1, unit: 'HOURS')
+     disableConcurrentBuilds()
+    }
+	parameters {
+        booleanParam(defaultValue: true, description: '', name: 'DIAGNOSTIC_FLAG')
+		booleanParam(defaultValue: false, description: '', name: 'CAN_RELEASE')
+    }
+    environment {
+        CI = 'true'
+    }
+    stages {
+        stage('Build') {
+		    
+			when {
+                anyOf{
+                    branch 'develop'
+                    branch 'feature/**'
+                }
+            }
+            steps {
+			    
+				script {
+				    if ("${params.CAN_RELEASE}" == "true" && env.BRANCH_NAME == "develop") {
+					
+								echo "CAN_RELEASE: ${params.CAN_RELEASE}"
+							    
+								sshagent (['jenkins-hg-key']) {
+								sh '''#!/bin/bash
+								whoami
+								chmod +x ./build.sh							
+								pwd
+								./build.sh --script build-release.cake
+								'''
+								}
+					}
+					else{
+						if ("${params.DIAGNOSTIC_FLAG}" == "true") {
+							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
+							sh 'chmod +x ./build.sh && pwd && ./build.sh -target=Test -verbosity=diagnostic'
+						}else
+						{
+							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
+							sh 'chmod +x ./build.sh && pwd && ./build.sh -target=Test'
+						}
+					}
+                }
+            }
+        } 
+		stage('Deliver for development') {
+            when {
+                branch 'development'
+            }
+            steps {
+				sh 'echo DevelopmentBranch'
+            }
+        }
+        stage('Release') {
+            when {
+                branch "release/*"
+            }
+            steps {
+				script {
+                    if ("${params.DIAGNOSTIC_FLAG}" == "true" && ("${params.CAN_RELEASE}" == "true")) {
+					    sh 'echo Release Branch'
+						echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
+						
+						echo "Release Branch"
+							    
+						sshagent (['jenkins-hg-key']) {
+						sh '''#!/bin/bash
+						whoami
+						chmod +x ./MicroservicesSDK/build.sh
+						cd MicroservicesSDK
+						pwd
+						./build.sh --script build-release.cake -verbosity=diagnostic
+						'''
+						}
+							
+                    }else if ("${params.CAN_RELEASE}" == "true")
+					{
+							echo "Release Branch"
+							    
+							sshagent (['jenkins-hg-key']) {
+							sh '''#!/bin/bash
+							whoami
+							chmod +x ./MicroservicesSDK/build.sh
+							cd MicroservicesSDK
+							pwd
+							./build.sh --script build-release.cake
+							'''
+							}
+					} else {
+					    sh 'echo Release Branch'
+						echo "CAN_RELEASE: ${params.CAN_RELEASE}"
+					}
+                }
+            }
+        }	
+    }
+	
+	post { 
+		success{
+
+            withCredentials([usernamePassword(credentialsId: 'jenkins-confraria', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
+                sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
+            }
+        }
+		failure {
+            script {
+                if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
+                   chat 'AAAAvnc5o90'
+                }
+            }
+
+            withCredentials([usernamePassword(credentialsId: 'jenkins-confraria', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
+                sh "chmod +x .jenkins/scripts/status.sh && .jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
+            }
+        }
+		always { 
+			sh 'echo cleanWs'
+        }
+    }
+}

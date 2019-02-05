@@ -6,7 +6,8 @@ Param(
 	
 if($version)
 {
-	git branch "$version"
-    git tag "$version"
-	#git push
+    git checkout -b "$version"
+    git add .
+    git commit -m "prepare release $version"
+	git push -f
 }
