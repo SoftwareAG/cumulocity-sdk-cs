@@ -34,3 +34,8 @@
 /examples/AdvancedExample/.vs/AdvancedExample/DesignTimeBuild
 /examples/HelloExample/HelloExample/HelloExample.csproj.user
 /.vs/Cumulocity.MQTT/DesignTimeBuild
+/Cumulocity.SDK.MQTT.Tests/bin/Debug/netcoreapp2.2
+/Cumulocity.SDK.MQTT.Tests/obj
+/src/Cumulocity.SDK.MQTT/bin/Debug/netcoreapp2.2
+/src/Cumulocity.SDK.MQTT/obj
+/Cumulocity.MQTT.sln.DotSettings.user

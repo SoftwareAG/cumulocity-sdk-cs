@@ -11,51 +11,40 @@ using MQTTnet.Protocol;
 
 namespace Cumulocity.SDK.MQTT.Operations
 {
-    public class MqttOperationsProvider : IOperationsProvider
-    {
+    public class MqttOperationsProvider : IOperationsProvider, IDisposable
+	{
         private IManagedMqttClient mqttClient;
         private const string TCP = "tcp://";
         private const int TCP_MQTT_PORT = 1883;
 
-        public bool ConnectionEstablished => mqttClient.IsStarted;
+        public event EventHandler<IMqttMessageResponse> MessageReceived;
 
+		public bool ConnectionEstablished => mqttClient.IsStarted;
 
         public async Task CreateConnectionAsync(IConnectionDetails connectionDetails)
         {
-            //var options = new ManagedMqttClientOptionsBuilder()
-            //     .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
-            //     .WithClientOptions(new MqttClientOptionsBuilder()
-            //        .WithClientId(connectionDetails.ClientId)
-            //        .WithTcpServer(connectionDetails.Host, TCP_MQTT_PORT)
-            //        .Build())
-            //    .Build();
-            //mqttClient = new MqttFactory().CreateManagedMqttClient();
-            ////
-            //mqttClient.ApplicationMessageReceived += MqttClient_ApplicationMessageReceived;
-            ////
-            //await mqttClient.StartAsync(options);
-
-            var options = new ManagedMqttClientOptionsBuilder()
-                             .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
-                             .WithClientOptions(new MqttClientOptionsBuilder()
-                                .WithClientId("Client1")
-                                .WithTcpServer("localhost", 1883)
-                                .Build())
-                            .Build();
-            mqttClient = new MqttFactory().CreateManagedMqttClient();
-            mqttClient.ApplicationMessageReceived += MqttClient_ApplicationMessageReceived;
-            await mqttClient.StartAsync(options);
-        }
+	        var options = new ManagedMqttClientOptionsBuilder()
+		        .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
+		        .WithClientOptions(new MqttClientOptionsBuilder()
+			        .WithClientId(connectionDetails.ClientId)
+			        .WithTcpServer(connectionDetails.Host, TCP_MQTT_PORT)
+			        .Build())
+		        .Build();
+	        mqttClient = new MqttFactory().CreateManagedMqttClient();
+	        //
+	        mqttClient.ApplicationMessageReceived += MqttClient_ApplicationMessageReceived;
+	        //
+	        await mqttClient.StartAsync(options);
+		}
 
         private void MqttClient_ApplicationMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
         {
-            Console.WriteLine("### RECEIVED APPLICATION MESSAGE ###");
-            Console.WriteLine($"+ Topic = {e.ApplicationMessage.Topic}");
-            Console.WriteLine($"+ Payload = {System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload)}");
-            Console.WriteLine($"+ QoS = {e.ApplicationMessage.QualityOfServiceLevel}");
-            Console.WriteLine($"+ Retain = {e.ApplicationMessage.Retain}");
-            Console.WriteLine();
-        }
+	        MessageReceived?.Invoke(this, new MqttMessageResponseBuilder()
+		        .WithTopicName(e.ApplicationMessage.Topic)
+		        .WithMessageContent(System.Text.Encoding.UTF8.GetString(e.ApplicationMessage.Payload))
+		        .WithQoS((QoS)e.ApplicationMessage.QualityOfServiceLevel)
+		        .Build());
+		}
 
         public Task Disconnect()
         {
@@ -79,17 +68,11 @@ namespace Cumulocity.SDK.MQTT.Operations
 
         public async Task SubscribeAsync(IMqttMessageRequest message)
         {
-            var filter = new TopicFilterBuilder()
-                                .WithTopic(message.TopicName)
-                                .WithQualityOfServiceLevel((MqttQualityOfServiceLevel)((int)message.QoS))
-                                .Build();
-
-            //await mqttClient.SubscribeAsync(new TopicFilterBuilder()
-            //                                   .WithTopic(message.TopicName)
-            //                                   .WithQualityOfServiceLevel((MqttQualityOfServiceLevel)((int)message.QoS))
-            //                                   .Build());
-            await mqttClient.SubscribeAsync(new TopicFilterBuilder().WithTopic("message").Build());
-        }
+	        await mqttClient.SubscribeAsync(new TopicFilterBuilder()
+		        .WithTopic(message.TopicName)
+		        .WithQualityOfServiceLevel((MqttQualityOfServiceLevel)((int)message.QoS))
+		        .Build());
+		}
 
         private string GetServerURI(ConnectionDetails connectionDetails)
         {
@@ -103,6 +86,10 @@ namespace Cumulocity.SDK.MQTT.Operations
             return new MqttApplicationMessageBuilder()
                    .WithExactlyOnceQoS();
         }
+        public void Dispose()
+        {
+	        mqttClient.ApplicationMessageReceived -= MqttClient_ApplicationMessageReceived;
+        }
 
-    }
+	}
 }

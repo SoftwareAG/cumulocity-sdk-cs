@@ -19,6 +19,8 @@ namespace Cumulocity.SDK.MQTT.Operations
         Task Disconnect();
 
         bool ConnectionEstablished { get; }
-    }
+
+        event EventHandler<IMqttMessageResponse> MessageReceived;
+	}
 
 }

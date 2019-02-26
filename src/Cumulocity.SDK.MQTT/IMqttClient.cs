@@ -1,10 +1,12 @@
-﻿using Cumulocity.SDK.MQTT.Model;
+﻿using System;
+using Cumulocity.SDK.MQTT.Model;
 using Cumulocity.SDK.MQTT.Model.MqttMessage;
 using System.Threading.Tasks;
+using Cumulocity.SDK.MQTT.Exception;
 
 namespace Cumulocity.SDK.MQTT
 {
-    interface IMqttClient
+    public interface IMqttClient
     {
         /// <summary>
         /// Connects the client to the broker
@@ -35,5 +37,10 @@ namespace Cumulocity.SDK.MQTT
         /// </summary>
         /// <exception cref="MqttDeviceSDKException"> </exception>
         Task Disconnect();
-    }
+
+        /// <summary>
+        /// Message received from the broker
+        /// </summary>
+        event EventHandler<IMqttMessageResponse> MessageReceived;
+	}
 }

@@ -10,26 +10,29 @@ namespace Cumulocity.SDK.MQTT
 {
     public class MqttClientExt : IMqttClient
     {
-        private MqttOperationsProvider operationsProvider;
 
-        public MqttClientExt(IConnectionDetails connectionDetails)
+
+        public MqttClientExt(IConnectionDetails connectionDetails, IOperationsProvider operationsProvider = null)
         {
-            ConnectionDetails = connectionDetails;
+	        OperationsProvider = operationsProvider ?? new MqttOperationsProvider();
+	        ConnectionDetails = connectionDetails;
         }
 
-        public IConnectionDetails ConnectionDetails { get; }
+		public IConnectionDetails ConnectionDetails { get; }
+		public IOperationsProvider OperationsProvider { get; }
 
-        public Task Disconnect()
+		public event EventHandler<IMqttMessageResponse> MessageReceived;
+
+		public Task Disconnect()
         {
-            return operationsProvider.Disconnect();
+            return OperationsProvider.Disconnect();
         }
 
         public async Task EstablishConnectionAsync()
         {
             try
             {
-                operationsProvider = new MqttOperationsProvider();
-                await operationsProvider.CreateConnectionAsync(ConnectionDetails);
+                await OperationsProvider.CreateConnectionAsync(ConnectionDetails);
             }
             catch (System.Exception ex)
             {
@@ -39,7 +42,7 @@ namespace Cumulocity.SDK.MQTT
 
         public async Task PublishAsync(IMqttMessageRequest message)
         {
-            if (!operationsProvider.ConnectionEstablished)
+            if (!OperationsProvider.ConnectionEstablished)
             {
                 throw new MqttDeviceSDKException("Publish can happen only when client is initialized and connection to " + "server established.");
             }
@@ -51,7 +54,7 @@ namespace Cumulocity.SDK.MQTT
 
             try
             {
-                await operationsProvider.PublishAsync(message);
+                await OperationsProvider.PublishAsync(message);
             }
             catch (System.Exception ex)
             {
@@ -60,14 +63,9 @@ namespace Cumulocity.SDK.MQTT
 
         }
 
-        public void PublishAsync(MqttMessageRequest message)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task SubscribeAsync(IMqttMessageRequest message)
         {
-            if (!operationsProvider.ConnectionEstablished)
+            if (!OperationsProvider.ConnectionEstablished)
             {
                 throw new MqttDeviceSDKException("Subscribe can happen only when client is initialized and " +
                         "connection to server established.");
@@ -80,7 +78,7 @@ namespace Cumulocity.SDK.MQTT
 
             try
             {
-                await operationsProvider.SubscribeAsync(message);
+                await OperationsProvider.SubscribeAsync(message);
             }
             catch (System.Exception ex)
             {
