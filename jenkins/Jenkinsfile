@@ -2,7 +2,7 @@ pipeline {
     agent {
         dockerfile {
             dir 'jenkins/build'
-            args '-v /var/lib/jenkins/.mono:/root/.mono'
+            args '-v /var/lib/jenkins/.mono:/root/.mono -v /var/lib/jenkins/.microsoft/:/root/.microsoft'
         }
     }
 	triggers { pollSCM('H/5 * * * *') }
@@ -23,6 +23,7 @@ pipeline {
 		    
 			when {
                 anyOf{
+				    branch 'master'
                     branch 'develop'
                     branch 'feature/**'
                 }
@@ -30,27 +31,29 @@ pipeline {
             steps {
 			    
 				script {
+					sh ' apt-get install -y dos2unix'
+                    sh ' dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*'
 				    if ("${params.CAN_RELEASE}" == "true" && env.BRANCH_NAME == "develop") {
-					
-								echo "CAN_RELEASE: ${params.CAN_RELEASE}"
-							    
+												    
 								sshagent (['jenkins-hg-key']) {
-								sh '''#!/bin/bash
-								whoami
-								chmod +x ./build.sh							
+								sh '''#!/bin/bash								
+								chmod +x ./MQTT-SDK/build.sh							
 								pwd
-								./build.sh --script build-release.cake
+								./MQTT-SDK/build.sh --script build-release.cake
 								'''
 								}
 					}
 					else{
 						if ("${params.DIAGNOSTIC_FLAG}" == "true") {
 							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
-							sh 'chmod +x ./build.sh && pwd && ./build.sh -target=Test -verbosity=diagnostic'
+							sh 'cd ./MQTT-SDK && chmod +x ./build.sh && pwd && ./build.sh -target=Test -verbosity=diagnostic && cd ..'
+							sh 'cd ./REST-SDK/test/Cumulocity.SDK.Client.IntegrationTest  && dotnet restore && dotnet build && dotnet test --filter EventIT && dotnet test --filter AlarmIT && dotnet test --filter MeasurementIT && dotnet test --filter UserIT && dotnet test --filter InventoryTests &&  dotnet test --filter CepApiIT && dotnet test --filter IdentityIT && dotnet test --filter TenantOptionIT && cd ..'
 						}else
 						{
 							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
-							sh 'chmod +x ./build.sh && pwd && ./build.sh -target=Test'
+							sh 'cd ./MQTT-SDK && chmod +x ./build.sh && pwd && ./build.sh -target=Test && cd ..'
+							sh 'cd ./REST-SDK/test/Cumulocity.SDK.Client.IntegrationTest && dotnet test --filter EventIT && dotnet test --filter AlarmIT && dotnet test --filter MeasurementIT && dotnet test --filter UserIT  && dotnet test --filter InventoryTests && dotnet test --filter TenantOptionIT'							
+							sh 'cd ..'
 						}
 					}
                 }
@@ -72,17 +75,14 @@ pipeline {
 				script {
                     if ("${params.DIAGNOSTIC_FLAG}" == "true" && ("${params.CAN_RELEASE}" == "true")) {
 					    sh 'echo Release Branch'
-						echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
 						
 						echo "Release Branch"
 							    
 						sshagent (['jenkins-hg-key']) {
 						sh '''#!/bin/bash
-						whoami
-						chmod +x ./MicroservicesSDK/build.sh
-						cd MicroservicesSDK
+						chmod +x ./MQTT-SDK/build.sh						
 						pwd
-						./build.sh --script build-release.cake -verbosity=diagnostic
+						./MQTT-SDK/build.sh --script build-release.cake -verbosity=diagnostic
 						'''
 						}
 							
@@ -93,10 +93,8 @@ pipeline {
 							sshagent (['jenkins-hg-key']) {
 							sh '''#!/bin/bash
 							whoami
-							chmod +x ./MicroservicesSDK/build.sh
-							cd MicroservicesSDK
-							pwd
-							./build.sh --script build-release.cake
+							chmod +x ./MQTT-SDK/build.sh
+							./MQTT-SDK/build.sh --script build-release.cake
 							'''
 							}
 					} else {
@@ -117,13 +115,13 @@ pipeline {
         }
 		failure {
             script {
-                if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
+                if (env.BRANCH_NAME ==~ '(master|develop|release/.*)') {
                    chat 'AAAAvnc5o90'
                 }
             }
 
             withCredentials([usernamePassword(credentialsId: 'jenkins-confraria', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
-                sh "chmod +x .jenkins/scripts/status.sh && .jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
+                sh "chmod +x jenkins/scripts/status.sh && .jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
 		always { 
