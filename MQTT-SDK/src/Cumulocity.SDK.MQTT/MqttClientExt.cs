@@ -16,7 +16,17 @@ namespace Cumulocity.SDK.MQTT
         {
 	        OperationsProvider = operationsProvider ?? new MqttOperationsProvider();
 	        ConnectionDetails = connectionDetails;
+			OperationsProvider.MessageReceived += OperationsProvider_MessageReceived;
         }
+
+		private void OperationsProvider_MessageReceived(object sender, IMqttMessageResponse e)
+		{
+			MessageReceived?.Invoke(this, new MqttMessageResponseBuilder()
+				.WithTopicName(e.TopicName)
+				.WithMessageContent(e.MessageContent)
+				.WithQoS((QoS)e.QoS)
+				.Build());
+		}
 
 		public IConnectionDetails ConnectionDetails { get; }
 		public IOperationsProvider OperationsProvider { get; }

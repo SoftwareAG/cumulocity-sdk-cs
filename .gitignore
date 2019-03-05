@@ -40,3 +40,5 @@
 /MQTT-SDK/test/Cumulocity.SDK.MQTT.Tests/obj
 /MQTT-SDK/examples/HelloJsonExample/bin/Debug/netcoreapp2.2
 /MQTT-SDK/examples/HelloJsonExample/obj
+/MQTT-SDK/HelloMqttNet/bin/Debug/netcoreapp2.2
+/MQTT-SDK/HelloMqttNet/obj

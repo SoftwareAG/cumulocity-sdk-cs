@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Cumulocity.SDK.MQTT;
 using Cumulocity.SDK.MQTT.Model;
@@ -20,13 +21,27 @@ namespace HelloJsonExample
 
 		private static async Task RunClientAsync()
 		{
+			//WS
 			var cDetails = new ConnectionDetailsBuilder()
 				.WithClientId("123456789")
 				.WithHost("piotr.staging.c8y.io/mqtt")
-				.WithCredentials("user/admin","pass")
+				.WithCredentials("piotr/admin", "test1234")
 				.WithCleanSession(true)
 				.WithWs()
 				.Build();
+			
+			//TCP
+			//var cDetails = new ConnectionDetailsBuilder()
+			//	.WithClientId("123456789")
+			//	.WithHost("piotr.staging.c8y.io")
+			//	.WithCredentials("piotr/admin", "test1234")
+			//	.WithCleanSession(true)
+			//	.WithTcp()
+			//	.Build();
+
+			MqttClientExt client = new MqttClientExt(cDetails);
+			client.MessageReceived += Client_MessageReceived;
+			await client.EstablishConnectionAsync();
 
 			string topic = "s/us";
 			string payload = "100, My MQTT device, c8y_MQTTDevice";
@@ -36,41 +51,44 @@ namespace HelloJsonExample
 				.WithMessageContent(payload)
 				.Build();
 
-			MqttClientExt client = new MqttClientExt(cDetails);
-			await client.EstablishConnectionAsync();
 			await client.PublishAsync(message);
 
-			///////////////////////////////
-			///
-			// Use WebSocket connection.
-			//var options = new MqttClientOptionsBuilder()
-			//	.WithWebSocketServer("127.0.0.1:5000/mqtt")
-			//	.Build();
-			//// Create a new MQTT client.
-			//var factory = new MqttFactory();
-			//var client = factory.CreateMqttClient();
+			// set device's hardware information
+			var deviceMessage = new MqttMessageRequestBuilder()
+				.WithTopicName("s/us")
+				.WithQoS(QoS.EXACTLY_ONCE)
+				.WithMessageContent("110, SZZZZ89898, MQTT test model 2, Rev0.2")
+				.Build();
 
-			//await client.ConnectAsync(options);
+			await client.PublishAsync(deviceMessage);
 
-			//client.Connected += async (s, e) =>
-			//{
-			//	Console.WriteLine("### CONNECTED WITH SERVER ###");
+			// add restart operation
+			await client.SubscribeAsync(new MqttMessageRequest() { TopicName = "s/ds" });
+			await client.SubscribeAsync(new MqttMessageRequest() { TopicName = "s/e" });
+			await client.PublishAsync(new MqttMessageRequestBuilder()
+				.WithTopicName("s/us")
+				.WithQoS(QoS.EXACTLY_ONCE)
+				.WithMessageContent("114,c8y_Restart")
+				.Build());
 
-			//	// Subscribe to a topic
-			//	await client.SubscribeAsync(new TopicFilterBuilder().WithTopic("message").Build());
+			// generate a random temperature (10º-20º) measurement and send it every 1 s
+			Random rnd = new Random();
+			for (int i = 0; i < 5; i++)
+			{
+				int temp = rnd.Next(10, 20);
+				Console.WriteLine("Sending temperature measurement (" + temp + "º) ...");
+				await client.PublishAsync(new MqttMessageRequestBuilder()
+					.WithTopicName("s/us")
+					.WithQoS(QoS.EXACTLY_ONCE)
+					.WithMessageContent("211," + temp)
+					.Build());
+				Thread.SpinWait(1000);
+			}
+		}
 
-			//	Console.WriteLine("### SUBSCRIBED ###");
-			//};
-			//client.ApplicationMessageReceived += Client_ApplicationMessageReceived;
-			//var message = new MqttApplicationMessageBuilder()
-			//	.WithTopic("MyTopic")
-			//	.WithPayload("Hello World")
-			//	.WithExactlyOnceQoS()
-			//	.WithRetainFlag()
-			//	.Build();
-
-			//await client.PublishAsync(message);
-
+		private static void Client_MessageReceived(object sender, IMqttMessageResponse e)
+		{
+			var content = e.MessageContent;
 		}
 
 		private static void Client_ApplicationMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
