@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.MQTT.Tests
 			operationsProvider.Setup(x => x.ConnectionEstablished).Returns(true);
 			managedMqttClient.Setup(x => x.IsStarted).Returns(true);
 
-			client = fixture.Create<MqttClientExt>();
+			client = fixture.Create<MqttClient>();
 		}
 
 

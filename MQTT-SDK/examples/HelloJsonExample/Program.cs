@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Cumulocity.SDK.MQTT;
 using Cumulocity.SDK.MQTT.Model;
-using Cumulocity.SDK.MQTT.Model.ConnectionOptions;
 using Cumulocity.SDK.MQTT.Model.MqttMessage;
-using MQTTnet;
-using MQTTnet.Client;
+using MqttClient = Cumulocity.SDK.MQTT.MqttClient;
 
 namespace HelloJsonExample
 {
@@ -22,24 +19,30 @@ namespace HelloJsonExample
 		private static async Task RunClientAsync()
 		{
 			//WS
-			var cDetails = new ConnectionDetailsBuilder()
-				.WithClientId("123456789")
-				.WithHost("piotr.staging.c8y.io/mqtt")
-				.WithCredentials("piotr/admin", "test1234")
-				.WithCleanSession(true)
-				.WithWs()
-				.Build();
+			//			var cDetails = new ConnectionDetailsBuilder()
+			//				.WithClientId("123456789")
+			//				.WithHost("piotr.staging.c8y.io/mqtt")
+			//				.WithCredentials("piotr/admin", "test1234")
+			//				.WithCleanSession(true)
+			//				.WithWs()
+			//				.Build();
+			
+			const string serverUrl = "mqtt.cumulocity.com";
+			const string clientId = "my_mqtt_cs_client";
+			const string device_name = "My new MQTT device";
+			const string user = "<<tenant>>/<<username>>";
+			const string password = "<<password>>";
 			
 			//TCP
-			//var cDetails = new ConnectionDetailsBuilder()
-			//	.WithClientId("123456789")
-			//	.WithHost("piotr.staging.c8y.io")
-			//	.WithCredentials("piotr/admin", "test1234")
-			//	.WithCleanSession(true)
-			//	.WithTcp()
-			//	.Build();
+			var cDetails = new ConnectionDetailsBuilder()
+				.WithClientId(clientId)
+				.WithHost(serverUrl)
+				.WithCredentials(user, password)
+				.WithCleanSession(true)
+				.WithTcp()
+				.Build();
 
-			MqttClientExt client = new MqttClientExt(cDetails);
+			MqttClient client = new MqttClient(cDetails);
 			client.MessageReceived += Client_MessageReceived;
 			await client.EstablishConnectionAsync();
 
@@ -91,9 +94,5 @@ namespace HelloJsonExample
 			var content = e.MessageContent;
 		}
 
-		private static void Client_ApplicationMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
-		{
-			Console.WriteLine("### MSG ###");
-		}
 	}
 }

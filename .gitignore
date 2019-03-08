@@ -42,3 +42,9 @@
 /MQTT-SDK/examples/HelloJsonExample/obj
 /MQTT-SDK/HelloMqttNet/bin/Debug/netcoreapp2.2
 /MQTT-SDK/HelloMqttNet/obj
+/MQTT-SDK/.idea/.idea.Cumulocity.MQTT
+/MQTT-SDK/examples/HelloJsonExample/bin
+/MQTT-SDK/examples/HelloMqttNet/bin
+/MQTT-SDK/examples/HelloMqttNet/obj
+/MQTT-SDK/src/Cumulocity.SDK.MQTT/bin
+/MQTT-SDK/src/MQTT.Client.NetStandard/bin/Release

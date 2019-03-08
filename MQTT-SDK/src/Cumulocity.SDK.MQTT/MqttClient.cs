@@ -8,11 +8,11 @@ using Cumulocity.SDK.MQTT.Util;
 
 namespace Cumulocity.SDK.MQTT
 {
-    public class MqttClientExt : IMqttClient
+    public class MqttClient : IMqttClient
     {
 
 
-        public MqttClientExt(IConnectionDetails connectionDetails, IOperationsProvider operationsProvider = null)
+        public MqttClient(IConnectionDetails connectionDetails, IOperationsProvider operationsProvider = null)
         {
 	        OperationsProvider = operationsProvider ?? new MqttOperationsProvider();
 	        ConnectionDetails = connectionDetails;
