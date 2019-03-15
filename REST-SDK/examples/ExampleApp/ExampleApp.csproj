@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Cumulocity.SDK.Client\Cumulocity.SDK.Client.csproj" />
     <ProjectReference Include="..\..\test\Cumulocity.SDK.Client.HelperTest\Cumulocity.SDK.Client.HelperTest.csproj" />
-    <ProjectReference Include="..\Cumulocity.SDK.Client\Cumulocity.SDK.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>
