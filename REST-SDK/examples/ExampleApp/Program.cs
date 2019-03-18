@@ -73,8 +73,28 @@ namespace ExampleApp
 			mo = inventory.Create(mo);
 			Console.WriteLine(mo.Id);
 
-			//Accessing the identity service
-			const string ASSET_TYPE = "com_cumulocity_idtype_AssetTag";
+            //Filter by Query
+            var managedObject = new ManagedObjectRepresentation
+            {
+                Name = "WizardName",
+                Type = "WizardType",
+                CreationTime = DateTime.UtcNow
+            };
+
+            var hardware = new Hardware("Model", "12345", "3");
+
+            managedObject.Set(new IsDevice());
+            managedObject.Set(hardware);
+            managedObject.Set(new MAC("991422012394"));
+
+            var wizardManagedObjectRepresentation = inventory.Create(managedObject);
+
+            var macFilter = new InventoryFilter().ByQuery(@"c8y_MAC.address eq '991422012394'");
+
+            var wizardByQuery = inventory.GetManagedObjectsByFilter(macFilter).GetFirstPage();
+
+            //Accessing the identity service
+            const string ASSET_TYPE = "com_cumulocity_idtype_AssetTag";
 			const string deviceUrl = "SAMPLE-A-239239232";
 
 			ExternalIDRepresentation externalIDGid = new ExternalIDRepresentation();
@@ -213,4 +233,57 @@ namespace ExampleApp
 		private int nightTariffStart = 22;
 		private int nightTariffEnd = 6;
 	}
+
+
+    [PackageName("c8y_MAC")]
+    public class MAC
+    {
+        private string address;
+
+        public MAC()
+        {
+        }
+
+        public MAC(string address)
+        {
+            this.address = address;
+        }
+
+        [JsonProperty("address")]
+        public virtual string Address
+        {
+            get
+            {
+                return address;
+            }
+            set
+            {
+                this.address = value;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj == this)
+            {
+                return true;
+            }
+            if (!(obj is Configuration))
+            {
+                return false;
+            }
+
+            Configuration rhs = (Configuration)obj;
+            return string.ReferenceEquals(address, null) ? string.ReferenceEquals(rhs.Config, null) : address.Equals(rhs.Config);
+        }
+
+        public override int GetHashCode()
+        {
+            return !string.ReferenceEquals(address, null) ? address.GetHashCode() : 0;
+        }
+    }
 }
