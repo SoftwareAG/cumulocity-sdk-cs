@@ -34,6 +34,13 @@ namespace Cumulocity.SDK.MQTT.Model
             return this;
         }
 
+        public ConnectionDetailsBuilder WithProtocol(TransportType transportType)
+        {
+            _options.Protocol = TransportType.Ws;
+
+            return this;
+        }
+
         public ConnectionDetailsBuilder WithWs()
         {
 	        _options.Protocol = TransportType.Ws;
