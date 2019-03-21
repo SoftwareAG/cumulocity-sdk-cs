@@ -18,7 +18,9 @@ public class InventoryFilter : Filter
 
 	private string text;
 
-	private string ids;
+    private string query;
+
+    private string ids;
 
 	private string childAssetId;
 
@@ -121,13 +123,31 @@ public class InventoryFilter : Filter
 			return text;
 		}
 	}
+    /// <summary>
+    /// Specifies the {@code query} query parameter
+    /// </summary>
+    /// <param name="queryText"> the text of the query filter </param>
+    /// <returns> the managed object filter with {@code query} Set </returns>
+    public virtual InventoryFilter ByQuery(string queryText)
+    {
+        this.query = queryText;
+        return this;
+    }
 
-	/// <summary>
-	/// Specifies the {@code ids} query parameter
-	/// </summary>
-	/// <param name="ids"> the ids of the managed object(s) </param>
-	/// <returns> the managed object filter with {@code ids} Set </returns>
-	public virtual InventoryFilter ByIds(IList<GId> ids)
+    /// <returns> the {@code query} parameter of the query </returns>
+    public virtual string Query
+    {
+        get
+        {
+            return query;
+        }
+    }
+        /// <summary>
+        /// Specifies the {@code ids} query parameter
+        /// </summary>
+        /// <param name="ids"> the ids of the managed object(s) </param>
+        /// <returns> the managed object filter with {@code ids} Set </returns>
+        public virtual InventoryFilter ByIds(IList<GId> ids)
 	{
 		this.ids = CreateCommaSeparatedStringFromGids(ids);
 		return this;
