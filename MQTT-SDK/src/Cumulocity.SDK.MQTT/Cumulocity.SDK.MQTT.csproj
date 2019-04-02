@@ -5,6 +5,16 @@
     <PackageId>Cumulocity.SDK.MQTT</PackageId>
     <Version>0.1.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Cumulocity</Authors>
+    <Product>Cumulocity</Product>
+    <Copyright>Cumulocity</Copyright>
+    <PackageIconUrl>https://avatars2.githubusercontent.com/u/3456374?s=100</PackageIconUrl>
+    <RepositoryUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/REST-SDK/</RepositoryUrl>
+    <PackageProjectUrl>cumulocity.com</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>
+      C# MQTT client enables the use of predefined messages to send them to the platform
+    </Description>
   </PropertyGroup>
 
   <ItemGroup>
