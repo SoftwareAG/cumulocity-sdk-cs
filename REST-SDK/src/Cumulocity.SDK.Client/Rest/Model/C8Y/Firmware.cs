@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
     [PackageName("c8y_Firmware")]
-    public class Firmware 
+    public class Firmware
     {
 
         private string name;
@@ -22,7 +22,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             this.url = url;
         }
 
-        [JsonProperty("url",NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("url", NullValueHandling = NullValueHandling.Ignore)]
         public virtual string Url
         {
             get
@@ -34,7 +34,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 this.url = value;
             }
         }
-        
+
         [JsonProperty("name")]
         public virtual string Name
         {
@@ -77,7 +77,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 return false;
             }
 
-            Firmware rhs = (Firmware) obj;
+            Firmware rhs = (Firmware)obj;
             bool result = string.ReferenceEquals(name, null) ? string.ReferenceEquals(rhs.name, null) : name.Equals(rhs.name);
             result = result && (string.ReferenceEquals(version, null) ? (string.ReferenceEquals(rhs.version, null)) : version.Equals(rhs.version));
             result = result && (string.ReferenceEquals(url, null) ? (string.ReferenceEquals(rhs.url, null)) : url.Equals(rhs.url));
