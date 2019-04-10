@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Cumulocity.SDK.Client.Rest.Utils;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    class DistanceMeasurement
+    [PackageName("c8y_DistanceMeasurement")]
+    public class DistanceMeasurement
     {
+        //TOOD:
     }
 }

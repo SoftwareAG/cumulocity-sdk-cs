@@ -1,7 +1,9 @@
+using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
+    [PackageName("c8y_tracking")]
     public class Tracking
     {
         // Reporting interval in seconds
