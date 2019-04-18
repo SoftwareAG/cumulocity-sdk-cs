@@ -37,5 +37,8 @@ namespace Cumulocity.SDK.MQTT.Model
 
         // smartrest downlink template creation
         public const string BASE_SMARTREST_TEMPLATE_CREATION_SUBSCRIBE = "s/dt";
+
+        // JSON via MQTT
+        public static readonly List<string> BASE_JSON_via_MQTT_TEMPLATE_ENDPOINTS = new List<string>() { "event/events", "alarm/alarms", "measurement/measurements", "inventory/managedObjects", "error" };
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Cumulocity.SDK.MQTT.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Cumulocity.SDK.MQTT.Util
@@ -15,7 +16,7 @@ namespace Cumulocity.SDK.MQTT.Util
                 return false;
             }
 
-            return IsSmartRestStaticPublishTopic(topic) || IsSmartRestLegacyPublishTopic(topic) || IsSmartRestPublishTopic(topic) || IsSmartRestTemplateCreationPublishTopic(topic);
+            return IsSmartRestStaticPublishTopic(topic) || IsSmartRestLegacyPublishTopic(topic) || IsSmartRestPublishTopic(topic) || IsSmartRestTemplateCreationPublishTopic(topic) || IsJsonViaMqttTopic(topic);
         }
 
 
@@ -26,7 +27,7 @@ namespace Cumulocity.SDK.MQTT.Util
                 return false;
             }
 
-            return IsSmartRestExceptionsTopic(topic) || IsSmartRestStaticSubscribeTopic(topic) || IsSmartRestLegacySubscribeTopic(topic) || IsSmartRestSubscribeTopic(topic) || IsSmartRestTemplateCreationSubscribeTopic(topic) || IsSmartRestLegacyOperationsTopic(topic);
+            return IsSmartRestExceptionsTopic(topic) || IsSmartRestStaticSubscribeTopic(topic) || IsSmartRestLegacySubscribeTopic(topic) || IsSmartRestSubscribeTopic(topic) || IsSmartRestTemplateCreationSubscribeTopic(topic) || IsSmartRestLegacyOperationsTopic(topic) || IsJsonViaMqttTopic(topic);
         }
 
 
@@ -78,6 +79,11 @@ namespace Cumulocity.SDK.MQTT.Util
         private static bool IsSmartRestTemplateCreationSubscribeTopic(string topic)
         {
             return topic.Contains(MqttTopics.BASE_SMARTREST_TEMPLATE_CREATION_SUBSCRIBE);
+        }
+
+        private static bool IsJsonViaMqttTopic(string topic)
+        {
+            return MqttTopics.BASE_JSON_via_MQTT_TEMPLATE_ENDPOINTS.Any(l => topic.Contains(l));
         }
     }
 }
