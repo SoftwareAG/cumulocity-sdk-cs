@@ -8,6 +8,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
     [PackageName("c8y_HumiditySensor")]
     public class HumiditySensor
     {
-        //TOOD:
+        //Empty
     }
 }

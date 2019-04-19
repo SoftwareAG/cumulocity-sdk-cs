@@ -6,8 +6,9 @@ using Cumulocity.SDK.Client.Rest.Utils;
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
     [PackageName("c8y_RelayArray")]
-    public class RelayArray
+    public class RelayArray : List<string>
     {
-        //TOOD:
+        private const long serialVersionUID = -2380441943881612189L;
     }
+
 }
