@@ -13,52 +13,80 @@ namespace HelloJsonExample
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
-			Task.Run(RunClientAsync);
+            Task.Run(RunJsonViaMqttClientAsync);
+            //Task.Run(RunClientAsync);
 			new System.Threading.AutoResetEvent(false).WaitOne();
 		}
 
-		private static async Task RunClientAsync()
-		{
-            //WS
-            //			var cDetails = new ConnectionDetailsBuilder()
-            //				.WithClientId("123456789")
-            //				.WithHost("piotr.staging.c8y.io/mqtt")
-            //				.WithCredentials("piotr/admin", "test1234")
-            //				.WithCleanSession(true)
-            //				.WithProtocol(TransportType.Ws)
-            //				.Build();
-
+        private static async Task RunJsonViaMqttClientAsync()
+        {
             const string serverUrl = "mqtt.cumulocity.com";
-			const string clientId = "my_mqtt_cs_client";
-			const string device_name = "My new MQTT device";
-			const string user = "<<tenant>>/<<username>>";
-			const string password = "<<password>>";
-			
-			//TCP
-			var cDetails = new ConnectionDetailsBuilder()
-				.WithClientId(clientId)
-				.WithHost(serverUrl)
-				.WithCredentials(user, password)
-				.WithCleanSession(true)
+            const string clientId = "my_mqtt_cs_client";
+            const string device_name = "My new MQTT device";
+            const string user = "<<tenant>>/<<device_username>>";
+            const string password = "<<password>>";
+
+            //TCP
+            var cDetails = new ConnectionDetailsBuilder()
+                .WithClientId(clientId)
+                .WithHost(serverUrl)
+                .WithCredentials(user, password)
+                .WithCleanSession(true)
                 .WithProtocol(TransportType.Tcp)
                 .Build();
 
-			MqttClient client = new MqttClient(cDetails);
+            string topicJson = "event/events/create";
+            string msgJson = "{  \"type\": \"TestEvent\", \"text\": \"sensor was triggered\", \"time\": \"2019-04-18T13:03:27.845Z\" }";
+
+            var messageJson = new MqttMessageRequestBuilder()
+                .WithTopicName(topicJson)
+                .WithQoS(QoS.EXACTLY_ONCE)
+                .WithMessageContent(msgJson)
+                .Build();
+
+            MqttClient client = new MqttClient(cDetails);
+            client.MessageReceived += Client_MessageReceived;
+            await client.EstablishConnectionAsync();
+            await client.SubscribeAsync(new MqttMessageRequest() { TopicName = "error" });
+
+            await client.PublishAsync(messageJson);
+        }
+
+        private static async Task RunClientAsync()
+		{
+
+            const string serverUrl = "mqtt.cumulocity.com";
+            const string clientId = "my_mqtt_cs_client";
+            const string device_name = "My new MQTT device";
+            const string user = "<<tenant>>/<<username>>";
+            const string password = "<<password>>";
+
+            //TCP
+            var cDetails = new ConnectionDetailsBuilder()
+                .WithClientId(clientId)
+                .WithHost(serverUrl)
+                .WithCredentials(user, password)
+                .WithCleanSession(true)
+                .WithProtocol(TransportType.Tcp)
+                .Build();
+
+            MqttClient client = new MqttClient(cDetails);
 			client.MessageReceived += Client_MessageReceived;
 			await client.EstablishConnectionAsync();
+          
 
-			string topic = "s/us";
-			string payload = "100, My MQTT device, c8y_MQTTDevice";
-			var message = new MqttMessageRequestBuilder()
-				.WithTopicName(topic)
-				.WithQoS(QoS.EXACTLY_ONCE)
-				.WithMessageContent(payload)
-				.Build();
+            string topic = "s/us";
+            string payload = "100, My MQTT device, c8y_MQTTDevice";
+            var message = new MqttMessageRequestBuilder()
+                .WithTopicName(topic)
+                .WithQoS(QoS.EXACTLY_ONCE)
+                .WithMessageContent(payload)
+                .Build();
 
-			await client.PublishAsync(message);
+            await client.PublishAsync(message);
 
-			// set device's hardware information
-			var deviceMessage = new MqttMessageRequestBuilder()
+            // set device's hardware information
+            var deviceMessage = new MqttMessageRequestBuilder()
 				.WithTopicName("s/us")
 				.WithQoS(QoS.EXACTLY_ONCE)
 				.WithMessageContent("110, SZZZZ89898, MQTT test model 2, Rev0.2")
