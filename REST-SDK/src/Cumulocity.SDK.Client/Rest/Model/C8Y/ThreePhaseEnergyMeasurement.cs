@@ -1,6 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿/*
+ * Copyright (C) 2019 Cumulocity GmbH
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of 
+ * this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
@@ -245,6 +261,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the a_minus_phase2 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "A-:2", ignoreIfNull = true) public final MeasurementValue getTotalActiveEnergyOutPhase2()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "A-:2")]
         public MeasurementValue TotalActiveEnergyOutPhase2
         {
             get
@@ -260,6 +277,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the p_plus_phase2 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "P+:2", ignoreIfNull = true) public final MeasurementValue getTotalActivePowerInPhase2()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "P+:2")]
         public MeasurementValue TotalActivePowerInPhase2
         {
             get
@@ -275,6 +293,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the p_minus_phase2 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "P-:2", ignoreIfNull = true) public final MeasurementValue getTotalActivePowerOutPhase2()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "P+:2")]
         public MeasurementValue TotalActivePowerOutPhase2
         {
             get
@@ -290,6 +309,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the a_plus_phase3 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "A+:3", ignoreIfNull = true) public final MeasurementValue getTotalActiveEnergyInPhase3()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "A+:3")]
         public MeasurementValue TotalActiveEnergyInPhase3
         {
             get
@@ -305,6 +325,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the a_minus_phase3 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "A-:3", ignoreIfNull = true) public final MeasurementValue getTotalActiveEnergyOutPhase3()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "A-:3")]
         public MeasurementValue TotalActiveEnergyOutPhase3
         {
             get
@@ -320,6 +341,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the p_plus_phase3 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "P+:3", ignoreIfNull = true) public final MeasurementValue getTotalActivePowerInPhase3()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "P+:3")]
         public MeasurementValue TotalActivePowerInPhase3
         {
             get
@@ -335,6 +357,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
         /// <returns> the p_minus_phase3 </returns>
         //ORIGINAL LINE: @JSONProperty(value = "P-:3", ignoreIfNull = true) public final MeasurementValue getTotalActivePowerOutPhase3()
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "P-:3")]
         public MeasurementValue TotalActivePowerOutPhase3
         {
             get

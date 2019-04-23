@@ -85,4 +85,4 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
     }
 
 }
-}
+

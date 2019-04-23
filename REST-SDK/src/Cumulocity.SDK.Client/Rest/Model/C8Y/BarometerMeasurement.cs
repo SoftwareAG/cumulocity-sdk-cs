@@ -45,8 +45,8 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 }
             }
 
-
-            public virtual MeasurementValue Alt
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "alt")]
+        public virtual MeasurementValue Alt
             {
                 get
                 {
