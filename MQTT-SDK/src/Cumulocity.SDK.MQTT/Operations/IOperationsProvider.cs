@@ -21,6 +21,8 @@ namespace Cumulocity.SDK.MQTT.Operations
         bool ConnectionEstablished { get; }
 
         event EventHandler<IMqttMessageResponse> MessageReceived;
-	}
+        event EventHandler<ProcessFailedEventArgs> ConnectionFailed;
+        event EventHandler<ClientConnectedEventArgs> Connected;
+    }
 
 }

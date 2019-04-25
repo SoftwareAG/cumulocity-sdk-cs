@@ -13,8 +13,8 @@ namespace HelloJsonExample
 		static void Main(string[] args)
 		{
 			Console.WriteLine("Hello World!");
-            Task.Run(RunJsonViaMqttClientAsync);
-            //Task.Run(RunClientAsync);
+            //Task.Run(RunJsonViaMqttClientAsync);
+            Task.Run(RunClientAsync);
 			new System.Threading.AutoResetEvent(false).WaitOne();
 		}
 
@@ -55,11 +55,10 @@ namespace HelloJsonExample
         private static async Task RunClientAsync()
 		{
 
-            const string serverUrl = "mqtt.cumulocity.com";
+            const string serverUrl = "piotr.staging.c8y.io";
             const string clientId = "my_mqtt_cs_client";
-            const string device_name = "My new MQTT device";
-            const string user = "<<tenant>>/<<username>>";
-            const string password = "<<password>>";
+            const string user = "piotr/device_feb5c2ba68584d35942e3ad512aa7bd0x";
+            const string password = "0SJ6uwx9@G";
 
             //TCP
             var cDetails = new ConnectionDetailsBuilder()
@@ -72,8 +71,9 @@ namespace HelloJsonExample
 
             MqttClient client = new MqttClient(cDetails);
 			client.MessageReceived += Client_MessageReceived;
-			await client.EstablishConnectionAsync();
-          
+            client.Connected += Client_Connected;
+            client.ConnectionFailed += Client_ConnectionFailed;
+            await client.EstablishConnectionAsync();
 
             string topic = "s/us";
             string payload = "100, My MQTT device, c8y_MQTTDevice";
@@ -118,7 +118,17 @@ namespace HelloJsonExample
 			}
 		}
 
-		private static void Client_MessageReceived(object sender, IMqttMessageResponse e)
+        private static void Client_ConnectionFailed(object sender, ProcessFailedEventArgs e)
+        {
+            Console.WriteLine("Connection failed");
+        }
+
+        private static void Client_Connected(object sender, ClientConnectedEventArgs e)
+        {
+            Console.WriteLine("Client connected.");
+        }
+
+        private static void Client_MessageReceived(object sender, IMqttMessageResponse e)
 		{
 			var content = e.MessageContent;
 		}

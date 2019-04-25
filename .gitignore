@@ -48,3 +48,6 @@
 /MQTT-SDK/examples/HelloMqttNet/obj
 /MQTT-SDK/src/Cumulocity.SDK.MQTT/bin
 /MQTT-SDK/src/MQTT.Client.NetStandard/bin/Release
+/REST-SDK/src/Cumulocity.SDK.Client/.vs/Cumulocity.SDK.Client/v15
+/REST-SDK/src/Cumulocity.SDK.Client/Cumulocity.SDK.Client.0.1.1.nupkg
+/REST-SDK/src/Cumulocity.SDK.Client/Cumulocity.SDK.Client.0.1.1.symbols.nupkg

@@ -17,9 +17,21 @@ namespace Cumulocity.SDK.MQTT
 	        OperationsProvider = operationsProvider ?? new MqttOperationsProvider();
 	        ConnectionDetails = connectionDetails;
 			OperationsProvider.MessageReceived += OperationsProvider_MessageReceived;
+            OperationsProvider.ConnectionFailed += OperationsProvider_ConnectionFailed;
+            OperationsProvider.Connected += OperationsProvider_Connected;
         }
 
-		private void OperationsProvider_MessageReceived(object sender, IMqttMessageResponse e)
+        private void OperationsProvider_Connected(object sender, ClientConnectedEventArgs e)
+        {
+            Connected?.Invoke(this,e);
+        }
+
+        private void OperationsProvider_ConnectionFailed(object sender, ProcessFailedEventArgs e)
+        {
+            ConnectionFailed?.Invoke(this, e );
+        }
+
+        private void OperationsProvider_MessageReceived(object sender, IMqttMessageResponse e)
 		{
 			MessageReceived?.Invoke(this, new MqttMessageResponseBuilder()
 				.WithTopicName(e.TopicName)
@@ -32,8 +44,10 @@ namespace Cumulocity.SDK.MQTT
 		public IOperationsProvider OperationsProvider { get; }
 
 		public event EventHandler<IMqttMessageResponse> MessageReceived;
+        public event EventHandler<ProcessFailedEventArgs> ConnectionFailed;
+        public event EventHandler<ClientConnectedEventArgs> Connected;
 
-		public Task Disconnect()
+        public Task Disconnect()
         {
             return OperationsProvider.Disconnect();
         }

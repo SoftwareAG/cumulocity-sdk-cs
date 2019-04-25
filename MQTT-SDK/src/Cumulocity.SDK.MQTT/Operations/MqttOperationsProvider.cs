@@ -7,6 +7,7 @@ using MQTTnet.Extensions.ManagedClient;
 using MQTTnet.Protocol;
 using System;
 using System.Threading.Tasks;
+using Cumulocity.SDK.MQTT.Exception;
 
 namespace Cumulocity.SDK.MQTT.Operations
 {
@@ -17,8 +18,10 @@ namespace Cumulocity.SDK.MQTT.Operations
 		private const int TCP_MQTT_PORT = 1883;
 
 		public event EventHandler<IMqttMessageResponse> MessageReceived;
+        public event EventHandler<ProcessFailedEventArgs> ConnectionFailed;
+        public event EventHandler<ClientConnectedEventArgs> Connected;
 
-		public bool ConnectionEstablished => mqttClient.IsStarted;
+        public bool ConnectionEstablished => mqttClient.IsStarted;
 
 		public async Task CreateConnectionAsync(IConnectionDetails connectionDetails)
 		{
@@ -42,11 +45,26 @@ namespace Cumulocity.SDK.MQTT.Operations
 			mqttClient = new MqttFactory().CreateManagedMqttClient();
 			//
 			mqttClient.ApplicationMessageReceived += MqttClient_ApplicationMessageReceived;
-			//
-			await mqttClient.StartAsync(managedMqttClient);
-		}
+            mqttClient.Connected += MqttClient_Connected;
+            mqttClient.ConnectingFailed += MqttClient_ConnectingFailed;
+            //
+           await mqttClient.StartAsync(managedMqttClient);
 
-		private void MqttClient_ApplicationMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
+            
+
+        }
+
+        private void MqttClient_Connected(object sender, MqttClientConnectedEventArgs e)
+        {
+            Connected?.Invoke(this,new ClientConnectedEventArgs(e.IsSessionPresent));
+        }
+
+        private void MqttClient_ConnectingFailed(object sender, MqttManagedProcessFailedEventArgs e)
+        {
+            ConnectionFailed?.Invoke(this, new ProcessFailedEventArgs(e.Exception));
+        }
+
+        private void MqttClient_ApplicationMessageReceived(object sender, MqttApplicationMessageReceivedEventArgs e)
 		{
 			MessageReceived?.Invoke(this, new MqttMessageResponseBuilder()
 				.WithTopicName(e.ApplicationMessage.Topic)
