@@ -12,13 +12,19 @@ namespace HelloJsonExample
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
-            //Task.Run(RunJsonViaMqttClientAsync);
-            Task.Run(RunClientAsync);
-			new System.Threading.AutoResetEvent(false).WaitOne();
+            Console.WriteLine("Application has started. Ctrl-C to end");
+
+            var cSource = new CancellationTokenSource();
+            var myTask = Task.Factory.StartNew(() => RunClientAsync(cSource.Token), cSource.Token);
+
+            Console.CancelKeyPress += (sender, eventArgs) => cSource.Cancel();
+
+            myTask.Wait();
+
+            Console.WriteLine("Now shutting down");
 		}
 
-        private static async Task RunJsonViaMqttClientAsync()
+        private static async Task RunJsonViaMqttClientAsync(CancellationToken cToken)
         {
             const string serverUrl = "mqtt.cumulocity.com";
             const string clientId = "my_mqtt_cs_client";
@@ -52,13 +58,13 @@ namespace HelloJsonExample
             await client.PublishAsync(messageJson);
         }
 
-        private static async Task RunClientAsync()
+        private static async Task RunClientAsync(CancellationToken cToken)
 		{
-
-            const string serverUrl = "piotr.staging.c8y.io";
+            const string serverUrl = "mqtt.cumulocity.com";
             const string clientId = "my_mqtt_cs_client";
-            const string user = "piotr/device_feb5c2ba68584d35942e3ad512aa7bd0x";
-            const string password = "0SJ6uwx9@G";
+            const string device_name = "My new MQTT device";
+            const string user = "<<tenant>>/<<device_username>>";
+            const string password = "<<password>>";
 
             //TCP
             var cDetails = new ConnectionDetailsBuilder()
@@ -105,17 +111,17 @@ namespace HelloJsonExample
 
 			// generate a random temperature (10º-20º) measurement and send it every 1 s
 			Random rnd = new Random();
-			for (int i = 0; i < 5; i++)
-			{
-				int temp = rnd.Next(10, 20);
+            while (!cToken.IsCancellationRequested)
+            {
+                int temp = rnd.Next(10, 20);
 				Console.WriteLine("Sending temperature measurement (" + temp + "º) ...");
 				await client.PublishAsync(new MqttMessageRequestBuilder()
 					.WithTopicName("s/us")
 					.WithQoS(QoS.EXACTLY_ONCE)
 					.WithMessageContent("211," + temp)
 					.Build());
-				Thread.SpinWait(1000);
-			}
+                Thread.Sleep(1000);
+            }
 		}
 
         private static void Client_ConnectionFailed(object sender, ProcessFailedEventArgs e)
