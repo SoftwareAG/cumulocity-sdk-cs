@@ -23,40 +23,45 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_AccelerationMeasurement")]
+    public class AccelerationMeasurement 
     {
-        public const string TEMP_UNIT = "C";
+        public const string ACC_UNIT = "m/s2";
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
+        private MeasurementValue acceleration;
 
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        [JsonProperty(PropertyName = "acceleration")]
+        public virtual MeasurementValue Acceleration
         {
             get
             {
-                return t;
+                return acceleration;
             }
             set
             {
-                this.t = value;
+                this.acceleration = value;
             }
         }
 
         [JsonIgnore]
-        public virtual decimal Temperature
+        public virtual decimal? AccelerationValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return acceleration?.Value;
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                acceleration = new MeasurementValue(ACC_UNIT);
+                acceleration.Value = value;
             }
         }
 
+
+        public override int GetHashCode()
+        {
+            return acceleration != null ? acceleration.GetHashCode() : 0;
+        }
 
         public override bool Equals(object obj)
         {
@@ -68,18 +73,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             {
                 return true;
             }
-            if (!(obj is TemperatureMeasurement))
+            if (!(obj is AccelerationMeasurement))
             {
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            AccelerationMeasurement rhs = (AccelerationMeasurement)obj;
+            return acceleration == null ? (rhs.acceleration == null) : acceleration.Equals(rhs.acceleration);
         }
 
-        public override int GetHashCode()
+        public override string ToString()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return "AccelerationMeasurement{" + "acceleration=" + acceleration + '}';
         }
     }
 }

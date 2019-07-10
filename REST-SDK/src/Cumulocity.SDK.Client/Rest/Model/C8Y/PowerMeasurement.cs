@@ -23,37 +23,36 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_PowerMeasurement")]
+    public class PowerMeasurement 
     {
-        public const string TEMP_UNIT = "C";
+        public const string POWER_UNIT = "W";
+        private MeasurementValue power;
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
-
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        [JsonProperty(PropertyName = "Power")]
+        public virtual MeasurementValue Power
         {
             get
             {
-                return t;
+                return power;
             }
             set
             {
-                this.t = value;
+                this.power = value;
             }
         }
 
-        [JsonIgnore]
-        public virtual decimal Temperature
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "powerValue")]
+        public virtual decimal PowerValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return (decimal) (power == null ? null : power.Value);
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                power = new MeasurementValue(POWER_UNIT);
+                power.Value = value;
             }
         }
 
@@ -68,18 +67,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             {
                 return true;
             }
-            if (!(obj is TemperatureMeasurement))
+            if (!(obj is PowerMeasurement))
             {
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            PowerMeasurement pm = (PowerMeasurement)obj;
+            return power == null ? pm.power == null : power.Equals(pm.power);
         }
 
         public override int GetHashCode()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return power == null ? 0 : power.GetHashCode();
         }
     }
 }

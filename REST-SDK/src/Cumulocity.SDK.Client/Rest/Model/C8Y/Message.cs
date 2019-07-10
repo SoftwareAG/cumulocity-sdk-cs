@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -18,12 +18,58 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-	[PackageName("c8y_ThreePhaseElectricitySensor")]
-	public class ThreePhaseElectricitySensor
-	{
-        //Empty
-	}
+    [PackageName("c8y_Message")]
+    public class Message { 
+        private string text;
+
+        public Message()
+        {
+        }
+
+        public Message(string text)
+        {
+            this.text = text;
+        }
+        [JsonProperty(PropertyName = "text")]
+        public virtual string Text
+        {
+            get
+            {
+                return text;
+            }
+            set
+            {
+                this.text = value;
+            }
+        }
+
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj == this)
+            {
+                return true;
+            }
+            if (!(obj is Message))
+            {
+                return false;
+            }
+
+            Message rhs = (Message)obj;
+            return string.ReferenceEquals(text, null) ? string.ReferenceEquals(rhs.text, null) : text.Equals(rhs.text);
+        }
+
+        public override int GetHashCode()
+        {
+            return string.ReferenceEquals(text, null) ? 0 : text.GetHashCode();
+        }
+    }
 }

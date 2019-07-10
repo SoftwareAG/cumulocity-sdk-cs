@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -17,13 +17,16 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using System;
+using System.Collections.Generic;
+using System.Text;
 using Cumulocity.SDK.Client.Rest.Utils;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-	[PackageName("c8y_ThreePhaseElectricitySensor")]
-	public class ThreePhaseElectricitySensor
-	{
+    [PackageName("c8y_DistanceSensor")]
+    public class DistanceSensor
+    {
         //Empty
-	}
+    }
 }

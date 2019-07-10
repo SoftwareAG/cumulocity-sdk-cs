@@ -17,43 +17,44 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_Battery")]
+    public class Battery
     {
-        public const string TEMP_UNIT = "C";
+        public const string LEVEL_UNIT = "%";
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
+        private MeasurementValue level;
 
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        public virtual MeasurementValue Level
         {
             get
             {
-                return t;
+                return level;
             }
             set
             {
-                this.t = value;
+                this.level = value;
             }
         }
 
-        [JsonIgnore]
-        public virtual decimal Temperature
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "levelValue")]
+        public virtual decimal? LevelValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return level?.Value;
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                level = new MeasurementValue(LEVEL_UNIT);
+                level.Value = value;
             }
         }
 
@@ -68,18 +69,20 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             {
                 return true;
             }
-            if (!(obj is TemperatureMeasurement))
+            if (!(obj is AccelerationMeasurement))
             {
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            Battery rhs = (Battery)obj;
+            return level == null ? (rhs.level == null) : level.Equals(rhs.level);
         }
 
         public override int GetHashCode()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return level != null ? level.GetHashCode() : 0;
         }
     }
+
 }
+

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -17,13 +17,23 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using Cumulocity.SDK.Client.Rest.Utils;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-	[PackageName("c8y_ThreePhaseElectricitySensor")]
-	public class ThreePhaseElectricitySensor
-	{
-        //Empty
-	}
+    /// <summary>
+    /// Provides a representation for an accelerometer sensor.
+    /// 
+    /// An acceleration sensor, or accelerometer, is a device that measures acceleration along an axis.
+    /// This sensor model does not define the direction of that axis.
+    /// 
+    /// At this moment in time, this representation does not have any properties of its own.
+    /// 
+    /// </summary>
+    [PackageName("c8y_AccelerationSensor")]
+    public class AccelerationSensor
+    {
+        // So far, this representation does not have any properties of its own.
+    }
 }

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -21,9 +21,9 @@ using Cumulocity.SDK.Client.Rest.Utils;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-	[PackageName("c8y_ThreePhaseElectricitySensor")]
-	public class ThreePhaseElectricitySensor
-	{
+    [PackageName("c8y_CurrentSensor")]
+    public class CurrentSensor
+    {
         //Empty
-	}
+    }
 }

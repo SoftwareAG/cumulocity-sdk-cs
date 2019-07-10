@@ -17,69 +17,88 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_PushButton")]
+    public class PushButton
     {
-        public const string TEMP_UNIT = "C";
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
+        private int duration;
 
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        private string button;
+
+        [JsonProperty(PropertyName = "duration")]
+        public virtual int Duration
         {
             get
             {
-                return t;
+                return duration;
             }
             set
             {
-                this.t = value;
+                this.duration = value;
             }
         }
 
-        [JsonIgnore]
-        public virtual decimal Temperature
+        [JsonProperty(PropertyName = "button")]
+        public virtual string Button
         {
             get
             {
-                return (decimal)t?.Value;
+                return button;
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                this.button = value;
             }
         }
 
+
+        public override int GetHashCode()
+        {
+            const int prime = 31;
+            int result = 1;
+            result = prime * result + ((string.ReferenceEquals(button, null)) ? 0 : button.GetHashCode());
+            result = prime * result + duration;
+            return result;
+        }
 
         public override bool Equals(object obj)
         {
+            if (this == obj)
+            {
+                return true;
+            }
             if (obj == null)
             {
                 return false;
             }
-            if (obj == this)
-            {
-                return true;
-            }
-            if (!(obj is TemperatureMeasurement))
+            if (this.GetType() != obj.GetType())
             {
                 return false;
             }
-
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            PushButton other = (PushButton)obj;
+            if (string.ReferenceEquals(button, null))
+            {
+                if (!string.ReferenceEquals(other.button, null))
+                {
+                    return false;
+                }
+            }
+            else if (!button.Equals(other.button))
+            {
+                return false;
+            }
+            if (duration != other.duration)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public override int GetHashCode()
-        {
-            return t == null ? 0 : t.GetHashCode();
-        }
+
     }
 }

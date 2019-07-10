@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -18,54 +18,60 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_Relay")]
-    public class Relay
+    [PackageName("c8y_CommunicationMode")]
+
+    public class CommunicationMode 
     {
-        public enum RelayState
+
+        private string mode;
+
+        public CommunicationMode()
         {
-            OPEN,
-            CLOSED
         }
 
-        private RelayState _relayState;
-
-        /// <returns> the relayState </returns>
-        public RelayState getRelayState()
+        public CommunicationMode(string mode)
         {
-            return _relayState;
+            this.mode = mode;
+        }
+        [JsonProperty(PropertyName = "mode")]
+        public virtual string Mode
+        {
+            get
+            {
+                return mode;
+            }
+            set
+            {
+                this.mode = value;
+            }
         }
 
-        /// <param name="relayState"> the relayState to Set </param>
-        public void SetRelayState(RelayState relayState)
-        {
-            _relayState = relayState;
-        }
 
         public override int GetHashCode()
         {
-            return _relayState != null ? _relayState.GetHashCode() : 0;
+            int hash = 7;
+            hash = 79 * hash + (!string.ReferenceEquals(this.mode, null) ? this.mode.GetHashCode() : 0);
+            return hash;
         }
 
-        public override bool Equals(object o)
+        public override bool Equals(object obj)
         {
-            if (this == o) return true;
-            if (!(o is Relay)) return false;
+            if (obj == null)
+            {
+                return false;
+            }
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
 
-            var relay = (Relay)o;
-
-            if (_relayState != relay._relayState) return false;
-
-            return true;
+            CommunicationMode other = (CommunicationMode)obj;
+            return !((string.ReferenceEquals(this.mode, null)) ? (!string.ReferenceEquals(other.mode, null)) : !this.mode.Equals(other.mode));
         }
 
-        public override string ToString()
-        {
-            return "Relay{" +
-                   "relayState=" + _relayState +
-                   '}';
-        }
     }
 }

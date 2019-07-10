@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -17,13 +17,39 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-	[PackageName("c8y_ThreePhaseElectricitySensor")]
-	public class ThreePhaseElectricitySensor
-	{
-        //Empty
-	}
+    [PackageName("c8y_DistanceMeasurement")]
+    public class DistanceMeasurement 
+    {
+
+        private MeasurementValue distance;
+
+        public DistanceMeasurement()
+        {
+        }
+
+        public DistanceMeasurement(MeasurementValue distance)
+        {
+            this.distance = distance;
+        }
+
+        [JsonProperty(PropertyName = "distance")]
+        public virtual MeasurementValue Distance
+        {
+            get
+            {
+                return distance;
+            }
+            set
+            {
+                this.distance = value;
+            }
+        }
+
+    }
 }

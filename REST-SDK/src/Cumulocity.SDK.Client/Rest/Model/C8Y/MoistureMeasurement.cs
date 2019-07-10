@@ -23,37 +23,37 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_MoistureMeasurement")]
+    public class MoistureMeasurement
     {
-        public const string TEMP_UNIT = "C";
+        public const string MOISTURE_UNIT = "%";
+        private MeasurementValue moisture;
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
-
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        [JsonProperty(PropertyName = "moisture")]
+        public virtual MeasurementValue Moisture
         {
             get
             {
-                return t;
+                return moisture;
             }
             set
             {
-                this.t = value;
+                this.moisture = value;
             }
         }
 
-        [JsonIgnore]
-        public virtual decimal Temperature
+
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore, PropertyName = "moistureValue")]
+        public virtual decimal MoistureValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return (decimal) (moisture == null ? null : moisture.Value);
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                moisture = new MeasurementValue(MOISTURE_UNIT);
+                moisture.Value = value;
             }
         }
 
@@ -73,13 +73,14 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            MoistureMeasurement mm = (MoistureMeasurement)obj;
+            return moisture == null ? mm.moisture == null : moisture.Equals(mm.moisture);
         }
 
         public override int GetHashCode()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return moisture == null ? 0 : moisture.GetHashCode();
         }
     }
+
 }

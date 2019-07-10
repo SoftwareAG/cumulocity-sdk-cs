@@ -17,43 +17,45 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
 using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_CurrentMeasurement")]
+    public class CurrentMeasurement 
     {
-        public const string TEMP_UNIT = "C";
+        public const string CURRENT_UNIT = "A";
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
+        private MeasurementValue current = new MeasurementValue(CURRENT_UNIT);
 
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        [JsonProperty(PropertyName = "current")]
+        public virtual MeasurementValue Current
         {
             get
             {
-                return t;
+                return current;
             }
             set
             {
-                this.t = value;
+                this.current = value;
             }
         }
 
+
         [JsonIgnore]
-        public virtual decimal Temperature
+        public virtual decimal CurrentValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return (decimal) (current == null ? null : current.Value);
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                current = new MeasurementValue(CURRENT_UNIT);
+                current.Value = value;
             }
         }
 
@@ -68,18 +70,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             {
                 return true;
             }
-            if (!(obj is TemperatureMeasurement))
+            if (!(obj is CurrentMeasurement))
             {
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            return current == null ? ((CurrentMeasurement)obj).current == null : current.Equals(((CurrentMeasurement)obj).current);
         }
 
         public override int GetHashCode()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return current == null ? 0 : current.GetHashCode();
         }
+
     }
 }

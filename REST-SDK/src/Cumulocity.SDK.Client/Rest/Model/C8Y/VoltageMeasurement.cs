@@ -23,37 +23,37 @@ using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_TemperatureMeasurement")]
-    public class TemperatureMeasurement
+    [PackageName("c8y_VoltageMeasurement")]
+    public class VoltageMeasurement
     {
-        public const string TEMP_UNIT = "C";
+        public const string VOLTAGE_UNIT = "V";
+        private MeasurementValue voltage;
 
-        private MeasurementValue t = new MeasurementValue(TEMP_UNIT);
-
-        [JsonProperty("T")]
-        public virtual MeasurementValue T
+        [JsonProperty(PropertyName = "voltage")]
+        public virtual MeasurementValue Voltage
         {
             get
             {
-                return t;
+                return voltage;
             }
             set
             {
-                this.t = value;
+                this.voltage = value;
             }
         }
 
+
         [JsonIgnore]
-        public virtual decimal Temperature
+        public virtual decimal VoltageValue
         {
             get
             {
-                return (decimal)t?.Value;
+                return (decimal) (voltage == null ? null : voltage.Value);
             }
             set
             {
-                t = new MeasurementValue(TEMP_UNIT);
-                t.Value = value;
+                voltage = new MeasurementValue(VOLTAGE_UNIT);
+                voltage.Value = value;
             }
         }
 
@@ -68,18 +68,18 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             {
                 return true;
             }
-            if (!(obj is TemperatureMeasurement))
+            if (!(obj is VoltageMeasurement))
             {
                 return false;
             }
 
-            TemperatureMeasurement rhs = (TemperatureMeasurement)obj;
-            return t == null ? (rhs.t == null) : t.Equals(rhs.t);
+            VoltageMeasurement vm = (VoltageMeasurement)obj;
+            return voltage == null ? vm.voltage == null : voltage.Equals(vm.voltage);
         }
 
         public override int GetHashCode()
         {
-            return t == null ? 0 : t.GetHashCode();
+            return voltage == null ? 0 : voltage.GetHashCode();
         }
     }
 }

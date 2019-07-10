@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -17,55 +17,70 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+using Cumulocity.SDK.Client.Rest.Model.Measurement;
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_Relay")]
-    public class Relay
+    [PackageName("c8y_HumidityMeasurement")]
+
+    public class HumidityMeasurement 
     {
-        public enum RelayState
+        public const string HUM_UNIT = "%RH";
+
+        private MeasurementValue h;
+
+        public virtual MeasurementValue H
         {
-            OPEN,
-            CLOSED
+            get
+            {
+                return h;
+            }
+            set
+            {
+                this.h = value;
+            }
         }
 
-        private RelayState _relayState;
 
-        /// <returns> the relayState </returns>
-        public RelayState getRelayState()
+        [JsonIgnore]
+        public virtual decimal Humidity
         {
-            return _relayState;
+            get
+            {
+                return (decimal) h.Value;
+            }
+            set
+            {
+                h = new MeasurementValue(HUM_UNIT);
+                h.Value = value;
+            }
         }
 
-        /// <param name="relayState"> the relayState to Set </param>
-        public void SetRelayState(RelayState relayState)
+
+        public override bool Equals(object obj)
         {
-            _relayState = relayState;
+            if (obj == null)
+            {
+                return false;
+            }
+            if (obj == this)
+            {
+                return true;
+            }
+            if (!(obj is HumidityMeasurement))
+            {
+                return false;
+            }
+
+            HumidityMeasurement rhs = (HumidityMeasurement)obj;
+            return h == null ? (rhs.h == null) : h.Equals(rhs.h);
         }
 
         public override int GetHashCode()
         {
-            return _relayState != null ? _relayState.GetHashCode() : 0;
-        }
-
-        public override bool Equals(object o)
-        {
-            if (this == o) return true;
-            if (!(o is Relay)) return false;
-
-            var relay = (Relay)o;
-
-            if (_relayState != relay._relayState) return false;
-
-            return true;
-        }
-
-        public override string ToString()
-        {
-            return "Relay{" +
-                   "relayState=" + _relayState +
-                   '}';
+            return h == null ? 0 : h.GetHashCode();
         }
     }
 }

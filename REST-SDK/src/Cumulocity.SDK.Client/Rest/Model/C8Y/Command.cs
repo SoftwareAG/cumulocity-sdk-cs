@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (C) 2019 Cumulocity GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -18,54 +18,73 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 using Cumulocity.SDK.Client.Rest.Utils;
+using Newtonsoft.Json;
 
 namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 {
-    [PackageName("c8y_Relay")]
-    public class Relay
+    [PackageName("c8y_Command")]
+    public class Command 
     {
-        public enum RelayState
+
+        private const long serialVersionUID = -6443811928706492241L;
+
+        private string text;
+        private string syntax;
+        private string result;
+
+        public Command()
         {
-            OPEN,
-            CLOSED
         }
 
-        private RelayState _relayState;
-
-        /// <returns> the relayState </returns>
-        public RelayState getRelayState()
+        public Command(string text)
         {
-            return _relayState;
+            this.text = text;
+        }
+        [JsonProperty(PropertyName = "text")]
+        public virtual string Text
+        {
+            get
+            {
+                return text;
+            }
+            set
+            {
+                this.text = value;
+            }
         }
 
-        /// <param name="relayState"> the relayState to Set </param>
-        public void SetRelayState(RelayState relayState)
+        [JsonProperty(PropertyName = "syntax")]
+        public virtual string Syntax
         {
-            _relayState = relayState;
+            get
+            {
+                return syntax;
+            }
+            set
+            {
+                this.syntax = value;
+            }
         }
 
-        public override int GetHashCode()
+
+        [JsonProperty(PropertyName = "result")]
+        public virtual string Result
         {
-            return _relayState != null ? _relayState.GetHashCode() : 0;
+            get
+            {
+                return result;
+            }
+            set
+            {
+                this.result = value;
+            }
         }
 
-        public override bool Equals(object o)
-        {
-            if (this == o) return true;
-            if (!(o is Relay)) return false;
-
-            var relay = (Relay)o;
-
-            if (_relayState != relay._relayState) return false;
-
-            return true;
-        }
 
         public override string ToString()
         {
-            return "Relay{" +
-                   "relayState=" + _relayState +
-                   '}';
+            return string.Format("Command [text={0}]", text);
         }
+
     }
 }
