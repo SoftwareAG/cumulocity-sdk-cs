@@ -44,6 +44,8 @@
 /MQTT-SDK/src/MQTT.Client.NetStandard/bin/Release
 /MQTT-SDK/test/Cumulocity.SDK.MQTT.Tests/bin/Debug/netcoreapp2.2
 /MQTT-SDK/test/Cumulocity.SDK.MQTT.Tests/obj
+/REST-SDK/src/cometd.NetStandard/bin/Debug
+/REST-SDK/src/Cumulocity.SDK.Client/bin/Debug
 /REST-SDK/ExampleWebApi/bin/Debug/netcoreapp2.2
-/REST-SDK/ExampleWebApi/obj/Debug/netcoreapp2.2
 /REST-SDK/ExampleWebApi/obj
+
