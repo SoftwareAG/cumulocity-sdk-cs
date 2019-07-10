@@ -23,7 +23,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
 
             if (!(obj is MotionTracking)) return false;
 
-            var rhs = (MotionTracking) obj;
+            var rhs = (MotionTracking)obj;
             return active == rhs.active;
         }
 

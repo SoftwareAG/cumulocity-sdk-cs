@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net47;net48;netcoreapp2.0</TargetFrameworks>
     <RootNamespace>Cometd</RootNamespace>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
