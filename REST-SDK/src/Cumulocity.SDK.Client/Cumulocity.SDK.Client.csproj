@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net47;netcoreapp2.0</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <Version>0.1.1</Version>
     <Authors>Cumulocity</Authors>
@@ -33,6 +33,7 @@ Interface Cumulocity with closed devices speaking an existing, Internet-enabled 
     <Reference Include="Microsoft.CSharp">
       <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.csharp\4.3.0\ref\netstandard1.0\Microsoft.CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
 
 </Project>

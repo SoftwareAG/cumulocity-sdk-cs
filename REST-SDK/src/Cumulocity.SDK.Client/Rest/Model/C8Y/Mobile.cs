@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.Client.Rest.Model.C8Y
             if (this == obj) return true;
             if (obj == null) return false;
             if (GetType() != obj.GetType()) return false;
-            var other = (Mobile) obj;
+            var other = (Mobile)obj;
             if (ReferenceEquals(cellId, null))
             {
                 if (!ReferenceEquals(other.cellId, null)) return false;
