@@ -126,7 +126,7 @@ pipeline {
         }
 		always { 
 			sh 'echo cleanWs'
-			deleteDir() /* clean up our workspace */
+			/*deleteDir()  clean up our workspace */
         }
     }
 }
