@@ -19,10 +19,10 @@ namespace ExampleWebApi.Controllers
             this.InventoryAPI = this.Platform.InventoryApi;
             this.AlarmApi = this.Platform.AlarmApi;
 
-            createSampleDevice();
+            CreateSampleDevice();
         }
 
-        private void createSampleDevice()
+        private void CreateSampleDevice()
         {
             SampleDevice = new ManagedObjectRepresentation
             {
