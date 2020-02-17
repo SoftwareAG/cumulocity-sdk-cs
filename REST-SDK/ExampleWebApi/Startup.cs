@@ -28,8 +28,7 @@ namespace ExampleWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(p => new PlatformImpl("http://tenant.staging.c8y.io", new Cumulocity.SDK.Client.Rest.Model.Authentication.CumulocityCredentials(@"tenant/admin", "pass")));
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
