@@ -31,7 +31,8 @@ pipeline {
             steps {
 			    
 				script {
-					sh ' apt-get install -y dos2unix'
+
+					sh ' apt-get purge dos2unix && apt-get install -y dos2unix'
                     sh ' dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*'
 				    if ("${params.CAN_RELEASE}" == "true" && env.BRANCH_NAME == "develop") {
 												    
