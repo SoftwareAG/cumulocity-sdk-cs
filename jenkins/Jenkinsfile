@@ -106,12 +106,7 @@ pipeline {
         }	
     }
 	
-    post {
-        always {
-            withCredentials([file(credentialsId: 'maven-settings', variable: 'MVN_SETTINGS')]) {
-                sh "chmod +x .jenkins/scripts/clean.sh && .jenkins/scripts/clean.sh"
-            }
-        }
+    post {      
         success {
             withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
                 sh "chmod +x .jenkins/scripts/status.sh && .jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
@@ -128,10 +123,8 @@ pipeline {
                 sh "chmod +x .jenkins/scripts/status.sh && .jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
-		always { 
-			sh 'echo cleanWs'
-			/*deleteDir()  clean up our workspace */
-			/* Testing Comment */
-			}
+        always {
+				sh 'echo cleanWs'
+            }		
     }
 }
