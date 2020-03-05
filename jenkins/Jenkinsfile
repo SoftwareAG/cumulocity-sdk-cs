@@ -109,7 +109,7 @@ pipeline {
 	post { 
 		success{
 
-            withCredentials([usernamePassword(credentialsId: 'jenkins-confraria', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
+            sshagent (['jenkins-hg-key'])  {
                 sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
@@ -120,7 +120,7 @@ pipeline {
                 }
             }
 
-            withCredentials([usernamePassword(credentialsId: 'jenkins-confraria', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
+            sshagent (['jenkins-hg-key'])  {
                 sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
