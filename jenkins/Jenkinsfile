@@ -132,5 +132,5 @@ pipeline {
 			sh 'echo cleanWs'
 			/*deleteDir()  clean up our workspace */
 			/* Testing Comment */
-        		}
-    	}
+			}
+    }
