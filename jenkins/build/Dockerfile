@@ -11,8 +11,8 @@ RUN apt install -y \
         gnupg \
         apt-transport-https \
         software-properties-common \
-        wget
-        # mono-devel \
+        wget\
+        mono-devel 
 
 # RUN  apt-key adv --no-tty --batch --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 # RUN  apt-get purge -y libmono-security4.0-cil
