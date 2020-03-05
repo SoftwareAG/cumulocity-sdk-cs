@@ -118,7 +118,8 @@ pipeline {
                    chat 'AAAAvnc5o90'
                 }
             }
-            sshagent (['jenkins-hg-key'])   {
+
+            sshagent (['jenkins-hg-key'])  {
                 sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
