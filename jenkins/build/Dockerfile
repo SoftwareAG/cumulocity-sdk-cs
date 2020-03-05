@@ -22,6 +22,6 @@ RUN apt install -y \
 # RUN  apt install -y mono-devel libmono-system-drawing4.0-cil
 
 RUN wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb
-RUN apt update -y && add-apt-repository universe
+RUN apt update -y && apt-get purge universe && add-apt-repository universe
 RUN apt install -y dotnet-sdk-3.1 powershell
 RUN dotnet --list-sdks
