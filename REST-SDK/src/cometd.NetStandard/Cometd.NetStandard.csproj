@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net47;net48;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net47;net48;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Cometd</RootNamespace>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.ServiceModel.Web" Version="1.0.0" />
   </ItemGroup>
 

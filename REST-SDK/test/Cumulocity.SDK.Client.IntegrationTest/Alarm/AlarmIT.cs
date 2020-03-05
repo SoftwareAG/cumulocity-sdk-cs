@@ -32,7 +32,6 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
-using Microsoft.DotNet.PlatformAbstractions;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
@@ -182,7 +181,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 			}
 			else
 			{
-				Assert.Equal(false, Platform.ConfigurationAsyncEnabled);
+				Assert.False(Platform.ConfigurationAsyncEnabled);
 			}
 		}
 
