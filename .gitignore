@@ -68,5 +68,18 @@
 /REST-SDK/ExampleWebApi/bin/Debug/netcoreapp2.2
 /REST-SDK/ExampleWebApi/obj
 .vscode/
-
+/MQTT-SDK/.vs/
+/MQTT-SDK/examples/AdvancedExample/.vs/
+/MQTT-SDK/examples/AdvancedExample/AdvancedExample/bin/
+/MQTT-SDK/examples/HelloExample/.vs/HelloExample/v16/
+/MQTT-SDK/test/Cumulocity.SDK.MQTT.Tests/bin/
+/MQTT-SDK/test/MQTT.Client.XUnitTest/bin/
+/REST-SDK/.editorconfig
+/REST-SDK/.vs/Cumulocity.SDK.Client/
+/REST-SDK/ExampleWebApi/bin/
+/REST-SDK/examples/ExampleApp/bin/
+/REST-SDK/test/Cumulocity.SDK.Client.HelperTest/bin/
+/REST-SDK/test/Cumulocity.SDK.Client.IntegrationTest/bin/
+/REST-SDK/test/Cumulocity.SDK.Client.UnitTest/bin/
+/REST-SDK/test/TestsExtensions/bin/
 

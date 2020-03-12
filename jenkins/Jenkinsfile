@@ -31,7 +31,8 @@ pipeline {
             steps {
 			    
 				script {
-					sh ' apt-get install -y dos2unix'
+
+					sh ' rm /var/lib/dpkg/statoverride &&apt-get install -y dos2unix'
                     sh ' dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*'
 				    if ("${params.CAN_RELEASE}" == "true" && env.BRANCH_NAME == "develop") {
 												    
@@ -106,26 +107,25 @@ pipeline {
         }	
     }
 	
-	post { 
-		success{
-            sshagent (['jenkins-hg-key'])  {
+    post {      
+        success {
+            withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
                 sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
-		failure {
+        failure {
             script {
-                if (env.BRANCH_NAME ==~ '(master|develop|release/.*)') {
-                   chat 'AAAAvnc5o90'
+                if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
+                    chat 'AAAAvnc5o90'
                 }
             }
-            sshagent (['jenkins-hg-key'])   {
+
+            withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
                 sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
         }
-		always { 
-			sh 'echo cleanWs'
-			/*deleteDir()  clean up our workspace */
-			/* Testing Comment */
-        }
+        always {
+				sh 'echo cleanWs'
+            }		
     }
 }
