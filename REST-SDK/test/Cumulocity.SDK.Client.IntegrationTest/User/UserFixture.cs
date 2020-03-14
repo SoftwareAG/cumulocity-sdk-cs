@@ -15,6 +15,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.User
 		{
 			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
 
+			Console.WriteLine(secretRevealer.Reveal());
+
 			PlatformImpl platform = new PlatformImpl(secretRevealer.Reveal().platformurl,
 				new CumulocityCredentials(secretRevealer.Reveal().user, secretRevealer.Reveal().pass))
 			{
