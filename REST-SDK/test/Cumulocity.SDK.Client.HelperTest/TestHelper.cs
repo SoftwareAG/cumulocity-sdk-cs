@@ -12,9 +12,6 @@ namespace Cumulocity.SDK.Client.HelperTest
 		{
 			Console.WriteLine("Value of outputPath " + outputPath );
 
-			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
-
-			Console.WriteLine("USER-SECRETS" + secretRevealer.Reveal());
 
 			return new ConfigurationBuilder()
 				.SetBasePath(outputPath)
