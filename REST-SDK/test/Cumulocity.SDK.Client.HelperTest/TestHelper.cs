@@ -11,6 +11,11 @@ namespace Cumulocity.SDK.Client.HelperTest
 		public static IConfigurationRoot GetIConfigurationRoot(string outputPath)
 		{
 			Console.WriteLine("Value of outputPath " + outputPath );
+
+			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
+
+			Console.WriteLine("USER-SECRETS" + secretRevealer.Reveal());
+
 			return new ConfigurationBuilder()
 				.SetBasePath(outputPath)
 				.AddJsonFile("appsettings.json", optional: true)
