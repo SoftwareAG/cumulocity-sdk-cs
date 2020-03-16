@@ -15,6 +15,8 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Event
 		{
 			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
 
+			Console.WriteLine("User Secret in EventFixture - " + secretRevealer.Reveal());
+
 			PlatformImpl platform = new PlatformImpl(secretRevealer.Reveal().platformurl,
 				new CumulocityCredentials(secretRevealer.Reveal().user, secretRevealer.Reveal().pass));
 
