@@ -16,8 +16,6 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		{
 			var secretRevealer = TestHelper.GetApplicationConfiguration(Environment.CurrentDirectory);
 
-			Console.WriteLine(" USER-SECRETS in AlarmFixture " + secretRevealer.Reveal());
-
 			PlatformImpl platform = new PlatformImpl(secretRevealer.Reveal().platformurl,
 				new CumulocityCredentials(secretRevealer.Reveal().user, secretRevealer.Reveal().pass));
 

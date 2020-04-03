@@ -10,9 +10,6 @@ namespace Cumulocity.SDK.Client.HelperTest
 	{
 		public static IConfigurationRoot GetIConfigurationRoot(string outputPath)
 		{
-			Console.WriteLine("Value of outputPath " + outputPath );
-
-
 			return new ConfigurationBuilder()
 				.SetBasePath(outputPath)
 				.AddJsonFile("appsettings.json", optional: true)
@@ -22,11 +19,6 @@ namespace Cumulocity.SDK.Client.HelperTest
 
 		public static ISecretRevealer GetApplicationConfiguration(string outputPath)
 		{
-			Console.WriteLine("Value of outputPath " + outputPath);
-
-			// I need to know the prevous caller of this function in jenkins
-			Console.WriteLine("StackTrace of GetApplicationConfiguration : '{0}'", Environment.StackTrace);
-
 			var iConfig = GetIConfigurationRoot(outputPath);
 
 			IServiceCollection services = new ServiceCollection();
