@@ -49,6 +49,8 @@ pipeline {
 							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
 							sh 'cd ./MQTT-SDK && chmod +x ./build.sh && pwd && ./build.sh -target=Test -verbosity=diagnostic && cd ..'
 					/*		sh 'cd ./REST-SDK/test/Cumulocity.SDK.Client.IntegrationTest  && dotnet restore && dotnet build && dotnet test --filter EventIT && dotnet test --filter AlarmIT && dotnet test --filter MeasurementIT && dotnet test --filter UserIT && dotnet test --filter InventoryTests &&  dotnet test --filter CepApiIT && dotnet test --filter IdentityIT && dotnet test --filter TenantOptionIT && cd ..'  */
+                    /* Tests with no dependies on the extra file Resources/cumulocity-test.properties */
+                    sh 'cd ./REST-SDK/test/Cumulocity.SDK.Client.IntegrationTest  && dotnet restore && dotnet build && dotnet test --filter EventIT && dotnet test --filter AlarmIT && dotnet test --filter MeasurementIT && dotnet test --filter InventoryTests &&  dotnet test --filter CepApiIT && dotnet test --filter IdentityIT && dotnet test --filter TenantOptionIT && cd ..'
 						}else
 						{
 							echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
