@@ -33,8 +33,6 @@ using System.Collections.Generic;
 using System.Net;
 using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Xunit;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 {
@@ -355,24 +353,15 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		[Fact]
 		public void ShouldDeleteAlarmCollectionByEmptyFilter()
 		{
-
-			Action<object> createAlarmAction = (object obj) =>
-			{// Given
-				for (int i = 0; i < 5; i++)
-				{
-					AlarmApi.Create(aSampleAlarm(mo1));
-					AlarmApi.Create(aSampleAlarm(mo2));
-					AlarmApi.Create(aSampleAlarm(mo3));
-				}
-			};
-
-		// Create a task but do not start it.
-
-		    Task createAlarmtask = new Task(createAlarmAction, "alarm");
-			createAlarmtask.Start();
+			// Given
+			for (int i = 0; i < 5; i++)
+			{
+				AlarmApi.Create(aSampleAlarm(mo1));
+				AlarmApi.Create(aSampleAlarm(mo2));
+				AlarmApi.Create(aSampleAlarm(mo3));
+			}
 
 			AlarmFilter emptyFilter = new AlarmFilter();
-			createAlarmtask.Wait();
 
 			//When
 			AlarmApi.DeleteAlarmsByFilter(emptyFilter);
@@ -391,32 +380,31 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Alarm
 		[Fact]
 		public void ShouldDeleteByFilterStatus()
 		{
-			Thread.Sleep(3000);
 			var allAlarmsT = AlarmApi.GetAlarms().GetFirstPage().Alarms;
 			// Given
-				AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
 					SampleAlarmRepresentation.ALARM_REPRESENTATION)
 						.withType("com_nsn_bts_TrxFaulty" + t++)
 						.withStatus("ACTIVE")
 						.withSource(mo1).build());
 
-				AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
-						SampleAlarmRepresentation.ALARM_REPRESENTATION)
-							.withType("com_nsn_bts_TrxFaulty" + t++)
-							.withStatus("ACKNOWLEDGED")
-							.withSource(mo1).build());
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACKNOWLEDGED")
+						.withSource(mo1).build());
 
-				AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
-						SampleAlarmRepresentation.ALARM_REPRESENTATION)
-							.withType("com_nsn_bts_TrxFaulty" + t++)
-							.withStatus("ACKNOWLEDGED")
-							.withSource(mo2).build());
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("ACKNOWLEDGED")
+						.withSource(mo2).build());
 
-				AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
-						SampleAlarmRepresentation.ALARM_REPRESENTATION)
-							.withType("com_nsn_bts_TrxFaulty" + t++)
-							.withStatus("CLEARED")
-							.withSource(mo2).build());
+			AlarmApi.Create(RestRepresentationObjectMother.anAlarmRepresentationLike(
+					SampleAlarmRepresentation.ALARM_REPRESENTATION)
+						.withType("com_nsn_bts_TrxFaulty" + t++)
+						.withStatus("CLEARED")
+						.withSource(mo2).build());
 
 			AlarmFilter alarmFilter = new AlarmFilter().ByStatus(CumulocityAlarmStatuses.valueOf("ACKNOWLEDGED"));
 
