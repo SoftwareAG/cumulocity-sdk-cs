@@ -506,13 +506,13 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 	public void CreateMeasurementsInBulkWithoutResponse()
 	{
 		//    Given I have '3' measurements of type 'com.type1' for the managed object
-		IHaveMeasurements(3, "com.type2");
+		IHaveMeasurements(3, "com.type1");
 
 		//    When I Create all measurements in bulk
 		ICreateAllBulkWithoutResponse();
 
 		// Since the return type of CreateBulkWithoutResponse is void we are asserting the status code here
-		Assert.Equal(200,this.Status);
+		Assert.Equal((int)HttpStatusCode.OK, this.Status);
 	}
 
 		// Scenario: Create single measurement without a response 
@@ -523,7 +523,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		ICreateMeasurementWithoutResponse();
 
 		// Since the return type of CreateWithoutResponse is void we are asserting the status code here
-		Assert.Equal(200, this.Status); ;
+		Assert.Equal((int)HttpStatusCode.OK, this.Status); ;
 
 	}
 

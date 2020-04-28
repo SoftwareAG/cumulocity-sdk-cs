@@ -302,8 +302,6 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
-
-			
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
