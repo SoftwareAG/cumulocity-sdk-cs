@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace Cumulocity.SDK.Client.Rest.Representation
 {
-//#pragma warning disable CS0169
-	public class MediaType
+#pragma warning disable CS0169
+    public class MediaType
     {
         public const string CHARSET_PARAMETER = "charset";
         public const string MEDIA_TYPE_WILDCARD = "*";

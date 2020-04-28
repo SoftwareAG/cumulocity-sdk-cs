@@ -284,7 +284,6 @@ namespace Cumulocity.SDK.Client
 					ContractResolver = new CamelCasePropertyNamesContractResolver()
 				});
 			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
-			File.AppendAllText("./httpPostWith3ArgsHit.txt", "Hit! \n");
 
 			var request = new HttpRequestMessage
 			{
@@ -312,8 +311,6 @@ namespace Cumulocity.SDK.Client
 					Formatting = Formatting.Indented
 				});
 			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
-
-			File.AppendAllText("./httpPostWith4ArgsHit.txt", "Hit! \n");
 
 			var request = new HttpRequestMessage
 			{

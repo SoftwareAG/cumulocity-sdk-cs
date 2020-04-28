@@ -497,8 +497,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    When I Create all measurements in bulk
 		ICreateAllBulk();
 			//    Then All measurements should be created
-		Assert.Equal(200,this.Status);
-
+		AllShouldBeCreated();
 		}
 
 		 
@@ -512,21 +511,21 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		//    When I Create all measurements in bulk
 		ICreateAllBulkWithoutResponse();
 
-			// //    Then All measurements should be created
+		// Since the return type of CreateBulkWithoutResponse is void we are asserting the status code here
 		Assert.Equal(200,this.Status);
 	}
 
 		// Scenario: Create single measurement without a response 
-		[Fact]
-		public void CreateSingleMeasurmentWithoutResponse()
-		{
+	[Fact]
+	public void CreateSingleMeasurmentWithoutResponse()
+	{
+		//    When I Create all measurements in bulk
+		ICreateMeasurementWithoutResponse();
 
-			//    When I Create all measurements in bulk
-			ICreateMeasurementWithoutResponse();
+		// Since the return type of CreateWithoutResponse is void we are asserting the status code here
+		Assert.Equal(200, this.Status); ;
 
-			// //    Then All measurements should be created
-			Assert.Equal(200, this.Status); ;
-		}
+	}
 
 		//
 		//    Scenario: Get measurements collection by default page settings
@@ -650,7 +649,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			{
 				Status = ex.HttpStatus;
 			}
-	}
+		}
 
 		//@When("I Create all measurements as bulk without a response")
 		public void ICreateAllBulkWithoutResponse()
@@ -667,7 +666,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 			}
 		}
 
-		//@When("I Create single measurements without a response")
+		//@When("I Create single measurement without a response")
 		public void ICreateMeasurementWithoutResponse()
 		{
 			try
