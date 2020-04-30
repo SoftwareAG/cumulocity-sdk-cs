@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Cumulocity.SDK.Client.Rest.Representation
 {
 #pragma warning disable CS0169
-	public class MediaType
+    public class MediaType
     {
         public const string CHARSET_PARAMETER = "charset";
         public const string MEDIA_TYPE_WILDCARD = "*";
@@ -78,6 +78,8 @@ namespace Cumulocity.SDK.Client.Rest.Representation
         public virtual bool WildcardType => Type.Equals("*");
 
         public virtual string Subtype => subtype;
+
+        public string TypeString => $"{Type}/{Subtype}";
 
         public virtual bool WildcardSubtype => Subtype.Equals("*");
 

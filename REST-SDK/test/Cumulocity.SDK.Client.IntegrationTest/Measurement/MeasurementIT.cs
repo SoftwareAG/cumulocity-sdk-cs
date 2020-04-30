@@ -6,6 +6,7 @@ using Cumulocity.SDK.Client.Rest.Representation.Measurement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
@@ -495,14 +496,41 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 		IHaveMeasurements(3, "com.type2");
 		//    When I Create all measurements in bulk
 		ICreateAllBulk();
-		//    Then All measurements should be created
+			//    Then All measurements should be created
 		AllShouldBeCreated();
+		}
+
+		 
+	//    Scenario: Create measurement in bulk without a response
+	[Fact]
+	public void CreateMeasurementsInBulkWithoutResponse()
+	{
+		//    Given I have '3' measurements of type 'com.type1' for the managed object
+		IHaveMeasurements(3, "com.type1");
+
+		//    When I Create all measurements in bulk
+		ICreateAllBulkWithoutResponse();
+
+		// Since the return type of CreateBulkWithoutResponse is void we are asserting the status code here
+		Assert.Equal((int)HttpStatusCode.OK, this.Status);
 	}
 
-	//
-	//    Scenario: Get measurements collection by default page settings
-
+		// Scenario: Create single measurement without a response 
 	[Fact]
+	public void CreateSingleMeasurmentWithoutResponse()
+	{
+		//    When I Create all measurements in bulk
+		ICreateMeasurementWithoutResponse();
+
+		// Since the return type of CreateWithoutResponse is void we are asserting the status code here
+		Assert.Equal((int)HttpStatusCode.OK, this.Status); ;
+
+	}
+
+		//
+		//    Scenario: Get measurements collection by default page settings
+
+		[Fact]
 	public void GetMeasurementCollectionByDefaultPageSettings() 
 	{
         // Given
@@ -616,6 +644,38 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Measurement
 				MeasurementCollectionRepresentation collection = new MeasurementCollectionRepresentation();
 				collection.Measurements = Input;
 				Result1.AddRange(MeasurementApi.CreateBulk(collection).Measurements);
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I Create all measurements as bulk without a response")
+		public void ICreateAllBulkWithoutResponse()
+		{
+			try
+			{
+				MeasurementCollectionRepresentation collection = new MeasurementCollectionRepresentation();
+				collection.Measurements = Input;
+				MeasurementApi.CreateBulkWithoutResponse(collection);
+			}
+			catch (SDKException ex)
+			{
+				Status = ex.HttpStatus;
+			}
+		}
+
+		//@When("I Create single measurement without a response")
+		public void ICreateMeasurementWithoutResponse()
+		{
+			try
+			{
+				MeasurementRepresentation rep = new MeasurementRepresentation();
+				rep.Type = "com.signalstrength";
+				rep.DateTime = DateTime.UtcNow;
+				rep.Source = managedObjects[0];
+				MeasurementApi.CreateWithoutResponse(rep);
 			}
 			catch (SDKException ex)
 			{

@@ -283,7 +283,7 @@ namespace Cumulocity.SDK.Client
 				{
 					ContractResolver = new CamelCasePropertyNamesContractResolver()
 				});
-			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.Subtype);
+			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
 
 			var request = new HttpRequestMessage
 			{
@@ -302,8 +302,6 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
-
-			
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
