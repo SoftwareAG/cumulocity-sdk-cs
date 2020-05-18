@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <PackageId>Cumulocity.SDK.MQTT</PackageId>
-    <Version>0.1.2</Version>
+    <Version>1006.6.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Cumulocity</Authors>
     <Product>Cumulocity</Product>
