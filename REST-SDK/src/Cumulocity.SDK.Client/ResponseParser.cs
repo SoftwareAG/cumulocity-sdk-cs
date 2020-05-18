@@ -42,9 +42,10 @@ namespace Cumulocity.SDK.Client
 
         public virtual void checkStatus(HttpResponseMessage response, params int[] expectedStatusCodes)
         {
-	            var status = (int) response.StatusCode;
+            var status = (int) response.StatusCode;
             var arr = expectedStatusCodes;
             var len = expectedStatusCodes.Length;
+            string responseBody = response.Content.ReadAsStringAsync().Result;
 
             for (var i = 0; i < len; ++i)
             {
@@ -52,10 +53,10 @@ namespace Cumulocity.SDK.Client
                 if (status == expectedStatusCode) return;
             }
 
-            throw new SDKException(status, getErrorMessage(response, status));
+            throw new SDKException(status, getErrorMessage(response, status, responseBody));
         }
 
-        protected internal virtual string getErrorMessage(HttpResponseMessage response, int status)
+        protected internal virtual string getErrorMessage(HttpResponseMessage response, int status, String responseBody)
         {
             var errorMessage = "Http status code: " + status;
 
@@ -65,7 +66,7 @@ namespace Cumulocity.SDK.Client
                 if (ReferenceEquals(errorRepresentation, null))
                     errorRepresentation = "Something went wrong. Failed to parse error message.";
 
-                errorMessage = errorMessage + "\n" + errorRepresentation;
+                errorMessage = errorMessage + "\n" + errorRepresentation + "\n" + responseBody;
             }
 
             return errorMessage;
