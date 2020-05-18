@@ -45,7 +45,7 @@ namespace Cumulocity.SDK.Client
             var status = (int) response.StatusCode;
             var arr = expectedStatusCodes;
             var len = expectedStatusCodes.Length;
-            var responseBody = response.Content.ReadAsStringAsync().Result;
+            string responseBody = response.Content.ReadAsStringAsync().Result;
 
             for (var i = 0; i < len; ++i)
             {
