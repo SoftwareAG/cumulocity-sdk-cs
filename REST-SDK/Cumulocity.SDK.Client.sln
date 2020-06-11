@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealTimeNotificationExample", "RealTimeNotificationExample\RealTimeNotificationExample.csproj", "{69BD8806-4C28-4513-BDA0-859787731F53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{84229BC0-D6C4-49B2-AB72-7EF34CC3FB17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84229BC0-D6C4-49B2-AB72-7EF34CC3FB17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84229BC0-D6C4-49B2-AB72-7EF34CC3FB17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69BD8806-4C28-4513-BDA0-859787731F53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69BD8806-4C28-4513-BDA0-859787731F53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69BD8806-4C28-4513-BDA0-859787731F53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69BD8806-4C28-4513-BDA0-859787731F53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{FAABAE57-9DD7-4B84-9F1D-F11B302E7ABB} = {AF409482-6397-490D-90D1-F600BCC6609A}
 		{D7DFADBF-92A6-4245-93CA-F30A567D4C01} = {D545FABA-0D15-4BFA-922D-64F937A59DDB}
 		{84229BC0-D6C4-49B2-AB72-7EF34CC3FB17} = {D545FABA-0D15-4BFA-922D-64F937A59DDB}
+		{69BD8806-4C28-4513-BDA0-859787731F53} = {D545FABA-0D15-4BFA-922D-64F937A59DDB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A7A0128D-00FC-41B4-89A0-0EB5AE504067}
