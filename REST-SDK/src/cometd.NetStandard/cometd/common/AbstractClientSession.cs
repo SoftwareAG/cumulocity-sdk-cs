@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
 
@@ -370,7 +370,7 @@ namespace Cometd.Common
 
             public void notifyMessageListeners(IMessage message)
             {
-                foreach (IClientSessionChannelListener listener in _listeners)
+                foreach (IClientSessionChannelListener listener in _listeners.ToList())
                 {
                     if (listener is IMessageListener)
                     {

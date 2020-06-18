@@ -198,8 +198,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 				// Start the asynchronous operation to GetFirstPage the response
 				exchange.listener.onSending(ObjectConverter.ToListOfIMessage(exchange.messages));
 				IAsyncResult result = (IAsyncResult)exchange.request.BeginGetResponse(new AsyncCallback(GetResponseCallback), exchange);
-
-				long timeout = 1000;//5400000 //120000;
+				// A new connection is established after every configured timeout milliseconds.
+				long timeout = 5400000;
 				ThreadPool.RegisterWaitForSingleObject(result.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), exchange, timeout, true);
 
 				exchange.isSending = false;
