@@ -15,11 +15,7 @@ Interface Cumulocity with open, C#-enabled devices through a device-side agent. 
 Interface Cumulocity with closed devices speaking an existing, Internet-enabled protocol through a server-side agent.</Description>
     <PackageLicenseUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/LICENSE.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="..\..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LibLog" Version="5.0.5">
       <PrivateAssets>all</PrivateAssets>
