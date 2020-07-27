@@ -4,6 +4,18 @@
     <TargetFrameworks>net47;net48;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Cometd</RootNamespace>
     <LangVersion>7.3</LangVersion>
+    <Version>1006.6.0</Version>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Cumulocity</Authors>
+    <Company>Cumulocity</Company>
+    <Product>Cumulocity</Product>
+    <Description>CometD library to be used with Cumulocity.SDK.Client.</Description>
+    <PackageLicenseUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Cumulocity</Copyright>
+    <PackageProjectUrl>cumulocity.com</PackageProjectUrl>
+    <RepositoryUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/REST-SDK/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
