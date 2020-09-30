@@ -1,0 +1,27 @@
+{{ $version := env "RELEASE_VERSION" }}
+
+name = "c8y-connection-sdk"
+revision = "{{ $version }}"
+
+[[scan]]
+type = "VSC#"
+path = "MQTT-SDK/src/Cumulocity.SDK.MQTT/Cumulocity.SDK.MQTT.csproj"
+excludes = ["com.nsn.cumulocity"]
+
+[[scan]]
+type = "VSC#"
+path = "MQTT-SDK/src/MQTT.Client.NetStandard/MQTT.NetStandard.csproj"
+excludes = ["com.nsn.cumulocity"]
+
+[[scan]]
+type = "VSC#"
+path = "REST-SDK/src/Cumulocity.SDK.Client/Cumulocity.SDK.Client.csproj"
+excludes = ["com.nsn.cumulocity"]
+
+[[scan]]
+type = "VSC#"
+path = "REST-SDK/src/cometd.NetStandard/Cometd.NetStandard.csproj"
+excludes = ["com.nsn.cumulocity"]
+
+
+
