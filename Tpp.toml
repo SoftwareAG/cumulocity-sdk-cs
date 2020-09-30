@@ -1,0 +1,9 @@
+{{ $version := env "RELEASE_VERSION" }}
+
+name = "c8y-connection-sdk"
+revision = "{{ $version }}"
+
+[[scan]]
+type = "VSC#"
+path = "src/MQTT.Client.NetStandard/MQTT.NetStandard.csproj"
+excludes = ["com.nsn.cumulocity"]
