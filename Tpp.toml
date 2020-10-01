@@ -10,11 +10,6 @@ excludes = ["com.nsn.cumulocity"]
 
 [[scan]]
 type = "VSC#"
-path = "MQTT-SDK/src/MQTT.Client.NetStandard/MQTT.NetStandard.csproj"
-excludes = ["com.nsn.cumulocity"]
-
-[[scan]]
-type = "VSC#"
 path = "REST-SDK/src/Cumulocity.SDK.Client/Cumulocity.SDK.Client.csproj"
 excludes = ["com.nsn.cumulocity"]
 
