@@ -30,7 +30,6 @@ namespace Cumulocity.SDK.Client.Rest
 		{
 			proxyPort = -1;
 			requireResponseBody_Renamed = true;
-			forceInitialHost = false;
 			PageSize = 5;
 		}
 
@@ -44,7 +43,6 @@ namespace Cumulocity.SDK.Client.Rest
 		{
 			proxyPort = -1;
 			requireResponseBody_Renamed = true;
-			forceInitialHost = false;
 			PageSize = 5;
 			PageSize = pageSize;
 			this.clientConfiguration = clientConfiguration;
@@ -119,6 +117,7 @@ namespace Cumulocity.SDK.Client.Rest
 		private void setMandatoryFields(string host, CumulocityCredentials credentials)
 		{
 			if (host[host.Length - 1] != '/') host = $"{host}/";
+			if (host.Equals("http://cumulocity:8111/")) forceInitialHost = true;
 
 			this.host = host;
 			tenantId = credentials.TenantId;
