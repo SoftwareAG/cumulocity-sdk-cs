@@ -30,7 +30,7 @@ namespace Cumulocity.SDK.Client.Rest
 		{
 			proxyPort = -1;
 			requireResponseBody_Renamed = true;
-			forceInitialHost = false;
+			forceInitialHost = true;
 			PageSize = 5;
 		}
 
@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest
 		{
 			proxyPort = -1;
 			requireResponseBody_Renamed = true;
-			forceInitialHost = false;
+			forceInitialHost = true;
 			PageSize = 5;
 			PageSize = pageSize;
 			this.clientConfiguration = clientConfiguration;
