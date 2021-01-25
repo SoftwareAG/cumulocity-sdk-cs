@@ -13,7 +13,7 @@ namespace Cumulocity.SDK.Client
 #pragma warning disable CS0169
 	public class CumulocityHttpClient : HttpClient
 	{
-		private readonly Regex hostPattern = new Regex(@"((http|https):\\/\\/.+?)(\\/|\\?|$)");
+		private readonly Regex hostPattern = new Regex("((http|https):\\/\\/.+?)(\\/|\\?|$)");
 
 		private PlatformParameters platformParameters;
 		private readonly SerializerSettings _serializerSettings;
@@ -52,7 +52,7 @@ namespace Cumulocity.SDK.Client
 			return this;
 		}
 
-		protected internal virtual string resolvePath(string path)
+		public string resolvePath(string path)
 		{
 			if (path.StartsWith("/", StringComparison.Ordinal)) path = InitialHost + path;
 			return platformParameters.ForceInitialHost ? insertInitialHost(path) : path;

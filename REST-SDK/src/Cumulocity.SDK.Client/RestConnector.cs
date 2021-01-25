@@ -60,6 +60,7 @@ namespace Cumulocity.SDK.Client
 
 		public async Task<Stream> GetStream(string path, MediaType aPPLICATION_OCTET_STREAM_TYPE)
 		{
+			path = Client.resolvePath(path);
 			return await client.GetStreamAsync(path);
 		}
 
@@ -132,6 +133,7 @@ namespace Cumulocity.SDK.Client
 		private async Task<T> sendAsyncRequest<T>(String method, String path, CumulocityMediaType mediaType,T representation)
 			where T : IResourceRepresentation
 		{
+			path = Client.resolvePath(path);
 			var bufferRequestService = PlatformParameters.BufferRequestService;
 			var request = BufferedRequest.create(method, path, mediaType, representation);
 			return (T) await bufferRequestService.Create(request);
@@ -151,6 +153,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> getClientResponse(string path, MediaType mediaType)
 		{
+			path = Client.resolvePath(path);
 			var request = new HttpRequestMessage
 			{
 				Method = HttpMethod.Get,
@@ -167,6 +170,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> getClientResponse(string path, CumulocityMediaType mediaType)
 		{
+			path = Client.resolvePath(path);
 			var request = new HttpRequestMessage
 			{
 				Method = HttpMethod.Get,
@@ -184,6 +188,7 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpStreamPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, Stream content, T representation)
 		{
+			path = Client.resolvePath(path);
 			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
 			ByteArrayContent byteContent;
 
@@ -214,6 +219,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> httpPostText<T>(string path, String content, Type representation)
 		{
+			path = Client.resolvePath(path);
 			var stringContent = new StringContent(content, Encoding.UTF8).Replace(MediaType.TEXT_PLAIN);
 
 			var request = new HttpRequestMessage
@@ -234,6 +240,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> httpPutText<T>(string path, String content, Type representation)
 		{
+			path = Client.resolvePath(path);
 			var stringContent = new StringContent(content, Encoding.UTF8).Replace(MediaType.TEXT_PLAIN);
 
 			var request = new HttpRequestMessage
@@ -254,6 +261,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> httpPutStream<T>(string path, Stream content, Type representation)
 		{
+			path = Client.resolvePath(path);
 			var streamContent = new StreamContent(content);
 
 			MultipartFormDataContent multipartContent = new MultipartFormDataContent();
@@ -278,6 +286,7 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, MediaType contentType,
 			 T representation)
 		{
+			path = Client.resolvePath(path);
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
@@ -302,6 +311,7 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
+			path = Client.resolvePath(path);
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
@@ -329,6 +339,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> deleteClientResponse(string path)
 		{
+			path = Client.resolvePath(path);
 			var request = new HttpRequestMessage
 			{
 				Method = HttpMethod.Delete,
@@ -344,6 +355,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> putClientResponse<T>(string path, CumulocityMediaType mediaType, T representation)
 		{
+			path = Client.resolvePath(path);
 			var json = JsonConvert.SerializeObject(representation,
 				new JsonSerializerSettings
 				{
@@ -440,6 +452,7 @@ namespace Cumulocity.SDK.Client
 
 		private Task<HttpResponseMessage> httpPostFile<T>(string path, byte[] bytes, ManagedObjectRepresentation container)
 		{
+			path = Client.resolvePath(path);
 			var stringContentObject = new StringContent(JsonConvert.SerializeObject(container, new JsonSerializerSettings
 			{
 				ContractResolver = new CamelCasePropertyNamesContractResolver()
