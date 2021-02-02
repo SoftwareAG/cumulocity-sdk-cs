@@ -37,7 +37,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Operation
 			set => description = value;
 		}
 		
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		[JsonConverter(typeof(GidConverter))]
 		public virtual GId Id
 		{

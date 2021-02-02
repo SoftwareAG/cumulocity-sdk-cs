@@ -43,14 +43,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification
 
 		private static void SetProperty(Object R, string propertyName, object value)
 		{
-            try
-            {
-                R.SetPropertyValue(propertyName, value);
-            }
-            catch (Exception x)
-            {
+			try
+			{
+				R.SetPropertyValue(propertyName, value);
+			}
+			catch (Exception x)
+			{
 				Console.WriteLine("{0}", x);
 			}
-        }
+		}
 	}
 }
