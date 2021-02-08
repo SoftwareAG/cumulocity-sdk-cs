@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>net47;netcoreapp3.1</TargetFrameworks>
-    <LangVersion>7.3</LangVersion>
-    <Version>1006.6.1</Version>
+    <LangVersion>8.0</LangVersion>
+    <Version>10.6.6.28</Version>
     <Authors>Cumulocity</Authors>
     <Product>Cumulocity</Product>
     <Copyright>Cumulocity</Copyright>
