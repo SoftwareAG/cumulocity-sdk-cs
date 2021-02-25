@@ -6,7 +6,7 @@ using Cumulocity.SDK.MQTT.Util;
 
 namespace Cumulocity.SDK.MQTT.Tests
 {
-    public class MQTTTopicValidatorTest
+    public class MqttTopicValidatorTest
     {
         [Fact]
         public void IsTopicValidForPublishTest()
