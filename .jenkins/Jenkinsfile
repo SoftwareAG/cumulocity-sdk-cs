@@ -2,7 +2,7 @@ pipeline {
     agent {
         kubernetes {
             inheritFrom 'mono3'
-            defaultContainer 'default'
+            defaultContainer 'mono3'
         }
     }
     triggers{
@@ -16,13 +16,26 @@ pipeline {
 	parameters {
         booleanParam(defaultValue: true, description: '', name: 'DIAGNOSTIC_FLAG')
 		booleanParam(defaultValue: false, description: '', name: 'CAN_RELEASE')
+        string(defaultValue: 'feature/MTM-37209/test-build-branch', description: 'specific build/release branch name', name: 'release_branch_name', trim: true)
     }
     environment {
         CI = 'true'
         DIAGNOSTIC_FLAG_ENV = "${params.DIAGNOSTIC_FLAG ? '-verbosity=diagnostic' : ''}"
     }
     stages {
+        stage('Checkout') {
+                steps {
+                container('mono3') {
+                    checkout([
+                    $class: 'GitSCM', branches: [[name: params.release_branch_name]],
+                    extensions: [[$class: 'CleanCheckout']],
+                    userRemoteConfigs: [[url: 'git@bitbucket.org:m2m/cumulocity-sdk-cs.git',credentialsId:'jenkins-master']] ])
+                        }
+                    }
+        }
+
         stage('Build') {
+        
 		    when {
                 anyOf{
                     branch 'master'
@@ -31,7 +44,7 @@ pipeline {
                 }
             }
             steps {
-			    container('default') {
+			    container('mono3') {
                     script {
                         echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
                         sh ''' 
@@ -39,11 +52,13 @@ pipeline {
                         dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix 
                         rm -rf "/var/lib/apt/lists/*"
                         cd MQTT-SDK && chmod +x ./build.sh && ./build.sh -target=Test  ${DIAGNOSTIC_FLAG_ENV} && cd .. 
+                        pwd
                         '''
                         }
                     }
                 }
             } 
+
         stage('Release') {
             when {
                 anyOf{    
@@ -52,7 +67,7 @@ pipeline {
                 }
             }
             steps {
-                container('default') {    
+                container('mono3') {    
                     script {   
                             echo "CAN_RELEASE: ${params.CAN_RELEASE}"    
                             echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"    
@@ -72,22 +87,20 @@ pipeline {
 	post { 
 		success{
             withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
-                sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
+                sh " chmod +x .jenkins/scripts/status.sh && ./.jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
+
             }
         }
 		failure {
             script {
                 if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
-                   chat 'AAAAvnc5o90'
+                 //  chat 'AAAAvnc5o90'
                 }
             }
 
             withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
-                sh "chmod +x jenkins/scripts/status.sh && jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
+               sh "chmod +x .jenkins/scripts/status.sh && ./.jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
             }
-        }
-        always {
-            cleanWs()
         }	
     }
 }
