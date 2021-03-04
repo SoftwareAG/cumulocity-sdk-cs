@@ -47,13 +47,7 @@ pipeline {
 			    container('mono3') {
                     script {
                         echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
-                        sh ''' 
-                        rm /var/lib/dpkg/statoverride &&apt-get install -y dos2unix
-                        dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix 
-                        rm -rf "/var/lib/apt/lists/*"
-                        cd MQTT-SDK && chmod +x ./build.sh && ./build.sh -target=Test  ${DIAGNOSTIC_FLAG_ENV} && cd .. 
-                        pwd
-                        '''
+                        sh 'cd MQTT-SDK && chmod +x ./build.sh && ./build.sh -target=Test  ${DIAGNOSTIC_FLAG_ENV} && cd .. '
                         }
                     }
                 }
@@ -73,9 +67,7 @@ pipeline {
                             echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"    
                         if ("${params.CAN_RELEASE}" == "true") {
                             sshagent (['jenkins-master']) {
-                                sh '''#!/bin/bash
-                                    cd MQTT-SDK && chmod +x ./build.sh && ./build.sh --script build-release.cake ${DIAGNOSTIC_FLAG_ENV}
-                                    '''
+                                sh 'cd MQTT-SDK && chmod +x ./build.sh && ./build.sh --script build-release.cake ${DIAGNOSTIC_FLAG_ENV}'
                                 }    
                             }
                         }
@@ -85,22 +77,14 @@ pipeline {
     }
 
 	post { 
-		success{
-            withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
-                sh " chmod +x .jenkins/scripts/status.sh && ./.jenkins/scripts/status.sh 'SUCCESSFUL' ${JOB_NAME} ${BUILD_TAG} "
 
-            }
-        }
 		failure {
             script {
                 if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
                  //  chat 'AAAAvnc5o90'
                 }
             }
-
-            withCredentials([usernamePassword(credentialsId: 'bitbucket-m2m', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USER')]) {
-               sh "chmod +x .jenkins/scripts/status.sh && ./.jenkins/scripts/status.sh 'FAILED' ${JOB_NAME} ${BUILD_TAG} "
-            }
-        }	
-    }
+        }
+    }	
+    
 }
