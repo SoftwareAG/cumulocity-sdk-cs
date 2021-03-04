@@ -35,8 +35,9 @@ pipeline {
                     script {
                         echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
                         sh ''' 
-                        rm /var/lib/dpkg/statoverride &&apt-get install -y dos2unix'
-                        dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*'
+                        rm /var/lib/dpkg/statoverride &&apt-get install -y dos2unix
+                        dos2unix ./MQTT-SDK/build.sh && apt-get --purge remove -y dos2unix 
+                        rm -rf "/var/lib/apt/lists/*"
                         cd MQTT-SDK && chmod +x ./build.sh && ./build.sh -target=Test  ${DIAGNOSTIC_FLAG_ENV} && cd .. 
                         '''
                         }
