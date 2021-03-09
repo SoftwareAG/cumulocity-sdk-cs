@@ -26,6 +26,7 @@ using Cumulocity.SDK.Client.Rest.API.DeviceControl;
 using Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll;
 using Cumulocity.SDK.Client.Rest.API.DeviceControl.Notification;
 using Cumulocity.SDK.Client.Rest.API.Inventory;
+using Cumulocity.SDK.Client.Rest.API.Notification;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.API.Polling;
 using Cumulocity.SDK.Client.Rest.Model;
@@ -251,13 +252,28 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 	IShouldReceiveXOperations(1);
 	}
 
-	//
-	//Given
-	//
+	[Fact]
+	public void OperationRepresentationValidation()
+	{
+		Dictionary<string, object> dictionary = new Dictionary<string, object>();
+		dictionary.Add("UnRegisteredKey", "DummyValue");
+		OperationRepresentation rep = Helpers.GetObject<OperationRepresentation>(dictionary);
+		// Any unregistered attribute of OperationRepresentation will not be added to the object.
+		Assert.True(rep.ToString().Equals("{}"));
 
-	//@Given("^I have a poller for agent '([^']*)'$")
+		dictionary.Add("Description", "This is the description");
+		rep = Helpers.GetObject<OperationRepresentation>(dictionary);
+		// Registered attributes of OperationRepresentation will be added to the object.
+		Assert.False(rep.ToString().Equals("{}"));
+	}
 
-	public void IHaveAPollerForAgent(int arg1)
+		//
+		//Given
+		//
+
+		//@Given("^I have a poller for agent '([^']*)'$")
+
+		public void IHaveAPollerForAgent(int arg1)
 		{
 			GId agentId = getMoId(arg1);
 			poller = new OperationsByAgentAndStatusPollerImpl(deviceControlResource, agentId.Value, OperationStatus.PENDING, operationProcessor);
