@@ -1,0 +1,84 @@
+pipeline {
+    agent {
+        kubernetes {
+            inheritFrom 'mono3'
+            defaultContainer 'mono3'
+        }
+    }
+    triggers{
+        bitbucketPush()
+    }
+    options{
+        buildDiscarder(logRotator(numToKeepStr: '3'))
+        timeout(time: 1, unit: 'HOURS')
+        disableConcurrentBuilds()
+    }
+	parameters {
+        booleanParam(defaultValue: true, description: '', name: 'DIAGNOSTIC_FLAG')
+		booleanParam(defaultValue: false, description: '', name: 'CAN_RELEASE')
+        string(defaultValue: 'feature/MTM-37209/test-build-branch', description: 'specific build/release branch name', name: 'release_branch_name', trim: true)
+    }
+    environment {
+        DIAGNOSTIC_FLAG_ENV = "${params.DIAGNOSTIC_FLAG ? '-verbosity=diagnostic' : ''}"
+    }
+    stages {
+        stage('Checkout') {
+                steps {
+                container('mono3') {
+                    checkout([
+                    $class: 'GitSCM', branches: [[name: params.release_branch_name]],
+                    extensions: [[$class: 'CleanCheckout']],
+                    userRemoteConfigs: [[url: 'git@bitbucket.org:m2m/cumulocity-sdk-cs.git',credentialsId:'jenkins-master']] ])
+                        }
+                    }
+        }
+        stage('Build') {
+		    when {
+                anyOf{
+                    branch 'master'
+                    branch 'develop'
+                    branch 'feature/**'
+                }
+            }
+            steps {
+			    container('mono3') {
+                    script {
+                        echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"
+                        sh 'cd MQTT-SDK && chmod +x ./build.sh && ./build.sh -target=Test  ${DIAGNOSTIC_FLAG_ENV} && cd .. '
+                        }
+                    }
+                }
+            } 
+        stage('Release') {
+            when {
+                anyOf{    
+                    branch 'develop'
+                    branch "release/*"
+                    branch 'master'
+                }
+            }
+            steps {
+                container('mono3') {    
+                    script {   
+                            echo "CAN_RELEASE: ${params.CAN_RELEASE}"    
+                            echo "diagnostic flag: ${params.DIAGNOSTIC_FLAG}"    
+                        if ("${params.CAN_RELEASE}" == "true") {
+                            sshagent (['jenkins-master']) {
+                                sh 'cd MQTT-SDK && chmod +x ./build.sh && ./build.sh --script build-release.cake ${DIAGNOSTIC_FLAG_ENV}'
+                                }    
+                            }
+                        }
+                    }
+                }
+            }	
+    }
+	post { 
+		failure {
+            script {
+                if (env.BRANCH_NAME ==~ '(develop|release/.*)') {
+                 //  chat 'AAAAvnc5o90'
+                }
+            }
+        }
+    }	
+}
