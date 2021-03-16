@@ -264,7 +264,7 @@ namespace Cumulocity.SDK.Client.IntegrationTest.DeviceControl
 		dictionary.Add("Description", "This is the description");
 		rep = Helpers.GetObject<OperationRepresentation>(dictionary);
 		// Registered attributes of OperationRepresentation will be added to the object.
-		Assert.False(rep.ToString().Equals("{}"));
+		Assert.Contains("Description", rep.ToString());
 	}
 
 		//
