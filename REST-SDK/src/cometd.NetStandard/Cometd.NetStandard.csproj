@@ -10,11 +10,11 @@
     <Company>Cumulocity</Company>
     <Product>Cumulocity</Product>
     <Description>CometD library to be used with Cumulocity.SDK.Client.</Description>
-    <PackageLicenseUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/SoftwareAG/cumulocity-sdk-cs/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Copyright>Cumulocity</Copyright>
     <PackageProjectUrl>cumulocity.com</PackageProjectUrl>
-    <RepositoryUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/REST-SDK/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SoftwareAG/cumulocity-sdk-cs/tree/master/REST-SDK/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 

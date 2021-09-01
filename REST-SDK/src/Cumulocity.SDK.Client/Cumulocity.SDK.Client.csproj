@@ -7,13 +7,13 @@
     <Product>Cumulocity</Product>
     <Copyright>Cumulocity</Copyright>
     <PackageIconUrl>https://avatars2.githubusercontent.com/u/3456374</PackageIconUrl>
-    <RepositoryUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/REST-SDK/</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SoftwareAG/cumulocity-sdk-cs/blob/master/REST-SDK/</RepositoryUrl>
     <PackageProjectUrl>cumulocity.com</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <Description>Cumulocity comes with elaborate support for developing clients in C#. You can use C#, for example, to:
 Interface Cumulocity with open, C#-enabled devices through a device-side agent. Today, many Embedded Linux devices such as the Raspberry Pi support C# out of the box.
 Interface Cumulocity with closed devices speaking an existing, Internet-enabled protocol through a server-side agent.</Description>
-    <PackageLicenseUrl>https://bitbucket.org/m2m/cumulocity-sdk-cs/src/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/SoftwareAG/cumulocity-sdk-cs/blob/master/LICENSE.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
