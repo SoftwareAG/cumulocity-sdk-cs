@@ -69,7 +69,7 @@ openSUSE                      | 42.1                          | x64            |
 
 ```
 #!bash
-git clone https://pinow@bitbucket.org/m2m/cumulocity-sdk-cs.git
+git clone git@github.com:SoftwareAG/cumulocity-sdk-cs.git
 ```
 
 * Customize the *build.cake* to your needs.
