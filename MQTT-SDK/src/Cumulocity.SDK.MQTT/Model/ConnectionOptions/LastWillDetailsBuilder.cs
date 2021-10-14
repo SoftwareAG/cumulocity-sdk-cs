@@ -10,25 +10,25 @@ namespace Cumulocity.SDK.MQTT.Model.ConnectionOptions
 
         public LastWillDetailsBuilder WithTopic(string topic)
         {
-            _lastWillDetails.Topic = topic;
+            _lastWillDetails.SetTopic(topic);
             return this;
         }
 
         public LastWillDetailsBuilder WithQoS(QoS qos)
         {
-            _lastWillDetails.qoS = qos;
+            _lastWillDetails.SetQoS(qos);
             return this;
         }
 
         public LastWillDetailsBuilder WithMessage(string message)
         {
-            _lastWillDetails.Message = message;
+            _lastWillDetails.SetMessage(message);
             return this;
         }
 
         public LastWillDetailsBuilder WithRetained(bool retained)
         {
-            _lastWillDetails.Retained = retained;
+            _lastWillDetails.SetRetained(retained);
             return this;
         }
 
