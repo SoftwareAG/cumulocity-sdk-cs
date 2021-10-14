@@ -93,6 +93,20 @@ namespace Cumulocity.SDK.MQTT.Tests
 			// Then
 			operationsProvider.Verify(x => x.SubscribeAsync(It.IsAny<IMqttMessageRequest>()), Times.Once);
 		}
+
+		[Fact]
+		public async Task UnsubscribeFromTopic()
+        {
+			// Given
+			string topic = "s/ds";
+
+			// When 
+			await client.UnsubscribeAsync(topic);
+
+			// Then
+			operationsProvider.Verify(x => x.UnsubscribeAsync(It.IsAny<string>()), Times.Once);
+        }
+
 		[Fact]
 		public async Task SubscribeToWrongTopic()
 		{
@@ -106,5 +120,16 @@ namespace Cumulocity.SDK.MQTT.Tests
 			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => client.SubscribeAsync(message));
 
 		}
+
+		[Fact]
+		public async Task UnsubscribeFromWrongTopic()
+        {
+			// Given
+			string topic = "s/xyz";
+
+			// When
+			// Then
+			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => client.UnsubscribeAsync(topic));
+        }
 	}
 }

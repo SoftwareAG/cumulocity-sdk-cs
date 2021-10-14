@@ -16,6 +16,8 @@ namespace Cumulocity.SDK.MQTT.Operations
 
         Task SubscribeAsync(IMqttMessageRequest message);
 
+        Task UnsubscribeAsync(string topic);
+
         Task Disconnect();
 
         bool ConnectionEstablished { get; }

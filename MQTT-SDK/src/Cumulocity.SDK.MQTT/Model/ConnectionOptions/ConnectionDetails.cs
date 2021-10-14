@@ -48,5 +48,11 @@ namespace Cumulocity.SDK.MQTT.Model
 		/// </value>
 		public TransportType Protocol { get; set; }
 
+        /// <summary>
+        /// The "last will" message that is specified at connection time and that
+        /// is executed when the client loses the connection.
+        /// </summary>
+        public LastWillDetails LastWill { get; set; }
+
 	}
 }

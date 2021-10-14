@@ -110,5 +110,26 @@ namespace Cumulocity.SDK.MQTT
             }
         }
 
+        public async Task UnsubscribeAsync(string topic)
+        {
+            if (!OperationsProvider.ConnectionEstablished)
+            {
+                throw new MqttDeviceSDKException("Unsubscribe can happen only when client is initialized, " +
+                    "connection to server established and any topic is subscribed.");
+            }
+
+            if (!MqttTopicValidator.IsTopicValidForSubscribe(topic))
+            {
+                throw new MqttDeviceSDKException("Invalid topic");
+            }
+            try
+            {
+                await OperationsProvider.UnsubscribeAsync(topic);
+            }
+            catch (System.Exception ex)
+            {
+                throw new MqttDeviceSDKException($"Unable to subscribe from topic {topic} for clientId {ConnectionDetails.ClientId} : ", ex);
+            }
+        }
     }
 }

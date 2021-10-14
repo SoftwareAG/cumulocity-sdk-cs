@@ -35,6 +35,8 @@ namespace Cumulocity.SDK.MQTT.Model
         TransportType Protocol { get; }
 
         bool UseTls { get; }
+
+        LastWillDetails LastWill { get; }
 	}
 
 }
