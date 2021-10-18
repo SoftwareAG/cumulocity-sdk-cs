@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Cumulocity.SDK.MQTT\Cumulocity.SDK.MQTT.csproj" />
+    <ProjectReference Include="..\..\src\Cumulocity.SDK.MQTT\Cumulocity.SDK.MQTT.csproj" />
   </ItemGroup>
 
 </Project>
