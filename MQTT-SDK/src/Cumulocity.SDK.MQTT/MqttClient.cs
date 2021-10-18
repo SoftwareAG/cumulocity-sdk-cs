@@ -128,7 +128,7 @@ namespace Cumulocity.SDK.MQTT
             }
             catch (System.Exception ex)
             {
-                throw new MqttDeviceSDKException($"Unable to subscribe from topic {topic} for clientId {ConnectionDetails.ClientId} : ", ex);
+                throw new MqttDeviceSDKException($"Unable to unsubscribe from topic {topic} for clientId {ConnectionDetails.ClientId} : ", ex);
             }
         }
     }

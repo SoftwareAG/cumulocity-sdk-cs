@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A261881D-97AE-4C22-A15A-D17B32300675}"
 EndProject
@@ -26,7 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{8B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloJsonExample", "examples\HelloJsonExample\HelloJsonExample.csproj", "{1CC59AC8-766E-4A58-B293-FAC77B76BB95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloMqttNet", "examples\HelloMqttNet\HelloMqttNet.csproj", "{6FD13776-8906-470D-ADA9-E8D935FFA94E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloMqttNet", "examples\HelloMqttNet\HelloMqttNet.csproj", "{6FD13776-8906-470D-ADA9-E8D935FFA94E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloMQTTNet2", "HelloMQTTNet2\HelloMQTTNet2.csproj", "{0335B5DD-6634-413B-821D-418397B4CCFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +112,18 @@ Global
 		{6FD13776-8906-470D-ADA9-E8D935FFA94E}.Release|x64.Build.0 = Release|Any CPU
 		{6FD13776-8906-470D-ADA9-E8D935FFA94E}.Release|x86.ActiveCfg = Release|Any CPU
 		{6FD13776-8906-470D-ADA9-E8D935FFA94E}.Release|x86.Build.0 = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|x64.Build.0 = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Debug|x86.Build.0 = Debug|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|x64.ActiveCfg = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|x64.Build.0 = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|x86.ActiveCfg = Release|Any CPU
+		{0335B5DD-6634-413B-821D-418397B4CCFD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -121,6 +135,7 @@ Global
 		{48EA55D1-C3DE-42F3-8A44-45EC3D5EEAF3} = {F1945BBB-C6C9-47F3-8EDB-669C41B35FFA}
 		{1CC59AC8-766E-4A58-B293-FAC77B76BB95} = {8BE06300-97CB-4A9B-81EA-65AD4374D240}
 		{6FD13776-8906-470D-ADA9-E8D935FFA94E} = {8BE06300-97CB-4A9B-81EA-65AD4374D240}
+		{0335B5DD-6634-413B-821D-418397B4CCFD} = {8BE06300-97CB-4A9B-81EA-65AD4374D240}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0DC5597-A814-4157-B095-157DC5D30920}
