@@ -62,6 +62,12 @@ namespace Cumulocity.SDK.MQTT.Model
 	        return this;
         }
 
+        public ConnectionDetailsBuilder WithLastWill(LastWillDetails lastWill)
+        {
+            _options.LastWill = lastWill;
+            return this;
+        }
+
 		public IConnectionDetails Build()
         {
             return _options;

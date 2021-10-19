@@ -73,7 +73,7 @@ namespace Cumulocity.SDK.MQTT
             
             if (!MqttTopicValidator.IsTopicValidForPublish(message.TopicName))
             {
-                throw new MqttDeviceSDKException("Invalid topic to publish.");
+                throw new MqttDeviceSDKException($"Invalid topic to publish. Topic name: {message.TopicName}, Client Id: {ConnectionDetails.ClientId}");
             }
 
             try
@@ -97,7 +97,7 @@ namespace Cumulocity.SDK.MQTT
 
             if (!MqttTopicValidator.IsTopicValidForSubscribe(message.TopicName))
             {
-                throw new MqttDeviceSDKException("Invalid topic to subscribe.");
+                throw new MqttDeviceSDKException($"Invalid topic to subscribe. Topic name: {message.TopicName}, Client Id: {ConnectionDetails.ClientId}");
             }
 
             try
@@ -110,5 +110,26 @@ namespace Cumulocity.SDK.MQTT
             }
         }
 
+        public async Task UnsubscribeAsync(string topic)
+        {
+            if (!OperationsProvider.ConnectionEstablished)
+            {
+                throw new MqttDeviceSDKException("Unsubscribe can happen only when client is initialized, " +
+                    $"and connection to server established. Topic name: {topic}, Client Id: {ConnectionDetails.ClientId}");
+            }
+
+            if (!MqttTopicValidator.IsTopicValidForSubscribe(topic))
+            {
+                throw new MqttDeviceSDKException($"The topic cannot be subscribed to. Topic name: {topic}, Client Id: {ConnectionDetails.ClientId}");
+            }
+            try
+            {
+                await OperationsProvider.UnsubscribeAsync(topic);
+            }
+            catch (System.Exception ex)
+            {
+                throw new MqttDeviceSDKException($"Unable to unsubscribe from topic {topic} for clientId {ConnectionDetails.ClientId} : ", ex);
+            }
+        }
     }
 }

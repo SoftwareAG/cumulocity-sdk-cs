@@ -8,6 +8,7 @@ using MQTTnet.Protocol;
 using System;
 using System.Threading.Tasks;
 using Cumulocity.SDK.MQTT.Exception;
+using System.Text;
 
 namespace Cumulocity.SDK.MQTT.Operations
 {
@@ -41,6 +42,17 @@ namespace Cumulocity.SDK.MQTT.Operations
 				.WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
 				.WithClientOptions(clientOptions.Build())
 				.Build();
+
+			if(connectionDetails.LastWill != null)
+            {
+				LastWillDetails lastWillDetails = connectionDetails.LastWill;
+				// Mimics Java getBytes(). 
+				byte[] payload = Encoding.Default.GetBytes(lastWillDetails.Message);
+				var mqttApplicationMessage = new MqttApplicationMessageBuilder().WithTopic(lastWillDetails.Topic)
+					.WithPayload(payload).WithQualityOfServiceLevel((MqttQualityOfServiceLevel)Convert.ToInt32(lastWillDetails.qoS))
+					.WithRetainFlag(lastWillDetails.Retained).Build();
+				clientOptions.WithWillMessage(mqttApplicationMessage);
+            }
 
 			mqttClient = new MqttFactory().CreateManagedMqttClient();
 			//
@@ -101,6 +113,11 @@ namespace Cumulocity.SDK.MQTT.Operations
 				.WithQualityOfServiceLevel((MqttQualityOfServiceLevel)((int)message.QoS))
 				.Build());
 		}
+
+		public async Task UnsubscribeAsync(string topic)
+        {
+			await mqttClient.UnsubscribeAsync(topic);
+        }
 
 		private string GetServerURI(ConnectionDetails connectionDetails)
 		{

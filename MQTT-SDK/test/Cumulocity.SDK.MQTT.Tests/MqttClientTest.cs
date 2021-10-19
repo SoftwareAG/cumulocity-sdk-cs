@@ -93,6 +93,20 @@ namespace Cumulocity.SDK.MQTT.Tests
 			// Then
 			operationsProvider.Verify(x => x.SubscribeAsync(It.IsAny<IMqttMessageRequest>()), Times.Once);
 		}
+
+		[Fact]
+		public async Task UnsubscribeFromTopic()
+        {
+			// Given
+			string topic = "s/ds";
+
+			// When 
+			await client.UnsubscribeAsync(topic);
+
+			// Then
+			operationsProvider.Verify(x => x.UnsubscribeAsync(It.IsAny<string>()), Times.Once);
+        }
+
 		[Fact]
 		public async Task SubscribeToWrongTopic()
 		{
@@ -105,6 +119,108 @@ namespace Cumulocity.SDK.MQTT.Tests
 			// Then
 			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => client.SubscribeAsync(message));
 
+		}
+
+		[Fact]
+		public async Task UnsubscribeFromWrongTopic()
+        {
+			// Given
+			string topic = "s/xyz";
+
+			// When
+			// Then
+			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => client.UnsubscribeAsync(topic));
+        }
+
+		[Fact]
+		public async Task SubscribeAndUnsubscribeFromTopic()
+        {
+			// Given
+			String topic = "s/ds";
+			var message = new MqttMessageRequestBuilder()
+											.WithTopicName(topic)
+											.WithQoS(QoS.EXACTLY_ONCE)
+											.Build();
+
+			// When
+			await client.SubscribeAsync(message);
+
+			// Then
+			operationsProvider.Verify(x => x.SubscribeAsync(It.IsAny<IMqttMessageRequest>()), Times.Once);
+
+			// When 
+			await client.UnsubscribeAsync(topic);
+
+			// Then
+			operationsProvider.Verify(x => x.UnsubscribeAsync(It.IsAny<string>()), Times.Once);
+		}
+
+		[Fact]
+		public async Task UnsubscribeFailWhenConnectionUnestablished()
+        {
+			IMqttClient mockClient;
+			IConnectionDetails cDetailsMock;
+			Mock<IManagedMqttClient> managedMqttClientMock;
+			Mock<IOperationsProvider> operationsProviderMock;
+			var fixture = new Fixture();
+			fixture.Customize(new AutoMoqCustomization());
+
+			cDetailsMock = new ConnectionDetailsBuilder()
+							  .WithClientId("123456789")
+							  .WithHost("test.c8y.io")
+							  .WithCredentials("tenant/user", "password")
+							  .WithCleanSession(true)
+							  .Build();
+
+			var connectionDetails = fixture.Freeze<Mock<IConnectionDetails>>();
+			managedMqttClientMock = fixture.Freeze<Mock<IManagedMqttClient>>();
+			operationsProviderMock = fixture.Freeze<Mock<IOperationsProvider>>();
+			operationsProviderMock.Setup(x => x.ConnectionEstablished).Returns(false);
+			managedMqttClientMock.Setup(x => x.IsStarted).Returns(false);
+
+			mockClient = fixture.Create<MqttClient>();
+
+			// Given
+			string topic = "s/ds";
+
+			// When
+			// Then
+			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => mockClient.UnsubscribeAsync(topic));
+		}
+
+		[Fact]
+		public async Task UnsubscribeWithException()
+        {
+			IMqttClient mockClient;
+			IConnectionDetails cDetailsMock;
+			Mock<IManagedMqttClient> managedMqttClientMock;
+			Mock<IOperationsProvider> operationsProviderMock;
+			var fixture = new Fixture();
+			fixture.Customize(new AutoMoqCustomization());
+
+			cDetailsMock = new ConnectionDetailsBuilder()
+							  .WithClientId("123456789")
+							  .WithHost("test.c8y.io")
+							  .WithCredentials("tenant/user", "password")
+							  .WithCleanSession(true)
+							  .Build();
+
+			var connectionDetails = fixture.Freeze<Mock<IConnectionDetails>>();
+			managedMqttClientMock = fixture.Freeze<Mock<IManagedMqttClient>>();
+			operationsProviderMock = fixture.Freeze<Mock<IOperationsProvider>>();
+			operationsProviderMock.Setup(x => x.ConnectionEstablished).Returns(true);
+			// Make OperationsProvider throw exception on Unsubscribe
+			operationsProviderMock.Setup(x => x.UnsubscribeAsync(It.IsAny<string>())).Throws(new System.Exception("Unsubscribe failed due to an exception"));
+			managedMqttClientMock.Setup(x => x.IsStarted).Returns(true);
+
+			mockClient = fixture.Create<MqttClient>();
+
+			// Given
+			string topic = "s/ds";
+
+			// When
+			// Then
+			await Assert.ThrowsAsync<MqttDeviceSDKException>(() => mockClient.UnsubscribeAsync(topic));
 		}
 	}
 }

@@ -33,6 +33,14 @@ namespace Cumulocity.SDK.MQTT
         Task SubscribeAsync(IMqttMessageRequest message);
 
         /// <summary>
+        /// Unsubscribe from a particular topic
+        /// </summary>
+        /// <param name="topic">
+        /// </param>
+        /// <exception cref="MqttDeviceSDKException"> </exception>
+        Task UnsubscribeAsync(string topic);
+
+        /// <summary>
         /// Disconnects the client from the broker
         /// </summary>
         /// <exception cref="MqttDeviceSDKException"> </exception>
