@@ -1,6 +1,7 @@
 ﻿using Cumulocity.SDK.Client.Rest.Model.Idtype;
 using Cumulocity.SDK.Client.Rest.Representation;
 using Cumulocity.SDK.Client.Rest.Representation.Messaging.Notifications;
+using Cumulocity.SDK.Client.Rest.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +75,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
 
         public void deleteTenantSubscriptions()
         {
-            throw new NotImplementedException();
+            NotificationSubscriptionFilter filter = new NotificationSubscriptionFilter().byContext(SubscriptionContext.TENANT.ToDescriptionString());
+            deleteByFilter(filter);
         }
 
         public INotificationSubscriptionCollection getSubscriptions()
