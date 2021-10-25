@@ -25,6 +25,9 @@ namespace Cumulocity.SDK.Client
 
 		private const int ReadTimeoutInMillis = 180000;
 
+		// Max number of connections per server endpoint
+		private const int MaxConnectionsPerRoute = 50;
+
 		private CumulocityHttpClient client;
 
 		public RestConnector(PlatformParameters platformParameters, ResponseParser responseParser) : this(
@@ -46,7 +49,7 @@ namespace Cumulocity.SDK.Client
 
 		public virtual ResponseParser ResponseParser { get; }
 
-		public T Get<T>(string path, CumulocityMediaType mediaType, Type responseType)
+		public virtual T Get<T>(string path, CumulocityMediaType mediaType, Type responseType)
 		{
 			var response = getClientResponse(path, mediaType);
 			return ResponseParser.parse<T>(response.Result, responseType, (int)HttpStatusCode.OK);
@@ -76,22 +79,35 @@ namespace Cumulocity.SDK.Client
 			return ResponseParser.parse<T>(response.Result, representation, (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
-		public T Post<T>(string path, CumulocityMediaType mediaType, T representation)
+		public virtual T Post<T>(string path, CumulocityMediaType mediaType, T representation)
 			where T : IResourceRepresentation
 		{
-			var response = httpPost(path, mediaType, mediaType, representation);
+			try
+            {
+				var response = httpPost(path, mediaType, mediaType, representation);
 
-			if (!PlatformParameters.requireResponseBody())
-			{
-				var repFromPlatform = ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
-				return repFromPlatform != null ? repFromPlatform : representation;
+				if (!PlatformParameters.requireResponseBody())
+				{
+					var repFromPlatform = ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
+					return repFromPlatform != null ? repFromPlatform : representation;
+				}
+
+				//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
+				//{
+				//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
+				//}
+
+				return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 			}
-			
-			//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
-			//{
-			//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
-			//}
+			catch(UriFormatException ex) { }
+			return default(T);
+		}
 
+		// C# methods implemented from interfaces are not virtual by default. Cant be used by used in Moq verify or setup. 
+		public virtual T Post<T, S>(String path, CumulocityMediaType contentType, CumulocityMediaType accept, S representation, T clazz)
+			where T : IResourceRepresentation where S: IResourceRepresentation
+        {
+			var response = httpPost(path, contentType, accept, representation);
 			return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 		}
 
@@ -145,7 +161,7 @@ namespace Cumulocity.SDK.Client
 			return ResponseParser.parse<T>(response.Result, representation.GetType(), (int)HttpStatusCode.OK);
 		}
 
-		public void Delete(string path)
+		public virtual void Delete(string path)
 		{
 			var response = this.deleteClientResponse(path);
 			this.ResponseParser.checkStatus(response.Result, new int[] { (int)HttpStatusCode.NoContent });
@@ -311,46 +327,61 @@ namespace Cumulocity.SDK.Client
 		private Task<HttpResponseMessage> httpPost<T>(string path, CumulocityMediaType contentType,
 			CumulocityMediaType accept, T representation)
 		{
-			path = Client.resolvePath(path);
-			var json = JsonConvert.SerializeObject(representation,
-				new JsonSerializerSettings
+			try
+            {
+				path = Client.resolvePath(path);
+				var json = JsonConvert.SerializeObject(representation,
+					new JsonSerializerSettings
+					{
+						ContractResolver = new CamelCasePropertyNamesContractResolver(),
+						Formatting = Formatting.Indented
+					});
+				var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
+
+				var request = new HttpRequestMessage
 				{
-					ContractResolver = new CamelCasePropertyNamesContractResolver(),
-					Formatting = Formatting.Indented
-				});
-			var stringContent = new StringContent(json, Encoding.UTF8).Replace(contentType.TypeString);
+					Method = HttpMethod.Post,
+					RequestUri = new Uri(path),
+					Content = stringContent
+				};
 
-			var request = new HttpRequestMessage
-			{
-				Method = HttpMethod.Post,
-				RequestUri = new Uri(path),
-				Content = stringContent
-			};
+				if (PlatformParameters.requireResponseBody())
+					request.Headers.TryAddWithoutValidation("Accept", accept.TypeString);
 
-			if (PlatformParameters.requireResponseBody())
-				request.Headers.TryAddWithoutValidation("Accept", accept.TypeString);
+				request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+				request.AddTfaHeader(this.PlatformParameters.GetTfaToken());
+				request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
 
-			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
-			request.AddTfaHeader(this.PlatformParameters.GetTfaToken());
-			request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
-
-			return client.SendAsync(request);
+				return client.SendAsync(request);
+			}
+			catch (UriFormatException ex)
+            {
+				throw new UriFormatException("Not a valid Uri");
+            }
+			return null;
 		}
 
 		private Task<HttpResponseMessage> deleteClientResponse(string path)
 		{
-			path = Client.resolvePath(path);
-			var request = new HttpRequestMessage
-			{
-				Method = HttpMethod.Delete,
-				RequestUri = new Uri(path)
-			};
+			try
+            {
+				path = Client.resolvePath(path);
+				var request = new HttpRequestMessage
+				{
+					Method = HttpMethod.Delete,
+					RequestUri = new Uri(path)
+				};
 
-			request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
-			request.AddTfaHeader(this.PlatformParameters.GetTfaToken());
-			request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
+				request.AddApplicationKeyHeader(this.PlatformParameters.ApplicationKey);
+				request.AddTfaHeader(this.PlatformParameters.GetTfaToken());
+				request.AddRequestOriginHeader(this.PlatformParameters.RequestOrigin);
 
-			return client.SendAsync(request);
+				return client.SendAsync(request);
+			}
+			catch(UriFormatException ex)
+            {
+            }
+			return null;
 		}
 
 		private Task<HttpResponseMessage> putClientResponse<T>(string path, CumulocityMediaType mediaType, T representation)
@@ -421,7 +452,7 @@ namespace Cumulocity.SDK.Client
 		private HttpClientHandler createDefaultClientHander(HttpClientHandler config)
 		{
 			var credentials = new NetworkCredential("user", "pass");
-			var handler = new HttpClientHandler { Credentials = credentials };
+			var handler = new HttpClientHandler { Credentials = credentials, MaxConnectionsPerServer = MaxConnectionsPerRoute };
 
 			return handler;
 		}
