@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Cumulocity.SDK.Client.Rest.Model.Buffering;
+using Cumulocity.SDK.Client.Logging;
 
 namespace Cumulocity.SDK.Client
 {
@@ -29,6 +30,8 @@ namespace Cumulocity.SDK.Client
 		private const int MaxConnectionsPerRoute = 50;
 
 		private CumulocityHttpClient client;
+
+		private static readonly ILog LOG = LogProvider.For<RestConnector>();
 
 		public RestConnector(PlatformParameters platformParameters, ResponseParser responseParser) : this(
 			platformParameters, responseParser, null)
@@ -99,7 +102,11 @@ namespace Cumulocity.SDK.Client
 
 				return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 			}
-			catch(UriFormatException ex) { }
+			// Reason for not logging exception: When we do api.delete in the test code, since absolute URL is not passed, .NET Uri unlike Java throws Exception. Hence only logging it. 
+			catch(UriFormatException ex) 
+			{
+				LOG.Error($"Invalid url passed: {ex.Message}");
+			}
 			return default(T);
 		}
 

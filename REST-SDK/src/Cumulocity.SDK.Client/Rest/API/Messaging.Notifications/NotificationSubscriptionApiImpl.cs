@@ -42,7 +42,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
             } 
             else
             {
-                throw new ArgumentNullException("Invalid subscription passed");
+                throw new ArgumentNullException("Invalid null subscription");
             }
         }
 
@@ -53,6 +53,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
                 Dictionary<string, string> parameters = (Dictionary<string, string>)filter.QueryParams;
                 restConnector.Delete(urlProcessor.replaceOrAddQueryParam(getSelfUri(), parameters));
             }
+            else
+            {
+                throw new ArgumentNullException("Invalid null filter");
+            }
         }
 
         public void deleteById(string subscriptionId)
@@ -62,6 +66,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
                 string url = $"{getSelfUri()}/{subscriptionId}";
                 restConnector.Delete(url);
             }
+            else
+            {
+                throw new ArgumentNullException("Invalid null subscription id");
+            }
         }
 
         public void deleteBySource(string source)
@@ -70,6 +78,10 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
             {
                 NotificationSubscriptionFilter filter = new NotificationSubscriptionFilter().bySource(new GId(source));
                 deleteByFilter(filter);
+            }
+            else
+            {
+                throw new ArgumentNullException("Invalid null source");
             }
         }
 
@@ -96,16 +108,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
 
         public NotificationSubscriptionRepresentation subscribe(NotificationSubscriptionRepresentation representation)
         {
-            NotificationSubscriptionRepresentation result = null;
             if (representation != null)
             {
-                result = restConnector.Post<NotificationSubscriptionRepresentation>(getSelfUri(), MEDIA_TYPE, representation);
+                return restConnector.Post<NotificationSubscriptionRepresentation>(getSelfUri(), MEDIA_TYPE, representation);
             }
             else
             {
                 throw new ArgumentNullException("Invalid representation passed");
             }
-            return result;
         }
     }
 }
