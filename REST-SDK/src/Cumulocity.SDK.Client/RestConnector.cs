@@ -363,8 +363,8 @@ namespace Cumulocity.SDK.Client
 			}
 			catch (UriFormatException ex)
             {
-				LOG.Error($"Invalid url passed: {ex.Message}");
-			}
+				throw new UriFormatException("Not a valid Uri");
+            }
 			return null;
 		}
 
@@ -387,8 +387,7 @@ namespace Cumulocity.SDK.Client
 			}
 			catch(UriFormatException ex)
             {
-				LOG.Error($"Invalid url passed: {ex.Message}");
-			}
+            }
 			return null;
 		}
 
