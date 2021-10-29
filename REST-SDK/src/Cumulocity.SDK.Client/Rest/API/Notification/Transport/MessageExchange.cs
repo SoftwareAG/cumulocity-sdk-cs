@@ -1,6 +1,7 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Client.Transport;
 using Cometd.Common;
+using Cumulocity.SDK.Client.Logging;
 using Cumulocity.SDK.Client.Rest.API.Notification.Common;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using Cumulocity.SDK.Client.Rest.API.Notification.Watchers;
@@ -31,6 +32,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		private CancellationTokenSource cts = new CancellationTokenSource();
 		private TimeSpan reconnectionWaitingTime = TimeSpan.FromMilliseconds(1000);
 		private ConnectionHeartBeatWatcher watcher;
+		private static readonly ILog LOG = LogProvider.For<MessageExchange>();
 
 		public MessageExchange(CumulocityLongPollingTransportMsgEx transport,
 							   ITransportListener listener,
@@ -66,7 +68,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		public virtual void Cancel()
 		{
-			Debug.WriteLine(String.Format("canceling {0}", JsonConvert.SerializeObject(messages)));
+			LOG.Debug(String.Format("canceling {0}", JsonConvert.SerializeObject(messages)));
 
 			listener.onException(new Exception("request cancelled"), ObjectConverter.ToListOfIMessage(messages));
 			cts.Cancel();
@@ -140,7 +142,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 								if (CHAR_SPACE.Equals(b.ToString()))
 								{
-									Debug.WriteLine("HeartBeat");
+									LOG.Debug("HeartBeat");
 
 									httpWebResponseMessage = new HttpWebResponseMessage(response.StatusCode, CHAR_SPACE);
 									await ConsumeResponse(content, httpWebResponseMessage);
@@ -149,14 +151,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 							catch (System.IO.EndOfStreamException ex)
 							{
 								var exMsg = ex.Message;
-								Debug.WriteLine("EndOfStreamException");
+								LOG.Debug("EndOfStreamException");
 								eof = true;
 							}
 
 							if (eof)
 							{
 								var result = Encoding.ASCII.GetString(stream.ToArray());
-								Debug.WriteLine(result);
+								LOG.Debug(result);
 								httpWebResponseMessage = new HttpWebResponseMessage(response.StatusCode, result);
 
 								break;
@@ -169,7 +171,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(content);
+				LOG.Debug(content);
 				UnauthorizedConnectionWatcher.resetCounter();
 				listener.onConnectException(ex, ObjectConverter.ToListOfIMessage(messages));
 				onFinish();
@@ -184,7 +186,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 				listener.OnFinish();
 			}
 
-			Debug.WriteLine(String.Format("stopping heartbeat watcher {0}", JsonConvert.SerializeObject(messages)));
+			LOG.Debug(String.Format("stopping heartbeat watcher {0}", JsonConvert.SerializeObject(messages)));
 			Watcher.stop();
 		}
 
@@ -207,7 +209,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(content);
+				LOG.Debug(content);
 				UnauthorizedConnectionWatcher.resetCounter();
 				listener.onConnectException(ex, ObjectConverter.ToListOfIMessage(messages));
 				onFinish();
@@ -216,7 +218,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		private void StartWatcher()
 		{
-			Debug.WriteLine(String.Format("{0} starting heartbeat watcher {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(messages)));
+			LOG.Debug(String.Format("{0} starting heartbeat watcher {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(messages)));
 			Watcher.Start();
 		}
 	}
@@ -243,6 +245,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 	{
 		private readonly MessageExchange messageExchange;
 		private readonly HttpWebResponseMessage response;
+		private static readonly ILog LOG = LogProvider.For<ResponseConsumer>();
 
 		public ResponseConsumer(HttpWebResponseMessage response, MessageExchange messageExchange)
 		{
@@ -257,7 +260,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			bool isHeartBeat = false;
 			try
 			{
-				Debug.WriteLine(String.Format("{0}Start response consumer ", DateTime.Now.ToString("HH:mm:ss.fff")));
+				LOG.Debug(String.Format("{0}Start response consumer ", DateTime.Now.ToString("HH:mm:ss.fff")));
 
 				isHeartBeat = HeartBeatWatch(response, response.Content);
 				if (isHeartBeat)
@@ -285,18 +288,18 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		//ORIGINAL LINE: private void getHeartBeats(final ClientResponse response) throws IOException
 		private bool GetHeartBeats(string memoryStream)
 		{
-			Debug.WriteLine(String.Format(" {0} getting heartbeants  {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(response)));
+			LOG.Debug(String.Format(" {0} getting heartbeants  {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(response)));
 
 			{
 				if (isHeartBeat(memoryStream))
 				{
-					Debug.WriteLine("recived heartbeat");
+					LOG.Debug("recived heartbeat");
 					messageExchange.Watcher.HeartBeat();
 					return true;
 				}
 				else
 				{
-					Debug.WriteLine("new messages recived");
+					LOG.Debug("new messages recived");
 					return false;
 				}
 			}
@@ -333,7 +336,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		private void handleContent(string content)
 		{
 			IList<IMutableMessage> messages = DictionaryMessage.parseMessages(content);
-			Debug.WriteLine(String.Format("{0} received messages {1} ", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(messages)));
+			LOG.Debug(String.Format("{0} received messages {1} ", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(messages)));
 			messageExchange.Listener.onMessages(messages);
 		}
 
@@ -365,14 +368,14 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		private void onConnectionFailed(Exception e)
 		{
-			Debug.WriteLine("connection failed");
+			LOG.Debug("connection failed");
 			messageExchange.UnauthorizedConnectionWatcher.resetCounter();
 			messageExchange.Listener.onConnectException(e, ObjectConverter.ToListOfIMessage(messageExchange.Messages));
 		}
 
 		private void onException(Exception x)
 		{
-			Debug.WriteLine(String.Format("request failed {0}", JsonConvert.SerializeObject(x)));
+			LOG.Debug(String.Format("request failed {0}", JsonConvert.SerializeObject(x)));
 			waitBeforeAnotherReconnect();
 			messageExchange.Listener.onException(x, ObjectConverter.ToListOfIMessage(messageExchange.Messages));
 		}
@@ -387,7 +390,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		private void onTransportException(int code)
 		{
-			Debug.WriteLine(String.Format("request failed with code {0}", code));
+			LOG.Debug(String.Format("request failed with code {0}", code));
 			if (code == 401)
 			{
 				messageExchange.UnauthorizedConnectionWatcher.unauthorizedAccess();
@@ -410,7 +413,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine(String.Format("Problem occurred while waiting for another bayeux reconnect {0}", ex.Message));
+				LOG.Error(String.Format("Problem occurred while waiting for another bayeux reconnect {0}", ex.Message));
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Client.Transport;
 using Cometd.Common;
+using Cumulocity.SDK.Client.Logging;
 using Cumulocity.SDK.Client.Rest.API.Notification.Common;
 using Cumulocity.SDK.Client.Rest.API.Notification.Watchers;
 using Newtonsoft.Json;
@@ -28,6 +29,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		private HashSet<LongPollingRequest> transmissions = new HashSet<LongPollingRequest>();
 		private List<LongPollingRequest> transportQueue = new List<LongPollingRequest>();
+
+		private static readonly ILog LOG = LogProvider.For<CumulocityLongPollingTransport>();
 
 		public CumulocityLongPollingTransport(IDictionary<String, Object> options, PlatformParameters platformParameters, UnauthorizedConnectionWatcher unauthorizedConnectionWatcher)
 									: base("long-polling", options)
@@ -188,7 +191,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 					byte[] byteArray = Encoding.UTF8.GetBytes(exchange.content);
 					//System.Diagnostics.Debug.WriteLine("Sending message(s): {0}", exchange.content);
 
-					Debug.WriteLine(String.Format("{0} sending messages {1} ", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(exchange.content)));
+					LOG.Debug(String.Format("{0} sending messages {1} ", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(exchange.content)));
 
 					// Write to the request stream.
 					postStream.Write(byteArray, 0, exchange.content.Length);

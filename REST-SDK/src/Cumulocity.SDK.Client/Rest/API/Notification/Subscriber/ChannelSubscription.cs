@@ -1,4 +1,5 @@
 ﻿using Cometd.Bayeux.Client;
+using Cumulocity.SDK.Client.Logging;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using System.Diagnostics;
 
@@ -11,6 +12,8 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 		private readonly IClientSessionChannel channel;
 
 		private T @object;
+		private static readonly ILog LOG = LogProvider.For<ChannelSubscription<T>>();
+
 
 		internal ChannelSubscription(IMessageListener listener, IClientSessionChannel channel, T @object)
 		{
@@ -21,7 +24,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 
 		public void Unsubscribe()
 		{
-			Debug.WriteLine("unsubscribing from channel {}", channel.Id);
+			LOG.Debug("unsubscribing from channel {}", channel.Id);
 			channel.unsubscribe(listener);
 		}
 

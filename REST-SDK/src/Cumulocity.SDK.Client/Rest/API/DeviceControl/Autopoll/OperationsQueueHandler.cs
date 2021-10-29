@@ -116,7 +116,7 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 				}
 				catch (ThreadInterruptedException e)
 				{
-					//logger.warn("Thread interrupted while processing operationRep", e);
+					LOG.Warn("Thread interrupted while processing operationRep", e);
 				}
 				catch (SDKException e)
 				{

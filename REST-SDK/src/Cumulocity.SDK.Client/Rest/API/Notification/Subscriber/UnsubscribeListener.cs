@@ -1,5 +1,6 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
+using Cumulocity.SDK.Client.Logging;
 using System.Diagnostics;
 
 namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
@@ -8,6 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 	{
 		private readonly SubscriptionRecord<T> subscribed;
 		private readonly IClientSessionChannel unsubscribeChannel;
+		private static readonly ILog LOG = LogProvider.For<UnsubscribeListener<T>>();
 		private readonly SubscriberImpl<T> subscriberImpl;
 
 		public UnsubscribeListener(SubscriptionRecord<T> subscribed, IClientSessionChannel unsubscribeChannel, SubscriberImpl<T> subscriberImpl)
@@ -23,7 +25,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			{
 				try
 				{
-					Debug.WriteLine("unsubscribed successfuly from channel {}", channel.Id);
+					LOG.Debug("unsubscribed successfuly from channel {}", channel.Id);
 					subscribed.Remove();
 				}
 				finally
