@@ -102,10 +102,10 @@ namespace Cumulocity.SDK.Client
 
 				return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 			}
-			// Reason for not logging exception: When we do api.delete in the test code, since absolute URL is not passed, .NET Uri unlike Java throws Exception. Hence only logging it. 
 			catch(UriFormatException ex) 
 			{
 				LOG.Error($"Invalid url passed: {ex.Message}");
+				throw new UriFormatException($"Invalid url passed: {ex.Message}");
 			}
 			return default(T);
 		}
@@ -170,8 +170,16 @@ namespace Cumulocity.SDK.Client
 
 		public virtual void Delete(string path)
 		{
-			var response = this.deleteClientResponse(path);
-			this.ResponseParser.checkStatus(response.Result, new int[] { (int)HttpStatusCode.NoContent });
+            try
+            {
+				var response = this.deleteClientResponse(path);
+				this.ResponseParser.checkStatus(response.Result, new int[] { (int)HttpStatusCode.NoContent });
+			}
+			catch (UriFormatException ex)
+			{
+				LOG.Error($"Invalid url passed: {ex.Message}");
+				throw new UriFormatException($"Invalid url passed: {ex.Message}");
+			}
 		}
 
 		private Task<HttpResponseMessage> getClientResponse(string path, MediaType mediaType)
@@ -364,6 +372,7 @@ namespace Cumulocity.SDK.Client
 			catch (UriFormatException ex)
             {
 				LOG.Error($"Invalid url passed: {ex.Message}");
+				throw new UriFormatException($"Invalid url passed: {ex.Message}");
 			}
 			return null;
 		}
@@ -388,6 +397,7 @@ namespace Cumulocity.SDK.Client
 			catch(UriFormatException ex)
             {
 				LOG.Error($"Invalid url passed: {ex.Message}");
+				throw new UriFormatException($"Invalid url passed: {ex.Message}");
 			}
 			return null;
 		}
