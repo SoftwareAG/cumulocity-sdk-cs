@@ -44,7 +44,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
         {
             if(expiredToken == null || string.IsNullOrEmpty(expiredToken.TokenString))
             {
-                throw new ArgumentException("Expired token is null");
+                throw new ArgumentNullException("Expired token is null");
             }
             string claimsString = null;
             try
@@ -53,9 +53,9 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
                 byte[] decodedArray = Convert.FromBase64String(tokenParts[1]);
                 claimsString = Encoding.UTF8.GetString(decodedArray);
             }
-            catch(ArgumentException argumentException)
+            catch(Exception argumentException)
             {
-                throw new ArgumentException("Not a valid token");
+                throw new ArgumentException("Not a valid token", argumentException);
             }
             TokenClaims parsedToken = JsonConvert.DeserializeObject<TokenClaims>(claimsString);
             string subscription = null;
@@ -65,7 +65,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
             } 
             catch (IndexOutOfRangeException ie)
             {
-                throw new ArgumentException("Not a Valid Topic");
+                throw new ArgumentException("Not a Valid Topic", ie);
             }
             long expiry = parsedToken.Exp - parsedToken.Iat;
             long validityPeriodMinutes = expiry / 60;

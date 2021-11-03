@@ -61,5 +61,12 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Buffering
             ProcessingRequest result = persistentProvider.poll();
             Assert.Equal(1, result.Id);
         }
+
+        [Fact]
+        public void testCounterIncrement()
+        {
+            persistentProvider.generateId();
+            Assert.Equal(2, persistentProvider.Counter);
+        }
     }
 }
