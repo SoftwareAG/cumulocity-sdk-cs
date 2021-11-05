@@ -3,8 +3,8 @@ using Cumulocity.SDK.Client.Rest.Representation.Alarm;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Cumulocity.SDK.Client.IntegrationTest.Buffering
@@ -60,6 +60,68 @@ namespace Cumulocity.SDK.Client.IntegrationTest.Buffering
             persistentProvider.offer(new ProcessingRequest(1, request));
             ProcessingRequest result = persistentProvider.poll();
             Assert.Equal(1, result.Id);
+        }
+
+        [Fact]
+        public void shouldReturnMultipleRequestsFromQueue()
+        {
+            List<ProcessingRequest> requests = new List<ProcessingRequest>();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            CancellationToken token = tokenSource.Token;
+            Task.Factory.StartNew(() => {
+                while (true)
+                {
+                    if(token.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    ProcessingRequest result = persistentProvider.poll();
+                    requests.Add(result);
+                }
+            }, token);
+            for (int offer = 0; offer < 5; offer++)
+            {
+                BufferedRequest request = BufferedRequest.create("POST", "test", AlarmMediaType.ALARM, new AlarmRepresentation());
+                long id = offer + 1;
+                persistentProvider.offer(new ProcessingRequest(id, request));
+            }
+            Thread.Sleep(3000);
+            tokenSource.Cancel();
+            Assert.Equal(5, requests.Count);
+        }
+
+        [Fact]
+        public void shouldReturnMultipleRequestsFromQueue2()
+        {
+            List<ProcessingRequest> requests = new List<ProcessingRequest>();
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            CancellationToken token = tokenSource.Token;
+            for (int offer = 0; offer < 2; offer++)
+            {
+                BufferedRequest request = BufferedRequest.create("POST", "test", AlarmMediaType.ALARM, new AlarmRepresentation());
+                long id = offer + 1;
+                persistentProvider.offer(new ProcessingRequest(id, request));
+            }
+            Task.Factory.StartNew(() => {
+                while (true)
+                {
+                    if (token.IsCancellationRequested)
+                    {
+                        break;
+                    }
+                    ProcessingRequest result = persistentProvider.poll();
+                    requests.Add(result);
+                }
+            }, token);
+            for (int offer = 2; offer < 7; offer++)
+            {
+                BufferedRequest request = BufferedRequest.create("POST", "test", AlarmMediaType.ALARM, new AlarmRepresentation());
+                long id = offer + 1;
+                persistentProvider.offer(new ProcessingRequest(id, request));
+            }
+            Thread.Sleep(3000);
+            tokenSource.Cancel();
+            Assert.Equal(7, requests.Count);
         }
 
         [Fact]

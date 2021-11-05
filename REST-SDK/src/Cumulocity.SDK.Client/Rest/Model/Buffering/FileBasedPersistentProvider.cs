@@ -20,8 +20,6 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 
         public long Counter { get => _counter; }
 
-        private volatile CountdownEvent latch = new CountdownEvent(1);
-
         private Queue<ProcessingRequest> requests = new Queue<ProcessingRequest>();
 
         private DirectoryInfo newRequestsTemp;
@@ -85,7 +83,14 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
             String fileName = $"{request.Id}";
             writeToFile(request.Entity.toCsvString(), new FileStream(Path.Combine(newRequestsTemp.FullName, fileName), FileMode.Create, FileAccess.ReadWrite));
             moveFile(fileName, newRequestsTemp, newRequests);
-            latch.Signal();
+            lock(requests)
+            {
+                // If the consumer thread is waiting for an item
+                // to be added to the queue, this will move it
+                // to a waiting list, to resume execution
+                // once we release our lock.
+                Monitor.Pulse(requests);
+            }
         }
 
         private void writeToFile(string content, FileStream fileStream)
@@ -120,23 +125,13 @@ namespace Cumulocity.SDK.Client.Rest.Model.Buffering
 
             if(requests.Count() == 0)
             {
-                waitForRequest();
+                lock(requests)
+                {
+                    Monitor.Wait(requests);
+                }
                 readFilesToQueue();
-                latch = new CountdownEvent(1);
             }
             return requests.Dequeue();
-        }
-
-        private void waitForRequest()
-        {
-            try
-            {
-                latch.Wait();
-            }
-            catch(ThreadInterruptedException ex)
-            {
-                throw new Exception($"{ex}");
-            }
         }
 
         private void readFilesToQueue()
