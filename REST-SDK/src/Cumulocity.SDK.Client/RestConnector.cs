@@ -94,12 +94,6 @@ namespace Cumulocity.SDK.Client
 					var repFromPlatform = ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 					return repFromPlatform != null ? repFromPlatform : representation;
 				}
-
-				//if (((IList)typeof(T).GetInterfaces()).Contains(typeof(IBaseResourceRepresentationWithId)))
-				//{
-				//	return (T)parseResponseWithId((IBaseResourceRepresentationWithId)representation, response.Result, (int)HttpStatusCode.Created);
-				//}
-
 				return ResponseParser.parse<T>(response.Result, typeof(T), (int)HttpStatusCode.Created, (int)HttpStatusCode.OK);
 			}
 			catch(UriFormatException ex) 

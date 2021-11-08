@@ -260,7 +260,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 			bool isHeartBeat = false;
 			try
 			{
-				LOG.Debug(String.Format("{0}Start response consumer ", DateTime.Now.ToString("HH:mm:ss.fff")));
+				LOG.Debug(String.Format("{0} Start response consumer ", DateTime.Now.ToString("HH:mm:ss.fff")));
 
 				isHeartBeat = HeartBeatWatch(response, response.Content);
 				if (isHeartBeat)
@@ -288,18 +288,18 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		//ORIGINAL LINE: private void getHeartBeats(final ClientResponse response) throws IOException
 		private bool GetHeartBeats(string memoryStream)
 		{
-			LOG.Debug(String.Format(" {0} getting heartbeants  {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(response)));
+			LOG.Debug(String.Format(" {0} getting heartbeats  {1}", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(response)));
 
 			{
 				if (isHeartBeat(memoryStream))
 				{
-					LOG.Debug("recived heartbeat");
+					LOG.Debug("received heartbeat");
 					messageExchange.Watcher.HeartBeat();
 					return true;
 				}
 				else
 				{
-					LOG.Debug("new messages recived");
+					LOG.Debug("new messages received");
 					return false;
 				}
 			}
