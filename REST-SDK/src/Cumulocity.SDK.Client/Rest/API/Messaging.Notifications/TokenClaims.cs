@@ -14,6 +14,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Messaging.Notifications
 
         private string topic;
 
+        // Token annotations: jti: id, iat: issued at, exp: expiry
         private string jti;
 
         private long iat;

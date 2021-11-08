@@ -9,6 +9,7 @@ namespace Cumulocity.SDK.Client.Rest.Representation.Messaging.Notifications
 {
     public class NotificationSubscriptionFilterRepresentation : BaseResourceRepresentation
     {
+        // Filter out Measurements, Events, Alarms etc mentioned in the list. Wildcards also allowed. 
         private List<string> apis;
         private string typeFilter;
 
