@@ -34,7 +34,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 		{
 			if (!Channel_Fields.META_SUBSCRIBE.Equals(metaSubscribeChannel.Id))
 			{
-				// Should never be here
 				LOG.Warn("Unexpected message to wrong channel, to SubscriptionSuccessListener: {}, {}", metaSubscribeChannel, message);
 				return;
 			}
