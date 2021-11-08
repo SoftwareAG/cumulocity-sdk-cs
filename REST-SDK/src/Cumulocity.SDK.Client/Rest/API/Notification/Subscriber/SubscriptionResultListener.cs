@@ -1,5 +1,6 @@
 ﻿using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
+using Cumulocity.SDK.Client.Logging;
 using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using System;
 
@@ -16,6 +17,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 		private readonly bool autoRetry;
 		private readonly int retriesCount;
 		private readonly SubscriberImpl<T> subscriberImpl;
+		private static readonly ILog LOG = LogProvider.For<SubscriptionResultListener<T>>();
 
 		public SubscriptionResultListener(SubscriptionRecord<T> subscribed, MessageListenerAdapter<T> listener, ISubscribeOperationListener subscribeOperationListener, IClientSessionChannel channel, bool autoRetry, int retriesCount, SubscriberImpl<T> subscriberImpl)
 		{
@@ -32,8 +34,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 		{
 			if (!Channel_Fields.META_SUBSCRIBE.Equals(metaSubscribeChannel.Id))
 			{
-				// Should never be here
-				//log.warn("Unexpected message to wrong channel, to SubscriptionSuccessListener: {}, {}", metaSubscribeChannel, message);
+				LOG.Warn("Unexpected message to wrong channel, to SubscriptionSuccessListener: {}, {}", metaSubscribeChannel, message);
 				return;
 			}
 			if (message.Successful && !isSubscriptionToChannel(message))
@@ -44,7 +45,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			{
 				if (message.Successful)
 				{
-					//log.debug("subscribed successfully to channel {}, {}", this.channel, message);
+					LOG.Debug("subscribed successfully to channel {}, {}", this.channel, message);
 					if (autoRetry)
 					{
 						subscriberImpl.removePendingSubscriptions(subscription);
@@ -56,13 +57,13 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 				}
 				else
 				{
-					//log.debug("Error subscribing channel: {}, {}", this.channel.Id, message);
+					LOG.Debug("Error subscribing channel: {}, {}", this.channel.Id, message);
 					handleError(message);
 				}
 			}
 			catch (NullReferenceException ex)
 			{
-				//log.warn("NPE on message {} - {}", message, Channel_Fields.META_SUBSCRIBE);
+				LOG.Debug("NPE on message {} - {}", message, Channel_Fields.META_SUBSCRIBE);
 				throw new Exception(ex.Message);
 			}
 			finally
@@ -82,17 +83,17 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Subscriber
 			{
 				if (retriesCount > RETRIES_ON_SHORT_NETWORK_FAILURES)
 				{
-					//log.error("Detected a short network failure, giving up after {} retries. " + "Another retry attempt only happen on another successfully handshake", retriesCount);
+					LOG.Error("Detected a short network failure, giving up after {} retries. " + "Another retry attempt only happen on another successfully handshake", retriesCount);
 				}
 				else
 				{
-					//log.debug("Detected a short network failure, retrying to Subscribe channel: {}", channel.Id);
+					LOG.Debug("Detected a short network failure, retrying to Subscribe channel: {}", channel.Id);
 					channel.unsubscribe(new UnsubscribeListener<T>(subscription, channel, this.subscriberImpl));
 				}
 			}
 			else if (autoRetry)
 			{
-				//log.debug("Detected an error (either server or long network error), " + "another retry attempt only happen on another successfully handshake");
+				LOG.Debug("Detected an error (either server or long network error), " + "another retry attempt only happen on another successfully handshake");
 			}
 			notifyListenerOnError(message);
 		}

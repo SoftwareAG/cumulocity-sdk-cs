@@ -1,4 +1,5 @@
-﻿using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
+﻿using Cumulocity.SDK.Client.Logging;
+using Cumulocity.SDK.Client.Rest.API.Notification.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +14,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 		private readonly int initialDelayMin;
 		private readonly ICollection<IConnectionIdleListener> listeners = new ThreadSafeList<IConnectionIdleListener>();
 		private DateTime lastHeartBeat = new DateTime();
+		private static readonly ILog LOG = LogProvider.For<ConnectionHeartBeatWatcher>();
 
 		public ConnectionHeartBeatWatcher(int initialDelayMin, int delayMin) : base(delayMin * 60)
 		{
@@ -49,7 +51,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 
 		protected override void ExecutionCore(CancellationToken cancellationToken)
 		{
-			if (IsExeededInterval())
+			if (IsExceededInterval())
 			{
 				onConnectionIdle();
 			}
@@ -59,25 +61,25 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Watchers
 			}
 		}
 
-		private bool IsExeededInterval()
+		private bool IsExceededInterval()
 		{
-			Debug.WriteLine("->IsExeededInterval");
-			Debug.WriteLine("DateTime.Now" + DateTime.Now.ToLongTimeString());
-			Debug.WriteLine("lastHeartBeat" + lastHeartBeat);
-			Debug.WriteLine("lastHeartBeat.Add" + lastHeartBeat.AddMinutes(HEARTBEAT_INTERVAL).ToLongTimeString());
-			Debug.WriteLine("<-IsExeededInterval");
+			LOG.Debug("->IsExceededInterval");
+			LOG.Debug("DateTime.Now" + DateTime.Now.ToLongTimeString());
+			LOG.Debug("lastHeartBeat" + lastHeartBeat);
+			LOG.Debug("lastHeartBeat.Add" + lastHeartBeat.AddMinutes(HEARTBEAT_INTERVAL).ToLongTimeString());
+			LOG.Debug("<-IsExceededInterval");
 
 			return !(DateTime.Now >= lastHeartBeat && DateTime.Now < lastHeartBeat.AddMinutes(HEARTBEAT_INTERVAL));
 		}
 
 		private void onConnectionActive()
 		{
-			Debug.WriteLine(String.Format("the connection is still active, last message was  {0}", lastHeartBeat));
+			LOG.Debug(String.Format("the connection is still active, last message was  {0}", lastHeartBeat));
 		}
 
 		private void onConnectionIdle()
 		{
-			Debug.WriteLine(String.Format("{0} canceling the long poll request because of inactivity", DateTime.Now.ToString("HH:mm:ss.fff")));
+			LOG.Warn(String.Format("{0} canceling the long poll request because of inactivity", DateTime.Now.ToString("HH:mm:ss.fff")));
 			foreach (IConnectionIdleListener listener in listeners)
 			{
 				listener.OnConnectionIdle();
