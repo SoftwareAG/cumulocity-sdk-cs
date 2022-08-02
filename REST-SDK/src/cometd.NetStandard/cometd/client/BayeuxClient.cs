@@ -10,6 +10,7 @@ using Cometd.Common;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Cometd.Logging;
 
 namespace Cometd.Client
 {
@@ -35,12 +36,10 @@ namespace Cometd.Client
         private static Mutex stateUpdateInProgressMutex = new Mutex();
         private int stateUpdateInProgress;
         private AutoResetEvent stateChanged = new AutoResetEvent(false);
-
+        private static readonly ILog LOG = LogProvider.For<BayeuxClient>();
 
         public BayeuxClient(String url, IList<ClientTransport> transports)
         {
-            //logger = Log.getLogger(GetType().FullName + "@" + this.GetHashCode());
-            //Console.WriteLine(GetType().FullName + "@" + this.GetHashCode());
 
             handshakeListener = new HandshakeTransportListener(this);
             connectListener = new ConnectTransportListener(this);
@@ -180,7 +179,6 @@ namespace Cometd.Client
             // Pick the first transport for the handshake, it will renegotiate if not right
             ClientTransport initialTransport = transportRegistry.getTransport(allowedTransports[0]);
             initialTransport.init();
-            //Console.WriteLine("Using initial transport {0} from {1}", initialTransport.Name, Print.List(allowedTransports));
 
             updateBayeuxClientState(
                     delegate(BayeuxClientState oldState)
@@ -220,7 +218,6 @@ namespace Cometd.Client
                 if (message.Id == null)
                     message.Id = newMessageId();
 
-                //Console.WriteLine("Handshaking with extra fields {0}, transport {1}", Print.Dictionary(bayeuxClientState.handshakeFields), Print.Dictionary(bayeuxClientState.transport as IDictionary<String, Object>));
                 bayeuxClientState.send(handshakeListener, message);
                 return true;
             }
@@ -387,10 +384,7 @@ namespace Cometd.Client
                 // @@ax: I think this should be able to return a list of objects?
                 Object serverTransportObject;
                 handshake.TryGetValue(Message_Fields.SUPPORTED_CONNECTION_TYPES_FIELD, out serverTransportObject);
-                //IList<Object> serverTransports = serverTransportObject as IList<Object>;
-                //Console.WriteLine("Supported transport: {0}", serverTransport);
                 var serverTransports = ((JArray)serverTransportObject).Select(x => (string)x).ToList();
-                //IList<Object> serverTransports = JsonConvert.DeserializeObject<IList<Object>>(serverTransportObject as string);
 
                 IList<ClientTransport> negotiatedTransports = transportRegistry.Negotiate(serverTransports, BAYEUX_VERSION);
                 ClientTransport newTransport = negotiatedTransports.Count == 0 ? null : negotiatedTransports[0];
@@ -640,12 +634,10 @@ namespace Cometd.Client
                 IList<IMutableMessage> messages = new List<IMutableMessage>();
                 messages.Add(message);
                 bool sent = sendMessages(messages);
-                //Console.WriteLine("{0} message {1}", sent?"Sent":"Failed", message);
             }
             else
             {
                 messageQueue.Enqueue(message);
-                //Console.WriteLine("Enqueued message {0} (batching: {1})", message, this.Batching);
             }
         }
 
@@ -679,7 +671,7 @@ namespace Cometd.Client
 
         public virtual void onFailure(Exception x, IList<IMessage> messages)
         {
-            Console.WriteLine("{0}", x.ToString());
+            LOG.Debug("{0}", x.ToString());
         }
 
         private void updateBayeuxClientState(BayeuxClientStateUpdater_createDelegate create)
@@ -702,7 +694,6 @@ namespace Cometd.Client
 
             if (!oldState.isUpdateableTo(newState))
             {
-                //Console.WriteLine("State not updateable : {0} -> {1}", oldState, newState);
                 return;
             }
 

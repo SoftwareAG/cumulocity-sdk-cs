@@ -1,4 +1,5 @@
 using Cometd.Bayeux;
+using Cometd.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,6 +11,7 @@ namespace Cometd.Common
 	public class DictionaryMessage : Dictionary<String, Object>, IMutableMessage
 	{
 		private const long serialVersionUID = 4318697940670212190L;
+		private static readonly ILog LOG = LogProvider.For<DictionaryMessage>();
 
 		public DictionaryMessage()
 		{
@@ -212,7 +214,7 @@ namespace Cometd.Common
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine("Exception when parsing json {0}", e);
+				LOG.Debug("Exception when parsing json {0}", e);
 			}
 
 			IList<IMutableMessage> messages = new List<IMutableMessage>();

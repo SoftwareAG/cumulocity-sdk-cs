@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net47;netcoreapp3.1</TargetFrameworks>
     <LangVersion>8.0</LangVersion>
-    <Version>10.6.6.28</Version>
+    <Version>10.6.6.29</Version>
     <Authors>Cumulocity</Authors>
     <Product>Cumulocity</Product>
     <Copyright>Cumulocity</Copyright>

@@ -56,7 +56,6 @@ namespace Cumulocity.SDK.Client.Rest.API.User
 			@params[REALM] = tenant;
 			@params[USER_NAME] = user;
 			string url = templateUrlParser.replacePlaceholdersWithParams(usersApiRepresentation.UserByName, @params);
-			Console.WriteLine(url);
 			return restConnector.Get<UserRepresentation>(url, UserMediaType.USER, typeof(UserRepresentation));
 		}
 

@@ -114,8 +114,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 
 		public override void send(ITransportListener listener, IList<IMutableMessage> messages)
 		{
-			//Console.WriteLine();
-			//Console.WriteLine("send({0} message(s))", messages.Count);
 			String url = getURL();
 
 			if (_appendMessageType && messages.Count == 1 && messages[0].Meta)
@@ -189,7 +187,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 				{
 					// Convert the string into a byte array.
 					byte[] byteArray = Encoding.UTF8.GetBytes(exchange.content);
-					//System.Diagnostics.Debug.WriteLine("Sending message(s): {0}", exchange.content);
 
 					LOG.Debug(String.Format("{0} sending messages {1} ", DateTime.Now.ToString("HH:mm:ss.fff"), JsonConvert.SerializeObject(exchange.content)));
 
@@ -233,7 +230,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 							if (peeker == 32)
 							{
 								responseString = " ";
-								Console.WriteLine("HeartBeat");
+								LOG.Debug("HeartBeat");
 							}
 							else
 							{
@@ -241,7 +238,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 							}
 						}
 					}
-					//Console.WriteLine("Received message(s): {0}", responseString);
 
 					if (response.Cookies != null)
 						foreach (Cookie cookie in response.Cookies)
@@ -250,7 +246,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 					response.Close();
 				}
 
-				Console.WriteLine(responseString);
+				LOG.Debug(responseString);
 				exchange.messages = DictionaryMessage.parseMessages(responseString);
 
 				exchange.listener.onMessages(exchange.messages);
@@ -269,7 +265,7 @@ namespace Cumulocity.SDK.Client.Rest.API.Notification.Transport
 		{
 			if (timedOut)
 			{
-				Console.WriteLine("Timeout");
+				LOG.Debug("Timeout");
 				TransportExchange exchange = state as TransportExchange;
 
 				if (exchange.request != null) exchange.request.Abort();

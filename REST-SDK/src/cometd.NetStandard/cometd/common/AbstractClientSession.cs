@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cometd.Bayeux;
 using Cometd.Bayeux.Client;
+using Cometd.Logging;
 
 namespace Cometd.Common
 {
@@ -18,6 +19,7 @@ namespace Cometd.Common
         private Dictionary<String, AbstractSessionChannel> _channels = new Dictionary<String, AbstractSessionChannel>();
         private int _batch;
         private int _idGen = 0;
+        private static readonly ILog LOG = LogProvider.For<AbstractClientSession>();
 
         protected AbstractClientSession()
         {
@@ -380,8 +382,7 @@ namespace Cometd.Common
                         }
                         catch (Exception x)
                         {
-                            Console.WriteLine("{0}", x);
-                            //logger.info(x);
+                            LOG.Debug("{0}", x);
                         }
                     }
                 }
@@ -399,8 +400,7 @@ namespace Cometd.Common
                             }
                             catch (System.Exception x)
                             {
-                                Console.WriteLine("{0}", x);
-                                //logger.info(x);
+                                LOG.Debug("{0}", x);
                             }
                         }
                     }
