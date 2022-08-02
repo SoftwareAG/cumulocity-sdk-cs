@@ -1,5 +1,6 @@
 using Cometd.Bayeux;
 using Cometd.Common;
+using Cometd.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace Cometd.Client.Transport
         private HashSet<LongPollingRequest> transmissions = new HashSet<LongPollingRequest>();
 
         private List<LongPollingRequest> transportQueue = new List<LongPollingRequest>();
+
+        private static readonly ILog LOG = LogProvider.For<BayeuxClient>();
 
         public LongPollingTransport(IDictionary<String, Object> options)
                                     : base("long-polling", options)
@@ -105,8 +108,6 @@ namespace Cometd.Client.Transport
 
         public override void send(ITransportListener listener, IList<IMutableMessage> messages)
         {
-            //Console.WriteLine();
-            //Console.WriteLine("send({0} message(s))", messages.Count);
             String url = getURL();
 
             if (_appendMessageType && messages.Count == 1 && messages[0].Meta)
@@ -162,8 +163,7 @@ namespace Cometd.Client.Transport
                 {
                     // Convert the string into a byte array.
                     byte[] byteArray = Encoding.UTF8.GetBytes(exchange.content);
-                    Console.WriteLine("Sending message(s): {0}", exchange.content);
-                    //Console.WriteLine("Sending message(s): {0}", exchange.content);
+                    LOG.Debug("Sending message(s): {0}", exchange.content);
 
                     // Write to the request stream.
                     postStream.Write(byteArray, 0, exchange.content.Length);
@@ -202,7 +202,6 @@ namespace Cometd.Client.Transport
                         using (StreamReader streamRead = new StreamReader(streamResponse))
                             responseString = streamRead.ReadToEnd();
                     }
-                    //Console.WriteLine("Received message(s): {0}", responseString);
 
                     if (response.Cookies != null)
                         foreach (Cookie cookie in response.Cookies)
@@ -211,7 +210,7 @@ namespace Cometd.Client.Transport
                     response.Close();
                 }
 
-                Console.WriteLine(responseString);
+                LOG.Debug(responseString);
                 exchange.messages = DictionaryMessage.parseMessages(responseString);
 
                 exchange.listener.onMessages(exchange.messages);
@@ -230,7 +229,7 @@ namespace Cometd.Client.Transport
         {
             if (timedOut)
             {
-                Console.WriteLine("Timeout");
+                LOG.Debug("Timeout");
                 TransportExchange exchange = state as TransportExchange;
 
                 if (exchange.request != null) exchange.request.Abort();

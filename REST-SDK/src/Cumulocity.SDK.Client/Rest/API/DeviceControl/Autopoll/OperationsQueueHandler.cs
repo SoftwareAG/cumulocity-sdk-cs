@@ -121,8 +121,8 @@ namespace Cumulocity.SDK.Client.Rest.API.DeviceControl.Autopoll
 				catch (SDKException e)
 				{
 					// TODO Auto-generated catch block
-					Console.WriteLine(e.ToString());
-					Console.Write(e.StackTrace);
+					LOG.Debug(e.ToString());
+					LOG.Debug(e.StackTrace);
 				}
 			}
 			Interlocked.Exchange(ref usingResource, 0);

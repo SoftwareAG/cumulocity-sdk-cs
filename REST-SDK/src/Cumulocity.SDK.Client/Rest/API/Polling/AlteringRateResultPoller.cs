@@ -25,7 +25,6 @@ namespace Cumulocity.SDK.Client.Rest.API.Polling
 		{
 			if (pollingTask == null)
 			{
-				Console.WriteLine("Poller Start requested without pollingTask being Set");
 				LOG.Error("Poller Start requested without pollingTask being Set");
 				return false;
 			}
