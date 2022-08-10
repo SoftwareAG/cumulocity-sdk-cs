@@ -4,7 +4,7 @@
     <TargetFrameworks>net47;net48;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Cometd</RootNamespace>
     <LangVersion>7.3</LangVersion>
-    <Version>1006.6.1</Version>
+    <Version>1013.0.0</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Authors>Cumulocity</Authors>
     <Company>Cumulocity</Company>
@@ -16,6 +16,7 @@
     <PackageProjectUrl>cumulocity.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SoftwareAG/cumulocity-sdk-cs/tree/master/REST-SDK/</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Bug fixes and code refactoring or improvements. Refactored logging messages</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
